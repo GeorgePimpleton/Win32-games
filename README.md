@@ -13,3 +13,5 @@ I've spent a lot of time, years, updating and revising this pre-C++11 code to wo
 The original source code and media files are copyrighted © 2003 & 2004 by Samspublishing, they is not my work.
 
 There are no executables included, they need to be created by compiling the sources.
+
+I use Visual Studio 2022 (Community) to update and test the game code, setting the C++ language standard to C++20.
