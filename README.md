@@ -1,3 +1,8 @@
-# Win32-games-2003
+# Teach Yourself Game Programming in 24 Hours (2003)
 
-M'ok, here's the start of a new github repository for old Win32 GDI games created using code from two pre-C++11 books I own.  As well as the revised code so the games actually work on modern Windows systems later than Win9x/Me.
+A book about creating 2D games using the Windows API.
+
+[comment]: #cover
+![Cover image](tygp24h.jpg)
+
+I've spent a lot of time updating this pre-C++11 code to work with modern Windows and the newer C++ language standards.
