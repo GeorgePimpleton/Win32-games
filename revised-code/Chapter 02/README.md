@@ -1,4 +1,4 @@
-#Win32 Games, Chapter 2: Blizzard
+# Win32 Games, Chapter 2: Blizzard
 
 Win9X/Me is officially dead!
 
