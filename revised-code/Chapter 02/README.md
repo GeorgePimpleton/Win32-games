@@ -14,4 +14,6 @@ Blizzard, pass 2: Reformatting, changing some file names and refining the code f
 
 Blizzard, pass 3: Added menus, inline the setters and getters and other misc. changes.
 
-Blizzard, pass 4: Use C++ smart pointers -- std::shared -- instead of raw pointers.  Is this the final version?  Probably, but maybe not.
+Blizzard, pass 4: Use C++ smart pointers, shared and unique, instead of raw pointers.
+
+Is pass 4 the final version?  Probably, but maybe not.  Depends on later game code that is updated to use smart pointers.
