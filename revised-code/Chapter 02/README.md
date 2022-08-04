@@ -12,4 +12,4 @@ Blizzard, pass 1: The bare minimum changes to work with modern C++/Win32 x86 & x
 
 Blizzard, pass 2: Reformatting, changing some file names and refining the code for Unicode and modern Windows OSes.  Added my Random Toolkit to generate random numbers the C++ way.
 
-Blizzard, pass 3: Use C++ smart pointers instead of raw pointers
+Blizzard, pass 3: Use C++ smart pointers, std::shared, instead of raw pointers.  Is this the final version?  Probably, but maybe not.
