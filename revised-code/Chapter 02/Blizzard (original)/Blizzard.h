@@ -1,15 +1,18 @@
+//-----------------------------------------------------------------
+// Blizzard Application
+// C++ Header - Blizzard.h
+//-----------------------------------------------------------------
+
 #pragma once
 
 //-----------------------------------------------------------------
-// include files
+// Include Files
 //-----------------------------------------------------------------
 #include <windows.h>
-#include <memory>
-#include "random_toolkit.hpp"
-#include "resource.h"
-#include "GameEngine.hpp"
+#include "Resource.h"
+#include "GameEngine.h"
 
 //-----------------------------------------------------------------
-// global variables
+// Global Variables
 //-----------------------------------------------------------------
-std::unique_ptr<GameEngine> g_pGame;
+GameEngine* g_pGame;
