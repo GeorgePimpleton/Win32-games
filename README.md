@@ -15,3 +15,9 @@ The original source code and media files are copyrighted © 2003 & 2004 by Samsp
 There are no executables included, they need to be created by compiling the sources.
 
 I use Visual Studio 2022 (Community) to update and test the game code, setting the C++ language standard to C++20.
+
+### Notes
+
+This is a "work in progress", there is no guarantee the entirety of the entire collection of games will ever be modernized any time soon.
+
+There may be links to websites or internet sources in these pages. Links can go stale. A search engine is your friend.
