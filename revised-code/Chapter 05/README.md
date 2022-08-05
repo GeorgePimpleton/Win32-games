@@ -2,7 +2,7 @@
 
 Win9X/Me is officially dead!
 
-Slideshow demonstrates how to interact with a game using the keyboard and mouse.
+Slideshow demonstrates how to interact with a game using the keyboard and mouse as well as making parts of an image transparent so it isn't drawn.
 
 Versions:
 
