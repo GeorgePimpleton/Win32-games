@@ -10,7 +10,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 I own a couple of OLD books about creating 2D games using the Windows API.
 
-![Sams Teach Yourself Game Programming in 24 Hours](tygp24h.jpg) ![Cover image](bgp.jpg)
+![Sams Teach Yourself Game Programming in 24 Hours (2003)](tygp24h.jpg) ![Sams Beginning Game Programming (2004)](bgp.jpg)
 
 I've spent a lot of time, years, updating and revising this pre-C++11 code to work with modern Windows and the newer C++ language standards.
 
