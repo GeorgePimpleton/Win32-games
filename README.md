@@ -29,3 +29,7 @@ There may be links to websites or internet sources in these pages and source cod
 This is a "work in progress", there is no guarantee the entirety of the entire collection of games will ever be modernized any time soon.  There is also no guarantee the source files will work for you.
 
 If you find better ways to rework the code don't hesitate to let me know.
+
+## Musings on Windows© Games
+
+To be honest the game engine created is hard to convert to modern C++ practices.  More and more it is looking like the game engine needs to be rewritten from top to bottme from scratch.
