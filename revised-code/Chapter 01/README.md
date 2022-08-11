@@ -9,11 +9,12 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 ### Possible types of apps that can be created on Windows
 
 1. console mode using C++
-2. Windows MessageBox
+2. Windows© MessageBox
 3. minimum Win API
 4. minimum MFC
 5. minimal skeletal Win API with app icons
 6. realistic skeletal Win API with icons and cursor (pointer)
+7. a modernized C++ practices skeletal Win API with icons and cursor and using C++ wide strings
 
 ### Notes
 
@@ -26,3 +27,7 @@ If you find better ways to rework the code don't hesitate to let me know.
 ### Musings on Windows© Games
 
 To be honest the game engine created is hard to convert to modern C++ practices.  More and more it is looking like the game engine needs to be rewritten from top to bottme from scratch.
+
+### Musing on the Windows© API
+
+I tried to convert the #define macros to modern C++ constexpr values, but the Win API refused to work that way.  Boo!
