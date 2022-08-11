@@ -1,6 +1,4 @@
-/* A simple toolkit to help beginners using the <random> library an easier task
- *
- * pre-C++20 header file */
+/* A simple toolkit to help beginners using the <random> library an easier task */
 
  // shamelessly stolen and adapted from a C++ working paper: WG21 N3551
  // http://www.open-std.org/JTC1/SC22/WG21/docs/papers/2013/n3551.pdf
