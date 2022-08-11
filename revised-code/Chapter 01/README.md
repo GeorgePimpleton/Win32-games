@@ -30,4 +30,4 @@ To be honest the game engine created is hard to convert to modern C++ practices.
 
 ### Musing on the Windows© API
 
-I tried to convert the #define macros to modern C++ constexpr values, but the Win API refused to work that way.  Boo!
+I tried to convert the #define macros to modern C++ constexpr/const values, but the Win API refused to work that way.  Not. Cool.
