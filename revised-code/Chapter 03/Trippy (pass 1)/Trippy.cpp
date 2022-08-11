@@ -28,17 +28,13 @@ void GameStart(HWND hWindow)
 }
 
 void GameEnd()
-{
-   // delete g_pGame;
-}
+{ }
 
 void GameActivate(HWND hWindow)
-{
-}
+{ }
 
 void GameDeactivate(HWND hWindow)
-{
-}
+{ }
 
 void GamePaint(HDC hDC)
 {
