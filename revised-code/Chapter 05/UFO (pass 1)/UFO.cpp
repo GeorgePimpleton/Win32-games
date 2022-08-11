@@ -1,5 +1,3 @@
-// UFO.cpp - Game Source
-
 #include "UFO.hpp"
 
 HRESULT GameInitialize(HINSTANCE hInstance)

@@ -1,5 +1,3 @@
-// Bitmap.cpp - Bitmap Source
-
 // include the Win32 library for TransparentBlt()
 #pragma comment(lib, "msimg32.lib")
 

@@ -1,5 +1,3 @@
-// UFO.hpp - Game Header
-
 #pragma once
 
 #include "Bitmap.hpp"

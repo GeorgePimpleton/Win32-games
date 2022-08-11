@@ -1,5 +1,3 @@
-// Bitmap.hpp - Bitmap Header
-
 #pragma once
 
 #include <windows.h>

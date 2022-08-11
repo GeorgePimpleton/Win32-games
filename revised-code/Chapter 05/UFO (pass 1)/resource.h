@@ -1,5 +1,3 @@
-// resource.h - Resource IDs
-
 #pragma once
 
 #define IDI_ICON         1001

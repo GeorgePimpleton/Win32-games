@@ -1,5 +1,3 @@
-// UFO.rc - Resource Declarations
-
 #include <windows.h>
 #include "resource.h"
 
