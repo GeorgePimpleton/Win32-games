@@ -10,7 +10,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 Slideshow demonstrates how to load bitmap files from a file or as a Win32 resource.
 
-Versions:
+### Slideshow Versions
 
 0. Chapter 5 on 2003 CD.  The program files are also on Chapter 4 2004 CD.  Each version of Slideshow has different pictures.
 
