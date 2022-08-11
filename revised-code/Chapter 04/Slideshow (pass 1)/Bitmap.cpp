@@ -1,5 +1,3 @@
-// "Talk to me like I'm a 3 year old!" Programming Lessons - Windows Games
-
 // Bitmap.cpp - Bitmap Source
 
 #include "Bitmap.hpp"
