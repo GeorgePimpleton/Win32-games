@@ -1,6 +1,4 @@
-/* A simple toolkit to help beginners using the <random> library an easier task
- *
- * pre-C++20 header file */
+/* A simple toolkit to help beginners using the <random> library an easier task */
 
  // shamelessly stolen and adapted from a C++ working paper: WG21 N3551
  // http://www.open-std.org/JTC1/SC22/WG21/docs/papers/2013/n3551.pdf
@@ -23,8 +21,6 @@ namespace rtk
       return URNG;
    }
 
-   // function to initialize (seed) the PRNG engine
-   // uses a seed sequence for better randomization
    inline void srand(bool FORCE_SEED = false)
    {
       static const std::seed_seq::result_type seeds[] { std::random_device {} (),
@@ -41,11 +37,8 @@ namespace rtk
       }
    }
 
-   // function to initialize the PRNG engine
-   // using a specified seed
    inline void srand(signed seed, bool FORCE_SEED = false)
    {
-      // the URNG can't be reseeded unless forced
       if (!seeded || FORCE_SEED)
       {
          urng().seed(static_cast<unsigned>(seed));
@@ -54,7 +47,6 @@ namespace rtk
       }
    }
 
-   // two function overloads to obtain uniform distribution ints and doubles
    inline int rand(int from, int to)
    {
       static std::uniform_int_distribution<> dist { };
@@ -73,10 +65,8 @@ namespace rtk
       return dist(urng(), decltype(dist)::param_type { from, to });
    }
 
-   // function for rolling dice, and checking if the # of pips is nonstandard
    inline int roll_die(int pips)
    {
-      // check to see if the number of die pips is less than 2
       if (pips < 2)
       {
          return -1;
