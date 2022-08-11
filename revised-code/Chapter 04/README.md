@@ -8,7 +8,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 ### Slideshow: Drawing Graphical Images
 
-Slideshow demonstrates how to load bitmap files from a file or as a Win32 resource.
+Slideshow demonstrates how to load bitmap files from a file or as a Win32 resource.  Introduces the Bitmap class.
 
 ### Slideshow Versions
 

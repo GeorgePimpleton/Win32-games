@@ -1,5 +1,3 @@
-// Slideshow.hpp - game header
-
 #pragma once
 
 #include <vector>

@@ -28,7 +28,7 @@ namespace rtk
 
       static std::seed_seq sseq(std::begin(seeds), std::end(seeds));
 
-      if (!seeded || FORCE_SEED)
+      if ( !seeded || FORCE_SEED )
       {
          urng().seed(sseq);
 
@@ -38,7 +38,7 @@ namespace rtk
 
    inline void srand(signed seed, bool FORCE_SEED = false)
    {
-      if (!seeded || FORCE_SEED)
+      if ( !seeded || FORCE_SEED )
       {
          urng().seed(static_cast<unsigned>(seed));
 
@@ -50,7 +50,7 @@ namespace rtk
    {
       static std::uniform_int_distribution<> dist { };
 
-      if (from > to) { throw std::invalid_argument("bad int distribution params"); }
+      if ( from > to ) { throw std::invalid_argument("bad int distribution params"); }
 
       return dist(urng(), decltype(dist)::param_type { from, to });
    }
@@ -59,14 +59,14 @@ namespace rtk
    {
       static std::uniform_real_distribution<> dist { };
 
-      if (from > to) { throw std::invalid_argument("bad double distribution params"); }
+      if ( from > to ) { throw std::invalid_argument("bad double distribution params"); }
 
       return dist(urng(), decltype(dist)::param_type { from, to });
    }
 
    inline int roll_die(int pips)
    {
-      if (pips < 2)
+      if ( pips < 2 )
       {
          return -1;
       }

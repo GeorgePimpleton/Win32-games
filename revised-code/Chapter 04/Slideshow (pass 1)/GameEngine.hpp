@@ -1,14 +1,11 @@
-// GameEngine.hpp - Game Engine Header
-
 #pragma once
 
 #include <windows.h>
 #include <strsafe.h>
 #include <memory>
+#include <string>
 #include "resource.h"
 #include "random_toolkit.hpp"
-
-const static UCHAR str_length { 64 };
 
 int WINAPI       wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ PWSTR szCmdLine, _In_ int iCmdShow);
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -51,11 +48,11 @@ public:
    void      SetSleep(BOOL bSleep);
 
 protected:
-   static std::shared_ptr<GameEngine> m_pGameEngine;
+   static std::unique_ptr<GameEngine> m_pGameEngine;
    HINSTANCE                          m_hInstance;
    HWND                               m_hWindow;
-   WCHAR                              m_szWindowClass[str_length];
-   WCHAR                              m_szTitle[str_length];
+   std::wstring                       m_szWindowClass;
+   std::wstring                       m_szTitle;
    WORD                               m_wIcon;
    WORD                               m_wSmallIcon;
    UINT                               m_iWidth;
@@ -71,67 +68,28 @@ inline void GameEngine::ErrorQuit(PCWSTR szErrorMsg)
    PostQuitMessage(0);
 }
 
-inline GameEngine* GameEngine::GetEngine()
-{
-   return m_pGameEngine.get();
-}
+inline GameEngine* GameEngine::GetEngine()            { return m_pGameEngine.get(); }
 
-inline HINSTANCE GameEngine::GetInstance() const
-{
-   return m_hInstance;
-}
+inline HINSTANCE GameEngine::GetInstance() const      { return m_hInstance; }
 
-inline HWND GameEngine::GetWindow() const
-{
-   return m_hWindow;
-}
+inline HWND GameEngine::GetWindow() const             { return m_hWindow; }
 
-inline void GameEngine::SetWindow(HWND hWindow)
-{
-   m_hWindow = hWindow;
-}
+inline void GameEngine::SetWindow(HWND hWindow)       { m_hWindow = hWindow; }
 
-inline PWSTR GameEngine::GetTitle()
-{
-   return m_szTitle;
-}
+inline PWSTR GameEngine::GetTitle()                   { return m_szTitle.data(); }
 
-inline WORD GameEngine::GetIcon() const
-{
-   return m_wIcon;
-}
+inline WORD GameEngine::GetIcon() const               { return m_wIcon; }
 
-inline WORD GameEngine::GetSmallIcon() const
-{
-   return m_wSmallIcon;
-}
+inline WORD GameEngine::GetSmallIcon() const          { return m_wSmallIcon; }
 
-inline UINT GameEngine::GetWidth() const
-{
-   return m_iWidth;
-}
+inline UINT GameEngine::GetWidth() const              { return m_iWidth; }
 
-inline UINT GameEngine::GetHeight() const
-{
-   return m_iHeight;
-}
+inline UINT GameEngine::GetHeight() const             { return m_iHeight; }
 
-inline UINT GameEngine::GetFrameDelay() const
-{
-   return m_iFrameDelay;
-}
+inline UINT GameEngine::GetFrameDelay() const         { return m_iFrameDelay; }
 
-inline void GameEngine::SetFrameRate(UINT iFrameRate)
-{
-   m_iFrameDelay = 1000 / iFrameRate;
-}
+inline void GameEngine::SetFrameRate(UINT iFrameRate) { m_iFrameDelay = 1000 / iFrameRate; }
 
-inline BOOL GameEngine::GetSleep() const
-{
-   return m_bSleep;
-}
+inline BOOL GameEngine::GetSleep() const              { return m_bSleep; }
 
-inline void GameEngine::SetSleep(BOOL bSleep)
-{
-   m_bSleep = bSleep;
-}
+inline void GameEngine::SetSleep(BOOL bSleep)         { m_bSleep = bSleep; }

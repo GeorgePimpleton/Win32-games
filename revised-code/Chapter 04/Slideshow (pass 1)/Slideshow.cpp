@@ -1,5 +1,3 @@
-// Slideshow.cpp - game source
-
 #include "Slideshow.hpp"
 
 HRESULT GameInitialize(HINSTANCE hInstance)
@@ -20,7 +18,6 @@ HRESULT GameInitialize(HINSTANCE hInstance)
 void GameStart(HWND hWindow)
 {
    // create/load the slide bitmaps
-   HINSTANCE hInstance = g_pGame->GetInstance();
 
    // create a blank bitmap
    g_pSlides[ 0 ] = std::make_unique<Bitmap>(g_pGame->GetWindow(), 640, 480, RGB(128, 128, 64));
@@ -31,6 +28,8 @@ void GameStart(HWND hWindow)
    g_pSlides[ 3 ] = std::make_unique<Bitmap>(L"Res/Image3.bmp");
 
    // load bitmaps as resources
+   HINSTANCE hInstance = g_pGame->GetInstance();
+
    g_pSlides[ 4 ] = std::make_unique<Bitmap>(IDB_IMAGE4, hInstance);
    g_pSlides[ 5 ] = std::make_unique<Bitmap>(IDB_IMAGE5, hInstance);
    g_pSlides[ 6 ] = std::make_unique<Bitmap>(IDB_IMAGE6, hInstance);
@@ -50,7 +49,6 @@ void GameDeactivate(HWND hWindow)
 
 void GamePaint(HDC hDC)
 {
-   // draw the current slide bitmap
    g_pSlides[ g_iCurSlide ]->Draw(hDC, 0, 0);
 }
 

@@ -1,14 +1,10 @@
-// Bitmap.hpp - Bitmap Header
-
 #pragma once
 
 #include <windows.h>
 
-// Bitmap CLASS ================================================================
 class Bitmap
 {
 public:
-   // constructor(s)/destructor
             Bitmap();
             Bitmap(PCWSTR szFileName);
             Bitmap(UINT uiResID, HINSTANCE hInstance);
@@ -16,7 +12,6 @@ public:
    virtual ~Bitmap();
 
 public:
-   // general methods
    BOOL Create(PCWSTR szFileName);
    BOOL Create(UINT uiResID, HINSTANCE hInstance);
    BOOL Create(HWND hWnd, LONG iWidth, LONG iHeight, COLORREF crColor);
@@ -29,11 +24,9 @@ public:
    LONG GetHeight() const;
 
 protected:
-   // helper methods
    void Free();
 
 protected:
-   // member variables
    HBITMAP m_hBitmap;
    LONG    m_iWidth;
    LONG    m_iHeight;
