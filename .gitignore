@@ -1,0 +1,18 @@
+# Unwanted folders
+Debug/
+Release/
+x64/
+.vs/
+
+# Precompiled Headers
+*.pch
+
+# Compile & misc files
+*.obj
+*.log
+*.tlog
+*.VC.db
+*.cache
+*.pdb
+*.pch
+*.user
