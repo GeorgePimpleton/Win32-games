@@ -14,4 +14,7 @@ x64/
 *.cache
 *.pdb
 *.pch
+*.sln
 *.user
+*.vcxproj
+*.filter
