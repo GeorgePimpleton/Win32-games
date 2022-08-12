@@ -26,7 +26,7 @@ If you find better ways to rework the code don't hesitate to let me know.
 
 ### Musings on Windows© Games
 
-To be honest the game engine created is hard to convert to modern C++ practices.  More and more it is looking like the game engine needs to be rewritten from top to bottme from scratch.
+To be honest the game engine created is hard to convert to modern C++ practices.  More and more it is looking like the game engine needs to be rewritten from top to bottom from scratch.
 
 ### Musing on the Windows© API
 
