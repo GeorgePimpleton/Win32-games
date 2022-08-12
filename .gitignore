@@ -4,10 +4,9 @@ Release/
 x64/
 .vs/
 
-# Precompiled Headers
-*.pch
-
 # Compile & misc files
+*.exe
+*.aps
 *.obj
 *.log
 *.tlog
