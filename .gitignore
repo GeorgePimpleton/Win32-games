@@ -18,3 +18,6 @@ x64/
 *.user
 *.vcxproj
 *.filter
+
+# MacOS-specific
+.DS_Store
