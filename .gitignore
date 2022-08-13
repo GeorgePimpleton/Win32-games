@@ -8,6 +8,7 @@ x64/
 *.exe
 *.aps
 *.obj
+*.lib
 *.log
 *.tlog
 *.VC.db
