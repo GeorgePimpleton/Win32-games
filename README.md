@@ -21,7 +21,7 @@ The original source code and media files are copyrighted © 2003 & 2004 by Samsp
 
 There are no executables included, they need to be created by compiling the sources.
 
-I currently use Visual Studio 2022 (Community) to update and test the game code, setting the C++ language standard to C++20.  You should too.  It's free.
+I currently use Visual Studio 2022 (Community) to update and test the game code, setting the C++ language standard to C++20.  You should think about using it too.  It's free for the Community edition.
 
 [Visual Studio 2022 Community download](https://visualstudio.microsoft.com/vs/community/)
 
