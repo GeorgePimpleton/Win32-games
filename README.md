@@ -11,7 +11,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 ### Why this repository exists
 
-I own a couple of OLD books about creating 2D games using the Windows API.
+I own a couple of OLD (© 2003 & 2004) books about creating 2D games using the Windows API.
 
 ![Sams Teach Yourself Game Programming in 24 Hours (2003)](tygp24h.jpg) ![Sams Beginning Game Programming (2004)](bgp.jpg)
 
