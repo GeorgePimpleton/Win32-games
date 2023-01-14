@@ -23,6 +23,10 @@ There are no executables included, they need to be created by compiling the sour
 
 I currently use Visual Studio 2022 (Community) to update and test the game code, setting the C++ language standard to C++20.  You should think about using it too.  It's free for the Community edition.
 
+## About the source
+
+I've been working with the games source code from both books for years.  Most of the example code is the same between the books, I've combined the examples into one.
+
 [Visual Studio 2022 Community download](https://visualstudio.microsoft.com/vs/community/)
 
 ### Notes
