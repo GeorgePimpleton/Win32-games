@@ -25,9 +25,9 @@ I currently use Visual Studio 2022 (Community) to update and test the game code,
 
 [Visual Studio 2022 Community download](https://visualstudio.microsoft.com/vs/community/)
 
-## About the source
+## About my revised source
 
-I've been working with the games source code from both books for years.  Most of the example code is the same between the books, I've combined the examples into one.
+I've been working with the games source code from both books for years, plinking around and trying out newer C++ features as I've run across them.  Most of the example code is the same between the books, so I've combined the examples into one representative example for each chapter.
 
 ### Notes
 
