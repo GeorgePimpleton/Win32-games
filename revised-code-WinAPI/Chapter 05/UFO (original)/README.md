@@ -11,12 +11,8 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 ### UFO: Controlling Game using the Keyboard and Mouse
 
-0. Chapter 6 on 2003 CD.  The program files are also on Chapter 5 2004 CD.
+0. **Chapter 6 on 2003 CD.  The program files are also on Chapter 5 2004 CD.** *<----- this example*
 1. modernized code...
-
-Is this the final version?  Probably, but maybe not.  Depends on later game code that is updated from the original.
-
-Possible updated version(s), use GDI+ and/or DirectX.  DX input control is different than the Win32 methods.
 
 ### Notes
 
