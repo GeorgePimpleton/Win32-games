@@ -15,12 +15,8 @@ Slideshow demonstrates how to load bitmap files from a file or as a Win32 resour
 
 ### Slideshow Versions
 
-0. Chapter 5 on 2003 CD.  The program files are also on Chapter 4 2004 CD.  Each version of Slideshow has different pictures.
+0. **Chapter 5 on 2003 CD.  The program files are also on Chapter 4 2004 CD.  Each version of Slideshow has different pictures.** *<----- this example*
 1. Replaced all the gawd-awful C-style "load a bitmap" code to use the Win32 LoadImage function instead.  Why reinvent a flat wheel when the Win API, even the antique GDI, has built-in support.  The books' author even admits he had to get help to write that code.  \**Ouch!*\*
-
-Is this the final version?  Probably, but maybe not.  Depends on later game code that is updated from the original.
-
-Possible updated version(s), use GDI+ and/or DirectX so more than bitmap files can be used.
 
 ### Notes
 
