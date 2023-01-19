@@ -14,10 +14,10 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 1. console mode using C++
 2. Windows© MessageBox
 3. minimum Win API
-4. minimal skeletal Win API with app icons
-5. realistic skeletal Win API with icons and cursor (pointer)
-6. a modernized C++ practices skeletal Win API with icons and cursor and using C++ wide strings
-7. minimum MFC
+4. minimal skeletal Win API app
+5. realistic skeletal Win API app using custom assets
+6. a modernized C++ practices skeletal Win API app using C++ wide strings
+7. minimum MFC app
 
 ### Notes
 

@@ -14,10 +14,12 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 1. console mode using C++
 2. Windows© MessageBox
 3. minimum Win API
-4. minimal skeletal Win API with app icons
-5. realistic skeletal Win API with icons and cursor (pointer)
-6. a modernized C++ practices skeletal Win API with icons and cursor and using C++ wide strings
-7. minimum MFC
+4. minimal skeletal Win API app  *<------- this example*
+5. realistic skeletal Win API app with custom assets
+6. a modernized C++ practices skeletal Win API app using C++ wide strings
+7. minimum MFC app
+
+This example uses a custom icon and cursor, most people think of it as a pointer, using a resource script to utilize the assets.
 
 ### Notes
 
@@ -26,11 +28,3 @@ There may be links to websites or internet sources in these pages and source cod
 This is a "work in progress", there is no guarantee the entirety of the entire collection of games will ever be modernized any time soon.  There is also no guarantee the source files will work for you.
 
 If you find better ways to rework the code don't hesitate to let me know.
-
-### Musings on Windows© Games
-
-To be honest the game engine created is hard to convert to modern C++ practices.  More and more it is looking like the game engine needs to be rewritten from top to bottom from scratch.
-
-### Musing on the Windows© API
-
-I tried to convert the #define macros to modern C++ constexpr/const values, but the Win API refused to work that way.  Not. Cool.

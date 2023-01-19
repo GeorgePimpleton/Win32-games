@@ -1,4 +1,4 @@
-// 1-5_Skeleton Minimal.cpp - minimal Windows skeleton source
+// 1-4_Skeleton Minimal.cpp - minimal Windows skeleton source
 
 #include <windows.h>
 #include "resource.h"

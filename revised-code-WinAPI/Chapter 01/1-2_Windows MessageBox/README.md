@@ -16,10 +16,10 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 1. console mode using C++
 2. Windows© MessageBox  *<---- This example*
 3. minimum Win API
-4. minimal skeletal Win API with app icons
-5. realistic skeletal Win API with icons and cursor (pointer)
-6. a modernized C++ practices skeletal Win API with icons and cursor and using C++ wide strings
-7. minimum MFC
+4. minimal skeletal Win API
+5. realistic skeletal Win API with custom assets
+6. a modernized C++ practices skeletal Win API using C++ wide strings
+7. minimum MFC app
 
 The two examples shows the bare minimum needed to recreate the "Hello World" console example using a WinAPI message box.  The first example shows older WinAPI usages, allowing for ANSI and Unicode encodings for the WinAPI functio ns.  This is original style WinAPI coding as done by Charles Petzold back in the Win9X/Me days.  This style should be dead and buries.
 

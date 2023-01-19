@@ -15,11 +15,11 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 1. console mode using C++  *<---- This example*
 2. Windows© MessageBox
-3. minimum Win API
-4. minimal skeletal Win API with app icons
-5. realistic skeletal Win API with icons and cursor (pointer)
-6. a modernized C++ practices skeletal Win API with icons and cursor and using C++ wide strings
-7. minimum MFC
+3. minimum Win API app
+4. minimal skeletal Win API app
+5. realistic skeletal Win API app with custom assets
+6. a modernized C++ practices skeletal Win API app using C++ wide strings
+7. minimum MFC app
 
 If you have done any C/C++ programming you've seen this example.
 
