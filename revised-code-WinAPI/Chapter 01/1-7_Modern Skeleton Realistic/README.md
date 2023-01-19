@@ -1,5 +1,8 @@
 # Programming Windows© Games, Chapter 1
 
+[![Language](https://img.shields.io/badge/Language%20-C++-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
+[![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
+
 ### Background
 
 Win9X/Me is officially dead!  Windows API ANSI encoding is dead!  Windows XP and later now use Unicode!
