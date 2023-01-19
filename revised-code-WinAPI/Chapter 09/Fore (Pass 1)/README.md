@@ -1,4 +1,4 @@
-# Win32 Games, Chapter 8
+# Win32 Games, Chapter 9
 
 [![Language](https://img.shields.io/badge/Language%20-C++-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
@@ -9,16 +9,10 @@ Win9X/Me is officially dead!  Windows API ANSI encoding is dead!  Windows XP and
 
 Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
-### Example Game: Light Cycles
+### Fore: Making Things Move with Sprites
 
-0. Chapter 8 on 2004 CD.
-1. modernized code...
-
-Remember the light cycle duel from the movie "Tron?"
-
-Is this the final version?  Probably, but maybe not.  Depends on later game code that is updated from the original.
-
-Possible updated version(s), use GDI+ and/or DirectX.  DX input control is different than the Win32 methods.
+0. Chapter 10 on 2003 CD. A visually different example, Planets, on 2004 CD as chapter 9.
+1. **modernized code...** *<----- this example*
 
 ### Notes
 
