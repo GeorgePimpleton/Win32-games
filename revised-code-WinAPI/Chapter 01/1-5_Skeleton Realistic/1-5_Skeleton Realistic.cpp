@@ -1,9 +1,9 @@
-// 1-6_Skeleton Realistic.cpp - realistic Windows skeleton source
+// 1-5_Skeleton Realistic.cpp - realistic Windows skeleton source
 
 // disable the "hAccel could be zero" whinging, line 81
 #pragma warning(disable : 6387)
 
-#include "1-6_Skeleton Realistic.hpp"
+#include "1-5_Skeleton Realistic.hpp"
 
 int WINAPI wWinMain(_In_     HINSTANCE hInstance,
                     _In_opt_ HINSTANCE hPrevInstance,

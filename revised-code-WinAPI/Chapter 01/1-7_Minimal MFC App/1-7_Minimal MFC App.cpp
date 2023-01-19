@@ -1,6 +1,6 @@
-// 1-4_MinimalMFCApp.cpp - a minimal MFC program
+// 1-7_MinimalMFCApp.cpp - a minimal MFC program
 
-#include "1-4_Minimal MFC App.hpp"
+#include "1-7_Minimal MFC App.hpp"
 
 // construct a window
 CMainWnd::CMainWnd()

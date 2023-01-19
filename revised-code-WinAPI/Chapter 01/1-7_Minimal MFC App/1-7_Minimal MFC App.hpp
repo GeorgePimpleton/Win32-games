@@ -1,4 +1,4 @@
-// 1-4_Minimal MFC App.hpp - derive essential MFC classes
+// 1-7_Minimal MFC App.hpp - derive essential MFC classes
 
 #pragma once
 
