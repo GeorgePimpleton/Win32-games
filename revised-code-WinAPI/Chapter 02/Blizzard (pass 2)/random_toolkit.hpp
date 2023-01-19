@@ -11,6 +11,7 @@
 #include <chrono>
 #include <random>
 #include <stdexcept>
+#include <limits>
 
 namespace rtk
 {
@@ -33,7 +34,7 @@ namespace rtk
       static std::seed_seq sseq(std::begin(seeds), std::end(seeds));
 
       // the URNG can't be reseeded unless forced
-      if (!seeded || FORCE_SEED)
+      if ( !seeded || FORCE_SEED )
       {
          urng().seed(sseq);
 
@@ -46,7 +47,7 @@ namespace rtk
    inline void srand(signed seed, bool FORCE_SEED = false)
    {
       // the URNG can't be reseeded unless forced
-      if (!seeded || FORCE_SEED)
+      if ( !seeded || FORCE_SEED )
       {
          urng().seed(static_cast<unsigned>(seed));
 
@@ -59,7 +60,7 @@ namespace rtk
    {
       static std::uniform_int_distribution<> dist { };
 
-      if (from > to) { throw std::invalid_argument("bad int distribution params"); }
+      if ( from > to ) { throw std::invalid_argument("bad int distribution params"); }
 
       return dist(urng(), decltype(dist)::param_type { from, to });
    }
@@ -68,7 +69,12 @@ namespace rtk
    {
       static std::uniform_real_distribution<> dist { };
 
-      if (from > to) { throw std::invalid_argument("bad double distribution params"); }
+      // a real distribution kinda goes flakey when the params are equal, divide by zero will do that,
+      // as well as reversed from expected
+      if ( from >= to || ((to - from) > std::numeric_limits<double>::max()) )
+      {
+         throw std::invalid_argument("bad double distribution params");
+      }
 
       return dist(urng(), decltype(dist)::param_type { from, to });
    }
@@ -77,7 +83,7 @@ namespace rtk
    inline int roll_die(int pips)
    {
       // check to see if the number of die pips is less than 2
-      if (pips < 2)
+      if ( pips < 2 )
       {
          return -1;
       }
