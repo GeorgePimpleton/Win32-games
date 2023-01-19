@@ -1,21 +1,16 @@
-// 1-3_Minimal Windows App.cpp - a very minimal Windows API application skeleton
+// 1-3_Minimal Windows App Updated.cpp - a very minimal Windows API application skeleton
 
-// INCLUDES ====================================================================
 #include <windows.h>
 
-// FUNCTION PROTOTYPES =========================================================
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
-// entry point for a Windows application =======================================
 int WINAPI wWinMain(_In_      HINSTANCE hInstance,
                     _In_opt_  HINSTANCE hPrevInstance,
                     _In_      PWSTR szCmdLine,
                     _In_      int nWinMode)
 {
-   // define the window class name
-   static const WCHAR szAppName[]  { L"1-3_MinimalWindowsApp" };
+   static const WCHAR szAppName[]  { L"MinimalWindowsApp" };
 
-   // create an instance of the window class structure
    WNDCLASSEXW wc { };
 
    wc.cbSize        = sizeof(WNDCLASSEX);
@@ -37,28 +32,23 @@ int WINAPI wWinMain(_In_      HINSTANCE hInstance,
       return E_FAIL;
    }
 
-   // define the application title
    static const WCHAR szAppTitle[] { L"WinAPI Skeletal Application" };
 
-   // create the window
    HWND hwnd { CreateWindowW(szAppName, szAppTitle,
                              WS_OVERLAPPEDWINDOW,
                              CW_USEDEFAULT, CW_USEDEFAULT,
                              CW_USEDEFAULT, CW_USEDEFAULT,
                              NULL, NULL, hInstance, NULL) };
 
-   // check if the window was created, exit if fail
    if (NULL == hwnd)
    {
       MessageBoxW(NULL, L"Unable to Create the Main Window!", szAppName, MB_OK | MB_ICONERROR);
       return E_FAIL;
    }
 
-   // show and update the window
    ShowWindow(hwnd, nWinMode);
    UpdateWindow(hwnd);
 
-   // enter the main message loop
    MSG msg;
 
    while (GetMessageW(&msg, NULL, 0, 0))
@@ -68,14 +58,12 @@ int WINAPI wWinMain(_In_      HINSTANCE hInstance,
       DispatchMessageW(&msg);
    }
 
-   // the app is done, exit normally, return control to Windows
+   // the cast is done for x64 Windows, otherwise VS whinges about possible loss of data
    return (int) msg.wParam;
 }
 
-// processes the messages that Windows sends to the application ================
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-   // choose which Windows messages you want to use (handle)
    switch(message)
    {
    case WM_PAINT:
@@ -84,7 +72,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
       hdc = BeginPaint(hwnd, &ps);
 
-      // draw some text centered in the client area
       RECT rect;
       GetClientRect(hwnd, &rect);
       DrawTextW(hdc, L"Hello, Windows!", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
@@ -93,11 +80,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
       return S_OK;
 
    case WM_DESTROY:
-      // exit the application
       PostQuitMessage(0);
       return S_OK;
    }
 
-   // let Windows process any unhandled messages
    return DefWindowProcW(hwnd, message, wParam, lParam);
 }
