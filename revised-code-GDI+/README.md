@@ -20,12 +20,16 @@ I currently use Visual Studio 2022 (Community) to update and test the game code,
 
 [Visual Studio 2022 Community download](https://visualstudio.microsoft.com/vs/community/)
 
+##
+
+GDI+ is considered to be a deprecated C++ enhancement to Windows' GDI, graphics only.  I still find it acceptable to use.
+
+Using GDI+: https://learn.microsoft.com/en-us/windows/win32/gdiplus/-gdiplus-using-gdi--use
+
+There are samples available, 'classic' (Not UWP) samples: https://github.com/microsoft/Windows-classic-samples
+
+Not all of the games will be replicated to use GDI+.
+
 ### Notes
 
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.
-
-This is a "work in progress", there is no guarantee the entirety of the entire collection of games will ever be modernized any time soon.  There is also no guarantee the source files will work for you.
-
-If you find better ways to rework the code don't hesitate to let me know.
-
-GDI+ is a deprecated C++ enhancement to Windows' GDI, graphics only.  Not all games will be replicated to use GDI+.

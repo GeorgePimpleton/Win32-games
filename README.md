@@ -29,7 +29,7 @@ I use Visual Studio 2022 (Community) to update and test the game code, setting t
 
 [Visual Studio 2022 Community download](https://visualstudio.microsoft.com/vs/community/)
 
-## About my revised sources
+## About the revised sources
 
 I've been working with the games source code from both books for years, plinking around and trying out newer C++ features as I've run across them.  Most of the example code is the same between the books, so I've combined the examples into one representative example for each chapter.
 
@@ -43,4 +43,4 @@ If you find better ways to rework the code don't hesitate to let me know.
 
 ### Musings on Windows© Games
 
-To be honest parts of the game engine created are hard to convert to modern C++ practices.  More and more it is looking like the game engine needs to be rewritten top to bottom from scratch.
+To be honest the game engine created so many years ago is hard to convert to modern C++ practices.  It isn't bad code, it just resists being modernized.  More and more it is looking like the game engine needs to be rewritten from top to bottom from scratch.  *UGH*

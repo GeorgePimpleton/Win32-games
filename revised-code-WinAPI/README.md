@@ -49,4 +49,4 @@ If you find better ways to rework the code please drop me a note and let me know
 
 ### Musings on Windows© Games
 
-To be honest the game engine created so many years ago is hard to convert to modern C++ practices.  It isn't bad code, it just resists being modernized.  More and more it is looking like the game engine needs to be rewritten from top to bottom from scratch.
+To be honest the game engine created so many years ago is hard to convert to modern C++ practices.  It isn't bad code, it just resists being modernized.  More and more it is looking like the game engine needs to be rewritten from top to bottom from scratch.  *UGH*
