@@ -19,13 +19,15 @@ I've spent a lot of time, years, updating and revising this pre-C++11 code to wo
 
 The original source code and media files are copyrighted © 2003 & 2004 by Samspublishing, the source files and resulting games are not my work.
 
-There are no executables included, they need to be created by compiling the sources.
+There are no executables included, you need to create them by compiling the sources.  Learn to program by compiling, compiling, compiling.
+
+## 
 
 I currently use Visual Studio 2022 (Community) to update and test the game code, setting the C++ language standard to C++20.  You should think about using it too.  It's free for the Community edition.
 
 [Visual Studio 2022 Community download](https://visualstudio.microsoft.com/vs/community/)
 
-## About my revised source
+## About my revised sources
 
 I've been working with the games source code from both books for years, plinking around and trying out newer C++ features as I've run across them.  Most of the example code is the same between the books, so I've combined the examples into one representative example for each chapter.
 
