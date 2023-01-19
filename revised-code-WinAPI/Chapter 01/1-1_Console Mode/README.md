@@ -13,7 +13,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 ### Possible types of apps that can be created on Windows
 
-1. console mode using C++  <----
+1. console mode using C++  *<---- This example*
 2. Windows© MessageBox
 3. minimum Win API
 4. minimum MFC
