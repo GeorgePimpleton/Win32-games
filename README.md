@@ -21,9 +21,11 @@ The original source code and media files are copyrighted © 2003 & 2004 by Samsp
 
 There are no executables included, you need to create them by compiling the sources.  Learn to program by compiling, compiling, compiling.
 
-## 
+There are 3 directories of revised game code sources.  The original WinAPI dir, and two additional dirs for revised code using GDI+ and Direct2D.  Currently the GDI+ & D2D dirs are empty placeholders.
 
-I currently use Visual Studio 2022 (Community) to update and test the game code, setting the C++ language standard to C++20.  You should think about using it too.  It's free for the Community edition.
+##
+
+I use Visual Studio 2022 (Community) to update and test the game code, setting the C++ language standard to C++20.  You should think about using it too.  It's free for the Community edition.
 
 [Visual Studio 2022 Community download](https://visualstudio.microsoft.com/vs/community/)
 
