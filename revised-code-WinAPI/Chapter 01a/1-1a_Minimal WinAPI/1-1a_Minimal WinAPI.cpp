@@ -55,8 +55,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-   static const WCHAR szAboutLeft[]  = L"This is a minimal Win API program.\nYou pressed the left mouse button!";
-   static const WCHAR szAboutRight[] = L"This is a minimal Win API program.\nYou pressed the right mouse button!";
+   static const WCHAR szAboutLeft[]  = L"This is a minimal WinAPI program.\nYou pressed the left mouse button!";
+   static const WCHAR szAboutRight[] = L"This is a minimal WinAPI program.\nYou pressed the right mouse button!";
 
    switch ( message )
    {

@@ -3,7 +3,7 @@
 // handles WM_LBUTTONDOWN messages
 void OnLButtonDown(HWND hwnd)
 {
-   static const WCHAR szAboutLeft[] = L"This is a modular Win API program.\nYou pressed the left mouse button!";
+   static const WCHAR szAboutLeft[] = L"This is a modular WinAPI program.\nYou pressed the left mouse button!";
 
    MessageBeep(MB_ICONEXCLAMATION);
    MessageBoxW(hwnd, szAboutLeft, L"About", MB_OK | MB_ICONINFORMATION);
@@ -12,7 +12,7 @@ void OnLButtonDown(HWND hwnd)
 // handles WM_RBUTTONDOWN messages
 void OnRButtonDown(HWND hwnd)
 {
-   static const WCHAR szAboutRight[] = L"This is a modular Win API program.\nYou pressed the right mouse button!";
+   static const WCHAR szAboutRight[] = L"This is a modular WinAPI program.\nYou pressed the right mouse button!";
 
    MessageBeep(MB_ICONASTERISK);
    MessageBoxW(hwnd, szAboutRight, L"About", MB_OK | MB_ICONINFORMATION);

@@ -1,14 +1,37 @@
-// Windows functions definitions
+// a modularized Win API application skeleton, version 1
 
-#include "winfuncs.hpp"
+#include	<windows.h>
+#include <winerror.h>
 
-static const WCHAR szWinName[]  = L"ModWin2";
-static const WCHAR szAppTitle[] = L"Modular Win32 API Application, Version 2";
+LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+
+HRESULT          InitApplication(HINSTANCE);
+HRESULT          InitInstance(HINSTANCE, int);
+int              MessageLoop();
+
+static const WCHAR szWinName[]  = L"ModWin1";
+static const WCHAR szAppTitle[] = L"Modular Win32 API Application, Version 1";
+
+int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
+                    _In_ PWSTR szCmdLine, _In_ int nWinMode)
+{
+   if ( FAILED(InitApplication(hInstance)) )
+   {
+      return 0;
+   }
+
+   if ( FAILED(InitInstance(hInstance, nWinMode)) )
+   {
+      return 0;
+   }
+
+   return MessageLoop();
+}
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-   static const WCHAR szAboutLeft[]  = L"This is a modular Win API program.\nYou pressed the left mouse button!";
-   static const WCHAR szAboutRight[] = L"This is a modular Win API program.\nYou pressed the right mouse button!";
+   static const WCHAR szAboutLeft[]  = L"This is a modular WinAPI program.\nYou pressed the left mouse button!";
+   static const WCHAR szAboutRight[] = L"This is a modular WinAPI program.\nYou pressed the right mouse button!";
 
    switch ( message )
    {
@@ -45,7 +68,7 @@ HRESULT InitApplication(HINSTANCE hInstance)
    wc.lpszMenuName  = NULL;
    wc.lpszClassName = szWinName;
 
-   if ( RegisterClassW(&wc) == 0 )
+   if ( 0 == RegisterClassW(&wc) )
    {
       MessageBoxW(NULL, L"Can't Register the Window Class!", szWinName, MB_OK | MB_ICONERROR);
       return E_FAIL;
@@ -53,6 +76,7 @@ HRESULT InitApplication(HINSTANCE hInstance)
    else return S_OK;
 }
 
+// initializes the instance data and creates a new window for each instance
 HRESULT InitInstance(HINSTANCE hInstance, int nWinMode)
 {
    HWND hwnd = CreateWindowW(szWinName, szAppTitle,
@@ -61,7 +85,7 @@ HRESULT InitInstance(HINSTANCE hInstance, int nWinMode)
                              CW_USEDEFAULT, CW_USEDEFAULT,
                              NULL, NULL, hInstance, NULL);
 
-   if ( hwnd == NULL )
+   if ( NULL == hwnd )
    {
       MessageBoxW(NULL, L"Can't Create the Main Window!", szWinName, MB_OK | MB_ICONERROR);
       return E_FAIL;
@@ -73,6 +97,7 @@ HRESULT InitInstance(HINSTANCE hInstance, int nWinMode)
    return S_OK;
 }
 
+// starts and runs the application's message loop
 int MessageLoop()
 {
    MSG msg;

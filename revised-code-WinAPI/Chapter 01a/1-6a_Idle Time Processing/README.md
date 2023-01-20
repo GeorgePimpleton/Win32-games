@@ -11,16 +11,16 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 ### Ruminations on modularizing Win API code
 
-Standard boiler-plate C/C++ WinAPI code is cumbersome to read and maintain  Only two functions are required for a WinAPI compliant app, WinMain and WndProc, those 2 functions do more than one simple task.
+Standard boiler-plate C/C++ WinAPI code is cumbersome to read and maintain.  Only two functions are required for a WinAPI compliant app, WinMain and WndProc. Those 2 functions do more than one simple task. Good functions should do one task as much as possible, simple and short.
 
 This sub-chapter shows several ways to modularize code into separate "one task only" functions.
 
-1. minimal Win API single file used as a template for modularizing.
-2. first version of modular Win API code.
-3. second version of modular Win API code split into multiple files.
-4. third version of modular Win API code further split into multiple files.
-5. fourth version of modular Win API code, creating functions to process WM_ messages.
-6. Rewriting #5 to allow for idle-time processing.
+1. minimal WinAPI single file used as a template for modularizing.
+2. first version of modular WinAPI code.
+3. second version of modular WinAPI code split into multiple files.
+4. third version of modular WinAPI code further split into multiple files.
+5. fourth version of modular WinAPI code, creating functions to process WM_ messages.
+6. **Rewriting #5 to allow for idle-time processing.** *<----- this example*
 
 Normal WinAPI apps spend a lot of time idle, waiting for user input.  Games can use "idle-time" processing to do their magic.
 
