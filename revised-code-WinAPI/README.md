@@ -24,7 +24,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 10. Fore 2: Managing a World of Sprites
 11. Example Game: Henway
 12. Brainiac 2: Playing Digital Sound Effects/Wave Files
-13. *under construction*
+13. Henway 2: Playing MIDI Music
 14. *under construction*
 15. *under construction*
 16. *under construction*
