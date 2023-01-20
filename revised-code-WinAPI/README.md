@@ -30,6 +30,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 16. Roids: Creating Backgrounds for Your Sprites
 
 ![under construction](construction.gif)
+
 17. Example Game: Meteor Defense \****under construction***\*
 18. Roids 2: Teaching Games to Think \****under construction***\*
 19. Example Game: Space Out \****under construction***\*
