@@ -26,7 +26,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 12. Brainiac 2: Playing Digital Sound Effects/Wave Files
 13. Henway 2: Playing MIDI Music
 14. Example Game: Battle Office
-15. *under construction*
+15. Battle Office 2: Animating the Appearance of Sprites
 16. *under construction*
 17. *under construction*
 18. *under construction*
