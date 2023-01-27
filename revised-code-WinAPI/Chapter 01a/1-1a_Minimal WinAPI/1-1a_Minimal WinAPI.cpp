@@ -14,8 +14,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
    wc.lpszClassName = szWinName;
    wc.lpfnWndProc   = WndProc;
    wc.style         = 0;
-   wc.hIcon         = (HICON)   LoadImage(NULL, IDI_APPLICATION, IMAGE_ICON, 0, 0, LR_SHARED);
-   wc.hCursor       = (HCURSOR) LoadImage(NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
+   wc.hIcon         = (HICON)   LoadImageW(NULL, IDI_APPLICATION, IMAGE_ICON, 0, 0, LR_SHARED);
+   wc.hCursor       = (HCURSOR) LoadImageW(NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
    wc.lpszMenuName  = NULL;
    wc.cbClsExtra    = 0;
    wc.cbWndExtra    = 0;
@@ -47,7 +47,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
    while ( GetMessageW(&msg, NULL, 0, 0) )
    {
       TranslateMessage(&msg);
-      DispatchMessage(&msg);
+      DispatchMessageW(&msg);
    }
 
    return (int) msg.wParam;
@@ -62,12 +62,12 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
    {
    case WM_LBUTTONDOWN:
       MessageBeep(MB_ICONEXCLAMATION);
-      MessageBox(hwnd, szAboutLeft, L"About", MB_OK | MB_ICONINFORMATION);
+      MessageBoxW(hwnd, szAboutLeft, L"About", MB_OK | MB_ICONINFORMATION);
       return 0;
 
    case WM_RBUTTONDOWN:
       MessageBeep(MB_ICONASTERISK);
-      MessageBox(hwnd, szAboutRight, L"About", MB_OK | MB_ICONINFORMATION);
+      MessageBoxW(hwnd, szAboutRight, L"About", MB_OK | MB_ICONINFORMATION);
       return 0;
 
    case WM_DESTROY:
@@ -75,5 +75,5 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
       return 0;
    }
 
-   return DefWindowProc(hwnd, message, wParam, lParam);
+   return DefWindowProcW(hwnd, message, wParam, lParam);
 }
