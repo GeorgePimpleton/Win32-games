@@ -1,4 +1,4 @@
-// 1-2_Windows MessageBox Updated.cpp - displays "Hello World!" in a GUI message box
+// 1-2 Windows MessageBox Updated.cpp - displays "Hello World!" in a GUI message box
 
 #include <windows.h>
 

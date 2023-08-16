@@ -1,4 +1,4 @@
-// 1-5_Skeleton Realistic.hpp - realistic Windows skeleton header
+// 1-5 Skeleton Realistic.hpp - realistic Windows skeleton header
 
 #pragma once
 

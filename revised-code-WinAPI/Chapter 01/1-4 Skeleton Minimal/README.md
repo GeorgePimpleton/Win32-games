@@ -13,12 +13,14 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 1. console mode using C++
 2. Windows© MessageBox
-3. minimum Win API app
-4. minimal skeletal Win API app
+3. minimum Win API
+4. minimal skeletal Win API app  *<------- this example*
 5. realistic skeletal Win API app with custom assets
-6. skeletal Win API app using C++ wide strings using modernized C++ practices 
+6. a modernized C++ practices skeletal Win API app using C++ wide strings
 7. minimum MFC app
 8. using a custom C++ header file to use C++11 (and later) random engine features instead of the C library
+
+This example uses a custom icon and cursor, most people think of it as a pointer, using a resource script to utilize the assets.
 
 ### Notes
 

@@ -18,6 +18,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 5. realistic skeletal Win API app using custom assets
 6. a modernized C++ practices skeletal Win API app using C++ wide strings *<----- this example*
 7. minimum MFC app
+8. using a custom C++ header file to use C++11 (and later) random engine features instead of the C library
 
 This was more of an experiment in C++ than anything really useful when using the WinAPI.
 

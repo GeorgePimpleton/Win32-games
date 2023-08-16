@@ -1,6 +1,6 @@
 #pragma warning(disable : 6387)
 
-#include "1-6_Modern_Skeleton Realistic.hpp"
+#include "1-6 Modern Skeleton Realistic.hpp"
 
 int WINAPI wWinMain(_In_     HINSTANCE hInstance,
                     _In_opt_ HINSTANCE hPrevInstance,
@@ -17,30 +17,30 @@ int WINAPI wWinMain(_In_     HINSTANCE hInstance,
    wc.cbClsExtra    = 0;
    wc.cbWndExtra    = 0;
    wc.hInstance     = hInstance;
-   wc.hIcon         = (HICON)   LoadImageW(hInstance, MAKEINTRESOURCEW(IDI_ICON),    IMAGE_ICON,   0, 0, LR_DEFAULTCOLOR);
-   wc.hIconSm       = (HICON)   LoadImageW(hInstance, MAKEINTRESOURCEW(IDI_ICON_SM), IMAGE_ICON,   0, 0, LR_DEFAULTCOLOR);
-   wc.hCursor       = (HCURSOR) LoadImageW(hInstance, MAKEINTRESOURCEW(IDC_CURSOR),  IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR);
+   wc.hIcon         = (HICON)   LoadImageW(hInstance, MAKEINTRESOURCEW(IDI_ICON), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
+   wc.hIconSm       = (HICON)   LoadImageW(hInstance, MAKEINTRESOURCEW(IDI_ICON_SM), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
+   wc.hCursor       = (HCURSOR) LoadImageW(hInstance, MAKEINTRESOURCEW(IDC_CURSOR), IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR);
    wc.hbrBackground = (HBRUSH)  (COLOR_WINDOW + 1);
    wc.lpszMenuName  = MAKEINTRESOURCEW(IDR_MENU);
-   wc.lpszClassName = szAppName.data();
+   wc.lpszClassName = szAppName.data( );
 
-   if (0 == RegisterClassExW(&wc))
+   if ( 0 == RegisterClassExW(&wc) )
    {
-      MessageBoxW(nullptr, L"Can't Register the Window Class!", szAppName.data(), MB_OK | MB_ICONERROR);
+      MessageBoxW(nullptr, L"Can't Register the Window Class!", szAppName.data( ), MB_OK | MB_ICONERROR);
       return E_FAIL;
    }
 
    static std::wstring szAppTitle { L"A C++ Monderized Realistic Windows Game Skeleton Application" };
 
-   HWND hwnd { CreateWindowW(szAppName.data(), szAppTitle.data(),
+   HWND hwnd { CreateWindowW(szAppName.data( ), szAppTitle.data( ),
                              WS_OVERLAPPEDWINDOW,
                              CW_USEDEFAULT, CW_USEDEFAULT,
                              CW_USEDEFAULT, CW_USEDEFAULT,
                              nullptr, nullptr, hInstance, nullptr) };
 
-   if (nullptr == hwnd)
+   if ( nullptr == hwnd )
    {
-      MessageBoxW(nullptr, L"Unable to Create the Main Window!", szAppName.data(), MB_OK | MB_ICONERROR);
+      MessageBoxW(nullptr, L"Unable to Create the Main Window!", szAppName.data( ), MB_OK | MB_ICONERROR);
       return E_FAIL;
    }
 
@@ -49,24 +49,24 @@ int WINAPI wWinMain(_In_     HINSTANCE hInstance,
 
    HACCEL hAccel { LoadAcceleratorsW(hInstance, MAKEINTRESOURCEW(IDR_ACCEL)) };
 
-   if (nullptr == hAccel)
+   if ( nullptr == hAccel )
    {
-      MessageBoxW(nullptr, L"Unable to Load the Accelerators!", szAppName.data(), MB_OK | MB_ICONERROR);
+      MessageBoxW(nullptr, L"Unable to Load the Accelerators!", szAppName.data( ), MB_OK | MB_ICONERROR);
    }
 
    static BOOL bRet;
    static MSG  msg;
 
-   while ((bRet = GetMessageW(&msg, nullptr, 0, 0)) != 0) // 0 = WM_QUIT
+   while ( (bRet = GetMessageW(&msg, nullptr, 0, 0)) != 0 ) // 0 = WM_QUIT
    {
-      if (-1 == bRet)
+      if ( -1 == bRet )
       {
-         MessageBoxW(nullptr, L"Unable to Continue!", szAppName.data(), MB_OK | MB_ICONERROR);
+         MessageBoxW(nullptr, L"Unable to Continue!", szAppName.data( ), MB_OK | MB_ICONERROR);
          return E_FAIL;
       }
       else
       {
-         if (0 == TranslateAcceleratorW(hwnd, hAccel, &msg))
+         if ( 0 == TranslateAcceleratorW(hwnd, hAccel, &msg) )
          {
             TranslateMessage(&msg);
             DispatchMessageW(&msg);
@@ -79,10 +79,10 @@ int WINAPI wWinMain(_In_     HINSTANCE hInstance,
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-   switch (message)
+   switch ( message )
    {
    case WM_COMMAND:
-      switch (LOWORD(wParam))
+      switch ( LOWORD(wParam) )
       {
       case IDM_GAME_EXIT:
          PostQuitMessage(0);
@@ -98,7 +98,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
    case WM_CREATE:
       SetClassLongPtrW(hwnd, GCLP_HCURSOR,
-                      (LONG64) LoadImageW(GetModuleHandleW(nullptr), MAKEINTRESOURCEW(IDC_CURSOR), IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR));
+                       (LONG64) LoadImageW(GetModuleHandleW(nullptr), MAKEINTRESOURCEW(IDC_CURSOR), IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR));
 
       return S_OK;
 
@@ -129,10 +129,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 BOOL CALLBACK DlgProc(HWND hDialog, UINT message, WPARAM wParam, LPARAM lParam)
 {
-   switch (message)
+   switch ( message )
    {
    case WM_COMMAND:
-      switch (LOWORD(wParam))
+      switch ( LOWORD(wParam) )
       {
       case IDOK:
          EndDialog(hDialog, 0);

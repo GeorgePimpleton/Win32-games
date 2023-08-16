@@ -1,4 +1,4 @@
-// 1-4_Skeleton Minimal.cpp - minimal Windows skeleton source
+// 1-4 Skeleton Minimal.cpp - minimal Windows skeleton source
 
 #include <windows.h>
 #include "resource.h"
@@ -26,7 +26,7 @@ int WINAPI wWinMain(_In_     HINSTANCE hInstance,
    wndclass.lpszMenuName  = NULL;
    wndclass.lpszClassName = szAppName;
 
-   if (!RegisterClassExW(&wndclass))
+   if ( !RegisterClassExW(&wndclass) )
    {
       return 0;
    }
@@ -42,7 +42,7 @@ int WINAPI wWinMain(_In_     HINSTANCE hInstance,
 
    MSG msg;
 
-   while (GetMessageW(&msg, NULL, 0, 0))
+   while ( GetMessageW(&msg, NULL, 0, 0) )
    {
       TranslateMessage(&msg);
       DispatchMessageW(&msg);
@@ -53,7 +53,7 @@ int WINAPI wWinMain(_In_     HINSTANCE hInstance,
 
 LRESULT CALLBACK WndProc(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-   switch (msg)
+   switch ( msg )
    {
    case WM_PAINT:
       HDC         hDC;

@@ -1,4 +1,4 @@
-// 1-4_Skeleton Minimal.rc - resource definitions
+// 1-4 Skeleton Minimal.rc - resource definitions
 
 // include the resource identifiers
 #include "resource.h"

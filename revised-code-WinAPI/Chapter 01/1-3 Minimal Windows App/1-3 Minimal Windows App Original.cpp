@@ -1,4 +1,4 @@
-// 1-3_Minimal Windows App Original.cpp - a very minimal Windows API application skeleton
+// 1-3 Minimal Windows App Original.cpp - a very minimal Windows API application skeleton
 
 // INCLUDES ====================================================================
 #include <windows.h>
@@ -10,7 +10,7 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int nWinMode)
 {
    // define the window class name
-   static const TCHAR szAppName[] = TEXT("MinimalWindowsApp");
+   static const TCHAR szAppName[ ] = TEXT("MinimalWindowsApp");
 
    // create an instance of the window class structure
    WNDCLASS wc;
@@ -20,9 +20,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
    wc.cbClsExtra    = 0;
    wc.cbWndExtra    = 0;
    wc.hInstance     = hInstance;
-   wc.hIcon         = (HICON)    LoadIcon(NULL, IDI_APPLICATION);
-   wc.hCursor       = (HCURSOR)  LoadCursor(NULL, IDC_ARROW);
-   wc.hbrBackground = (HBRUSH)   (COLOR_WINDOW + 1);
+   wc.hIcon         = (HICON)   LoadIcon(NULL, IDI_APPLICATION);
+   wc.hCursor       = (HCURSOR) LoadCursor(NULL, IDC_ARROW);
+   wc.hbrBackground = (HBRUSH)  (COLOR_WINDOW + 1);
    wc.lpszMenuName  = NULL;
    wc.lpszClassName = szAppName;
 
@@ -33,7 +33,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
    }
 
    // define the application title
-   static const TCHAR szAppTitle[] = TEXT("Win32 API Skeletal Application");
+   static const TCHAR szAppTitle[ ] = TEXT("Win32 API Skeletal Application");
 
    // create the window
    HWND hwnd = CreateWindow(szAppName, szAppTitle,

@@ -1,4 +1,4 @@
-// 1-3_Minimal Windows App Updated.cpp - a very minimal Windows API application skeleton
+// 1-3 Minimal Windows App Updated.cpp - a very minimal Windows API application skeleton
 
 #include <windows.h>
 
@@ -9,7 +9,7 @@ int WINAPI wWinMain(_In_      HINSTANCE hInstance,
                     _In_      PWSTR szCmdLine,
                     _In_      int nWinMode)
 {
-   static const WCHAR szAppName[]  { L"MinimalWindowsApp" };
+   static const WCHAR szAppName[ ] { L"MinimalWindowsApp" };
 
    WNDCLASSEXW wc { };
 
@@ -26,13 +26,14 @@ int WINAPI wWinMain(_In_      HINSTANCE hInstance,
    wc.lpszMenuName  = NULL;
    wc.lpszClassName = szAppName;
 
-   if (0 == RegisterClassExW(&wc))
+   if ( 0 == RegisterClassExW(&wc) )
    {
       MessageBoxW(NULL, L"Can't Register the Window Class!", szAppName, MB_OK | MB_ICONERROR);
       return E_FAIL;
    }
 
-   static const WCHAR szAppTitle[] { L"WinAPI Skeletal Application" };
+   // Win32 is now known as the Windows API since x64 Windows
+   static const WCHAR szAppTitle[ ] { L"Windows API Skeletal Application" };
 
    HWND hwnd { CreateWindowW(szAppName, szAppTitle,
                              WS_OVERLAPPEDWINDOW,
@@ -40,7 +41,7 @@ int WINAPI wWinMain(_In_      HINSTANCE hInstance,
                              CW_USEDEFAULT, CW_USEDEFAULT,
                              NULL, NULL, hInstance, NULL) };
 
-   if (NULL == hwnd)
+   if ( NULL == hwnd )
    {
       MessageBoxW(NULL, L"Unable to Create the Main Window!", szAppName, MB_OK | MB_ICONERROR);
       return E_FAIL;
@@ -51,7 +52,7 @@ int WINAPI wWinMain(_In_      HINSTANCE hInstance,
 
    MSG msg;
 
-   while (GetMessageW(&msg, NULL, 0, 0))
+   while ( GetMessageW(&msg, NULL, 0, 0) )
    {
       // process the message
       TranslateMessage(&msg);
@@ -64,7 +65,7 @@ int WINAPI wWinMain(_In_      HINSTANCE hInstance,
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-   switch(message)
+   switch ( message )
    {
    case WM_PAINT:
       HDC         hdc;

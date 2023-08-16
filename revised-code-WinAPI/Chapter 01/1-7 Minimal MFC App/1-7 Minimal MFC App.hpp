@@ -1,4 +1,4 @@
-// 1-7_Minimal MFC App.hpp - derive essential MFC classes
+// 1-7 Minimal MFC App.hpp - derive essential MFC classes
 
 #pragma once
 
@@ -16,17 +16,17 @@
 class CTheApp : public CWinApp
 {
 public:
-   BOOL InitInstance();
+   BOOL InitInstance( );
 };
 
 // main window class
 class CMainWnd : public CFrameWnd
 {
 public:
-   CMainWnd();
+   CMainWnd( );
 
 protected:
-   afx_msg void OnPaint();
+   afx_msg void OnPaint( );
 
-   DECLARE_MESSAGE_MAP()
+   DECLARE_MESSAGE_MAP( )
 };
