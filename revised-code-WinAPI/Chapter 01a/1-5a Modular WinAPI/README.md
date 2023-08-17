@@ -11,7 +11,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 ### Ruminations on modularizing Win API code
 
-Standard boiler-plate C/C++ WinAPI code is cumbersome to read and maintain.  Only two functions are required for a WinAPI compliant app, WinMain and WndProc. Those 2 functions do more than one simple task. Good functions should do one task as much as possible, simple and short.
+Standard boiler-plate C/C++ WinAPI code is cumbersome to read and difficult to maintain as the code's functionality increases.  Only two functions are required for a WinAPI compliant app, WinMain and WndProc. Those 2 functions do more than one simple task. Good functions should do one task as much as possible, simple and short.
 
 This sub-chapter shows several ways to modularize code into separate "one task only" functions.
 
@@ -20,7 +20,8 @@ This sub-chapter shows several ways to modularize code into separate "one task o
 3. second version of modular WinAPI code split into multiple files.
 4. third version of modular WinAPI code further split into multiple files.
 5. **fourth version of modular WinAPI code, creating functions to process WM_ messages.** *<----- this example*
-6. Rewriting #5 to allow for idle-time processing.
+6. rewriting #5 to allow for idle-time processing.
+7. a simple toolkit for using the C++ <random> library written as a C++20 module interface file.
 
 ### About <windowsx.h> and "message cracking"
 

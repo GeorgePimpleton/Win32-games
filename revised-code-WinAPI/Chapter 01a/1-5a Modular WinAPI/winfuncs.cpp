@@ -1,24 +1,16 @@
 #include "winmsg.hpp"
 #include "winfuncs.hpp"
 
-static const WCHAR szWinName[]  = L"ModWin3";
-static const WCHAR szAppTitle[] = L"Modular Win32 API Application, Version 3";
+static const WCHAR szWinName[ ]  = L"ModWin4";
+static const WCHAR szAppTitle[ ] = L"Modular WinAPI Application, Version 4";
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
    switch ( message )
    {
-   case WM_LBUTTONDOWN:
-      OnLButtonDown(hwnd);
-      return 0;
-
-   case WM_RBUTTONDOWN:
-      OnRButtonDown(hwnd);
-      return 0;
-
-   case WM_DESTROY:
-      PostQuitMessage(0);
-      return 0;
+      HANDLE_MSG(hwnd, WM_LBUTTONDOWN, OnLButtonDown);
+      HANDLE_MSG(hwnd, WM_RBUTTONDOWN, OnRButtonDown);
+      HANDLE_MSG(hwnd, WM_DESTROY, OnDestroy);
    }
 
    return DefWindowProcW(hwnd, message, wParam, lParam);
@@ -67,7 +59,7 @@ HRESULT InitInstance(HINSTANCE hInstance, int nWinMode)
    return S_OK;
 }
 
-int MessageLoop()
+int MessageLoop( )
 {
    MSG msg;
 

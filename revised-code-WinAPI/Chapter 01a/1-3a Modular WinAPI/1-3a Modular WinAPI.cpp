@@ -1,9 +1,9 @@
-// a modularized Win API application skeleton, version 3
+// a modularized Win API application skeleton, version 2
 
 #include "winfuncs.hpp"
 
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
-                    _In_ PWSTR szCmdLine, _In_ int nWinMode)
+                    _In_ PWSTR     szCmdLine, _In_ int           nWinMode)
 {
    if ( FAILED(InitApplication(hInstance)) )
    {
@@ -15,5 +15,5 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
       return 0;
    }
 
-   return MessageLoop();
+   return MessageLoop( );
 }

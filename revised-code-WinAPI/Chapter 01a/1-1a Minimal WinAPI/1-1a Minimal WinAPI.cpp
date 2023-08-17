@@ -3,10 +3,10 @@
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
-                    _In_ PWSTR szCmdLine, _In_ int nWinMode)
+                    _In_ PWSTR     szCmdLine, _In_ int           nWinMode)
 {
-   static const WCHAR szWinName[]  = L"MinWin";
-   static const WCHAR szAppTitle[] = L"Win32 API Minimal Application";
+   static const WCHAR szWinName[ ]  = L"MinWin";
+   static const WCHAR szAppTitle[ ] = L"WinAPI Minimal Application";
 
    WNDCLASS wc { };
 
@@ -55,8 +55,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-   static const WCHAR szAboutLeft[]  = L"This is a minimal WinAPI program.\nYou pressed the left mouse button!";
-   static const WCHAR szAboutRight[] = L"This is a minimal WinAPI program.\nYou pressed the right mouse button!";
+   static const WCHAR szAboutLeft[ ]  = L"This is a minimal WinAPI program.\nYou pressed the left mouse button!";
+   static const WCHAR szAboutRight[ ] = L"This is a minimal WinAPI program.\nYou pressed the right mouse button!";
 
    switch ( message )
    {

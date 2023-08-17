@@ -11,7 +11,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 ### Ruminations on modularizing Win API code
 
-Standard boiler-plate C/C++ WinAPI code is cumbersome to read and maintain.  Only two functions are required for a WinAPI compliant app, WinMain and WndProc. Those 2 functions do more than one simple task. Good functions should do one task as much as possible, simple and short.
+Standard boiler-plate C/C++ WinAPI code is cumbersome to read and difficult to maintain as the code's functionality increases.  Only two functions are required for a WinAPI compliant app, WinMain and WndProc. Those 2 functions do more than one simple task. Good functions should do one task as much as possible, simple and short.
 
 This sub-chapter shows several ways to modularize code into separate "one task only" functions.
 
@@ -20,9 +20,12 @@ This sub-chapter shows several ways to modularize code into separate "one task o
 3. second version of modular WinAPI code split into multiple files.
 4. third version of modular WinAPI code further split into multiple files.
 5. fourth version of modular WinAPI code, creating functions to process WM_ messages.
-6. **Rewriting #5 to allow for idle-time processing.** *<----- this example*
+6. rewriting #5 to allow for idle-time processing.
+7. **a simple toolkit for using the C++ <random> library written as a C++20 module interface file.** *<----- this example*
 
-Normal WinAPI apps spend a lot of time idle, waiting for user input.  Games can use "idle-time" processing to do their magic.
+This example uses a header only toolkit to make it easier to use the C++ random engine features, using a module interface file.
+
+The example code requires C++20, including the module interface file.
 
 ### Notes
 

@@ -1,4 +1,4 @@
-// a modularized Win API application skeleton, version 4
+// a modularized Win API application skeleton, version 3
 
 #include "winfuncs.hpp"
 
@@ -15,5 +15,5 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
       return 0;
    }
 
-   return MessageLoop();
+   return MessageLoop( );
 }

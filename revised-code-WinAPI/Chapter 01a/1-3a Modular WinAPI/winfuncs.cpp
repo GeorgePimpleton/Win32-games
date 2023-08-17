@@ -1,16 +1,30 @@
-#include "winmsg.hpp"
+// Windows functions definitions
+
 #include "winfuncs.hpp"
 
-static const WCHAR szWinName[]  = L"IdleTime";
-static const WCHAR szAppTitle[] = L"Idle Time Processing";
+static const WCHAR szWinName[ ]  = L"ModWin2";
+static const WCHAR szAppTitle[ ] = L"Modular WinAPI Application, Version 2";
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+   static const WCHAR szAboutLeft[ ]  = L"This is a modular WinAPI program.\nYou pressed the left mouse button!";
+   static const WCHAR szAboutRight[ ] = L"This is a modular WinAPI program.\nYou pressed the right mouse button!";
+
    switch ( message )
    {
-      HANDLE_MSG(hwnd, WM_LBUTTONDOWN, OnLButtonDown);
-      HANDLE_MSG(hwnd, WM_RBUTTONDOWN, OnRButtonDown);
-      HANDLE_MSG(hwnd, WM_DESTROY, OnDestroy);
+   case WM_LBUTTONDOWN:
+      MessageBeep(MB_ICONEXCLAMATION);
+      MessageBoxW(hwnd, szAboutLeft, L"About", MB_OK | MB_ICONINFORMATION);
+      return 0;
+
+   case WM_RBUTTONDOWN:
+      MessageBeep(MB_ICONASTERISK);
+      MessageBoxW(hwnd, szAboutRight, L"About", MB_OK | MB_ICONINFORMATION);
+      return 0;
+
+   case WM_DESTROY:
+      PostQuitMessage(0);
+      return 0;
    }
 
    return DefWindowProcW(hwnd, message, wParam, lParam);
@@ -59,24 +73,14 @@ HRESULT InitInstance(HINSTANCE hInstance, int nWinMode)
    return S_OK;
 }
 
-int MessageLoop()
+int MessageLoop( )
 {
    MSG msg;
 
-   ZeroMemory(&msg, sizeof(MSG));
-
-   while ( msg.message != WM_QUIT )
+   while ( GetMessageW(&msg, NULL, 0, 0) )
    {
-      if ( PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE) )
-      {
-         TranslateMessage(&msg);
-         DispatchMessageW(&msg);
-      }
-      else
-      {
-         // idle-time processing
-         // best if a function call is used
-      }
+      TranslateMessage(&msg);
+      DispatchMessageW(&msg);
    }
 
    return (int) msg.wParam;

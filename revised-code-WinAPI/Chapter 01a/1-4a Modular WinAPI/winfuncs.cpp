@@ -1,25 +1,19 @@
-// Windows functions definitions
-
+#include "winmsg.hpp"
 #include "winfuncs.hpp"
 
-static const WCHAR szWinName[]  = L"ModWin2";
-static const WCHAR szAppTitle[] = L"Modular Win32 API Application, Version 2";
+static const WCHAR szWinName[ ]  = L"ModWin3";
+static const WCHAR szAppTitle[ ] = L"Modular WinAPI Application, Version 3";
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-   static const WCHAR szAboutLeft[]  = L"This is a modular WinAPI program.\nYou pressed the left mouse button!";
-   static const WCHAR szAboutRight[] = L"This is a modular WinAPI program.\nYou pressed the right mouse button!";
-
    switch ( message )
    {
    case WM_LBUTTONDOWN:
-      MessageBeep(MB_ICONEXCLAMATION);
-      MessageBoxW(hwnd, szAboutLeft, L"About", MB_OK | MB_ICONINFORMATION);
+      OnLButtonDown(hwnd);
       return 0;
 
    case WM_RBUTTONDOWN:
-      MessageBeep(MB_ICONASTERISK);
-      MessageBoxW(hwnd, szAboutRight, L"About", MB_OK | MB_ICONINFORMATION);
+      OnRButtonDown(hwnd);
       return 0;
 
    case WM_DESTROY:
@@ -73,7 +67,7 @@ HRESULT InitInstance(HINSTANCE hInstance, int nWinMode)
    return S_OK;
 }
 
-int MessageLoop()
+int MessageLoop( )
 {
    MSG msg;
 

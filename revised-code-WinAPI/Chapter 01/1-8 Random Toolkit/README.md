@@ -22,7 +22,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 7. minimum MFC app
 8. using a custom C++ header file to use C++11 (and later) random engine features instead of the C library  *<---- This example*
 
-This created a header only toolkit to make it easier to use the C++ random engine features.
+This example uses a header only toolkit to make it easier to use the C++ random engine features.
 
 The example code requires C++20, the header only toolkit doesn't.
 

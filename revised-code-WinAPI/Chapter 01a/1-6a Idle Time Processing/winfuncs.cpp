@@ -1,8 +1,8 @@
 #include "winmsg.hpp"
 #include "winfuncs.hpp"
 
-static const WCHAR szWinName[]  = L"ModWin4";
-static const WCHAR szAppTitle[] = L"Modular Win32 API Application, Version 4";
+static const WCHAR szWinName[ ]  = L"IdleTime";
+static const WCHAR szAppTitle[ ] = L"Idle Time Processing";
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -59,14 +59,24 @@ HRESULT InitInstance(HINSTANCE hInstance, int nWinMode)
    return S_OK;
 }
 
-int MessageLoop()
+int MessageLoop( )
 {
    MSG msg;
 
-   while ( GetMessageW(&msg, NULL, 0, 0) )
+   ZeroMemory(&msg, sizeof(MSG));
+
+   while ( msg.message != WM_QUIT )
    {
-      TranslateMessage(&msg);
-      DispatchMessageW(&msg);
+      if ( PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE) )
+      {
+         TranslateMessage(&msg);
+         DispatchMessageW(&msg);
+      }
+      else
+      {
+         // idle-time processing
+         // best if a function call is used
+      }
    }
 
    return (int) msg.wParam;
