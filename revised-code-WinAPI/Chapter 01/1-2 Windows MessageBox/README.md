@@ -14,7 +14,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 ### Possible types of apps that can be created on Windows
 
 1. console mode using C++
-2. Windows© MessageBox  *<---- This example*
+2. **Windows© MessageBox**  *<---- This example*
 3. minimum Win API
 4. minimal skeletal Win API
 5. realistic skeletal Win API with custom assets
@@ -24,13 +24,13 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 The two examples shows the bare minimum needed to recreate the "Hello World" console example using a WinAPI message box.  The first example shows older WinAPI usages, allowing for ANSI and Unicode encodings for the WinAPI functio ns.  This is original style WinAPI coding as done by Charles Petzold back in the Win9X/Me days.  This style should be dead and buries.
 
-The second example uses strictly Unicode, so you'll see a lot of W suffixes on function names.  This is the style I use when creating WinAPI apps.
+The second example uses strictly Unicode/wide char functions, so you'll see a lot of W suffixes on function names.  I also use generic return code labels (S_OK, E_FAIL) for better readability. This is the style I use when creating WinAPI apps.
+
+I also use SAL, MS source-code annotation language, on WinMain.  Visual Studio 'whinges' if it is missing.  It doesn't stop the code from compiling or the executable from running.
+
+// https://learn.microsoft.com/en-us/cpp/code-quality/understanding-sal
 
 Get used to it.  "This will be on 'the test'."
-
-I also use SAL, the WinAPI function annotation on WinMain.  Visual Studio 'whinges' if it is missing.  It doesn't stop the code from compiling or the executable from running.
-
-https://learn.microsoft.com/en-us/previous-versions/visualstudio/visual-studio-2013/ms182032(v=vs.120)
 
 ### Notes
 

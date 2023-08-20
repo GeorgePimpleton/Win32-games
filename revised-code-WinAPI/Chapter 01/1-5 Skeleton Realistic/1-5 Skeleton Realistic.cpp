@@ -5,10 +5,7 @@
 
 #include "1-5 Skeleton Realistic.hpp"
 
-int WINAPI wWinMain(_In_     HINSTANCE hInstance,
-                    _In_opt_ HINSTANCE hPrevInstance,
-                    _In_     PWSTR szCmdLine,
-                    _In_     int iCmdShow)
+int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ PWSTR szCmdLine, _In_ int iCmdShow)
 {
    static WCHAR szAppName[ ] { L"Realistic Windows Skeleton" };
 
@@ -27,7 +24,7 @@ int WINAPI wWinMain(_In_     HINSTANCE hInstance,
    wc.lpszMenuName  = MAKEINTRESOURCEW(IDR_MENU);
    wc.lpszClassName = szAppName;
 
-   if ( 0 == RegisterClassExW(&wc) )
+   if ( FAILED(RegisterClassExW(&wc)) )
    {
       MessageBoxW(NULL, L"Can't Register the Window Class!", szAppName, MB_OK | MB_ICONERROR);
       return E_FAIL;
@@ -78,7 +75,7 @@ int WINAPI wWinMain(_In_     HINSTANCE hInstance,
       else
       {
          // check for accelerator keystrokes
-         if ( 0 == TranslateAcceleratorW(hwnd, hAccel, &msg) )
+         if (SUCCEEDED(TranslateAcceleratorW(hwnd, hAccel, &msg)) )
          {
             // no accelerator used so process the message
             TranslateMessage(&msg);
@@ -119,10 +116,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
       return S_OK;
 
    case WM_PAINT:
-      HDC         hdc;
+   {
       PAINTSTRUCT ps;
-
-      hdc = BeginPaint(hwnd, &ps);
+      HDC         hdc = BeginPaint(hwnd, &ps);
 
       RECT rect;
 
@@ -133,6 +129,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
       EndPaint(hwnd, &ps);
 
       return S_OK;
+   }
 
    case WM_DESTROY:
       PostQuitMessage(0);

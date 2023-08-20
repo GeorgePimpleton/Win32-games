@@ -29,7 +29,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
    if ( 0 == RegisterClass(&wc) )
    {
       MessageBox(NULL, TEXT("Can't Register the Window Class!"), szAppName, MB_OK | MB_ICONERROR);
-      return E_FAIL;
+      return 0;
    }
 
    // define the application title
@@ -46,7 +46,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
    if ( NULL == hwnd )
    {
       MessageBox(NULL, TEXT("Unable to Create the Main Window!"), szAppName, MB_OK | MB_ICONERROR);
-      return E_FAIL;
+      return 0;
    }
 
    // show and update the window
@@ -85,12 +85,12 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
       DrawText(hdc, TEXT("Hello, Windows!"), -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
       EndPaint(hwnd, &ps);
-      return S_OK;
+      return 0;
 
    case WM_DESTROY:
       // exit the application
       PostQuitMessage(0);
-      return S_OK;
+      return 0;
    }
 
    // let Windows process any unhandled messages

@@ -4,10 +4,8 @@
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
-int WINAPI wWinMain(_In_      HINSTANCE hInstance,
-                    _In_opt_  HINSTANCE hPrevInstance,
-                    _In_      PWSTR szCmdLine,
-                    _In_      int nWinMode)
+int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
+                    _In_ PWSTR     szCmdLine, _In_     int       nWinMode)
 {
    static const WCHAR szAppName[ ] { L"MinimalWindowsApp" };
 
@@ -26,13 +24,13 @@ int WINAPI wWinMain(_In_      HINSTANCE hInstance,
    wc.lpszMenuName  = NULL;
    wc.lpszClassName = szAppName;
 
-   if ( 0 == RegisterClassExW(&wc) )
+   if ( FAILED(RegisterClassExW(&wc)) )
    {
       MessageBoxW(NULL, L"Can't Register the Window Class!", szAppName, MB_OK | MB_ICONERROR);
       return E_FAIL;
    }
 
-   // Win32 is now known as the Windows API since x64 Windows
+   // Win32 is now known as the Windows API (WinAPI) since x64 Windows
    static const WCHAR szAppTitle[ ] { L"Windows API Skeletal Application" };
 
    HWND hwnd { CreateWindowW(szAppName, szAppTitle,
@@ -54,7 +52,6 @@ int WINAPI wWinMain(_In_      HINSTANCE hInstance,
 
    while ( GetMessageW(&msg, NULL, 0, 0) )
    {
-      // process the message
       TranslateMessage(&msg);
       DispatchMessageW(&msg);
    }
@@ -68,10 +65,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
    switch ( message )
    {
    case WM_PAINT:
-      HDC         hdc;
+   {
       PAINTSTRUCT ps;
-
-      hdc = BeginPaint(hwnd, &ps);
+      HDC         hdc = BeginPaint(hwnd, &ps);
 
       RECT rect;
       GetClientRect(hwnd, &rect);
@@ -79,6 +75,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
       EndPaint(hwnd, &ps);
       return S_OK;
+   }
 
    case WM_DESTROY:
       PostQuitMessage(0);

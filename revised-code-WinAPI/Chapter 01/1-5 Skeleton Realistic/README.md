@@ -15,12 +15,12 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 2. Windows© MessageBox
 3. minimum Win API
 4. minimal skeletal Win API app
-5. realistic skeletal Win API app with custom assets  *<----- this example*
+5. **realistic skeletal Win API app with custom assets**  *<----- this example*
 6. a modernized C++ practices skeletal Win API app using C++ wide strings
 7. minimum MFC app
 8. using a custom C++ header file to use C++11 (and later) random engine features instead of the C library
 
-This example creates a custom menu and "About...." dialog box.
+This example creates a custom main menu and an "About...." dialog box.
 
 ### Notes
 
