@@ -5,45 +5,45 @@
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
-int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ PWSTR szCmdLine, _In_ int iCmdShow)
+int WINAPI wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE hPrevInst, _In_ PWSTR cmdLine, _In_ int winMode)
 {
-   static WCHAR szAppName[ ] { L"Skeleton" };
-   WNDCLASSEXW  wc           { };
+   static const WCHAR appName[ ] { L"Skeleton" };
+   WNDCLASSEXW        wc         { };
 
    wc.cbSize        = sizeof(wc);
    wc.style         = CS_HREDRAW | CS_VREDRAW;
    wc.lpfnWndProc   = WndProc;
    wc.cbClsExtra    = 0;
    wc.cbWndExtra    = 0;
-   wc.hInstance     = hInstance;
-   wc.hIcon         = (HICON)   LoadImageW(hInstance, MAKEINTRESOURCEW(IDI_SKELETON), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
-   wc.hIconSm       = (HICON)   LoadImageW(hInstance, MAKEINTRESOURCEW(IDI_SKELETON_SM), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
+   wc.hInstance     = hInst;
+   wc.hIcon         = (HICON)   LoadImageW(hInst, MAKEINTRESOURCEW(IDI_SKELETON), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
+   wc.hIconSm       = (HICON)   LoadImageW(hInst, MAKEINTRESOURCEW(IDI_SKELETON_SM), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
    wc.hCursor       = (HCURSOR) LoadImageW(NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
    wc.hbrBackground = (HBRUSH)  (COLOR_WINDOW + 1);
    wc.lpszMenuName  = NULL;
-   wc.lpszClassName = szAppName;
+   wc.lpszClassName = appName;
 
    // another way to test for failure registering the window class
    // I personally prefer using the macros, they are understandable what is happening
    if ( !RegisterClassExW(&wc) )
    {
-      MessageBoxW(NULL, L"Can't Register the Window Class!", szAppName, MB_OK | MB_ICONERROR);
+      MessageBoxW(NULL, L"Can't Register the Window Class!", appName, MB_OK | MB_ICONERROR);
       return E_FAIL;
    }
 
-   HWND hwnd { CreateWindowW(szAppName, L"Minimal Windows Skeleton Application",
+   HWND hwnd { CreateWindowW(appName, L"Minimal Windows Skeleton Application",
                              WS_OVERLAPPEDWINDOW,
                              CW_USEDEFAULT, CW_USEDEFAULT,
                              CW_USEDEFAULT, CW_USEDEFAULT,
-                             NULL, NULL, hInstance, NULL) };
+                             NULL, NULL, hInst, NULL) };
 
    if ( NULL == hwnd )
    {
-      MessageBoxW(NULL, L"Unable to Create the Main Window!", szAppName, MB_OK | MB_ICONERROR);
+      MessageBoxW(NULL, L"Unable to Create the Main Window!", appName, MB_OK | MB_ICONERROR);
       return E_FAIL;
    }
 
-   ShowWindow(hwnd, iCmdShow);
+   ShowWindow(hwnd, winMode);
    UpdateWindow(hwnd);
 
    MSG msg;
@@ -57,22 +57,22 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
    return (int) msg.wParam;
 }
 
-LRESULT CALLBACK WndProc(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
    switch ( msg )
    {
    case WM_PAINT:
    {
       PAINTSTRUCT ps;
-      HDC         hDC = BeginPaint(hWindow, &ps);
+      HDC         hDC = BeginPaint(hwnd, &ps);
 
       RECT rect;
 
-      GetClientRect(hWindow, &rect);
+      GetClientRect(hwnd, &rect);
 
       DrawTextW(hDC, L"This is a minimal Windows skeleton application!", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
-      EndPaint(hWindow, &ps);
+      EndPaint(hwnd, &ps);
       return S_OK;
    }
 
@@ -81,5 +81,5 @@ LRESULT CALLBACK WndProc(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam)
       return S_OK;
    }
 
-   return DefWindowProcW(hWindow, msg, wParam, lParam);
+   return DefWindowProcW(hwnd, msg, wParam, lParam);
 }

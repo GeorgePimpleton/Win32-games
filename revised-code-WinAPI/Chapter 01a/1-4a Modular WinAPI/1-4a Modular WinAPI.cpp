@@ -2,17 +2,16 @@
 
 #include "winfuncs.hpp"
 
-int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
-                    _In_ PWSTR szCmdLine, _In_ int nWinMode)
+int WINAPI wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE hPrevInst, _In_ PWSTR cmdLine, _In_ int winMode)
 {
-   if ( FAILED(InitApplication(hInstance)) )
+   if ( FAILED(InitApplication(hInst)) )
    {
-      return 0;
+      return E_FAIL;
    }
 
-   if ( FAILED(InitInstance(hInstance, nWinMode)) )
+   if ( FAILED(InitInstance(hInst, winMode)) )
    {
-      return 0;
+      return E_FAIL;
    }
 
    return MessageLoop( );

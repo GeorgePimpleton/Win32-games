@@ -6,10 +6,10 @@
 
 // using SAL (MS source-code annotation language)
 // https://learn.microsoft.com/en-us/cpp/code-quality/understanding-sal
-int WINAPI wWinMain(_In_     HINSTANCE hInstance,
-                    _In_opt_ HINSTANCE hPrevInstance,
-                    _In_     PWSTR szCmdLine,
-                    _In_     int iCmdShow)
+int WINAPI wWinMain(_In_     HINSTANCE hInst,
+                    _In_opt_ HINSTANCE hPrevInst,
+                    _In_     PWSTR     cmdLine,
+                    _In_     int       cmdShow)
 {
    MessageBoxW(NULL, L"Hello World!", L"Hello Message", MB_OK);
 

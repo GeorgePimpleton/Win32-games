@@ -1,7 +1,6 @@
 // Windows function declarations
 
 #include <windows.h>
-#include <winerror.h>
 
 #pragma once
 

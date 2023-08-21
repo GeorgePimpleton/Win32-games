@@ -1,30 +1,30 @@
 #include "winmsg.hpp"
 #include "winfuncs.hpp"
 
-static const WCHAR szWinName[ ]  = L"ModWin3";
-static const WCHAR szAppTitle[ ] = L"Modular WinAPI Application, Version 3";
+static const WCHAR winName[ ]  = L"ModWin3";
+static const WCHAR appTitle[ ] = L"Modular WinAPI Application, Version 3";
 
-LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-   switch ( message )
+   switch ( msg )
    {
    case WM_LBUTTONDOWN:
       OnLButtonDown(hwnd);
-      return 0;
+      return S_OK;
 
    case WM_RBUTTONDOWN:
       OnRButtonDown(hwnd);
-      return 0;
+      return S_OK;
 
    case WM_DESTROY:
       PostQuitMessage(0);
-      return 0;
+      return S_OK;
    }
 
-   return DefWindowProcW(hwnd, message, wParam, lParam);
+   return DefWindowProcW(hwnd, msg, wParam, lParam);
 }
 
-HRESULT InitApplication(HINSTANCE hInstance)
+HRESULT InitApplication(HINSTANCE hInst)
 {
    WNDCLASS wc { };
 
@@ -32,36 +32,36 @@ HRESULT InitApplication(HINSTANCE hInstance)
    wc.lpfnWndProc   = WndProc;
    wc.cbClsExtra    = 0;
    wc.cbWndExtra    = 0;
-   wc.hInstance     = hInstance;
+   wc.hInstance     = hInst;
    wc.hIcon         = (HICON)   LoadImageW(NULL, IDI_APPLICATION, IMAGE_ICON, 0, 0, LR_SHARED);
    wc.hCursor       = (HCURSOR) LoadImageW(NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
    wc.hbrBackground = (HBRUSH)  (COLOR_WINDOW + 1);
    wc.lpszMenuName  = NULL;
-   wc.lpszClassName = szWinName;
+   wc.lpszClassName = winName;
 
-   if ( RegisterClassW(&wc) == 0 )
+   if ( FAILED(RegisterClassW(&wc)) )
    {
-      MessageBoxW(NULL, L"Can't Register the Window Class!", szWinName, MB_OK | MB_ICONERROR);
+      MessageBoxW(NULL, L"Can't Register the Window Class!", winName, MB_OK | MB_ICONERROR);
       return E_FAIL;
    }
    else return S_OK;
 }
 
-HRESULT InitInstance(HINSTANCE hInstance, int nWinMode)
+HRESULT InitInstance(HINSTANCE hInst, int winMode)
 {
-   HWND hwnd = CreateWindowW(szWinName, szAppTitle,
+   HWND hwnd = CreateWindowW(winName, appTitle,
                              WS_OVERLAPPEDWINDOW,
                              CW_USEDEFAULT, CW_USEDEFAULT,
                              CW_USEDEFAULT, CW_USEDEFAULT,
-                             NULL, NULL, hInstance, NULL);
+                             NULL, NULL, hInst, NULL);
 
-   if ( hwnd == NULL )
+   if ( NULL == hwnd )
    {
-      MessageBoxW(NULL, L"Can't Create the Main Window!", szWinName, MB_OK | MB_ICONERROR);
+      MessageBoxW(NULL, L"Can't Create the Main Window!", winName, MB_OK | MB_ICONERROR);
       return E_FAIL;
    }
 
-   ShowWindow(hwnd, nWinMode);
+   ShowWindow(hwnd, winMode);
    UpdateWindow(hwnd);
 
    return S_OK;

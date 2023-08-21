@@ -2,16 +2,14 @@
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
-int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
-                    _In_ PWSTR     szCmdLine, _In_ int           nWinMode)
+int WINAPI wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE hPrevInst, _In_ PWSTR cmdLine, _In_ int winMode)
 {
-   static const WCHAR szWinName[ ]  = L"MinWin";
-   static const WCHAR szAppTitle[ ] = L"WinAPI Minimal Application";
+   static const WCHAR winName[ ]  = L"MinWin";
 
    WNDCLASS wc { };
 
-   wc.hInstance     = hInstance;
-   wc.lpszClassName = szWinName;
+   wc.hInstance     = hInst;
+   wc.lpszClassName = winName;
    wc.lpfnWndProc   = WndProc;
    wc.style         = 0;
    wc.hIcon         = (HICON)   LoadImageW(NULL, IDI_APPLICATION, IMAGE_ICON, 0, 0, LR_SHARED);
@@ -21,25 +19,27 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
    wc.cbWndExtra    = 0;
    wc.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1);
 
-   if ( RegisterClassW(&wc) == 0 )
+   if ( FAILED(RegisterClassW(&wc)) )
    {
       MessageBoxW(NULL, L"Couldn't Register the Window Class!", L"ERROR", MB_OK | MB_ICONERROR);
-      return 0;
+      return E_FAIL;
    }
 
-   HWND hwnd = CreateWindowW(szWinName, szAppTitle,
+   static const WCHAR appTitle[ ] = L"WinAPI Minimal Application";
+
+   HWND hwnd = CreateWindowW(winName, appTitle,
                              WS_OVERLAPPEDWINDOW,
                              CW_USEDEFAULT, CW_USEDEFAULT,
                              CW_USEDEFAULT, CW_USEDEFAULT,
-                             NULL, NULL, hInstance, NULL);
+                             NULL, NULL, hInst, NULL);
 
-   if ( hwnd == NULL )
+   if ( NULL == hwnd )
    {
       MessageBoxW(NULL, L"Couldn't Create the Main Window!", L"ERROR", MB_OK | MB_ICONERROR);
-      return 0;
+      return E_FAIL;
    }
 
-   ShowWindow(hwnd, nWinMode);
+   ShowWindow(hwnd, winMode);
    UpdateWindow(hwnd);
 
    MSG msg;
@@ -53,27 +53,27 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
    return (int) msg.wParam;
 }
 
-LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
    static const WCHAR szAboutLeft[ ]  = L"This is a minimal WinAPI program.\nYou pressed the left mouse button!";
    static const WCHAR szAboutRight[ ] = L"This is a minimal WinAPI program.\nYou pressed the right mouse button!";
 
-   switch ( message )
+   switch ( msg )
    {
    case WM_LBUTTONDOWN:
       MessageBeep(MB_ICONEXCLAMATION);
       MessageBoxW(hwnd, szAboutLeft, L"About", MB_OK | MB_ICONINFORMATION);
-      return 0;
+      return S_OK;
 
    case WM_RBUTTONDOWN:
       MessageBeep(MB_ICONASTERISK);
       MessageBoxW(hwnd, szAboutRight, L"About", MB_OK | MB_ICONINFORMATION);
-      return 0;
+      return S_OK;
 
    case WM_DESTROY:
       PostQuitMessage(0);
-      return 0;
+      return S_OK;
    }
 
-   return DefWindowProcW(hwnd, message, wParam, lParam);
+   return DefWindowProcW(hwnd, msg, wParam, lParam);
 }

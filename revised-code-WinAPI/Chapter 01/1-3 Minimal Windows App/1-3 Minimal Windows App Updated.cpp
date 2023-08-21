@@ -4,48 +4,46 @@
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
-int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
-                    _In_ PWSTR     szCmdLine, _In_     int       nWinMode)
+int WINAPI wWinMain(_In_ HINSTANCE hInst,   _In_opt_ HINSTANCE hPrevInst,
+                    _In_ PWSTR     cmdLine, _In_     int       winMode)
 {
-   static const WCHAR szAppName[ ] { L"MinimalWindowsApp" };
+   static const WCHAR appName[ ] { L"MinWinApp" };
 
-   WNDCLASSEXW wc { };
+   WNDCLASSW wc { };
 
-   wc.cbSize        = sizeof(WNDCLASSEX);
    wc.style         = CS_HREDRAW | CS_VREDRAW;
    wc.lpfnWndProc   = WndProc;
    wc.cbClsExtra    = 0;
    wc.cbWndExtra    = 0;
-   wc.hInstance     = hInstance;
+   wc.hInstance     = hInst;
    wc.hIcon         = (HICON)   LoadImageW(NULL, IDI_APPLICATION, IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
-   wc.hIconSm       = (HICON)   LoadImageW(NULL, IDI_APPLICATION, IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
    wc.hCursor       = (HCURSOR) LoadImageW(NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
    wc.hbrBackground = (HBRUSH)  (COLOR_WINDOW + 1);
    wc.lpszMenuName  = NULL;
-   wc.lpszClassName = szAppName;
+   wc.lpszClassName = appName;
 
-   if ( FAILED(RegisterClassExW(&wc)) )
+   if ( FAILED(RegisterClassW(&wc)) )
    {
-      MessageBoxW(NULL, L"Can't Register the Window Class!", szAppName, MB_OK | MB_ICONERROR);
+      MessageBoxW(NULL, L"Can't Register the Window Class!", appName, MB_OK | MB_ICONERROR);
       return E_FAIL;
    }
 
    // Win32 is now known as the Windows API (WinAPI) since x64 Windows
-   static const WCHAR szAppTitle[ ] { L"Windows API Skeletal Application" };
+   static const WCHAR appTitle[ ] { L"Windows API Skeletal Application" };
 
-   HWND hwnd { CreateWindowW(szAppName, szAppTitle,
+   HWND hwnd { CreateWindowW(appName, appTitle,
                              WS_OVERLAPPEDWINDOW,
                              CW_USEDEFAULT, CW_USEDEFAULT,
                              CW_USEDEFAULT, CW_USEDEFAULT,
-                             NULL, NULL, hInstance, NULL) };
+                             NULL, NULL, hInst, NULL) };
 
    if ( NULL == hwnd )
    {
-      MessageBoxW(NULL, L"Unable to Create the Main Window!", szAppName, MB_OK | MB_ICONERROR);
+      MessageBoxW(NULL, L"Unable to Create the Main Window!", appName, MB_OK | MB_ICONERROR);
       return E_FAIL;
    }
 
-   ShowWindow(hwnd, nWinMode);
+   ShowWindow(hwnd, winMode);
    UpdateWindow(hwnd);
 
    MSG msg;
@@ -60,9 +58,9 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
    return (int) msg.wParam;
 }
 
-LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-   switch ( message )
+   switch ( msg )
    {
    case WM_PAINT:
    {
@@ -82,5 +80,5 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
       return S_OK;
    }
 
-   return DefWindowProcW(hwnd, message, wParam, lParam);
+   return DefWindowProcW(hwnd, msg, wParam, lParam);
 }
