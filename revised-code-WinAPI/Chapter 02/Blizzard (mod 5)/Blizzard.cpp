@@ -1,12 +1,9 @@
 // Blizzard.cpp - Blizzard application source
 
-// include files
 #include "Blizzard.hpp"
 
-// game engine functions
 HRESULT GameInitialize(HINSTANCE hInstance)
 {
-   // create the game engine
    g_pGame = std::make_unique<GameEngine>(hInstance, L"Blizzard", L"Creating An Engine For Games",
                                           IDI_ICON, IDI_ICON_SM);
 
@@ -15,7 +12,6 @@ HRESULT GameInitialize(HINSTANCE hInstance)
       return E_FAIL;
    }
 
-   // set the frame rate
    g_pGame->SetFrameRate(15);
 
    return S_OK;
@@ -23,7 +19,6 @@ HRESULT GameInitialize(HINSTANCE hInstance)
 
 void GameStart(HWND hWindow)
 {
-   // seed the random number generator
    rtk::srand();
 }
 
@@ -37,13 +32,11 @@ void GameEnd()
 
 void GameActivate(HWND hWindow)
 {
-   HDC  hDC;
    RECT rect;
 
-   // draw activation text on the game screen
    GetClientRect(hWindow, &rect);
 
-   hDC = GetDC(hWindow);
+   HDC hDC = GetDC(hWindow);
 
    DrawTextW(hDC, L"Here comes the blizzard!", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
@@ -52,13 +45,11 @@ void GameActivate(HWND hWindow)
 
 void GameDeactivate(HWND hWindow)
 {
-   HDC  hDC;
    RECT rect;
 
-   // draw deactivation text on the game screen
    GetClientRect(hWindow, &rect);
 
-   hDC = GetDC(hWindow);
+   HDC hDC = GetDC(hWindow);
 
    DrawTextW(hDC, L"The blizzard has passed.", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
@@ -72,7 +63,6 @@ void GameCycle()
 {
    HWND hWindow = g_pGame->GetWindow();
 
-   // draw the snowflake icon at random positions on the game screen
    HDC hDC { GetDC(hWindow) };
 
    DrawIcon(hDC, rtk::rand(0, g_pGame->GetWidth()), rtk::rand(0, g_pGame->GetHeight()),
@@ -81,7 +71,6 @@ void GameCycle()
    ReleaseDC(hWindow, hDC);
 }
 
-// handles game menu messages
 void GameMenu(WPARAM wParam)
 {
    switch (LOWORD(wParam))

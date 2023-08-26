@@ -1,52 +1,49 @@
-// GameEngine.hpp - game engine header
-
-// include files
 #include "GameEngine.hpp"
 
 // static variable initialization
 GameEngine* GameEngine::m_pGameEngine = nullptr;
 
-// Windows functions
-int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ PWSTR szCmdLine, _In_ int iCmdShow)
+int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
+                    _In_ PWSTR     szCmdLine, _In_     int       iCmdShow)
 {
-   if (GameInitialize(hInstance) == S_OK)
+   if ( GameInitialize(hInstance) == S_OK )
    {
       MSG msg;
 
       // initialize the game engine
-      if (GameEngine::GetEngine()->Initialize(iCmdShow) != S_OK)
+      if ( GameEngine::GetEngine( )->Initialize(iCmdShow) != S_OK )
       {
          return E_FAIL;
       }
 
       // enter the main message loop
-      while (TRUE)
+      while ( TRUE )
       {
-         if (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE))
+         if ( PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE) )
          {
             // process the message
-            if (msg.message == WM_QUIT)
+            if ( msg.message == WM_QUIT )
             {
                break;
             }
 
-               TranslateMessage(&msg);
-               DispatchMessageW(&msg);
+            TranslateMessage(&msg);
+            DispatchMessageW(&msg);
          }
          else
          {
             // make sure the game engine isn't sleeping
-            if (!GameEngine::GetEngine()->GetSleep())
+            if ( !GameEngine::GetEngine( )->GetSleep( ) )
             {
                // check the tick count to see if a game cycle has elapsed
                static ULONGLONG iTickTrigger { };
-               ULONGLONG        iTickCount   { GetTickCount64() };
+               ULONGLONG        iTickCount   { GetTickCount64( ) };
 
-               if (iTickCount > iTickTrigger)
+               if ( iTickCount > iTickTrigger )
                {
-                  iTickTrigger = iTickCount + GameEngine::GetEngine()->GetFrameDelay();
+                  iTickTrigger = iTickCount + GameEngine::GetEngine( )->GetFrameDelay( );
 
-                  GameCycle();
+                  GameCycle( );
                }
             }
          }
@@ -56,7 +53,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
    }
 
    // end the game
-   GameEnd();
+   GameEnd( );
 
    return S_OK;
 }
@@ -65,17 +62,17 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 LRESULT CALLBACK WndProc(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam)
 {
    // route all windows messages to the game engine
-   return GameEngine::GetEngine()->HandleEvent(hWindow, msg, wParam, lParam);
+   return GameEngine::GetEngine( )->HandleEvent(hWindow, msg, wParam, lParam);
 }
 
 // handles messages sent by Windows to the about dialog box
 BOOL CALLBACK DlgProc(HWND hDialog, UINT message, WPARAM wParam, LPARAM lParam)
 {
    // handle about dialog box messages
-   switch (message)
+   switch ( message )
    {
    case WM_COMMAND:
-      switch (LOWORD(wParam))
+      switch ( LOWORD(wParam) )
       {
       case IDOK:
          EndDialog(hDialog, 0);
@@ -102,8 +99,9 @@ GameEngine::GameEngine(HINSTANCE hInstance, PCWSTR szWindowClass, PCWSTR szTitle
    m_bSleep      = TRUE;
 
    size_t  pcch { };
+
    HRESULT hRes = StringCchLengthW(szWindowClass, str_length, &pcch);
-   if (pcch > 0)
+   if ( pcch > 0 )
    {
       StringCchCopyW(m_szWindowClass, str_length, szWindowClass);
    }
@@ -115,7 +113,7 @@ GameEngine::GameEngine(HINSTANCE hInstance, PCWSTR szWindowClass, PCWSTR szTitle
 #pragma warning(disable: 28193)
 
    hRes = StringCchLengthW(szTitle, str_length, &pcch);
-   if (pcch > 0)
+   if ( pcch > 0 )
    {
       StringCchCopyW(m_szTitle, str_length, szTitle);
    }
@@ -125,30 +123,30 @@ GameEngine::GameEngine(HINSTANCE hInstance, PCWSTR szWindowClass, PCWSTR szTitle
    }
 }
 
-GameEngine::~GameEngine()
+GameEngine::~GameEngine( )
 { }
 
 // game engine general methods
 HRESULT GameEngine::Initialize(int iCmdShow)
 {
-   WNDCLASSEXW wndclass { };
+   WNDCLASSEXW wc { };
 
    // create the window class for the main window
-   wndclass.cbSize        = sizeof(WNDCLASSEXW);
-   wndclass.style         = CS_HREDRAW | CS_VREDRAW;
-   wndclass.lpfnWndProc   = WndProc;
-   wndclass.cbClsExtra    = 0;
-   wndclass.cbWndExtra    = 0;
-   wndclass.hInstance     = m_hInstance;
-   wndclass.hIcon         = (HICON)   LoadImageW(m_hInstance, MAKEINTRESOURCEW(GetIcon()), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
-   wndclass.hIconSm       = (HICON)   LoadImageW(m_hInstance, MAKEINTRESOURCEW(GetSmallIcon()), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
-   wndclass.hCursor       = (HCURSOR) LoadImageW(NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
-   wndclass.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1);
-   wndclass.lpszMenuName  = NULL;
-   wndclass.lpszClassName = m_szWindowClass;
+   wc.cbSize        = sizeof(WNDCLASSEXW);
+   wc.style         = CS_HREDRAW | CS_VREDRAW;
+   wc.lpfnWndProc   = WndProc;
+   wc.cbClsExtra    = 0;
+   wc.cbWndExtra    = 0;
+   wc.hInstance     = m_hInstance;
+   wc.hIcon         = (HICON)   LoadImageW(m_hInstance, MAKEINTRESOURCEW(GetIcon( )), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
+   wc.hIconSm       = (HICON)   LoadImageW(m_hInstance, MAKEINTRESOURCEW(GetSmallIcon( )), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
+   wc.hCursor       = (HCURSOR) LoadImageW(NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
+   wc.hbrBackground = (HBRUSH)  (COLOR_WINDOW + 1);
+   wc.lpszMenuName  = NULL;
+   wc.lpszClassName = m_szWindowClass;
 
    // register the window class
-   if (!RegisterClassExW(&wndclass))
+   if ( !RegisterClassExW(&wc) )
    {
       return E_FAIL;
    }
@@ -168,7 +166,7 @@ HRESULT GameEngine::Initialize(int iCmdShow)
                              iWindowWidth, iWindowHeight,
                              NULL, NULL, m_hInstance, NULL);
 
-   if (!m_hWindow)
+   if ( !m_hWindow )
    {
       return E_FAIL;
    }
@@ -183,7 +181,7 @@ HRESULT GameEngine::Initialize(int iCmdShow)
 LRESULT GameEngine::HandleEvent(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam)
 {
    // route windows messages to game engine member functions
-   switch (msg)
+   switch ( msg )
    {
    case WM_CREATE:
       // set the game window and start the game
@@ -204,20 +202,20 @@ LRESULT GameEngine::HandleEvent(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lP
       return 0;
 
    case WM_PAINT:
-      HDC         hDC;
+   {
       PAINTSTRUCT ps;
-
-      hDC = BeginPaint(hWindow, &ps);
+      HDC hDC = BeginPaint(hWindow, &ps);
 
       // paint the game
       GamePaint(hDC);
 
       EndPaint(hWindow, &ps);
       return 0;
+   }
 
    case WM_DESTROY:
       // end the game and exit the application
-      GameEnd();
+      GameEnd( );
       PostQuitMessage(0);
       return 0;
    }

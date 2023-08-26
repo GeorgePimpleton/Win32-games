@@ -30,20 +30,17 @@ void GameStart(HWND hWindow)
 void GameEnd()
 {
    // cleanup the game engine
-
-   // cleanup automatically done via std::unique_ptr<>
-   // delete g_pGame;
+   delete g_pGame;
 }
 
 void GameActivate(HWND hWindow)
 {
-   HDC  hDC;
    RECT rect;
 
    // draw activation text on the game screen
    GetClientRect(hWindow, &rect);
 
-   hDC = GetDC(hWindow);
+   HDC hDC = GetDC(hWindow);
 
    DrawTextW(hDC, L"Here comes the blizzard!", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
@@ -52,13 +49,12 @@ void GameActivate(HWND hWindow)
 
 void GameDeactivate(HWND hWindow)
 {
-   HDC  hDC;
    RECT rect;
 
    // draw deactivation text on the game screen
    GetClientRect(hWindow, &rect);
 
-   hDC = GetDC(hWindow);
+   HDC hDC = GetDC(hWindow);
 
    DrawTextW(hDC, L"The blizzard has passed.", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 

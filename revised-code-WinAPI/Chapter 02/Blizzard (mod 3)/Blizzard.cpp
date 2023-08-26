@@ -1,12 +1,9 @@
 // Blizzard.cpp - Blizzard application source
 
-// include files
 #include "Blizzard.hpp"
 
-// game engine functions
 HRESULT GameInitialize(HINSTANCE hInstance)
 {
-   // create the game engine
    g_pGame = new GameEngine(hInstance, L"Blizzard", L"Creating An Engine For Games",
                             IDI_ICON, IDI_ICON_SM);
 
@@ -15,7 +12,6 @@ HRESULT GameInitialize(HINSTANCE hInstance)
       return E_FAIL;
    }
 
-   // set the frame rate
    g_pGame->SetFrameRate(15);
 
    return S_OK;
@@ -31,19 +27,17 @@ void GameEnd()
 {
    // cleanup the game engine
 
-   // cleanup automatically done via std::unique_ptr<>
-   // delete g_pGame;
+   delete g_pGame;
 }
 
 void GameActivate(HWND hWindow)
 {
-   HDC  hDC;
    RECT rect;
 
    // draw activation text on the game screen
    GetClientRect(hWindow, &rect);
 
-   hDC = GetDC(hWindow);
+   HDC hDC = GetDC(hWindow);
 
    DrawTextW(hDC, L"Here comes the blizzard!", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
@@ -52,13 +46,12 @@ void GameActivate(HWND hWindow)
 
 void GameDeactivate(HWND hWindow)
 {
-   HDC  hDC;
    RECT rect;
 
    // draw deactivation text on the game screen
    GetClientRect(hWindow, &rect);
 
-   hDC = GetDC(hWindow);
+   HDC hDC = GetDC(hWindow);
 
    DrawTextW(hDC, L"The blizzard has passed.", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
