@@ -4,101 +4,101 @@
 
 HRESULT GameInitialize(HINSTANCE hInstance)
 {
-   g_pGame = std::make_unique<GameEngine>(hInstance, L"Trippy", L"Learning to Draw Basic Graphics",
-                                          IDI_ICON, IDI_ICON_SM);
+   g_game = std::make_unique<GameEngine>(hInstance, L"Trippy", L"Learning to Draw Basic Graphics",
+                                         IDI_ICON, IDI_ICON_SM);
 
-   if (g_pGame == nullptr)
+   if (g_game == nullptr)
    {
       return E_FAIL;
    }
 
-   g_pGame->SetFrameRate(15);
+   g_game->SetFrameRate(15);
 
    return S_OK;
 }
 
 void GameStart(HWND hWindow)
 {
-   rtk::srand();
+   rtk::srand( );
 
-   g_rcRectangle.left   = g_pGame->GetWidth() * 2 / 5;
-   g_rcRectangle.top    = g_pGame->GetHeight() * 2 / 5;
-   g_rcRectangle.right  = g_rcRectangle.left + g_pGame->GetWidth() / 5;
-   g_rcRectangle.bottom = g_rcRectangle.top + g_pGame->GetHeight() / 5;
+   g_rect.left   = g_game->GetWidth() * 2 / 5;
+   g_rect.top    = g_game->GetHeight() * 2 / 5;
+   g_rect.right  = g_rect.left + g_game->GetWidth() / 5;
+   g_rect.bottom = g_rect.top + g_game->GetHeight() / 5;
 }
 
-void GameEnd()
+void GameEnd( )
 { }
 
-void GameActivate(HWND hWindow)
+void GameActivate(HWND hwnd)
 { }
 
-void GameDeactivate(HWND hWindow)
+void GameDeactivate(HWND hwnd)
 { }
 
 void GamePaint(HDC hDC)
 {
    // draw grid lines as a background for the rectangles
-   const UINT iGridLines = 50;
+   const UINT gridLines = 50;
 
-   for (UINT i = 1; i <= iGridLines; i++)
+   for (UINT i = 1; i <= gridLines; i++)
    {
       // draw a horizontal grid line
-      MoveToEx(hDC, g_pGame->GetWidth() * i / iGridLines, 0, NULL);
-      LineTo(hDC, g_pGame->GetWidth() * i / iGridLines, g_pGame->GetHeight());
+      MoveToEx(hDC, g_game->GetWidth() * i / gridLines, 0, NULL);
+      LineTo(hDC, g_game->GetWidth() * i / gridLines, g_game->GetHeight());
 
       // draw a vertical grid line
-      MoveToEx(hDC, 0, g_pGame->GetHeight() * i / iGridLines, NULL);
-      LineTo(hDC, g_pGame->GetWidth(), g_pGame->GetHeight() * i / iGridLines);
+      MoveToEx(hDC, 0, g_game->GetHeight() * i / gridLines, NULL);
+      LineTo(hDC, g_game->GetWidth(), g_game->GetHeight() * i / gridLines);
    }
 }
 
-void GameCycle()
+void GameCycle( )
 {
    // randomly alter the position and size of the rectangle
-   int iInflation = rtk::rand(-10, 10);
+   int inflation = rtk::rand(-10, 10);
 
-   InflateRect(&g_rcRectangle, iInflation, iInflation);
+   InflateRect(&g_rect, inflation, inflation);
 
    int dx = rtk::rand(-9, 9);
    int dy = rtk::rand(-9, 9);
 
-   OffsetRect(&g_rcRectangle, dx, dy);
+   OffsetRect(&g_rect, dx, dy);
 
    // check if the rectangle might be outside the window
-   if (g_rcRectangle.right < 0)
+   if (g_rect.right < 0)
    {
-      g_rcRectangle.right = 10;
+      g_rect.right = 10;
    }
 
-   if (g_rcRectangle.left > (int) g_pGame->GetWidth())
+   if (g_rect.left > (int) g_game->GetWidth())
    {
-      g_rcRectangle.left = (int) g_pGame->GetWidth() - 10;
+      g_rect.left = (int) g_game->GetWidth() - 10;
    }
 
-   if (g_rcRectangle.bottom < 0)
+   if (g_rect.bottom < 0)
    {
-      g_rcRectangle.bottom = 10;
+      g_rect.bottom = 10;
    }
 
-   if (g_rcRectangle.top > (int) g_pGame->GetHeight())
+   if (g_rect.top > (int) g_game->GetHeight())
    {
-      g_rcRectangle.top = (int) g_pGame->GetHeight() - 10;
+      g_rect.top = (int) g_game->GetHeight() - 10;
    }
 
    // draw the new rectangle in a random color
-   UINT   red    = rtk::rand(0, 255);
-   UINT   green  = rtk::rand(0, 255);
-   UINT   blue   = rtk::rand(0, 255);
-   HBRUSH hBrush = CreateSolidBrush(RGB(red, green, blue));
+   UINT   red   = rtk::rand(0, 255);
+   UINT   green = rtk::rand(0, 255);
+   UINT   blue  = rtk::rand(0, 255);
+   HBRUSH brush = CreateSolidBrush(RGB(red, green, blue));
 
-   HWND hWindow = g_pGame->GetWindow();
-   HDC  hDC = GetDC(hWindow);
+   HWND hwnd = g_game-> GetWindow();
+   HDC  hDC  = GetDC(hwnd);
 
-   FillRect(hDC, &g_rcRectangle, hBrush);
+   FillRect(hDC, &g_rect, brush);
 
-   ReleaseDC(hWindow, hDC);
-   DeleteObject(hBrush);
+   ReleaseDC(hwnd, hDC);
+   DeleteObject(brush);
 
    // add a bit of delay so the rectangles aren't drawn so fast
    Sleep(10);
@@ -109,13 +109,13 @@ void GameMenu(WPARAM wParam)
    switch (LOWORD(wParam))
    {
    case IDM_GAME_EXIT:
-      GameEnd();
+      GameEnd( );
       PostQuitMessage(0);
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW(g_pGame->GetInstance(), MAKEINTRESOURCEW(IDD_ABOUT),
-                 g_pGame->GetWindow(), (DLGPROC) DlgProc);
+      DialogBoxW(g_game->GetInstance(), MAKEINTRESOURCEW(IDD_ABOUT),
+                 g_game->GetWindow(), (DLGPROC) DlgProc);
       return;
    }
 }
