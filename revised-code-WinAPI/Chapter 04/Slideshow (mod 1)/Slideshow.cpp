@@ -1,75 +1,75 @@
 #include "Slideshow.hpp"
 
-HRESULT GameInitialize(HINSTANCE hInstance)
+HRESULT GameInitialize(HINSTANCE hInst)
 {
-   g_pGame = std::make_unique<GameEngine>(hInstance, L"Slideshow", L"Drawing Graphical Images",
+   g_game = std::make_unique<GameEngine>(hInst, L"Slideshow", L"Drawing Graphical Images",
                                           IDI_ICON, IDI_ICON_SM);
 
-   if ( g_pGame == nullptr )
+   if ( g_game == nullptr )
    {
       return E_FAIL;
    }
 
-   g_pGame->SetFrameRate(1);
+   g_game->SetFrameRate(1);
 
    return S_OK;
 }
 
-void GameStart(HWND hWindow)
+void GameStart(HWND hwnd)
 {
    // create/load the slide bitmaps
 
    // create a blank bitmap
-   g_pSlides[ 0 ] = std::make_unique<Bitmap>(g_pGame->GetWindow(), 640, 480, RGB(128, 128, 64));
+   g_slides[ 0 ] = std::make_unique<Bitmap>(g_game->GetWindow(), 640, 480, RGB(128, 128, 64));
 
    // load bitmaps from a file
-   g_pSlides[ 1 ] = std::make_unique<Bitmap>(L"Res/Image1.bmp");
-   g_pSlides[ 2 ] = std::make_unique<Bitmap>(L"Res/Image2.bmp");
-   g_pSlides[ 3 ] = std::make_unique<Bitmap>(L"Res/Image3.bmp");
+   g_slides[ 1 ] = std::make_unique<Bitmap>(L"Res/Image1.bmp");
+   g_slides[ 2 ] = std::make_unique<Bitmap>(L"Res/Image2.bmp");
+   g_slides[ 3 ] = std::make_unique<Bitmap>(L"Res/Image3.bmp");
 
    // load bitmaps as resources
-   HINSTANCE hInstance = g_pGame->GetInstance();
+   HINSTANCE hInst = g_game->GetInstance();
 
-   g_pSlides[ 4 ] = std::make_unique<Bitmap>(IDB_IMAGE4, hInstance);
-   g_pSlides[ 5 ] = std::make_unique<Bitmap>(IDB_IMAGE5, hInstance);
-   g_pSlides[ 6 ] = std::make_unique<Bitmap>(IDB_IMAGE6, hInstance);
+   g_slides[ 4 ] = std::make_unique<Bitmap>(IDB_IMAGE4, hInst);
+   g_slides[ 5 ] = std::make_unique<Bitmap>(IDB_IMAGE5, hInst);
+   g_slides[ 6 ] = std::make_unique<Bitmap>(IDB_IMAGE6, hInst);
 
    // set the index to the second slide
-   g_iCurSlide = 1;
+   g_currentSlide = 1;
 }
 
-void GameEnd()
+void GameEnd( )
 { }
 
-void GameActivate(HWND hWindow)
+void GameActivate(HWND hwnd)
 { }
 
-void GameDeactivate(HWND hWindow)
+void GameDeactivate(HWND hwnd)
 { }
 
 void GamePaint(HDC hDC)
 {
-   g_pSlides[ g_iCurSlide ]->Draw(hDC, 0, 0);
+   g_slides[ g_currentSlide ]->Draw(hDC, 0, 0);
 }
 
-void GameCycle()
+void GameCycle( )
 {
-   static UINT iDelay = 0;
+   static UINT delay = 0;
 
    // establish a 3-second delay before moving to the next slide
-   if ( ++iDelay > 3 )
+   if ( ++delay > 3 )
    {
       // reset the delay counter
-      iDelay = 0;
+      delay = 0;
 
       // move to the next slide
-      if ( ++g_iCurSlide == g_iNUMSLIDES )
+      if ( ++g_currentSlide == g_NUMSLIDES )
       {
-         g_iCurSlide = 0;
+         g_currentSlide = 0;
       }
 
       // force a repaint to draw the next slide
-      InvalidateRect(g_pGame->GetWindow(), NULL, FALSE);
+      InvalidateRect(g_game->GetWindow(), NULL, FALSE);
    }
 }
 
@@ -83,7 +83,7 @@ void GameMenu(WPARAM wParam)
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW(g_pGame->GetInstance(), MAKEINTRESOURCEW(IDD_ABOUT), g_pGame->GetWindow(), (DLGPROC) DlgProc);
+      DialogBoxW(g_game->GetInstance(), MAKEINTRESOURCEW(IDD_ABOUT), g_game->GetWindow(), (DLGPROC) DlgProc);
       return;
    }
 }

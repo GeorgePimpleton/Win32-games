@@ -4,8 +4,8 @@
 #include "Bitmap.hpp"
 #include "GameEngine.hpp"
 
-const UINT g_iNUMSLIDES { 7 };
+const UINT g_NUMSLIDES { 7 };
 
-std::unique_ptr<GameEngine>          g_pGame;
-std::vector<std::unique_ptr<Bitmap>> g_pSlides(g_iNUMSLIDES);
-UINT                                 g_iCurSlide;
+std::unique_ptr<GameEngine>          g_game;
+std::vector<std::unique_ptr<Bitmap>> g_slides(g_NUMSLIDES);
+UINT                                 g_currentSlide;
