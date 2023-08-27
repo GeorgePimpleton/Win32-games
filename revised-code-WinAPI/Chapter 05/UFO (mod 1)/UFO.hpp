@@ -3,12 +3,12 @@
 #include "Bitmap.hpp"
 #include "GameEngine.hpp"
 
-const LONG                  g_iMAXSPEED { 8 };
+const LONG                  g_MAXSPEED { 8 };
 
-std::unique_ptr<GameEngine> g_pGame;
-std::unique_ptr<Bitmap>     g_pBackground;
-std::unique_ptr<Bitmap>     g_pSaucer;
-LONG                        g_iSaucerX;
-LONG                        g_iSaucerY;
-LONG                        g_iSpeedX;
-LONG                        g_iSpeedY;
+std::unique_ptr<GameEngine> g_game;
+std::unique_ptr<Bitmap>     g_background;
+std::unique_ptr<Bitmap>     g_saucer;
+LONG                        g_saucerX;
+LONG                        g_saucerY;
+LONG                        g_speedX;
+LONG                        g_speedY;
