@@ -1,6 +1,6 @@
-// 1-4 Skeleton Minimal.rc - resource definitions
+// resource definitions
 
-// include the resource identifiers
+// include the resource identifiers header
 #include "resource.h"
 
 // define the icon(s)

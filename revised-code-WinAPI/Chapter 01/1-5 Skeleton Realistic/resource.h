@@ -1,5 +1,3 @@
-// resource.h - resource IDs
-
 #pragma once
 
 // icons               range : 1000 - 1999

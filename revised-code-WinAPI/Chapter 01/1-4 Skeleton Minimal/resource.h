@@ -1,4 +1,4 @@
-// resource.h - resource IDs
+// resource IDs
 
 #pragma once
 

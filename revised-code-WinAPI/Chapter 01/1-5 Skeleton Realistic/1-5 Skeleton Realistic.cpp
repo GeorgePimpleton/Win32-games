@@ -1,14 +1,12 @@
-// 1-5 Skeleton Realistic.cpp - realistic Windows skeleton source
-
-// disable the "hAccel could be zero" whinging
+// disable the "accel could be zero" whinging
 // this is just a low-level warning, the code will still compile
 #pragma warning(disable : 6387)
 
 #include "1-5 Skeleton Realistic.hpp"
 
-int WINAPI wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE hPrevInst, _In_ PWSTR cmdLine, _In_ int cmdShow)
+int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int cmdShow)
 {
-   static WCHAR appName[ ] { L"Realistic Windows Skeleton" };
+   static WCHAR appName[ ] { L"Realistic Windows© Skeleton" };
 
    WNDCLASSEXW wc { };
 
@@ -17,10 +15,10 @@ int WINAPI wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE hPrevInst, _In_ PWS
    wc.lpfnWndProc   = WndProc;
    wc.cbClsExtra    = 0;
    wc.cbWndExtra    = 0;
-   wc.hInstance     = hInst;
-   wc.hIcon         = (HICON)   LoadImageW(hInst, MAKEINTRESOURCEW(IDI_ICON), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
-   wc.hIconSm       = (HICON)   LoadImageW(hInst, MAKEINTRESOURCEW(IDI_ICON_SM), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
-   wc.hCursor       = (HCURSOR) LoadImageW(hInst, MAKEINTRESOURCEW(IDC_CURSOR), IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR);
+   wc.hInstance     = inst;
+   wc.hIcon         = (HICON)   LoadImageW(inst, MAKEINTRESOURCEW(IDI_ICON), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
+   wc.hIconSm       = (HICON)   LoadImageW(inst, MAKEINTRESOURCEW(IDI_ICON_SM), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
+   wc.hCursor       = (HCURSOR) LoadImageW(inst, MAKEINTRESOURCEW(IDC_CURSOR), IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR);
    wc.hbrBackground = (HBRUSH)  (COLOR_WINDOW + 1);
    wc.lpszMenuName  = MAKEINTRESOURCEW(IDR_MENU);
    wc.lpszClassName = appName;
@@ -31,41 +29,41 @@ int WINAPI wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE hPrevInst, _In_ PWS
       return E_FAIL;
    }
 
-   static WCHAR appTitle[ ] { L"A Realistic Windows Game Skeleton Application" };
+   static WCHAR appTitle[ ] { L"A Realistic Windows© Skeleton Application" };
 
-   HWND hwnd { CreateWindowW(appName, appTitle,
-                             WS_OVERLAPPEDWINDOW,
-                             CW_USEDEFAULT, CW_USEDEFAULT,
-                             CW_USEDEFAULT, CW_USEDEFAULT,
-                             NULL, NULL, hInst, NULL) };
+   HWND wnd { CreateWindowW(appName, appTitle,
+                            WS_OVERLAPPEDWINDOW,
+                            CW_USEDEFAULT, CW_USEDEFAULT,
+                            CW_USEDEFAULT, CW_USEDEFAULT,
+                            NULL, NULL, inst, NULL) };
 
-   if ( NULL == hwnd )
+   if ( NULL == wnd )
    {
       MessageBoxW(NULL, L"Unable to Create the Main Window!", appName, MB_OK | MB_ICONERROR);
       return E_FAIL;
    }
 
-   ShowWindow(hwnd, cmdShow);
-   UpdateWindow(hwnd);
+   ShowWindow(wnd, cmdShow);
+   UpdateWindow(wnd);
 
    // load the accelerators
-   HACCEL hAccel { LoadAcceleratorsW(hInst, MAKEINTRESOURCEW(IDR_ACCEL)) };
+   HACCEL accel { LoadAcceleratorsW(inst, MAKEINTRESOURCEW(IDR_ACCEL)) };
 
    // check accelerators are loaded
    // the app can still run without accelerators
-   if ( NULL == hAccel )
+   if ( NULL == accel )
    {
       MessageBoxW(NULL, L"Unable to Load the Accelerators!", appName, MB_OK | MB_ICONERROR);
    }
 
    // enter the main message loop with a bit of sanity checking
-   static BOOL bRet;
+   static BOOL ret;
    static MSG  msg;
 
-   while ( (bRet = GetMessageW(&msg, NULL, 0, 0)) != 0 ) // 0 = WM_QUIT
+   while ( (ret = GetMessageW(&msg, NULL, 0, 0)) != 0 ) // 0 = WM_QUIT
    {
       // check for error
-      if ( -1 == bRet )
+      if ( -1 == ret )
       {
          // handle the error and possibly exit
 
@@ -76,7 +74,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE hPrevInst, _In_ PWS
       else
       {
          // check for accelerator keystrokes
-         if (SUCCEEDED(TranslateAcceleratorW(hwnd, hAccel, &msg)) )
+         if (0 == TranslateAcceleratorW(wnd, accel, &msg) )
          {
             // no accelerator used so process the message
             TranslateMessage(&msg);

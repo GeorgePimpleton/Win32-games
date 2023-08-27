@@ -2,7 +2,7 @@
 
 #include "1-6 Modern Skeleton Realistic.hpp"
 
-int WINAPI wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE hPrevInst, _In_ PWSTR cmdLine, _In_ int cmdShow)
+int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int cmdShow)
 {
    static std::wstring appName { L"C++ Modernized Realistic Windows Skeleton" };
 
@@ -13,10 +13,10 @@ int WINAPI wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE hPrevInst, _In_ PWS
    wc.lpfnWndProc   = WndProc;
    wc.cbClsExtra    = 0;
    wc.cbWndExtra    = 0;
-   wc.hInstance     = hInst;
-   wc.hIcon         = (HICON)   LoadImageW(hInst, MAKEINTRESOURCEW(IDI_ICON), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
-   wc.hIconSm       = (HICON)   LoadImageW(hInst, MAKEINTRESOURCEW(IDI_ICON_SM), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
-   wc.hCursor       = (HCURSOR) LoadImageW(hInst, MAKEINTRESOURCEW(IDC_CURSOR), IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR);
+   wc.hInstance     = inst;
+   wc.hIcon         = (HICON)   LoadImageW(inst, MAKEINTRESOURCEW(IDI_ICON), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
+   wc.hIconSm       = (HICON)   LoadImageW(inst, MAKEINTRESOURCEW(IDI_ICON_SM), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
+   wc.hCursor       = (HCURSOR) LoadImageW(inst, MAKEINTRESOURCEW(IDC_CURSOR), IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR);
    wc.hbrBackground = (HBRUSH)  (COLOR_WINDOW + 1);
    wc.lpszMenuName  = MAKEINTRESOURCEW(IDR_MENU);
    wc.lpszClassName = appName.data( );
@@ -27,43 +27,43 @@ int WINAPI wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE hPrevInst, _In_ PWS
       return E_FAIL;
    }
 
-   static std::wstring appTitle { L"A C++ Monderized Realistic Windows Skeleton Application" };
+   static std::wstring appTitle { L"A C++ Monderized Realistic Windows© Skeleton Application" };
 
-   HWND hwnd { CreateWindowW(appName.data( ), appTitle.data( ),
-                             WS_OVERLAPPEDWINDOW,
-                             CW_USEDEFAULT, CW_USEDEFAULT,
-                             CW_USEDEFAULT, CW_USEDEFAULT,
-                             nullptr, nullptr, hInst, nullptr) };
+   HWND wnd { CreateWindowW(appName.data( ), appTitle.data( ),
+                            WS_OVERLAPPEDWINDOW,
+                            CW_USEDEFAULT, CW_USEDEFAULT,
+                            CW_USEDEFAULT, CW_USEDEFAULT,
+                            nullptr, nullptr, inst, nullptr) };
 
-   if ( nullptr == hwnd )
+   if ( nullptr == wnd )
    {
       MessageBoxW(nullptr, L"Unable to Create the Main Window!", appName.data( ), MB_OK | MB_ICONERROR);
       return E_FAIL;
    }
 
-   ShowWindow(hwnd, cmdShow);
-   UpdateWindow(hwnd);
+   ShowWindow(wnd, cmdShow);
+   UpdateWindow(wnd);
 
-   HACCEL hAccel { LoadAcceleratorsW(hInst, MAKEINTRESOURCEW(IDR_ACCEL)) };
+   HACCEL accel { LoadAcceleratorsW(inst, MAKEINTRESOURCEW(IDR_ACCEL)) };
 
-   if ( nullptr == hAccel )
+   if ( nullptr == accel )
    {
       MessageBoxW(nullptr, L"Unable to Load the Accelerators!", appName.data( ), MB_OK | MB_ICONERROR);
    }
 
-   static BOOL bRet;
+   static BOOL ret;
    static MSG  msg;
 
-   while ( (bRet = GetMessageW(&msg, nullptr, 0, 0)) != 0 ) // 0 = WM_QUIT
+   while ( (ret = GetMessageW(&msg, nullptr, 0, 0)) != 0 ) // 0 = WM_QUIT
    {
-      if ( -1 == bRet )
+      if ( -1 == ret )
       {
          MessageBoxW(nullptr, L"Unable to Continue!", appName.data( ), MB_OK | MB_ICONERROR);
          return E_FAIL;
       }
       else
       {
-         if (SUCCEEDED(TranslateAcceleratorW(hwnd, hAccel, &msg)) )
+         if (SUCCEEDED(TranslateAcceleratorW(wnd, accel, &msg)) )
          {
             TranslateMessage(&msg);
             DispatchMessageW(&msg);
@@ -74,7 +74,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE hPrevInst, _In_ PWS
    return (int) msg.wParam;
 }
 
-LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
    switch ( msg )
    {
@@ -87,14 +87,14 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
          return S_OK;
 
       case IDM_HELP_ABOUT:
-         DialogBoxW((HINSTANCE) GetWindowLongPtrW(hwnd, GWLP_HINSTANCE), MAKEINTRESOURCEW(IDD_ABOUT), hwnd, (DLGPROC) DlgProc);
+         DialogBoxW((HINSTANCE) GetWindowLongPtrW(wnd, GWLP_HINSTANCE), MAKEINTRESOURCEW(IDD_ABOUT), wnd, (DLGPROC) DlgProc);
 
          return S_OK;
       }
       break;
 
    case WM_CREATE:
-      SetClassLongPtrW(hwnd, GCLP_HCURSOR,
+      SetClassLongPtrW(wnd, GCLP_HCURSOR,
                        (LONG64) LoadImageW(GetModuleHandleW(nullptr), MAKEINTRESOURCEW(IDC_CURSOR), IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR));
 
       return S_OK;
@@ -102,15 +102,14 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
    case WM_PAINT:
    {
       PAINTSTRUCT ps;
-      HDC         hdc = BeginPaint(hwnd, &ps);
+      HDC         dc = BeginPaint(wnd, &ps);
+      RECT        rect;
 
-      RECT rect;
+      GetClientRect(wnd, &rect);
 
-      GetClientRect(hwnd, &rect);
+      DrawTextW(dc, L"This is a C++ modernized realistic skeletal Windows® application!", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
-      DrawTextW(hdc, L"This is a C++ modernized realistic skeletal Windows® application!", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
-
-      EndPaint(hwnd, &ps);
+      EndPaint(wnd, &ps);
 
       return S_OK;
    }
@@ -121,7 +120,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       return S_OK;
    }
 
-   return DefWindowProcW(hwnd, msg, wParam, lParam);
+   return DefWindowProcW(wnd, msg, wParam, lParam);
 }
 
 BOOL CALLBACK DlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)

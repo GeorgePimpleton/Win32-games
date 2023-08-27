@@ -1,11 +1,9 @@
-// 1-4 Skeleton Minimal.cpp - minimal Windows skeleton source
-
 #include <windows.h>
 #include "resource.h"
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
-int WINAPI wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE hPrevInst, _In_ PWSTR cmdLine, _In_ int winMode)
+int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int winMode)
 {
    static const WCHAR appName[ ] { L"Skeleton" };
    WNDCLASSEXW        wc         { };
@@ -15,9 +13,9 @@ int WINAPI wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE hPrevInst, _In_ PWS
    wc.lpfnWndProc   = WndProc;
    wc.cbClsExtra    = 0;
    wc.cbWndExtra    = 0;
-   wc.hInstance     = hInst;
-   wc.hIcon         = (HICON)   LoadImageW(hInst, MAKEINTRESOURCEW(IDI_SKELETON), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
-   wc.hIconSm       = (HICON)   LoadImageW(hInst, MAKEINTRESOURCEW(IDI_SKELETON_SM), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
+   wc.hInstance     = inst;
+   wc.hIcon         = (HICON)   LoadImageW(inst, MAKEINTRESOURCEW(IDI_SKELETON), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
+   wc.hIconSm       = (HICON)   LoadImageW(inst, MAKEINTRESOURCEW(IDI_SKELETON_SM), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
    wc.hCursor       = (HCURSOR) LoadImageW(NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
    wc.hbrBackground = (HBRUSH)  (COLOR_WINDOW + 1);
    wc.lpszMenuName  = NULL;
@@ -31,20 +29,20 @@ int WINAPI wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE hPrevInst, _In_ PWS
       return E_FAIL;
    }
 
-   HWND hwnd { CreateWindowW(appName, L"Minimal Windows Skeleton Application",
-                             WS_OVERLAPPEDWINDOW,
-                             CW_USEDEFAULT, CW_USEDEFAULT,
-                             CW_USEDEFAULT, CW_USEDEFAULT,
-                             NULL, NULL, hInst, NULL) };
+   HWND wnd { CreateWindowW(appName, L"Minimal Windows Skeleton Application",
+                            WS_OVERLAPPEDWINDOW,
+                            CW_USEDEFAULT, CW_USEDEFAULT,
+                            CW_USEDEFAULT, CW_USEDEFAULT,
+                            NULL, NULL, inst, NULL) };
 
-   if ( NULL == hwnd )
+   if ( NULL == wnd )
    {
       MessageBoxW(NULL, L"Unable to Create the Main Window!", appName, MB_OK | MB_ICONERROR);
       return E_FAIL;
    }
 
-   ShowWindow(hwnd, winMode);
-   UpdateWindow(hwnd);
+   ShowWindow(wnd, winMode);
+   UpdateWindow(wnd);
 
    MSG msg;
 
@@ -57,22 +55,22 @@ int WINAPI wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE hPrevInst, _In_ PWS
    return (int) msg.wParam;
 }
 
-LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
    switch ( msg )
    {
    case WM_PAINT:
    {
       PAINTSTRUCT ps;
-      HDC         hDC = BeginPaint(hwnd, &ps);
+      HDC         dc = BeginPaint(wnd, &ps);
 
       RECT rect;
 
-      GetClientRect(hwnd, &rect);
+      GetClientRect(wnd, &rect);
 
-      DrawTextW(hDC, L"This is a minimal Windows skeleton application!", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+      DrawTextW(dc, L"This is a minimal Windows© skeleton application!", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
-      EndPaint(hwnd, &ps);
+      EndPaint(wnd, &ps);
       return S_OK;
    }
 
@@ -81,5 +79,5 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       return S_OK;
    }
 
-   return DefWindowProcW(hwnd, msg, wParam, lParam);
+   return DefWindowProcW(wnd, msg, wParam, lParam);
 }

@@ -1,6 +1,4 @@
-﻿// test chassis for the random toolkit
-
-// requires C++20 for the following code, the toolkit header doesn't
+﻿// requires C++20 for the following code, the toolkit header doesn't
 
 #include <array>
 #include <iostream>
@@ -66,10 +64,10 @@ int main( )
    }
    std::cout << "\n\n";
 
-   // let's try to create a bad distribution
+   // let's try to create several bad distributions
    // setting warning level 4 causes VS to 'warn' about uninitialized variables
-   std::cout << "Creating a bad random distribution, it should be be\n";
-   std::cout << "encapsulated within a try/catch block.  Unless you want to crash.\n";
+   std::cout << "Creating bad random distributions, they should be be\n";
+   std::cout << "encapsulated within try/catch blocks.  Unless you want to crash.\n";
 
    try
    {
@@ -101,6 +99,15 @@ int main( )
    try
    {
       double dtest2 { rtk::rand_rl(5.3, 2.8) };
+   }
+   catch ( const std::exception& e )
+   {
+      std::cerr << "\n>>> A standard exception was caught, with message '" << e.what( ) << "'\n";
+   }
+
+   try
+   {
+      double dtest3 { rtk::rand(5.3, 5.3) };
    }
    catch ( const std::exception& e )
    {

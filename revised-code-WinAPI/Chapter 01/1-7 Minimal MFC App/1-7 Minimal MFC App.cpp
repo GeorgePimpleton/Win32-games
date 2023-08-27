@@ -1,6 +1,9 @@
-// 1-7 MinimalMFCApp.cpp - a minimal MFC program
+// a minimal MFC program
 
 #include "1-7 Minimal MFC App.hpp"
+
+// instantiate the application
+CTheApp theApp;
 
 // construct a window
 CMainWnd::CMainWnd( )
@@ -27,7 +30,7 @@ END_MESSAGE_MAP( )
 // draw some text centered in the client area
 void CMainWnd::OnPaint( )
 {
-   CRect    rect;
+   CRect rect;
 
    GetClientRect(&rect);
 
@@ -35,6 +38,3 @@ void CMainWnd::OnPaint( )
 
    dc.DrawTextW(L"Hello, MFC!", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 }
-
-// instantiate the application
-CTheApp  theApp;

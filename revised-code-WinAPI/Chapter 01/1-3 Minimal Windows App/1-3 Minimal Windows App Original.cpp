@@ -1,4 +1,4 @@
-// 1-3 Minimal Windows App Original.cpp - a very minimal Windows API application skeleton
+// 1-3 Minimal Windows© App Original.cpp - a very minimal Windows© API application skeleton
 
 // INCLUDES ====================================================================
 #include <windows.h>
@@ -6,7 +6,7 @@
 // FUNCTION PROTOTYPES =========================================================
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
-// entry point for a Windows application =======================================
+// entry point for a Windows© application =======================================
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int nWinMode)
 {
    // define the window class name
@@ -63,18 +63,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
       DispatchMessageW(&msg);
    }
 
-   // the app is done, exit normally, return control to Windows
+   // the app is done, exit normally, return control to Windows©
    return msg.wParam;
 }
 
-// processes the messages that Windows sends to the application ================
+// processes the messages that Windows© sends to the application ================
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
    HDC         hdc;
    PAINTSTRUCT ps;
    RECT        rect;
 
-   // choose which Windows messages you want to use
+   // choose which Windows© messages you want to use
    switch ( message )
    {
    case WM_PAINT:
@@ -82,7 +82,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
       // draw some text centered in the client area
       GetClientRect(hwnd, &rect);
-      DrawText(hdc, TEXT("Hello, Windows!"), -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+      DrawText(hdc, TEXT("Hello, Windows©!"), -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
       EndPaint(hwnd, &ps);
       return 0;
@@ -93,6 +93,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
       return 0;
    }
 
-   // let Windows process any unhandled messages
+   // let Windows© process any unhandled messages
    return DefWindowProc(hwnd, message, wParam, lParam);
 }
