@@ -1,126 +1,122 @@
-// "Talk to me like I'm a 3 year old!" Programming Lessons - Windows Games
-
-// UFO 2.cpp - Game Source
-
 #include "UFO 2.hpp"
 
-HRESULT GameInitialize(HINSTANCE hInstance)
+HRESULT GameInitialize(HINSTANCE hInst)
 {
-   g_pGame = std::make_unique<GameEngine>(hInstance, L"UFO 2", L"Improving Input with Joysticks",
-                                          IDI_ICON, IDI_ICON_SM, 500, 400);
+   g_game = std::make_unique<GameEngine>(hInst, L"UFO 2", L"Improving Input with Joysticks",
+                                         IDI_ICON, IDI_ICON_SM, 500, 400);
 
-   if (g_pGame == NULL)
+   if ( NULL == g_game )
    {
       return E_FAIL;
    }
 
-   g_pGame->SetFrameRate(30);
+   g_game->SetFrameRate(30);
 
    // initialize the joystick
-   g_pGame->InitJoystick();
+   g_game->InitJoystick( );
 
    return S_OK;
 }
 
-void GameStart(HWND hWindow)
+void GameStart(HWND hwnd)
 {
-   rtk::srand();
+   rtk::srand( );
 
    // create and load the background and saucer bitmaps
-   HINSTANCE hInstance = g_pGame->GetInstance();
+   HINSTANCE hInst = g_game->GetInstance( );
 
-   g_pBackground = std::make_unique<Bitmap>(IDB_BACKGROUND, hInstance);
-   g_pSaucer[0]  = std::make_unique<Bitmap>(IDB_SAUCER, hInstance);
-   g_pSaucer[1]  = std::make_unique<Bitmap>(IDB_SAUCERFLAME, hInstance);
+   g_background  = std::make_unique<Bitmap>(IDB_BACKGROUND, hInst);
+   g_saucer[ 0 ] = std::make_unique<Bitmap>(IDB_SAUCER, hInst);
+   g_saucer[ 1 ] = std::make_unique<Bitmap>(IDB_SAUCERFLAME, hInst);
 
    // set the initial saucer position and speed
-   g_iSaucerX = 250 - (g_pSaucer[0]->GetWidth() / 2);
-   g_iSaucerY = 200 - (g_pSaucer[0]->GetHeight() / 2);
-   g_iSpeedX  = 0;
-   g_iSpeedY  = 0;
+   g_saucerX = 250 - (g_saucer[ 0 ]-> GetWidth( ) / 2);
+   g_saucerY = 200 - (g_saucer[ 0 ]-> GetHeight( ) / 2);
+   g_speedX  = 0;
+   g_speedY  = 0;
 }
 
-void GameEnd()
+void GameEnd( )
 {
 }
 
-void GameActivate(HWND hWindow)
+void GameActivate(HWND hwnd)
 {
    // capture the joystick
-   g_pGame->CaptureJoystick();
+   g_game->CaptureJoystick( );
 }
 
-void GameDeactivate(HWND hWindow)
+void GameDeactivate(HWND hwnd)
 {
    // release the joystick
-   g_pGame->ReleaseJoystick();
+   g_game->ReleaseJoystick( );
 }
 
 void GamePaint(HDC hDC)
 {
-   g_pBackground->Draw(hDC, 0, 0);
-   g_pSaucer[g_bSaucerFlame ? 1 : 0]->Draw(hDC, g_iSaucerX, g_iSaucerY, TRUE);
+   g_background->Draw(hDC, 0, 0);
+   g_saucer[ g_saucerFlame ? 1 : 0 ]->Draw(hDC, g_saucerX, g_saucerY, TRUE);
 }
 
-void GameCycle()
+void GameCycle( )
 {
-   g_iSaucerX = min(500 - (LONG) g_pSaucer[0]->GetWidth(), max(0, g_iSaucerX + g_iSpeedX));
-   g_iSaucerY = min(320, max(0, g_iSaucerY + g_iSpeedY));
+   g_saucerX = min(500 - (LONG) g_saucer[ 0 ]->GetWidth( ), max(0, g_saucerX + g_speedX));
+   g_saucerY = min(320, max(0, g_saucerY + g_speedY));
 
-   InvalidateRect(g_pGame->GetWindow(), NULL, FALSE);
+   InvalidateRect(g_game->GetWindow( ), NULL, FALSE);
 }
 
 void GameMenu(WPARAM wParam)
 {
-   switch (LOWORD(wParam))
+   switch ( LOWORD(wParam) )
    {
    case IDM_GAME_EXIT:
-      GameEnd();
+      GameEnd( );
       PostQuitMessage(0);
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW(g_pGame->GetInstance(), MAKEINTRESOURCEW(IDD_ABOUT), g_pGame->GetWindow(), (DLGPROC) DlgProc);
+      DialogBoxW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT), g_game->GetWindow( ), (DLGPROC) DlgProc);
       return;
    }
 }
 
-void HandleKeys()
+void HandleKeys( )
 {
-   if (GetAsyncKeyState(VK_LEFT) < 0)
+   if ( GetAsyncKeyState(VK_LEFT) < 0 )
    {
-      g_iSpeedX = max(-g_iMAXSPEED, --g_iSpeedX);
+      g_speedX = max(-g_MAXSPEED, --g_speedX);
    }
-   else if (GetAsyncKeyState(VK_RIGHT) < 0)
+   else if ( GetAsyncKeyState(VK_RIGHT) < 0 )
    {
-      g_iSpeedX = min(g_iMAXSPEED, ++g_iSpeedX);
+      g_speedX = min(g_MAXSPEED, ++g_speedX);
    }
 
-   if (GetAsyncKeyState(VK_UP) < 0)
+   if ( GetAsyncKeyState(VK_UP) < 0 )
    {
-      g_iSpeedY = max(-g_iMAXSPEED, --g_iSpeedY);
+      g_speedY = max(-g_MAXSPEED, --g_speedY);
    }
-   else if (GetAsyncKeyState(VK_DOWN) < 0)
+   else if ( GetAsyncKeyState(VK_DOWN) < 0 )
    {
-      g_iSpeedY = min(g_iMAXSPEED, ++g_iSpeedY);
+      g_speedY = min(g_MAXSPEED, ++g_speedY);
    }
 }
 
-void MouseButtonDown(LONG x, LONG y, BOOL bLeft)
+void MouseButtonDown(LONG x, LONG y, BOOL left)
 {
-   if (bLeft)
+   if ( left )
    {
-      g_iSaucerX = x - (g_pSaucer[0]->GetWidth() / 2);
-      g_iSaucerY = y - (g_pSaucer[0]->GetHeight() / 2);
+      g_saucerX = x - (g_saucer[ 0 ]->GetWidth( ) / 2);
+      g_saucerY = y - (g_saucer[ 0 ]->GetHeight( ) / 2);
    }
    else
    {
-      g_iSpeedX = 0;
-      g_iSpeedY = 0;
+      g_speedX = 0;
+      g_speedY = 0;
    }
 }
 
-void MouseButtonUp(LONG x, LONG y, BOOL bLeft)
+void MouseButtonUp(LONG x, LONG y, BOOL left)
 {
 }
 
@@ -129,36 +125,36 @@ void MouseMove(LONG x, LONG y)
 }
 
 // handles a joystick
-void HandleJoystick(JOYSTATE jsJoystickState)
+void HandleJoystick(JOYSTATE joyState)
 {
    // check horizontal movement
-   if (jsJoystickState & JOY_LEFT)
+   if ( joyState & JOY_LEFT )
    {
-      g_iSpeedX = max(-g_iMAXSPEED, g_iSpeedX - 2);
+      g_speedX = max(-g_MAXSPEED, g_speedX - 2);
    }
-   else if (jsJoystickState & JOY_RIGHT)
+   else if ( joyState & JOY_RIGHT )
    {
-      g_iSpeedX = min(g_iMAXSPEED, g_iSpeedX + 2);
+      g_speedX = min(g_MAXSPEED, g_speedX + 2);
    }
 
    // check vertical movement
-   if (jsJoystickState & JOY_UP)
+   if ( joyState & JOY_UP )
    {
-      g_iSpeedY = max(-g_iMAXSPEED, g_iSpeedY - 2);
+      g_speedY = max(-g_MAXSPEED, g_speedY - 2);
    }
-   else if (jsJoystickState & JOY_DOWN)
+   else if ( joyState & JOY_DOWN )
    {
-      g_iSpeedY = min(g_iMAXSPEED, g_iSpeedY + 2);
+      g_speedY = min(g_MAXSPEED, g_speedY + 2);
    }
 
    // check primary joystick button
-   g_bSaucerFlame = (jsJoystickState & JOY_FIRE1);
+   g_saucerFlame = (joyState & JOY_FIRE1);
 
    // check secondary joystick button
-   if (jsJoystickState & JOY_FIRE2)
+   if ( joyState & JOY_FIRE2 )
    {
       // force the flying saucer into hyperspace
-      g_iSaucerX = rtk::rand(0, (500 - g_pSaucer[0]->GetWidth()));
-      g_iSaucerY = rtk::rand(0, (400 - g_pSaucer[0]->GetHeight()));
+      g_saucerX = rtk::rand(0, (500 - g_saucer[ 0 ]->GetWidth( )));
+      g_saucerY = rtk::rand(0, (400 - g_saucer[ 0 ]->GetHeight( )));
    }
 }

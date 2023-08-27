@@ -1,18 +1,14 @@
-// "Talk to me like I'm a 3 year old!" Programming Lessons - Windows Games
-
-// UFO 2.cpp - Game Source
-
 #pragma once
 
 #include "Bitmap.hpp"
 #include "GameEngine.hpp"
 
-std::unique_ptr<GameEngine> g_pGame;
-std::unique_ptr<Bitmap>     g_pBackground;
-std::unique_ptr<Bitmap>     g_pSaucer[2];
-BOOL                        g_bSaucerFlame;
-const LONG                  g_iMAXSPEED { 8 };
-LONG                        g_iSaucerX;
-LONG                        g_iSaucerY;
-LONG                        g_iSpeedX;
-LONG                        g_iSpeedY;
+std::unique_ptr<GameEngine> g_game;
+std::unique_ptr<Bitmap>     g_background;
+std::unique_ptr<Bitmap>     g_saucer[2];
+BOOL                        g_saucerFlame;
+const LONG                  g_MAXSPEED { 8 };
+LONG                        g_saucerX;
+LONG                        g_saucerY;
+LONG                        g_speedX;
+LONG                        g_speedY;
