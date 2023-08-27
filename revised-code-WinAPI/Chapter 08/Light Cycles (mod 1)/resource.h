@@ -1,7 +1,3 @@
-   // "Talk to me like I'm a 3 year old!" Programming Lessons - Windows Games
-
-// resource.h - Resource IDs
-
 #pragma once
 
 #define IDI_ICON            1001

@@ -1,7 +1,3 @@
-// "Talk to me like I'm a 3 year old!" Programming Lessons - Windows Games
-
-// Light Cycles.hpp - Light Cycles Header
-
 #pragma once
 
 #include <windows.h>
@@ -9,18 +5,18 @@
 #include "GameEngine.hpp"
 #include "Bitmap.hpp"
 
-std::unique_ptr<GameEngine> g_pGame;
-std::unique_ptr<Bitmap>     g_pBackground;
-std::unique_ptr<Bitmap>     g_pCycle[2][4];
-POINT                       g_ptCyclePos[2];
-POINT                       g_ptCycleSpeed[2];
-POINT                       g_ptCycleTrail[2][100];
-int                         g_iTrailLen[2];
-const int                   g_iSPEED { 4 };
-BOOL                        g_bGameOver;
+std::unique_ptr<GameEngine> g_game;
+std::unique_ptr<Bitmap>     g_background;
+std::unique_ptr<Bitmap>     g_cycle[ 2 ][ 4 ];
+POINT                       g_cyclePos[ 2 ];
+POINT                       g_cycleSpeed[ 2 ];
+POINT                       g_cycleTrail[ 2 ][ 100 ];
+int                         g_trailLength[ 2 ];
+const int                   g_SPEED { 4 };
+BOOL                        g_gameOver;
 
 // game specific functions
-void NewGame();
-void UpdateCycles();
-void SteerCycle(int iCycle, int iDirection);
-void EndGame(int iCycle);
+void NewGame( );
+void UpdateCycles( );
+void SteerCycle(int cycle, int direction);
+void EndGame(int cycle);
