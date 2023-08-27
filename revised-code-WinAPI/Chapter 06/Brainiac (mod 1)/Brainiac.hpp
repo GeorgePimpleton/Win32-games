@@ -6,11 +6,11 @@
 #include "Bitmap.hpp"
 #include "GameEngine.hpp"
 
-std::unique_ptr<GameEngine>          g_pGame;
-std::vector<std::unique_ptr<Bitmap>> g_pTiles(9);
-BOOL                                 g_bTileStates[ 4 ][ 4 ];
-INT                                  g_iTiles[ 4 ][ 4 ];
-UINT                                 g_iMatches;
-UINT                                 g_iTries;
-POINT                                g_ptTile1;
-POINT                                g_ptTile2;
+std::unique_ptr<GameEngine>          g_game;
+std::vector<std::unique_ptr<Bitmap>> g_tiles(9);
+BOOL                                 g_tileState[ 4 ][ 4 ];
+INT                                  g_tile[ 4 ][ 4 ];
+UINT                                 g_matches;
+UINT                                 g_tries;
+POINT                                g_tile1;
+POINT                                g_tile2;

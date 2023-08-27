@@ -1,44 +1,44 @@
 #include "Brainiac.hpp"
 
-HRESULT GameInitialize(HINSTANCE hInstance)
+HRESULT GameInitialize(HINSTANCE hInst)
 {
-   g_pGame = std::make_unique<GameEngine>(hInstance, L"Brainiac", L"Example Game: Brainiac",
-                                          IDI_ICON, IDI_ICON_SM, 528, 508);
+   g_game = std::make_unique<GameEngine>(hInst, L"Brainiac", L"Example Game: Brainiac",
+                                         IDI_ICON, IDI_ICON_SM, 528, 508);
 
-   if ( g_pGame == nullptr )
+   if ( nullptr == g_game )
    {
       return E_FAIL;
    }
 
    // set the frame rate
-   g_pGame->SetFrameRate(1);
+   g_game->SetFrameRate(1);
 
    return S_OK;
 }
 
-void GameStart(HWND hWindow)
+void GameStart(HWND hwnd)
 {
    rtk::srand();
 
-   HINSTANCE hInstance { g_pGame->GetInstance() };
+   HINSTANCE hInst { g_game->GetInstance() };
 
-   g_pTiles[ 0 ] = std::make_unique<Bitmap>(IDB_TILEBLANK, hInstance);
-   g_pTiles[ 1 ] = std::make_unique<Bitmap>(IDB_TILE1, hInstance);
-   g_pTiles[ 2 ] = std::make_unique<Bitmap>(IDB_TILE2, hInstance);
-   g_pTiles[ 3 ] = std::make_unique<Bitmap>(IDB_TILE3, hInstance);
-   g_pTiles[ 4 ] = std::make_unique<Bitmap>(IDB_TILE4, hInstance);
-   g_pTiles[ 5 ] = std::make_unique<Bitmap>(IDB_TILE5, hInstance);
-   g_pTiles[ 6 ] = std::make_unique<Bitmap>(IDB_TILE6, hInstance);
-   g_pTiles[ 7 ] = std::make_unique<Bitmap>(IDB_TILE7, hInstance);
-   g_pTiles[ 8 ] = std::make_unique<Bitmap>(IDB_TILE8, hInstance);
+   g_tiles[ 0 ] = std::make_unique<Bitmap>(IDB_TILEBLANK, hInst);
+   g_tiles[ 1 ] = std::make_unique<Bitmap>(IDB_TILE1, hInst);
+   g_tiles[ 2 ] = std::make_unique<Bitmap>(IDB_TILE2, hInst);
+   g_tiles[ 3 ] = std::make_unique<Bitmap>(IDB_TILE3, hInst);
+   g_tiles[ 4 ] = std::make_unique<Bitmap>(IDB_TILE4, hInst);
+   g_tiles[ 5 ] = std::make_unique<Bitmap>(IDB_TILE5, hInst);
+   g_tiles[ 6 ] = std::make_unique<Bitmap>(IDB_TILE6, hInst);
+   g_tiles[ 7 ] = std::make_unique<Bitmap>(IDB_TILE7, hInst);
+   g_tiles[ 8 ] = std::make_unique<Bitmap>(IDB_TILE8, hInst);
 
    // clear the tile states and images
    for ( UINT i { }; i < 4; i++ )
    {
       for ( UINT j { }; j < 4; j++ )
       {
-         g_bTileStates[ i ][ j ] = FALSE;
-         g_iTiles[ i ][ j ] = 0;
+         g_tileState[ i ][ j ] = FALSE;
+         g_tile[ i ][ j ]      = 0;
       }
    }
 
@@ -50,55 +50,55 @@ void GameStart(HWND hWindow)
          int x = rtk::rand(0, 3);
          int y = rtk::rand(0, 3);
 
-         while ( g_iTiles[ x ][ y ] != 0 )
+         while ( g_tile[ x ][ y ] != 0 )
          {
             x = rtk::rand(0, 3);
             y = rtk::rand(0, 3);
          }
 
-         g_iTiles[ x ][ y ] = j;
+         g_tile[ x ][ y ] = j;
       }
    }
 
    // initialize the tile selections and match/try count
-   g_ptTile1.x = g_ptTile1.y = -1;
-   g_ptTile2.x = g_ptTile2.y = -1;
-   g_iMatches = g_iTries = 0;
+   g_tile1.x = g_tile1.y = -1;
+   g_tile2.x = g_tile2.y = -1;
+   g_matches = g_tries   = 0;
 }
 
-void GameEnd()
+void GameEnd( )
 { }
 
-void GameActivate(HWND hWindow)
+void GameActivate(HWND hwnd)
 { }
 
-void GameDeactivate(HWND hWindow)
+void GameDeactivate(HWND hwnd)
 { }
 
 void GamePaint(HDC hDC)
 {
    // draw the tiles
-   UINT iTileWidth { (UINT) g_pTiles[ 0 ]->GetWidth() };
-   UINT iTileHeight { (UINT) g_pTiles[ 0 ]->GetHeight() };
+   UINT tileWidth  { (UINT) g_tiles[ 0 ]->GetWidth() };
+   UINT tileHeight { (UINT) g_tiles[ 0 ]->GetHeight() };
 
    for ( UINT i { }; i < 4; i++ )
    {
       for ( UINT j { }; j < 4; j++ )
       {
-         if ( g_bTileStates[ i ][ j ] || ((i == g_ptTile1.x) && (j == g_ptTile1.y)) ||
-             ((i == g_ptTile2.x) && (j == g_ptTile2.y)) )
+         if ( g_tileState[ i ][ j ] || ((i == g_tile1.x) && (j == g_tile1.y)) ||
+             ((i == g_tile2.x) && (j == g_tile2.y)) )
          {
-            g_pTiles[ g_iTiles[ i ][ j ] ]->Draw(hDC, i * iTileWidth, j * iTileHeight, TRUE);
+            g_tiles[ g_tile[ i ][ j ] ]->Draw(hDC, i * tileWidth, j * tileHeight, TRUE);
          }
          else
          {
-            g_pTiles[ 0 ]->Draw(hDC, i * iTileWidth, j * iTileHeight, TRUE);
+            g_tiles[ 0 ]->Draw(hDC, i * tileWidth, j * tileHeight, TRUE);
          }
       }
    }
 }
 
-void GameCycle()
+void GameCycle( )
 { }
 
 void GameMenu(WPARAM wParam)
@@ -111,76 +111,76 @@ void GameMenu(WPARAM wParam)
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW(g_pGame->GetInstance(), MAKEINTRESOURCEW(IDD_ABOUT), g_pGame->GetWindow(), (DLGPROC) DlgProc);
+      DialogBoxW(g_game->GetInstance(), MAKEINTRESOURCEW(IDD_ABOUT), g_game->GetWindow(), (DLGPROC) DlgProc);
       return;
    }
 }
 
-void HandleKeys()
+void HandleKeys( )
 { }
 
-void MouseButtonDown(LONG x, LONG y, BOOL bLeft)
+void MouseButtonDown(LONG x, LONG y, BOOL left)
 {
    // determine which tile was clicked
-   int iTileX = x / g_pTiles[ 0 ]->GetWidth();
-   int iTileY = y / g_pTiles[ 0 ]->GetHeight();
+   int tileX = x / g_tiles[ 0 ]->GetWidth();
+   int tileY = y / g_tiles[ 0 ]->GetHeight();
 
    // make sure the tile hasn't already been matched
-   if ( !g_bTileStates[ iTileX ][ iTileY ] )
+   if ( !g_tileState[ tileX ][ tileY ] )
    {
       // see if this is the first tile selected
-      if ( g_ptTile1.x == -1 )
+      if ( g_tile1.x == -1 )
       {
          // set the first tile selection
-         g_ptTile1.x = iTileX;
-         g_ptTile1.y = iTileY;
+         g_tile1.x = tileX;
+         g_tile1.y = tileY;
       }
-      else if ( (iTileX != g_ptTile1.x) || (iTileY != g_ptTile1.y) )
+      else if ( (tileX != g_tile1.x) || (tileY != g_tile1.y) )
       {
-         if ( g_ptTile2.x == -1 )
+         if ( g_tile2.x == -1 )
          {
             // increase the number of tries
-            g_iTries++;
+            g_tries++;
 
             // set the second tile selection
-            g_ptTile2.x = iTileX;
-            g_ptTile2.y = iTileY;
+            g_tile2.x = tileX;
+            g_tile2.y = tileY;
 
             // see if it's a match
-            if ( g_iTiles[ g_ptTile1.x ][ g_ptTile1.y ] == g_iTiles[ g_ptTile2.x ][ g_ptTile2.y ] )
+            if ( g_tile[ g_tile1.x ][ g_tile1.y ] == g_tile[ g_tile2.x ][ g_tile2.y ] )
             {
                // set the tile state to indicate the match
-               g_bTileStates[ g_ptTile1.x ][ g_ptTile1.y ] = TRUE;
-               g_bTileStates[ g_ptTile2.x ][ g_ptTile2.y ] = TRUE;
+               g_tileState[ g_tile1.x ][ g_tile1.y ] = TRUE;
+               g_tileState[ g_tile2.x ][ g_tile2.y ] = TRUE;
 
                // clear the tile selections
-               g_ptTile1.x = g_ptTile1.y = g_ptTile2.x = g_ptTile2.y = -1;
+               g_tile1.x = g_tile1.y = g_tile2.x = g_tile2.y = -1;
 
                // update the match count
-               ++g_iMatches;
+               ++g_matches;
             }
          }
          else
          {
             // clear the tile selections
-            g_ptTile1.x = g_ptTile1.y = g_ptTile2.x = g_ptTile2.y = -1;
+            g_tile1.x = g_tile1.y = g_tile2.x = g_tile2.y = -1;
          }
       }
 
       // force a repaint to update the tile
-      InvalidateRect(g_pGame->GetWindow(), nullptr, FALSE);
+      InvalidateRect(g_game->GetWindow(), nullptr, FALSE);
 
       // check for winner
-      if ( g_iMatches == 8 )
+      if ( g_matches == 8 )
       {
          WCHAR szText[ 64 ];
-         wsprintfW(szText, L"You won in %d tries.", g_iTries);
-         MessageBoxW(g_pGame->GetWindow(), szText, L"Brainiac", MB_OK);
+         wsprintfW(szText, L"You won in %d tries.", g_tries);
+         MessageBoxW(g_game->GetWindow(), szText, L"Brainiac", MB_OK);
       }
    }
 }
 
-void MouseButtonUp(LONG x, LONG y, BOOL bLeft)
+void MouseButtonUp(LONG x, LONG y, BOOL left)
 { }
 
 void MouseMove(LONG x, LONG y)
