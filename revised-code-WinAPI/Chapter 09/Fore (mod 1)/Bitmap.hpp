@@ -1,7 +1,3 @@
-// "Talk to me like I'm a 3 year old!" Programming Lessons - Windows Games
-
-// Bitmap.hpp - Bitmap Header
-
 #pragma once
 
 #include <windows.h>
@@ -9,39 +5,39 @@
 class Bitmap
 {
 public:
-            Bitmap();
-            Bitmap(PCWSTR szFileName);
-            Bitmap(UINT uiResID, HINSTANCE hInstance);
-            Bitmap(HWND hWnd, LONG iWidth, LONG iHeight, COLORREF crColor = RGB(0, 0, 0));
-   virtual ~Bitmap();
+            Bitmap( );
+            Bitmap(PCWSTR fileName);
+            Bitmap(UINT resID, HINSTANCE inst);
+            Bitmap(HWND wnd, LONG width, LONG height, COLORREF color = RGB(0, 0, 0));
+   virtual ~Bitmap( );
 
 public:
-   BOOL Create(PCWSTR szFileName);
-   BOOL Create(UINT uiResID, HINSTANCE hInstance);
-   BOOL Create(HWND hWnd, LONG iWidth, LONG iHeight, COLORREF crColor);
+   BOOL Create(PCWSTR fileName);
+   BOOL Create(UINT resID, HINSTANCE inst);
+   BOOL Create(HWND wnd, LONG width, LONG height, COLORREF color);
 
 public:
-   void Draw(HDC hDC, int x, int y, BOOL bTrans = FALSE, COLORREF crTransColor = RGB(255, 0, 255));
+   void Draw(HDC dc, int x, int y, BOOL trans = FALSE, COLORREF transColor = RGB(255, 0, 255));
 
 public:
-   LONG GetWidth();
-   LONG GetHeight();
+   LONG GetWidth( );
+   LONG GetHeight( );
 
 protected:
    void Free();
 
 protected:
-   HBITMAP m_hBitmap;
-   LONG    m_iWidth;
-   LONG    m_iHeight;
+   HBITMAP m_bitmap;
+   LONG    m_width;
+   LONG    m_height;
 };
 
-inline LONG Bitmap::GetWidth()
+inline LONG Bitmap::GetWidth( )
 {
-   return m_iWidth;
+   return m_width;
 };
 
-inline LONG Bitmap::GetHeight()
+inline LONG Bitmap::GetHeight( )
 {
-   return m_iHeight;
+   return m_height;
 };

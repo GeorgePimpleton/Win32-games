@@ -1,166 +1,161 @@
-// "Talk to me like I'm a 3 year old!" Programming Lessons - Windows Games
-
-// Sprite.cpp - Sprite Source
-
 #include "Sprite.hpp"
 
 using enum BOUNDSACTION;
 
-Sprite::Sprite(Bitmap* pBitmap)
+Sprite::Sprite(Bitmap* bitmap)
 {
    // Initialize the member variables
-   m_pBitmap.reset(pBitmap);
+   m_bitmap.reset(bitmap);
 
-   SetRect(&m_rcPosition, 0, 0, pBitmap->GetWidth(), pBitmap->GetHeight());
+   SetRect(&m_position, 0, 0, bitmap->GetWidth( ), bitmap->GetHeight( ));
 
-   m_ptVelocity.x = m_ptVelocity.y = 0;
-   m_iZOrder      = 0;
+   m_velocity.x = m_velocity.y = 0;
+   m_zOrder     = 0;
 
-   SetRect(&m_rcBounds, 0, 0, 640, 480);
+   SetRect(&m_bounds, 0, 0, 640, 480);
 
-   m_baBoundsAction = BA_STOP;
-   m_bHidden        = FALSE;
+   m_boundsAction = BA_STOP;
+   m_hidden       = FALSE;
 }
 
-Sprite::Sprite(Bitmap* pBitmap, RECT& rcBounds, BOUNDSACTION baBoundsAction)
+Sprite::Sprite(Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction)
 {
    // calculate a random position
-   int iXPos { rtk::rand(0, (rcBounds.right - rcBounds.left)) };
-   int iYPos { rtk::rand(0, (rcBounds.bottom - rcBounds.top)) };
+   int xPos { rtk::rand(0, (bounds.right - bounds.left)) };
+   int yPos { rtk::rand(0, (bounds.bottom - bounds.top)) };
 
    // initialize the member variables
-   m_pBitmap.reset(pBitmap);
+   m_bitmap.reset(bitmap);
 
-   SetRect(&m_rcPosition, iXPos, iYPos, iXPos + pBitmap->GetWidth(), iYPos + pBitmap->GetHeight());
+   SetRect(&m_position, xPos, yPos, xPos + bitmap->GetWidth( ), yPos + bitmap->GetHeight( ));
 
-   m_ptVelocity.x = m_ptVelocity.y = 0;
-   m_iZOrder      = 0;
+   m_velocity.x = m_velocity.y = 0;
+   m_zOrder     = 0;
 
-   CopyRect(&m_rcBounds, &rcBounds);
+   CopyRect(&m_bounds, &bounds);
 
-   m_baBoundsAction = baBoundsAction;
-   m_bHidden        = FALSE;
+   m_boundsAction = boundsAction;
+   m_hidden = FALSE;
 }
 
-Sprite::Sprite(Bitmap* pBitmap, POINT ptPosition, POINT ptVelocity, int iZOrder, RECT& rcBounds, BOUNDSACTION baBoundsAction)
+Sprite::Sprite(Bitmap* bitmap, POINT position, POINT velocity, int zOrder, RECT& bounds, BOUNDSACTION boundsAction)
 {
    // initialize the member variables
-   m_pBitmap.reset(pBitmap);
+   m_bitmap.reset(bitmap);
 
-   SetRect(&m_rcPosition, ptPosition.x, ptPosition.y, ptPosition.x + pBitmap->GetWidth(), ptPosition.y + pBitmap->GetHeight());
+   SetRect(&m_position, position.x, position.y, position.x + bitmap->GetWidth( ), position.y + bitmap->GetHeight( ));
 
-   m_ptVelocity = ptVelocity;
-   m_iZOrder    = iZOrder;
+   m_velocity = velocity;
+   m_zOrder   = zOrder;
 
-   CopyRect(&m_rcBounds, &rcBounds);
+   CopyRect(&m_bounds, &bounds);
 
-   m_baBoundsAction = baBoundsAction;
-   m_bHidden        = FALSE;
+   m_boundsAction = boundsAction;
+   m_hidden       = FALSE;
 }
 
-Sprite::~Sprite()
-{
-}
+Sprite::~Sprite( )
+{ }
 
-void Sprite::Update()
+void Sprite::Update( )
 {
    // update the position
-   POINT ptNewPosition;
-   POINT ptSpriteSize;
-   POINT ptBoundsSize;
+   POINT newPosition;
+   POINT spriteSize;
+   POINT boundsSize;
 
-   ptNewPosition.x = m_rcPosition.left + m_ptVelocity.x;
-   ptNewPosition.y = m_rcPosition.top  + m_ptVelocity.y;
+   newPosition.x = m_position.left + m_velocity.x;
+   newPosition.y = m_position.top + m_velocity.y;
 
-   ptSpriteSize.x = m_rcPosition.right  - m_rcPosition.left;
-   ptSpriteSize.y = m_rcPosition.bottom - m_rcPosition.top;
-   ptBoundsSize.x = m_rcBounds.right    - m_rcBounds.left;
-   ptBoundsSize.y = m_rcBounds.bottom   - m_rcBounds.top;
+   spriteSize.x = m_position.right  - m_position.left;
+   spriteSize.y = m_position.bottom - m_position.top;
+   boundsSize.x = m_bounds.right    - m_bounds.left;
+   boundsSize.y = m_bounds.bottom   - m_bounds.top;
 
    // check the bounds
    // wrap?
-   if (m_baBoundsAction == BA_WRAP)
+   if ( BA_WRAP == m_boundsAction )
    {
-      if ((ptNewPosition.x + ptSpriteSize.x) < m_rcBounds.left)
+      if ( (newPosition.x + spriteSize.x) < m_bounds.left )
       {
-         ptNewPosition.x = m_rcBounds.right;
+         newPosition.x = m_bounds.right;
       }
-      else if (ptNewPosition.x > m_rcBounds.right)
+      else if ( newPosition.x > m_bounds.right )
       {
-         ptNewPosition.x = m_rcBounds.left - ptSpriteSize.x;
+         newPosition.x = m_bounds.left - spriteSize.x;
       }
 
-      if ((ptNewPosition.y + ptSpriteSize.y) < m_rcBounds.top)
+      if ( (newPosition.y + spriteSize.y) < m_bounds.top )
       {
-         ptNewPosition.y = m_rcBounds.bottom;
+         newPosition.y = m_bounds.bottom;
       }
-      else if (ptNewPosition.y > m_rcBounds.bottom)
+      else if ( newPosition.y > m_bounds.bottom )
       {
-         ptNewPosition.y = m_rcBounds.top - ptSpriteSize.y;
+         newPosition.y = m_bounds.top - spriteSize.y;
       }
    }
    // bounce?
-   else if (m_baBoundsAction == BA_BOUNCE)
+   else if ( BA_BOUNCE == m_boundsAction )
    {
-      BOOL  bBounce       { FALSE };
-      POINT ptNewVelocity { m_ptVelocity };
+      BOOL  bounce      { FALSE };
+      POINT newVelocity { m_velocity };
 
-      if (ptNewPosition.x < m_rcBounds.left)
+      if ( newPosition.x < m_bounds.left )
       {
-         bBounce         = TRUE;
-         ptNewPosition.x = m_rcBounds.left;
-         ptNewVelocity.x = -ptNewVelocity.x;
+         bounce        = TRUE;
+         newPosition.x = m_bounds.left;
+         newVelocity.x = -newVelocity.x;
       }
-      else if ((ptNewPosition.x + ptSpriteSize.x) > m_rcBounds.right)
+      else if ( (newPosition.x + spriteSize.x) > m_bounds.right )
       {
-         bBounce         = TRUE;
-         ptNewPosition.x = m_rcBounds.right - ptSpriteSize.x;
-         ptNewVelocity.x = -ptNewVelocity.x;
-      }
-
-      if (ptNewPosition.y < m_rcBounds.top)
-      {
-         bBounce         = TRUE;
-         ptNewPosition.y = m_rcBounds.top;
-         ptNewVelocity.y = -ptNewVelocity.y;
-      }
-      else if ((ptNewPosition.y + ptSpriteSize.y) > m_rcBounds.bottom)
-      {
-         bBounce         = TRUE;
-         ptNewPosition.y = m_rcBounds.bottom - ptSpriteSize.y;
-         ptNewVelocity.y = -ptNewVelocity.y;
+         bounce        = TRUE;
+         newPosition.x = m_bounds.right - spriteSize.x;
+         newVelocity.x = -newVelocity.x;
       }
 
-      if (bBounce)
+      if ( newPosition.y < m_bounds.top )
       {
-         SetVelocity(ptNewVelocity);
+         bounce        = TRUE;
+         newPosition.y = m_bounds.top;
+         newVelocity.y = -newVelocity.y;
+      }
+      else if ( (newPosition.y + spriteSize.y) > m_bounds.bottom )
+      {
+         bounce        = TRUE;
+         newPosition.y = m_bounds.bottom - spriteSize.y;
+         newVelocity.y = -newVelocity.y;
+      }
+
+      if ( bounce )
+      {
+         SetVelocity(newVelocity);
       }
    }
    // stop (default)
    else
    {
-      if (ptNewPosition.x  < m_rcBounds.left || ptNewPosition.x >(m_rcBounds.right - ptSpriteSize.x))
+      if ( newPosition.x  < m_bounds.left || newPosition.x >(m_bounds.right - spriteSize.x) )
       {
-         ptNewPosition.x = max(m_rcBounds.left, min(ptNewPosition.x, m_rcBounds.right - ptSpriteSize.x));
+         newPosition.x = max(m_bounds.left, min(newPosition.x, m_bounds.right - spriteSize.x));
 
          SetVelocity(0, 0);
       }
-      if (ptNewPosition.y  < m_rcBounds.top || ptNewPosition.y >(m_rcBounds.bottom - ptSpriteSize.y))
+      if ( newPosition.y  < m_bounds.top || newPosition.y >(m_bounds.bottom - spriteSize.y) )
       {
-         ptNewPosition.y = max(m_rcBounds.top, min(ptNewPosition.y, m_rcBounds.bottom - ptSpriteSize.y));
+         newPosition.y = max(m_bounds.top, min(newPosition.y, m_bounds.bottom - spriteSize.y));
 
          SetVelocity(0, 0);
       }
    }
 
-   SetPosition(ptNewPosition);
+   SetPosition(newPosition);
 }
 
-void Sprite::Draw(HDC hDC)
+void Sprite::Draw(HDC dc)
 {
    // draw the sprite if it isn't hidden
-   if (m_pBitmap != NULL && !m_bHidden)
+   if ( m_bitmap != NULL && !m_hidden )
    {
-      m_pBitmap->Draw(hDC, m_rcPosition.left, m_rcPosition.top, TRUE);
+      m_bitmap->Draw(dc, m_position.left, m_position.top, TRUE);
    }
 }

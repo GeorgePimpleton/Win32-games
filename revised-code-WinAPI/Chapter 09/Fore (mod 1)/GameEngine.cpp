@@ -1,42 +1,38 @@
-// "Talk to me like I'm a 3 year old!" Programming Lessons - Windows Games
-
-// GameEngine.cpp -  Game Engine Source
-
 #pragma comment(lib, "winmm.lib")
 
 #include "GameEngine.hpp"
 
-std::unique_ptr<GameEngine> GameEngine::m_pGameEngine = NULL;
+std::unique_ptr<GameEngine> GameEngine::m_gameEngine = NULL;
 
-int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ PWSTR szCmdLine, int _In_ iCmdShow)
+int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, int _In_ cmdShow)
 {
-   if (GameInitialize(hInstance) == S_OK)
+   if ( GameInitialize(inst) == S_OK )
    {
-      if (GameEngine::GetEngine()->Initialize(iCmdShow) != S_OK)
+      if ( GameEngine::GetEngine( )->Initialize(cmdShow) != S_OK )
       {
          return E_FAIL;
       }
 
-      HACCEL hAccel { LoadAcceleratorsW(hInstance, MAKEINTRESOURCEW(IDR_ACCELERATORS)) };
+      HACCEL accel { LoadAcceleratorsW(inst, MAKEINTRESOURCEW(IDR_ACCELERATORS)) };
 
-      if (hAccel == NULL)
+      if ( NULL == accel )
       {
-         MessageBoxW(NULL, L"Unable to Load the Accelerators!", GameEngine::GetEngine()->GetTitle(), MB_OK | MB_ICONERROR);
+         MessageBoxW(NULL, L"Unable to Load the Accelerators!", GameEngine::GetEngine( )->GetTitle( ), MB_OK | MB_ICONERROR);
          return E_FAIL;
       }
 
       MSG msg;
 
-      while (TRUE)
+      while ( TRUE )
       {
-         if (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE) != 0)
+         if ( PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE) != 0 )
          {
-            if (msg.message == WM_QUIT)
+            if ( WM_QUIT == msg.message )
             {
                break;
             }
 
-            if (0 == TranslateAcceleratorW(GameEngine::GetEngine()->GetWindow(), hAccel, &msg))
+            if ( 0 == TranslateAcceleratorW(GameEngine::GetEngine( )->GetWindow( ), accel, &msg) )
             {
                TranslateMessage(&msg);
                DispatchMessageW(&msg);
@@ -44,42 +40,43 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
          }
          else
          {
-            if (GameEngine::GetEngine()->GetSleep() == FALSE)
+            if ( GameEngine::GetEngine( )->GetSleep( ) == FALSE )
             {
-               static ULONGLONG iTickTrigger { };
-               ULONGLONG        iTickCount   { GetTickCount64() };
+               static ULONGLONG tickTrigger { };
+               ULONGLONG        tickCount   { GetTickCount64( ) };
 
-               if (iTickCount > iTickTrigger)
+               if ( tickCount > tickTrigger )
                {
-                  iTickTrigger = iTickCount + GameEngine::GetEngine()->GetFrameDelay();
-                  HandleKeys();
-                  GameEngine::GetEngine()->CheckJoystick();
-                  GameCycle();
+                  tickTrigger = tickCount + GameEngine::GetEngine( )->GetFrameDelay( );
+                  HandleKeys( );
+                  GameEngine::GetEngine( )->CheckJoystick( );
+                  GameCycle( );
                }
             }
          }
       }
+
       return (int) msg.wParam;
    }
 
-   GameEnd();
+   GameEnd( );
    return S_OK;
 }
 
-LRESULT CALLBACK WndProc(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-   return GameEngine::GetEngine()->HandleEvent(hWindow, msg, wParam, lParam);
+   return GameEngine::GetEngine( )->HandleEvent(wnd, msg, wParam, lParam);
 }
 
-BOOL CALLBACK DlgProc(HWND hDialog, UINT message, WPARAM wParam, LPARAM lParam)
+BOOL CALLBACK DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-   switch (message)
+   switch ( msg )
    {
    case WM_COMMAND:
-      switch (LOWORD(wParam))
+      switch ( LOWORD(wParam) )
       {
       case IDOK:
-         EndDialog(hDialog, 0);
+         EndDialog(dlg, 0);
          return TRUE;
       }
    }
@@ -87,51 +84,50 @@ BOOL CALLBACK DlgProc(HWND hDialog, UINT message, WPARAM wParam, LPARAM lParam)
    return FALSE;
 }
 
-GameEngine::GameEngine(HINSTANCE hInstance, PCWSTR szWindowClass, PCWSTR szTitle,
-                       WORD wIcon, WORD wSmallIcon, UINT iWidth, UINT iHeight)
+GameEngine::GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
+                       WORD icon, WORD smallIcon, UINT width, UINT height)
 {
-   m_pGameEngine.reset(this);
+   m_gameEngine.reset(this);
 
-   m_hInstance      = hInstance;
-   m_hWindow        = NULL;
-   m_wIcon          = wIcon;
-   m_wSmallIcon     = wSmallIcon;
-   m_iWidth         = iWidth;
-   m_iHeight        = iHeight;
-   m_iFrameDelay    = 50;
-   m_bSleep         = TRUE;
-   m_uiJoystickID   = 0;
-   m_rcJoystickTrip = {};
+   m_inst       = inst;
+   m_wnd        = NULL;
+   m_icon       = icon;
+   m_smallIcon  = smallIcon;
+   m_width      = width;
+   m_height     = height;
+   m_frameDelay = 50;
+   m_sleep      = TRUE;
+   m_joyID      = 0;
+   m_joyTrip    = { };
 
    size_t  pcch { };
-   HRESULT hRes { StringCchLengthW(szWindowClass, str_length, &pcch) };
+   HRESULT hRes { StringCchLengthW(wndClass, str_length, &pcch) };
 
-   if (pcch > 0)
+   if ( pcch > 0 )
    {
-      StringCchCopyW(m_szWindowClass, str_length, szWindowClass);
+      StringCchCopyW(m_wndClass, str_length, wndClass);
    }
    else
    {
-      StringCchCopyW(m_szWindowClass, str_length, L"");
+      StringCchCopyW(m_wndClass, str_length, L"");
    }
 
 #pragma warning (disable : 28193)
 
-   hRes = StringCchLengthW(szTitle, str_length, &pcch);
+   hRes = StringCchLengthW(title, str_length, &pcch);
 
-   if (pcch > 0)
+   if ( pcch > 0 )
    {
-      StringCchCopyW(m_szTitle, str_length, szTitle);
+      StringCchCopyW(m_title, str_length, title);
    }
    else
    {
-      StringCchCopyW(m_szTitle, str_length, L"");
+      StringCchCopyW(m_title, str_length, L"");
    }
 }
 
-GameEngine::~GameEngine()
-{
-}
+GameEngine::~GameEngine( )
+{ }
 
 HRESULT GameEngine::Initialize(int iCmdShow)
 {
@@ -142,206 +138,206 @@ HRESULT GameEngine::Initialize(int iCmdShow)
    wc.lpfnWndProc   = WndProc;
    wc.cbClsExtra    = 0;
    wc.cbWndExtra    = 0;
-   wc.hInstance     = m_hInstance;
-   wc.hIcon         = (HICON)   LoadImageW(m_hInstance, MAKEINTRESOURCEW(IDI_ICON), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
-   wc.hIconSm       = (HICON)   LoadImageW(m_hInstance, MAKEINTRESOURCEW(IDI_ICON_SM), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
+   wc.hInstance     = m_inst;
+   wc.hIcon         = (HICON)   LoadImageW(m_inst, MAKEINTRESOURCEW(IDI_ICON), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
+   wc.hIconSm       = (HICON)   LoadImageW(m_inst, MAKEINTRESOURCEW(IDI_ICON_SM), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
    wc.hCursor       = (HCURSOR) LoadImageW(NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
    wc.hbrBackground = (HBRUSH)  (COLOR_WINDOW + 1);
    wc.lpszMenuName  = MAKEINTRESOURCEW(IDR_MENU);
-   wc.lpszClassName = m_szWindowClass;
+   wc.lpszClassName = m_wndClass;
 
-   if (RegisterClassExW(&wc) == 0)
+   if ( FAILED(RegisterClassExW(&wc)) )
    {
       MessageBoxW(NULL, L"Unable to initialize Main Window!", L"ERROR", MB_ICONERROR | MB_OK);
       return E_FAIL;
    }
 
-   UINT iWindowWidth  { m_iWidth  + GetSystemMetrics(SM_CXFIXEDFRAME) * 2 };
-   UINT iWindowHeight { m_iHeight + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 + GetSystemMetrics(SM_CYCAPTION) };
+   UINT windowWidth  { m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2 };
+   UINT windowHeight { m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 + GetSystemMetrics(SM_CYCAPTION) };
 
-   iWindowWidth  += 10;
-   iWindowHeight += 10;
+   windowWidth  += 10;
+   windowHeight += 10;
 
-   if (wc.lpszMenuName != NULL)
+   if ( wc.lpszMenuName != NULL )
    {
-      iWindowHeight += GetSystemMetrics(SM_CYMENU);
+      windowHeight += GetSystemMetrics(SM_CYMENU);
    }
 
-   UINT iWindowPosX { (GetSystemMetrics(SM_CXSCREEN) - iWindowWidth)  / 2 };
-   UINT iWindowPosY { (GetSystemMetrics(SM_CYSCREEN) - iWindowHeight) / 2 };
+   UINT windowPosX { (GetSystemMetrics(SM_CXSCREEN) - windowWidth) / 2 };
+   UINT windowPosY { (GetSystemMetrics(SM_CYSCREEN) - windowHeight) / 2 };
 
-   m_hWindow = CreateWindowW(m_szWindowClass, m_szTitle,
-                             WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
-                             iWindowPosX, iWindowPosY,
-                             iWindowWidth, iWindowHeight,
-                             NULL, NULL, m_hInstance, NULL);
+   m_wnd = CreateWindowW(m_wndClass, m_title,
+                         WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
+                         windowPosX, windowPosY,
+                         windowWidth, windowHeight,
+                         NULL, NULL, m_inst, NULL);
 
-   if (m_hWindow == NULL)
+   if ( NULL == m_wnd )
    {
       MessageBoxW(NULL, L"Unable to create Main Window!", L"ERROR", MB_ICONERROR | MB_OK);
       return E_FAIL;
    }
 
-   ShowWindow(m_hWindow, iCmdShow);
-   UpdateWindow(m_hWindow);
+   ShowWindow(m_wnd, iCmdShow);
+   UpdateWindow(m_wnd);
 
    return S_OK;
 }
 
-LRESULT GameEngine::HandleEvent(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT GameEngine::HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-   switch (msg)
+   switch ( msg )
    {
    case WM_CREATE:
-      SetWindow(hWindow);
-      GameStart(hWindow);
-      return 0;
+      SetWindow(wnd);
+      GameStart(wnd);
+      return S_OK;
 
    case WM_ACTIVATE:
-      if (wParam != WA_INACTIVE)
+      if ( wParam != WA_INACTIVE )
       {
-         GameActivate(hWindow);
+         GameActivate(wnd);
          SetSleep(FALSE);
       }
       else
       {
-         GameDeactivate(hWindow);
+         GameDeactivate(wnd);
          SetSleep(TRUE);
       }
-      return 0;
+      return S_OK;
 
    case WM_COMMAND:
       GameMenu(wParam);
-      return 0;
+      return S_OK;
 
    case WM_PAINT:
-      HDC         hDC;
+   {
       PAINTSTRUCT ps;
+      HDC         dc = BeginPaint(wnd, &ps);
 
-      hDC = BeginPaint(hWindow, &ps);
+      GamePaint(dc);
 
-      GamePaint(hDC);
-
-      EndPaint(hWindow, &ps);
-      return 0;
+      EndPaint(wnd, &ps);
+   }
+   return S_OK;
 
    case WM_LBUTTONDOWN:
       MouseButtonDown(LOWORD(lParam), HIWORD(lParam), TRUE);
-      return 0;
+      return S_OK;
 
    case WM_LBUTTONUP:
       MouseButtonUp(LOWORD(lParam), HIWORD(lParam), TRUE);
-      return 0;
+      return S_OK;
 
    case WM_RBUTTONDOWN:
       MouseButtonDown(LOWORD(lParam), HIWORD(lParam), FALSE);
-      return 0;
+      return S_OK;
 
    case WM_RBUTTONUP:
       MouseButtonUp(LOWORD(lParam), HIWORD(lParam), FALSE);
-      return 0;
+      return S_OK;
 
    case WM_MOUSEMOVE:
       MouseMove(LOWORD(lParam), HIWORD(lParam));
-      return 0;
+      return S_OK;
 
    case WM_DESTROY:
-      GameEnd();
+      GameEnd( );
       PostQuitMessage(0);
-      return 0;
+      return S_OK;
    }
-   return DefWindowProcW(hWindow, msg, wParam, lParam);
+   return DefWindowProcW(wnd, msg, wParam, lParam);
 }
 
-HRESULT GameEngine::InitJoystick()
+HRESULT GameEngine::InitJoystick( )
 {
-   UINT uiNumJoysticks;
+   UINT numJoysticks;
 
-   if ((uiNumJoysticks = joyGetNumDevs()) == 0)
+   if ( (numJoysticks = joyGetNumDevs( )) == 0 )
    {
       return E_FAIL;
    }
 
-   JOYINFO jiInfo;
+   JOYINFO joyInfo;
 
-   if (joyGetPos(JOYSTICKID1, &jiInfo) != JOYERR_UNPLUGGED)
+   if ( joyGetPos(JOYSTICKID1, &joyInfo) != JOYERR_UNPLUGGED )
    {
-      m_uiJoystickID = JOYSTICKID1;
+      m_joyID = JOYSTICKID1;
    }
    else
    {
       return E_FAIL;
    }
 
-   JOYCAPS jcCaps;
+   JOYCAPS joyCaps;
 
-   joyGetDevCaps(m_uiJoystickID, &jcCaps, sizeof(JOYCAPS));
+   joyGetDevCaps(m_joyID, &joyCaps, sizeof(JOYCAPS));
 
-   WORD dwXCenter { (WORD) (((WORD) jcCaps.wXmin + jcCaps.wXmax) / 2) };
-   WORD dwYCenter { (WORD) (((WORD) jcCaps.wYmin + jcCaps.wYmax) / 2) };
+   WORD xCenter { (WORD) (((WORD) joyCaps.wXmin + joyCaps.wXmax) / 2) };
+   WORD yCenter { (WORD) (((WORD) joyCaps.wYmin + joyCaps.wYmax) / 2) };
 
-   m_rcJoystickTrip.left   = (jcCaps.wXmin + (WORD) dwXCenter) / 2;
-   m_rcJoystickTrip.right  = (jcCaps.wXmax + (WORD) dwXCenter) / 2;
-   m_rcJoystickTrip.top    = (jcCaps.wYmin + (WORD) dwYCenter) / 2;
-   m_rcJoystickTrip.bottom = (jcCaps.wYmax + (WORD) dwYCenter) / 2;
+   m_joyTrip.left   = (joyCaps.wXmin + (WORD) xCenter) / 2;
+   m_joyTrip.right  = (joyCaps.wXmax + (WORD) xCenter) / 2;
+   m_joyTrip.top    = (joyCaps.wYmin + (WORD) yCenter) / 2;
+   m_joyTrip.bottom = (joyCaps.wYmax + (WORD) yCenter) / 2;
 
    return S_OK;
 }
 
-void GameEngine::CaptureJoystick()
+void GameEngine::CaptureJoystick( )
 {
-   if (m_uiJoystickID == JOYSTICKID1)
+   if ( m_joyID == JOYSTICKID1 )
    {
-      joySetCapture(m_hWindow, m_uiJoystickID, NULL, TRUE);
+      joySetCapture(m_wnd, m_joyID, NULL, TRUE);
    }
 }
 
-void GameEngine::ReleaseJoystick()
+void GameEngine::ReleaseJoystick( )
 {
-   if (m_uiJoystickID == JOYSTICKID1)
+   if ( m_joyID == JOYSTICKID1 )
    {
-      joyReleaseCapture(m_uiJoystickID);
+      joyReleaseCapture(m_joyID);
    }
 }
 
-void GameEngine::CheckJoystick()
+void GameEngine::CheckJoystick( )
 {
-   if (m_uiJoystickID == JOYSTICKID1)
+   if ( m_joyID == JOYSTICKID1 )
    {
-      JOYINFO  jiInfo;
-      JOYSTATE jsJoystickState { };
+      JOYINFO  joyInfo;
+      JOYSTATE joyState { };
 
-      if (joyGetPos(m_uiJoystickID, &jiInfo) == JOYERR_NOERROR)
+      if ( JOYERR_NOERROR == joyGetPos(m_joyID, &joyInfo) )
       {
-         if (jiInfo.wXpos < (WORD) m_rcJoystickTrip.left)
+         if ( joyInfo.wXpos < (WORD) m_joyTrip.left )
          {
-            jsJoystickState |= JOY_LEFT;
+            joyState |= JOY_LEFT;
          }
-         else if (jiInfo.wXpos > (WORD) m_rcJoystickTrip.right)
+         else if ( joyInfo.wXpos > (WORD) m_joyTrip.right )
          {
-            jsJoystickState |= JOY_RIGHT;
-         }
-
-         if (jiInfo.wYpos < (WORD) m_rcJoystickTrip.top)
-         {
-            jsJoystickState |= JOY_UP;
-         }
-         else if (jiInfo.wYpos > (WORD) m_rcJoystickTrip.bottom)
-         {
-            jsJoystickState |= JOY_DOWN;
+            joyState |= JOY_RIGHT;
          }
 
-         if (jiInfo.wButtons & JOY_BUTTON1)
+         if ( joyInfo.wYpos < (WORD) m_joyTrip.top )
          {
-            jsJoystickState |= JOY_FIRE1;
+            joyState |= JOY_UP;
+         }
+         else if ( joyInfo.wYpos > (WORD) m_joyTrip.bottom )
+         {
+            joyState |= JOY_DOWN;
          }
 
-         if (jiInfo.wButtons & JOY_BUTTON2)
+         if ( joyInfo.wButtons & JOY_BUTTON1 )
          {
-            jsJoystickState |= JOY_FIRE2;
+            joyState |= JOY_FIRE1;
+         }
+
+         if ( joyInfo.wButtons & JOY_BUTTON2 )
+         {
+            joyState |= JOY_FIRE2;
          }
       }
 
-      HandleJoystick(jsJoystickState);
+      HandleJoystick(joyState);
    }
 }
