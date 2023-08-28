@@ -1,11 +1,4 @@
-﻿// test chassis for the random toolkit
-
-//#include <array>
-//#include <iostream>
-//#include <numeric>
-//#include <algorithm>
-
-import <array>;
+﻿import <array>;
 import <iostream>;
 import <numeric>;
 import <algorithm>;
@@ -105,6 +98,15 @@ int main( )
    try
    {
       double dtest2 { rtk::rand_rl(5.3, 2.8) };
+   }
+   catch ( const std::exception& e )
+   {
+      std::cerr << "\n>>> A standard exception was caught, with message '" << e.what( ) << "'\n";
+   }
+
+   try
+   {
+      double dtest3 { rtk::rand(5.3, 5.3) };
    }
    catch ( const std::exception& e )
    {

@@ -1,33 +1,19 @@
-// Windows functions definitions
-
+#include "winmsg.hpp"
 #include "winfuncs.hpp"
 
-static const WCHAR winName[ ]  = L"ModWin2";
-static const WCHAR appTitle[ ] = L"Modular WinAPI Application, Version 2";
+static const WCHAR winName[ ]  = L"ModWin4";
+static const WCHAR appTitle[ ] = L"Modular WinAPI Application, Version 4";
 
-LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-   static const WCHAR aboutLeft[ ]  = L"This is a modular WinAPI program.\nYou pressed the left mouse button!";
-   static const WCHAR aboutRight[ ] = L"This is a modular WinAPI program.\nYou pressed the right mouse button!";
-
-   switch ( msg )
+   switch ( message )
    {
-   case WM_LBUTTONDOWN:
-      MessageBeep(MB_ICONEXCLAMATION);
-      MessageBoxW(hwnd, aboutLeft, L"About", MB_OK | MB_ICONINFORMATION);
-      return S_OK;
-
-   case WM_RBUTTONDOWN:
-      MessageBeep(MB_ICONASTERISK);
-      MessageBoxW(hwnd, aboutRight, L"About", MB_OK | MB_ICONINFORMATION);
-      return S_OK;
-
-   case WM_DESTROY:
-      PostQuitMessage(0);
-      return S_OK;
+      HANDLE_MSG(hwnd, WM_LBUTTONDOWN, OnLButtonDown);
+      HANDLE_MSG(hwnd, WM_RBUTTONDOWN, OnRButtonDown);
+      HANDLE_MSG(hwnd, WM_DESTROY, OnDestroy);
    }
 
-   return DefWindowProcW(hwnd, msg, wParam, lParam);
+   return DefWindowProcW(hwnd, message, wParam, lParam);
 }
 
 HRESULT InitApplication(HINSTANCE hInst)
@@ -45,7 +31,7 @@ HRESULT InitApplication(HINSTANCE hInst)
    wc.lpszMenuName  = NULL;
    wc.lpszClassName = winName;
 
-   if ( RegisterClassW(&wc) == 0 )
+   if ( FAILED(RegisterClassW(&wc)) )
    {
       MessageBoxW(NULL, L"Can't Register the Window Class!", winName, MB_OK | MB_ICONERROR);
       return E_FAIL;
@@ -61,7 +47,7 @@ HRESULT InitInstance(HINSTANCE hInst, int winMode)
                              CW_USEDEFAULT, CW_USEDEFAULT,
                              NULL, NULL, hInst, NULL);
 
-   if ( hwnd == NULL )
+   if ( NULL == hwnd )
    {
       MessageBoxW(NULL, L"Can't Create the Main Window!", winName, MB_OK | MB_ICONERROR);
       return E_FAIL;

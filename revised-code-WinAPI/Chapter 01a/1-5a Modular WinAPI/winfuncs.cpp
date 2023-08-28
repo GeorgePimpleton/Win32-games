@@ -1,22 +1,34 @@
-#include "winmsg.hpp"
 #include "winfuncs.hpp"
 
-static const WCHAR winName[ ]  = L"ModWin4";
-static const WCHAR appTitle[ ] = L"Modular WinAPI Application, Version 4";
+static const WCHAR winName[ ]  = L"ModWin2";
+static const WCHAR appTitle[ ] = L"Modular WinAPI Application, Version 2";
 
-LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-   switch ( message )
+   static const WCHAR aboutLeft[ ]  = L"This is a modular WinAPI program.\nYou pressed the left mouse button!";
+   static const WCHAR aboutRight[ ] = L"This is a modular WinAPI program.\nYou pressed the right mouse button!";
+
+   switch ( msg )
    {
-      HANDLE_MSG(hwnd, WM_LBUTTONDOWN, OnLButtonDown);
-      HANDLE_MSG(hwnd, WM_RBUTTONDOWN, OnRButtonDown);
-      HANDLE_MSG(hwnd, WM_DESTROY, OnDestroy);
+   case WM_LBUTTONDOWN:
+      MessageBeep(MB_ICONEXCLAMATION);
+      MessageBoxW(wnd, aboutLeft, L"About", MB_OK | MB_ICONINFORMATION);
+      return S_OK;
+
+   case WM_RBUTTONDOWN:
+      MessageBeep(MB_ICONASTERISK);
+      MessageBoxW(wnd, aboutRight, L"About", MB_OK | MB_ICONINFORMATION);
+      return S_OK;
+
+   case WM_DESTROY:
+      PostQuitMessage(0);
+      return S_OK;
    }
 
-   return DefWindowProcW(hwnd, message, wParam, lParam);
+   return DefWindowProcW(wnd, msg, wParam, lParam);
 }
 
-HRESULT InitApplication(HINSTANCE hInst)
+HRESULT InitApplication(HINSTANCE inst)
 {
    WNDCLASS wc { };
 
@@ -24,7 +36,7 @@ HRESULT InitApplication(HINSTANCE hInst)
    wc.lpfnWndProc   = WndProc;
    wc.cbClsExtra    = 0;
    wc.cbWndExtra    = 0;
-   wc.hInstance     = hInst;
+   wc.hInstance     = inst;
    wc.hIcon         = (HICON)   LoadImageW(NULL, IDI_APPLICATION, IMAGE_ICON, 0, 0, LR_SHARED);
    wc.hCursor       = (HCURSOR) LoadImageW(NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
    wc.hbrBackground = (HBRUSH)  (COLOR_WINDOW + 1);
@@ -39,22 +51,22 @@ HRESULT InitApplication(HINSTANCE hInst)
    else return S_OK;
 }
 
-HRESULT InitInstance(HINSTANCE hInst, int winMode)
+HRESULT InitInstance(HINSTANCE inst, int winMode)
 {
-   HWND hwnd = CreateWindowW(winName, appTitle,
-                             WS_OVERLAPPEDWINDOW,
-                             CW_USEDEFAULT, CW_USEDEFAULT,
-                             CW_USEDEFAULT, CW_USEDEFAULT,
-                             NULL, NULL, hInst, NULL);
+   HWND wnd = CreateWindowW(winName, appTitle,
+                            WS_OVERLAPPEDWINDOW,
+                            CW_USEDEFAULT, CW_USEDEFAULT,
+                            CW_USEDEFAULT, CW_USEDEFAULT,
+                            NULL, NULL, inst, NULL);
 
-   if ( NULL == hwnd )
+   if ( wnd == NULL )
    {
       MessageBoxW(NULL, L"Can't Create the Main Window!", winName, MB_OK | MB_ICONERROR);
       return E_FAIL;
    }
 
-   ShowWindow(hwnd, winMode);
-   UpdateWindow(hwnd);
+   ShowWindow(wnd, winMode);
+   UpdateWindow(wnd);
 
    return S_OK;
 }

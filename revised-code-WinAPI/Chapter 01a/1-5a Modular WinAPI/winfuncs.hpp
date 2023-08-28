@@ -1,5 +1,4 @@
 #include <windows.h>
-#include <windowsx.h>
 
 #pragma once
 
