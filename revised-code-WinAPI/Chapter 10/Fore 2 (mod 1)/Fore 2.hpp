@@ -1,7 +1,3 @@
-// "Talk to me like I'm a 3 year old!" Programming Lessons - Windows Games
-
-// Fore 2.hpp - Game Header
-
 #pragma once
 
 #include <windows.h>
@@ -11,9 +7,9 @@
 #include "Sprite.hpp"
 #include "GameEngine.hpp"
 
-GameEngine* g_pGame;
-Bitmap*     g_pForestBitmap;
-Bitmap*     g_pGolfBallBitmap;
-HDC         g_hOffscreenDC;
-HBITMAP     g_hOffscreenBitmap;
-Sprite*     g_pDragSprite;
+GameEngine* g_game;
+Bitmap*     g_forestBitmap;
+Bitmap*     g_golfBallBitmap;
+HDC         g_offscreenDC;
+HBITMAP     g_offscreenBitmap;
+Sprite*     g_dragSprite;
