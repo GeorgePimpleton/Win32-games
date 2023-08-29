@@ -1,172 +1,168 @@
-// "Talk to me like I'm a 3 year old!" Programming Lessons - Windows Games
-
-// Battle Office.cpp - Game Source
-
 #include "Battle Office.hpp"
 
-HRESULT GameInitialize(HINSTANCE hInstance)
+HRESULT GameInitialize(HINSTANCE inst)
 {
-   _pGame = new GameEngine(hInstance, L"Battle Office", L"Example Game: Battle Office",
+   g_game = new GameEngine(inst, L"Battle Office", L"Example Game: Battle Office",
                            IDI_ICON, IDI_ICON_SM, 500, 400);
 
-   if (_pGame == NULL)
+   if ( NULL == g_game )
    {
       return E_FAIL;
    }
 
-   _pGame->SetFrameRate(30);
+   g_game->SetFrameRate(30);
 
    return S_OK;
 }
 
-void GameStart(HWND hWindow)
+void GameStart(HWND wnd)
 {
-   rtk::srand();
+   rtk::srand( );
 
    // load the custom cursor
-   SetClassLongPtrW(hWindow, GCLP_HCURSOR,
+   SetClassLongPtrW(wnd, GCLP_HCURSOR,
                     (LONG64) LoadImageW(GetModuleHandleW(NULL), MAKEINTRESOURCEW(IDC_CURSOR), IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR));
 
-   _hOffscreenDC     = CreateCompatibleDC(GetDC(hWindow));
-   _hOffscreenBitmap = CreateCompatibleBitmap(GetDC(hWindow), _pGame->GetWidth(), _pGame->GetHeight());
+   g_offscreenDC     = CreateCompatibleDC(GetDC(wnd));
+   g_offscreenBitmap = CreateCompatibleBitmap(GetDC(wnd), g_game-> GetWidth( ), g_game-> GetHeight( ));
 
-   SelectObject(_hOffscreenDC, _hOffscreenBitmap);
+   SelectObject(g_offscreenDC, g_offscreenBitmap);
 
-   HINSTANCE hInstance = GetModuleHandle(NULL);
+   HINSTANCE inst = GetModuleHandleW(NULL);
 
-   _pOfficeBitmap   = new Bitmap(IDB_OFFICE,   hInstance);
-   _pPowBitmap      = new Bitmap(IDB_POW,      hInstance);
-   _pGuyBitmaps[0]  = new Bitmap(IDB_GUY1,     hInstance);
-   _pGuyBitmaps[1]  = new Bitmap(IDB_GUY2,     hInstance);
-   _pGuyBitmaps[2]  = new Bitmap(IDB_GUY3,     hInstance);
-   _pGuyBitmaps[3]  = new Bitmap(IDB_GUY4,     hInstance);
-   _pGuyBitmaps[4]  = new Bitmap(IDB_GUY5,     hInstance);
-   _pSmallGuyBitmap = new Bitmap(IDB_SMALLGUY, hInstance);
-   _pGameOverBitmap = new Bitmap(IDB_GAMEOVER, hInstance);
+   g_officeBitmap    = new Bitmap(IDB_OFFICE, inst);
+   g_powBitmap       = new Bitmap(IDB_POW, inst);
+   g_guyBitmaps[ 0 ] = new Bitmap(IDB_GUY1, inst);
+   g_guyBitmaps[ 1 ] = new Bitmap(IDB_GUY2, inst);
+   g_guyBitmaps[ 2 ] = new Bitmap(IDB_GUY3, inst);
+   g_guyBitmaps[ 3 ] = new Bitmap(IDB_GUY4, inst);
+   g_guyBitmaps[ 4 ] = new Bitmap(IDB_GUY5, inst);
+   g_smallGuyBitmap  = new Bitmap(IDB_SMALLGUY, inst);
+   g_gameOverBitmap  = new Bitmap(IDB_GAMEOVER, inst);
 
-   _pGame->PlayMIDISong(L"Music.mid");
+   g_game->PlayMIDISong(L"Music.mid");
 
-   NewGame();
+   NewGame( );
 }
 
-void GameEnd()
+void GameEnd( )
 {
-   _pGame->CloseMIDIPlayer();
+   g_game->CloseMIDIPlayer( );
 
-   DeleteObject(_hOffscreenBitmap);
-   DeleteDC(_hOffscreenDC);
+   DeleteObject(g_offscreenBitmap);
+   DeleteDC(g_offscreenDC);
 
-   delete _pOfficeBitmap;
-   delete _pPowBitmap;
+   delete g_officeBitmap;
+   delete g_powBitmap;
 
-   for (int i = 0; i < 5; i++)
+   for ( int i = 0; i < 5; i++ )
    {
-      delete _pGuyBitmaps[i];
+      delete g_guyBitmaps[ i ];
    }
 
-   delete _pSmallGuyBitmap;
-   delete _pGameOverBitmap;
+   delete g_smallGuyBitmap;
+   delete g_gameOverBitmap;
 
-   _pGame->CleanupSprites();
+   g_game->CleanupSprites( );
 
-   delete _pGame;
+   delete g_game;
 }
 
-void GameActivate(HWND hWindow)
+void GameActivate(HWND wnd)
 {
-   _pGame->PlayMIDISong(TEXT(""), FALSE);
+   g_game->PlayMIDISong(TEXT(""), FALSE);
 }
 
-void GameDeactivate(HWND hWindow)
+void GameDeactivate(HWND wnd)
 {
-   _pGame->PauseMIDISong();
+   g_game->PauseMIDISong( );
 }
 
-void GamePaint(HDC hDC)
+void GamePaint(HDC dc)
 {
-   _pOfficeBitmap->Draw(hDC, 0, 0);
+   g_officeBitmap->Draw(dc, 0, 0);
 
-   _pGame->DrawSprites(hDC);
+   g_game->DrawSprites(dc);
 
    // draw the number of guys who were hit
-   WCHAR szText[STR_LENGTH];
+   WCHAR text[ STR_LENGTH ];
    RECT  rect = { 237, 360, 301, 390 };
 
-   wsprintfW(szText, L"%d", _iHits);
+   wsprintfW(text, L"%d", g_hits);
 
-   DrawTextW(hDC, szText, -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+   DrawTextW(dc, text, -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
    // draw the number of guys who were missed (got away)
-   for (int i = 0; i < _iMisses; i++)
+   for ( int i = 0; i < g_misses; i++ )
    {
-      _pSmallGuyBitmap->Draw(hDC, 389 + (_pSmallGuyBitmap->GetWidth() * i), 359, TRUE);
+      g_smallGuyBitmap->Draw(dc, 389 + (g_smallGuyBitmap->GetWidth( ) * i), 359, TRUE);
    }
 
    // draw the game over message, if necessary
-   if (_bGameOver)
+   if ( g_gameOver )
    {
-      _pGameOverBitmap->Draw(hDC, 120, 110, TRUE);
+      g_gameOverBitmap->Draw(dc, 120, 110, TRUE);
    }
 }
 
-void GameCycle()
+void GameCycle( )
 {
-   if (!_bGameOver)
+   if ( !g_gameOver )
    {
       // randomly show and hide the guys
-      for (int i = 0; i < 5; i++)
+      for ( int i = 0; i < 5; i++ )
       {
-         if (_pGuySprites[i]->IsHidden())
+         if ( g_guySprites[ i ]->IsHidden( ) )
          {
-            if (rtk::rand(0, 60) == 0)
+            if ( rtk::rand(0, 60) == 0 )
             {
                // show the guy
-               _pGuySprites[i]->SetHidden(FALSE);
+               g_guySprites[ i ]->SetHidden(FALSE);
 
                // start the countdown delay
-               if (i == 3)
+               if ( i == 3 )
                {
                   // start the guy running left
-                  _iGuyDelay[i] = 80;
-                  _pGuySprites[i]->SetPosition(500, 10);
+                  g_guyDelay[ i ] = 80;
+                  g_guySprites[ i ]->SetPosition(500, 10);
                }
-               else if (i == 4)
+               else if ( i == 4 )
                {
                   // start the guy running right
-                  _iGuyDelay[i] = 45;
-                  _pGuySprites[i]->SetPosition(260, 60);
+                  g_guyDelay[ i ] = 45;
+                  g_guySprites[ i ]->SetPosition(260, 60);
                }
                else
                {
-                  _iGuyDelay[i] = 20 + (rtk::rand(0, _iGuyMasterDelay));
+                  g_guyDelay[ i ] = 20 + (rtk::rand(0, g_guyMasterDelay));
                }
             }
          }
          else
          {
-            if (--_iGuyDelay[i] == 0)
+            if ( --g_guyDelay[ i ] == 0 )
             {
                // play a sound for the guy getting away
                PlaySoundW((PCWSTR) IDW_TAUNT, GetModuleHandle(NULL), SND_ASYNC | SND_RESOURCE);
 
                // hide the guy
-               _pGuySprites[i]->SetHidden(TRUE);
+               g_guySprites[ i ]->SetHidden(TRUE);
 
                // increment the misses
-               if (++_iMisses == 5)
+               if ( ++g_misses == 5 )
                {
                   // play a sound for the game ending
                   PlaySoundW((PCWSTR) IDW_BOO, GetModuleHandle(NULL), SND_ASYNC | SND_RESOURCE);
 
                   // end the game
-                  for (int i = 0; i < 5; i++)
+                  for ( int i = 0; i < 5; i++ )
                   {
-                     _pGuySprites[i]->SetHidden(TRUE);
+                     g_guySprites[ i ]->SetHidden(TRUE);
                   }
-                  _bGameOver = TRUE;
+                  g_gameOver = TRUE;
 
                   // pause the background music
-                  _pGame->PauseMIDISong();
+                  g_game->PauseMIDISong( );
                }
             }
          }
@@ -174,158 +170,156 @@ void GameCycle()
    }
 
    // update the sprites
-   _pGame->UpdateSprites();
+   g_game->UpdateSprites( );
 
    // obtain a device context for repainting the game
-   HWND hWindow = _pGame->GetWindow();
-   HDC  hDC     = GetDC(hWindow);
+   HWND wnd = g_game-> GetWindow( );
+   HDC  dc  = GetDC(wnd);
 
    // paint the game to the offscreen device context
-   GamePaint(_hOffscreenDC);
+   GamePaint(g_offscreenDC);
 
    // blit the offscreen bitmap to the game screen
-   BitBlt(hDC, 0, 0, _pGame->GetWidth(), _pGame->GetHeight(), _hOffscreenDC, 0, 0, SRCCOPY);
+   BitBlt(dc, 0, 0, g_game->GetWidth( ), g_game->GetHeight( ), g_offscreenDC, 0, 0, SRCCOPY);
 
    // cleanup
-   ReleaseDC(hWindow, hDC);
+   ReleaseDC(wnd, dc);
 }
 
 void GameMenu(WPARAM wParam)
 {
-   switch (LOWORD(wParam))
+   switch ( LOWORD(wParam) )
    {
    case IDM_GAME_NEW:
-      if (_bGameOver == TRUE)
+      if ( g_gameOver == TRUE )
       {
          // start a new game
-         NewGame();
+         NewGame( );
       }
       return;
 
    case IDM_GAME_EXIT:
-      GameEnd();
+      GameEnd( );
       PostQuitMessage(0);
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW(_pGame->GetInstance(), MAKEINTRESOURCEW(IDD_ABOUT), _pGame->GetWindow(), (DLGPROC) DlgProc);
+      DialogBoxW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT), g_game->GetWindow( ), (DLGPROC) DlgProc);
       return;
    }
 }
 
-void HandleKeys()
+void HandleKeys( )
 {
 }
 
-void MouseButtonDown(LONG x, LONG y, BOOL bLeft)
+void MouseButtonDown(LONG x, LONG y, BOOL left)
 {
    // only check the left mouse button
-   if (_bGameOver == FALSE && bLeft)
+   if ( g_gameOver == FALSE && left )
    {
       // temporarily hide the POW sprite
-      _pPowSprite->SetHidden(TRUE);
+      g_powSprite->SetHidden(TRUE);
 
       // see if a guy sprite was clicked
       Sprite* pSprite;
 
-      if ((pSprite = _pGame->IsPointInSprite(x, y)) != NULL)
+      if ( (pSprite = g_game->IsPointInSprite(x, y)) != NULL )
       {
          // play a sound for hitting the guy
          PlaySoundW((PCWSTR) IDW_WHACK, GetModuleHandle(NULL), SND_ASYNC | SND_RESOURCE);
 
          // position and show the pow sprite
-         _pPowSprite->SetPosition(x - (_pPowSprite->GetWidth() / 2), y - (_pPowSprite->GetHeight() / 2));
-         _pPowSprite->SetHidden(FALSE);
+         g_powSprite->SetPosition(x - (g_powSprite->GetWidth( ) / 2), y - (g_powSprite->GetHeight( ) / 2));
+         g_powSprite->SetHidden(FALSE);
 
          // hide the guy that was clicked
          pSprite->SetHidden(TRUE);
 
          // increment the hits and make the game harder, if necessary
-         if ((++_iHits % 5) == 0)
+         if ( (++g_hits % 5) == 0 )
          {
-            if (--_iGuyMasterDelay == 0)
+            if ( --g_guyMasterDelay == 0 )
             {
-               _iGuyMasterDelay = 1;
+               g_guyMasterDelay = 1;
             }
          }
       }
    }
-   else if (_bGameOver == TRUE && !bLeft)
+   else if ( g_gameOver == TRUE && !left )
    {
       // start a new game
-      NewGame();
+      NewGame( );
 
       // restart the background music
-      _pGame->PlayMIDISong();
+      g_game->PlayMIDISong( );
    }
 }
 
-void MouseButtonUp(LONG x, LONG y, BOOL bLeft)
-{
-}
+void MouseButtonUp(LONG x, LONG y, BOOL left)
+{ }
 
 void MouseMove(LONG x, LONG y)
-{
-}
+{ }
 
 void HandleJoystick(JOYSTATE jsJoystickState)
-{
-}
+{ }
 
-BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
+BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
 {
    return FALSE;
 }
 
-void NewGame()
+void NewGame( )
 {
-   _pGame->CleanupSprites();
+   g_game->CleanupSprites( );
 
-   RECT    rcBounds = { 0, 0, 500, 400 };
-   _pPowSprite = new Sprite(_pPowBitmap, rcBounds, BA_STOP);
-   _pPowSprite->SetZOrder(3);
-   _pPowSprite->SetHidden(TRUE);
-   _pGame->AddSprite(_pPowSprite);
+   RECT bounds = { 0, 0, 500, 400 };
 
-   _pGuySprites[0] = new Sprite(_pGuyBitmaps[0], rcBounds);
-   _pGuySprites[0]->SetPosition(92, 175);
-   _pGuySprites[0]->SetZOrder(2);
-   _pGuySprites[0]->SetHidden(TRUE);
-   _pGame->AddSprite(_pGuySprites[0]);
+   g_powSprite = new Sprite(g_powBitmap, bounds, BA_STOP);
+   g_powSprite->SetZOrder(3);
+   g_powSprite->SetHidden(TRUE);
+   g_game->AddSprite(g_powSprite);
 
-   _pGuySprites[1] = new Sprite(_pGuyBitmaps[1], rcBounds);
-   _pGuySprites[1]->SetPosition(301, 184);
-   _pGuySprites[1]->SetZOrder(2);
-   _pGuySprites[1]->SetHidden(TRUE);
-   _pGame->AddSprite(_pGuySprites[1]);
+   g_guySprites[ 0 ] = new Sprite(g_guyBitmaps[ 0 ], bounds);
+   g_guySprites[ 0 ]->SetPosition(92, 175);
+   g_guySprites[ 0 ]->SetZOrder(2);
+   g_guySprites[ 0 ]->SetHidden(TRUE);
+   g_game->AddSprite(g_guySprites[ 0 ]);
 
-   _pGuySprites[2] = new Sprite(_pGuyBitmaps[2], rcBounds);
-   _pGuySprites[2]->SetPosition(394, 61);
-   _pGuySprites[2]->SetZOrder(2);
-   _pGuySprites[2]->SetHidden(TRUE);
-   _pGame->AddSprite(_pGuySprites[2]);
+   g_guySprites[ 1 ] = new Sprite(g_guyBitmaps[ 1 ], bounds);
+   g_guySprites[ 1 ]->SetPosition(301, 184);
+   g_guySprites[ 1 ]->SetZOrder(2);
+   g_guySprites[ 1 ]->SetHidden(TRUE);
+   g_game->AddSprite(g_guySprites[ 1 ]);
 
-   rcBounds.left = 340;
-   _pGuySprites[3] = new Sprite(_pGuyBitmaps[3], rcBounds, BA_WRAP);
-   _pGuySprites[3]->SetPosition(500, 10);
-   _pGuySprites[3]->SetVelocity(-3, 0);
-   _pGuySprites[3]->SetZOrder(1);
-   _pGuySprites[3]->SetHidden(TRUE);
-   _pGame->AddSprite(_pGuySprites[3]);
+   g_guySprites[ 2 ] = new Sprite(g_guyBitmaps[ 2 ], bounds);
+   g_guySprites[ 2 ]->SetPosition(394, 61);
+   g_guySprites[ 2 ]->SetZOrder(2);
+   g_guySprites[ 2 ]->SetHidden(TRUE);
+   g_game->AddSprite(g_guySprites[ 2 ]);
 
-   rcBounds.left = 385;
-   _pGuySprites[4] = new Sprite(_pGuyBitmaps[4], rcBounds, BA_WRAP);
-   _pGuySprites[4]->SetPosition(260, 60);
-   _pGuySprites[4]->SetVelocity(5, 0);
-   _pGuySprites[4]->SetZOrder(1);
-   _pGuySprites[4]->SetHidden(TRUE);
-   _pGame->AddSprite(_pGuySprites[4]);
+   bounds.left = 340;
+   g_guySprites[ 3 ] = new Sprite(g_guyBitmaps[ 3 ], bounds, BA_WRAP);
+   g_guySprites[ 3 ]->SetPosition(500, 10);
+   g_guySprites[ 3 ]->SetVelocity(-3, 0);
+   g_guySprites[ 3 ]->SetZOrder(1);
+   g_guySprites[ 3 ]->SetHidden(TRUE);
+   g_game->AddSprite(g_guySprites[ 3 ]);
 
-   _iGuyMasterDelay = 50;
-   _iHits           = 0;
-   _iMisses         = 0;
-   _bGameOver       = FALSE;
+   bounds.left = 385;
+   g_guySprites[ 4 ] = new Sprite(g_guyBitmaps[ 4 ], bounds, BA_WRAP);
+   g_guySprites[ 4 ]->SetPosition(260, 60);
+   g_guySprites[ 4 ]->SetVelocity(5, 0);
+   g_guySprites[ 4 ]->SetZOrder(1);
+   g_guySprites[ 4 ]->SetHidden(TRUE);
+   g_game->AddSprite(g_guySprites[ 4 ]);
+
+   g_guyMasterDelay = 50;
+   g_hits           = 0;
+   g_misses         = 0;
+   g_gameOver       = FALSE;
 
    // restart the background music
-   _pGame->PlayMIDISong();
+   g_game->PlayMIDISong( );
 }

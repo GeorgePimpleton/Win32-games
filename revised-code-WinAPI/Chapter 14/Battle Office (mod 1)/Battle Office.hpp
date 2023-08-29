@@ -1,7 +1,3 @@
-// "Talk to me like I'm a 3 year old!" Programming Lessons - Windows Games
-
-// Battle Office.hpp - Game Header
-
 #pragma once
 
 #include <windows.h>
@@ -11,18 +7,18 @@
 #include "Sprite.hpp"
 #include "GameEngine.hpp"
 
-GameEngine* _pGame;
-Bitmap*     _pOfficeBitmap;
-Bitmap*     _pPowBitmap;
-Bitmap*     _pGuyBitmaps[5];
-Bitmap*     _pSmallGuyBitmap;
-Bitmap*     _pGameOverBitmap;
-BOOL        _bGameOver;
-HDC         _hOffscreenDC;
-HBITMAP     _hOffscreenBitmap;
-int         _iGuyDelay[5];
-int         _iGuyMasterDelay;
-int         _iHits;
-int         _iMisses;
-Sprite*     _pPowSprite;
-Sprite*     _pGuySprites[5];
+GameEngine* g_game;
+Bitmap*     g_officeBitmap;
+Bitmap*     g_powBitmap;
+Bitmap*     g_guyBitmaps[5];
+Bitmap*     g_smallGuyBitmap;
+Bitmap*     g_gameOverBitmap;
+BOOL        g_gameOver;
+HDC         g_offscreenDC;
+HBITMAP     g_offscreenBitmap;
+int         g_guyDelay[5];
+int         g_guyMasterDelay;
+int         g_hits;
+int         g_misses;
+Sprite*     g_powSprite;
+Sprite*     g_guySprites[5];
