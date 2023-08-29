@@ -1,7 +1,3 @@
-// "Talk to me like I'm a 3 year old!" Programming Lessons - Windows Games
-
-// Henway.cpp - Henway Source
-
 #include <windows.h>
 #include <vector>
 #include "resource.h"
@@ -10,19 +6,18 @@
 #include "GameEngine.hpp"
 #include "random_toolkit.hpp"
 
-GameEngine* _pGame;
-Bitmap*     _pHighwayBitmap;
-Bitmap*     _pChickenBitmap;
-Bitmap*     _pCarBitmaps[4];
-Bitmap*     _pChickenHeadBitmap;
-BOOL        _bGameOver;
-HDC         _hOffscreenDC;
-HBITMAP     _hOffscreenBitmap;
-UINT        _iInputDelay;
-UINT        _iNumLives;
-UINT        _iScore;
-Sprite*     _pChickenSprite;
-
+GameEngine* g_game;
+Bitmap*     g_highwayBitmap;
+Bitmap*     g_chickenBitmap;
+Bitmap*     g_carBitmaps[4];
+Bitmap*     g_chickenHeadBitmap;
+BOOL        g_gameOver;
+HDC         g_offscreenDC;
+HBITMAP     g_offscreenBitmap;
+UINT        g_inputDelay;
+UINT        g_numLives;
+UINT        g_score;
+Sprite*     g_chickenSprite;
 
 // HELPER GAME FUNCTION DECLARATION ============================================
-void MoveChicken(int iXDistance, int iYDistance);
+void MoveChicken(int xDistance, int yDistance);
