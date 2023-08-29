@@ -1,241 +1,230 @@
-// "Talk to me like I'm a 3 year old!" Programming Lessons - Windows Games
-
-// Brainiac 2.cpp - Brainiac 2 Game Source
-
 #include "Brainiac 2.hpp"
 
-HRESULT GameInitialize(HINSTANCE hInstance)
+HRESULT GameInitialize(HINSTANCE inst)
 {
-   _pGame = new GameEngine(hInstance, L"Brainiac2", L"Playing Wave Sounds",
+   g_game = new GameEngine(inst, L"Brainiac2", L"Playing Wave Sounds",
                            IDI_ICON, IDI_ICON_SM, 528, 508);
 
-   if (_pGame == NULL)
+   if ( NULL == g_game )
    {
       return E_FAIL;
    }
 
-   _pGame->SetFrameRate(1);
+   g_game->SetFrameRate(1);
 
    return S_OK;
 }
 
-void GameStart(HWND hWindow)
+void GameStart(HWND wnd)
 {
-   rtk::srand();
+   rtk::srand( );
 
    HINSTANCE hInstance = GetModuleHandleW(NULL);
 
-   _pTiles[0] = new Bitmap(IDB_TILEBLANK, hInstance);
-   _pTiles[1] = new Bitmap(IDB_TILE1, hInstance);
-   _pTiles[2] = new Bitmap(IDB_TILE2, hInstance);
-   _pTiles[3] = new Bitmap(IDB_TILE3, hInstance);
-   _pTiles[4] = new Bitmap(IDB_TILE4, hInstance);
-   _pTiles[5] = new Bitmap(IDB_TILE5, hInstance);
-   _pTiles[6] = new Bitmap(IDB_TILE6, hInstance);
-   _pTiles[7] = new Bitmap(IDB_TILE7, hInstance);
-   _pTiles[8] = new Bitmap(IDB_TILE8, hInstance);
+   g_tile[ 0 ] = new Bitmap(IDB_TILEBLANK, hInstance);
+   g_tile[ 1 ] = new Bitmap(IDB_TILE1, hInstance);
+   g_tile[ 2 ] = new Bitmap(IDB_TILE2, hInstance);
+   g_tile[ 3 ] = new Bitmap(IDB_TILE3, hInstance);
+   g_tile[ 4 ] = new Bitmap(IDB_TILE4, hInstance);
+   g_tile[ 5 ] = new Bitmap(IDB_TILE5, hInstance);
+   g_tile[ 6 ] = new Bitmap(IDB_TILE6, hInstance);
+   g_tile[ 7 ] = new Bitmap(IDB_TILE7, hInstance);
+   g_tile[ 8 ] = new Bitmap(IDB_TILE8, hInstance);
 
-   NewGame();
+   NewGame( );
 }
 
-void GameEnd()
+void GameEnd( )
 {
-   for (int i = 0; i < 9; i++)
+   for ( int i = 0; i < 9; i++ )
    {
-      delete _pTiles[i];
+      delete g_tile[ i ];
    }
 
-   delete _pGame;
+   delete g_game;
 }
 
 void GameActivate(HWND hWindow)
-{
-}
+{ }
 
 void GameDeactivate(HWND hWindow)
-{
-}
+{ }
 
-void GamePaint(HDC hDC)
+void GamePaint(HDC dc)
 {
    // draw the tiles
-   UINT iTileWidth  = _pTiles[0]->GetWidth();
-   UINT iTileHeight = _pTiles[0]->GetHeight();
+   UINT tileWidth  = g_tile[ 0 ]-> GetWidth( );
+   UINT tileHeight = g_tile[ 0 ]-> GetHeight( );
 
-   for (UINT i = 0; i < 4; i++)
+   for ( UINT i = 0; i < 4; i++ )
    {
-      for (UINT j = 0; j < 4; j++)
+      for ( UINT j = 0; j < 4; j++ )
       {
-         if (_bTileStates[i][j] || ((i == _ptTile1.x) && (j == _ptTile1.y)) || ((i == _ptTile2.x) && (j == _ptTile2.y)))
+         if ( g_tileStates[ i ][ j ] || ((i == g_tile1.x) && (j == g_tile1.y)) || ((i == g_tile2.x) && (j == g_tile2.y)) )
          {
-            _pTiles[_iTiles[i][j]]->Draw(hDC, i * iTileWidth, j * iTileHeight, TRUE);
+            g_tile[ g_tiles[ i ][ j ] ]->Draw(dc, i * tileWidth, j * tileHeight, TRUE);
          }
          else
          {
-            _pTiles[0]->Draw(hDC, i * iTileWidth, j * iTileHeight, TRUE);
+            g_tile[ 0 ]->Draw(dc, i * tileWidth, j * tileHeight, TRUE);
          }
       }
    }
 }
 
-void GameCycle()
-{
-}
+void GameCycle( )
+{ }
 
 void GameMenu(WPARAM wParam)
 {
-   switch (LOWORD(wParam))
+   switch ( LOWORD(wParam) )
    {
    case IDM_GAME_NEW:
-      NewGame();
+      NewGame( );
       return;
 
    case IDM_GAME_EXIT:
-      GameEnd();
+      GameEnd( );
       PostQuitMessage(0);
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW(_pGame->GetInstance(), MAKEINTRESOURCEW(IDD_ABOUT), _pGame->GetWindow(), (DLGPROC) DlgProc);
+      DialogBoxW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT), g_game->GetWindow( ), (DLGPROC) DlgProc);
       return;
    }
 }
 
-void HandleKeys()
-{
-}
+void HandleKeys( )
+{ }
 
 void MouseButtonDown(LONG x, LONG y, BOOL bLeft)
 {
    // determine which tile was clicked
-   UINT iTileX = x / _pTiles[0]->GetWidth();
-   UINT iTileY = y / _pTiles[0]->GetHeight();
+   UINT tileX = x / g_tile[ 0 ]->GetWidth( );
+   UINT tileY = y / g_tile[ 0 ]->GetHeight( );
 
    // make sure the tile hasn't already been matched
-   if (!_bTileStates[iTileX][iTileY])
+   if ( !g_tileStates[ tileX ][ tileY ] )
    {
       // see if this is the first tile selected
-      if (_ptTile1.x == -1)
+      if ( g_tile1.x == -1 )
       {
          // play a sound for the tile selection
-         PlaySoundW((PCWSTR) IDW_SELECT, _hInstance, SND_ASYNC | SND_RESOURCE);
+         PlaySoundW((PCWSTR) IDW_SELECT, g_inst, SND_ASYNC | SND_RESOURCE);
 
          // set the first tile selection
-         _ptTile1.x = iTileX;
-         _ptTile1.y = iTileY;
+         g_tile1.x = tileX;
+         g_tile1.y = tileY;
       }
-      else if ((iTileX != _ptTile1.x) || (iTileY != _ptTile1.y))
+      else if ( (tileX != g_tile1.x) || (tileY != g_tile1.y) )
       {
-         if (_ptTile2.x == -1)
+         if ( g_tile2.x == -1 )
          {
             // play a sound for the tile selection
-            PlaySoundW((PCWSTR) IDW_SELECT, _hInstance, SND_ASYNC | SND_RESOURCE);
+            PlaySoundW((PCWSTR) IDW_SELECT, g_inst, SND_ASYNC | SND_RESOURCE);
 
             // increase the number of tries
-            _iTries++;
+            g_tries++;
 
             // set the second tile selection
-            _ptTile2.x = iTileX;
-            _ptTile2.y = iTileY;
+            g_tile2.x = tileX;
+            g_tile2.y = tileY;
 
             // see if it's a match
-            if (_iTiles[_ptTile1.x][_ptTile1.y] == _iTiles[_ptTile2.x][_ptTile2.y])
+            if ( g_tiles[ g_tile1.x ][ g_tile1.y ] == g_tiles[ g_tile2.x ][ g_tile2.y ] )
             {
                // play a sound for the tile match
-               PlaySoundW((PCWSTR) IDW_MATCH, _hInstance, SND_ASYNC | SND_RESOURCE);
+               PlaySoundW((PCWSTR) IDW_MATCH, g_inst, SND_ASYNC | SND_RESOURCE);
 
                // set the tile state to indicate the match
-               _bTileStates[_ptTile1.x][_ptTile1.y] = TRUE;
-               _bTileStates[_ptTile2.x][_ptTile2.y] = TRUE;
+               g_tileStates[ g_tile1.x ][ g_tile1.y ] = TRUE;
+               g_tileStates[ g_tile2.x ][ g_tile2.y ] = TRUE;
 
                // clear the tile selections
-               _ptTile1.x = _ptTile1.y = _ptTile2.x = _ptTile2.y = -1;
+               g_tile1.x = g_tile1.y = g_tile2.x = g_tile2.y = -1;
 
                // update the match count
-               ++_iMatches;
+               ++g_matches;
             }
             else
             {
                // play a sound for the tile mismatch
-               PlaySoundW((PCWSTR) IDW_MISMATCH, _hInstance, SND_ASYNC | SND_RESOURCE);
+               PlaySoundW((PCWSTR) IDW_MISMATCH, g_inst, SND_ASYNC | SND_RESOURCE);
             }
          }
          else
          {
             // clear the tile selections
-            _ptTile1.x = _ptTile1.y = _ptTile2.x = _ptTile2.y = -1;
+            g_tile1.x = g_tile1.y = g_tile2.x = g_tile2.y = -1;
          }
       }
 
       // force a repaint to update the tiles
-      InvalidateRect(_pGame->GetWindow(), NULL, FALSE);
+      InvalidateRect(g_game->GetWindow( ), NULL, FALSE);
 
       // check for winner
-      if (_iMatches == 8)
+      if ( g_matches == 8 )
       {
          // play a victory sound
-         PlaySoundW((PCWSTR) IDW_WIN, _hInstance, SND_ASYNC | SND_RESOURCE);
+         PlaySoundW((PCWSTR) IDW_WIN, g_inst, SND_ASYNC | SND_RESOURCE);
 
-         TCHAR szText[64];
+         TCHAR szText[ 64 ];
 
-         wsprintfW(szText, L"You won in %d tries.", _iTries);
+         wsprintfW(szText, L"You won in %d tries.", g_tries);
 
-         MessageBoxW(_pGame->GetWindow(), szText, L"Brainiac", MB_OK);
+         MessageBoxW(g_game->GetWindow( ), szText, L"Brainiac", MB_OK);
       }
    }
 }
 
 void MouseButtonUp(LONG x, LONG y, BOOL bLeft)
-{
-}
+{ }
 
 void MouseMove(LONG x, LONG y)
-{
-}
+{ }
 
 void HandleJoystick(JOYSTATE jsJoystickState)
-{
-}
+{ }
 
 BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
 {
    return FALSE;
 }
 
-void NewGame()
+void NewGame( )
 {
    // clear the tile states and images
-   for (int i = 0; i < 4; i++)
+   for ( int i = 0; i < 4; i++ )
    {
-      for (int j = 0; j < 4; j++)
+      for ( int j = 0; j < 4; j++ )
       {
-         _bTileStates[i][j] = FALSE;
-         _iTiles[i][j]      = 0;
+         g_tileStates[ i ][ j ] = FALSE;
+         g_tiles[ i ][ j ] = 0;
       }
    }
 
    // initialize the tile images randomly
-   for (int i = 0; i < 2; i++)
+   for ( int i = 0; i < 2; i++ )
    {
-      for (int j = 1; j < 9; j++)
+      for ( int j = 1; j < 9; j++ )
       {
          int x = rtk::rand(0, 3);
          int y = rtk::rand(0, 3);
 
-         while (_iTiles[x][y] != 0)
+         while ( g_tiles[ x ][ y ] != 0 )
          {
             x = rtk::rand(0, 3);
             y = rtk::rand(0, 3);
          }
-         _iTiles[x][y] = j;
+         g_tiles[ x ][ y ] = j;
       }
    }
 
    // initialize the tile selections and match/try count
-   _ptTile1.x = _ptTile1.y = -1;
-   _ptTile2.x = _ptTile2.y = -1;
-   _iMatches  = _iTries = 0;
+   g_tile1.x = g_tile1.y = -1;
+   g_tile2.x = g_tile2.y = -1;
+   g_matches = g_tries   = 0;
 
    // force a repaint to update the tiles
-   InvalidateRect(_pGame->GetWindow(), NULL, FALSE);
+   InvalidateRect(g_game->GetWindow( ), NULL, FALSE);
 }

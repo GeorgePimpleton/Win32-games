@@ -1,7 +1,3 @@
-// "Talk to me like I'm a 3 year old!" Programming Lessons - Windows Games
-
-// Brainiac2.rc - Resource Declarations
-
 #include "windows.h"
 #include "resource.h"
 
@@ -23,7 +19,6 @@ IDW_MATCH      WAVE     "Res/Match.wav"
 IDW_MISMATCH   WAVE     "Res/Mismatch.wav"
 IDW_WIN        WAVE     "Res/Win.wav"
 
-
 IDD_ABOUT   DIALOG   32, 32, 180, 102
 CAPTION "About..."
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
@@ -36,7 +31,6 @@ STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 
    DEFPUSHBUTTON  "OK", IDOK, 66, 81, 50, 14
 }
-
 
 IDR_MENU    MENU
 {
@@ -52,7 +46,6 @@ IDR_MENU    MENU
       MENUITEM "&About...\tF1",  IDM_HELP_ABOUT
    }
 }
-
 
 IDR_ACCELERATORS ACCELERATORS
 {
