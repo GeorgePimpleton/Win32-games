@@ -1,5 +1,3 @@
-// Trippy.rc - resource declarations
-
 #include <windows.h>
 #include "resource.h"
 

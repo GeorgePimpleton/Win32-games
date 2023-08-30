@@ -1,13 +1,11 @@
-// Trippy.cpp - game source
-
 #include "Trippy.hpp"
 
-HRESULT GameInitialize(HINSTANCE hInstance)
+HRESULT GameInitialize(HINSTANCE inst)
 {
-   g_game = std::make_unique<GameEngine>(hInstance, L"Trippy", L"Learning to Draw Basic Graphics",
+   g_game = std::make_unique<GameEngine>(inst, L"Trippy", L"Learning to Draw Basic Graphics",
                                          IDI_ICON, IDI_ICON_SM);
 
-   if (g_game == nullptr)
+   if ( nullptr == g_game )
    {
       return E_FAIL;
    }
@@ -92,12 +90,12 @@ void GameCycle( )
    UINT   blue  = rtk::rand(0, 255);
    HBRUSH brush = CreateSolidBrush(RGB(red, green, blue));
 
-   HWND hwnd = g_game-> GetWindow();
-   HDC  hDC  = GetDC(hwnd);
+   HWND wnd = g_game-> GetWindow();
+   HDC  dc  = GetDC(wnd);
 
-   FillRect(hDC, &g_rect, brush);
+   FillRect(dc, &g_rect, brush);
 
-   ReleaseDC(hwnd, hDC);
+   ReleaseDC(wnd, dc);
    DeleteObject(brush);
 
    // add a bit of delay so the rectangles aren't drawn so fast
