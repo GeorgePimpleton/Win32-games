@@ -21,6 +21,7 @@ Blizzard, creates and uses the Game Engine class.  From the 2004 CD.
 3. Added menus, inline the setters and getters and other misc. changes.
 4. **Use C++ smart pointers, shared and unique, instead of raw pointers.** *<----- this example*
 5. Changed the shared pointers to unique, any WCHAR string arrays in the Game Engine class are now std::wstring.
+6. Removed the old WinAPI Hungarian Notation from variables.  Even MS recommends not using it.
 
 ### Notes
 
