@@ -2,7 +2,7 @@
 
 #include "GameEngine.hpp"
 
-GameEngine* GameEngine::m_gameEngine = NULL;
+GameEngine* GameEngine::m_gameEngine = nullptr;
 
 int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int cmdShow)
 {
@@ -15,9 +15,9 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR
 
       HACCEL accel = LoadAcceleratorsW(inst, MAKEINTRESOURCEW(IDR_ACCELERATORS));
 
-      if ( NULL == accel )
+      if ( nullptr == accel )
       {
-         MessageBoxW(NULL, L"Unable to Load the Accelerators!", GameEngine::GetEngine( )->GetTitle( ), MB_OK | MB_ICONERROR);
+         MessageBoxW(nullptr, L"Unable to Load the Accelerators!", GameEngine::GetEngine( )->GetTitle( ), MB_OK | MB_ICONERROR);
          return E_FAIL;
       }
 
@@ -25,7 +25,7 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR
 
       while ( TRUE )
       {
-         if ( PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE) != 0 )
+         if ( PeekMessageW(&msg, nullptr, 0, 0, PM_REMOVE) != 0 )
          {
             if ( WM_QUIT == msg.message )
             {
@@ -89,40 +89,19 @@ GameEngine::GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
 {
    m_gameEngine = this;
    m_inst       = inst;
-   m_wnd        = NULL;
+   m_wnd        = nullptr;
    m_icon       = icon;
    m_smallIcon  = smallIcon;
    m_width      = width;
    m_height     = height;
    m_frameDelay = 50;
-   m_sleep      = TRUE;
+   m_asleep     = TRUE;
    m_joyID      = 0;
    m_joyTrip    = { };
+   m_wndClass   = wndClass;
+   m_title      = title;
 
    m_sprites.reserve(50);
-
-   size_t  pcch = 0;
-   HRESULT hRes = StringCchLengthW(wndClass, str_length, &pcch);
-
-   if ( pcch > 0 )
-   {
-      StringCchCopyW(m_wndClass, str_length, wndClass);
-   }
-   else
-   {
-      StringCchCopyW(m_wndClass, str_length, L"");
-   }
-
-   hRes = StringCchLengthW(title, str_length, &pcch);
-
-   if ( pcch > 0 )
-   {
-      StringCchCopyW(m_title, str_length, title);
-   }
-   else
-   {
-      StringCchCopyW(m_title, str_length, L"");
-   }
 }
 
 GameEngine::~GameEngine( )
@@ -140,14 +119,14 @@ HRESULT GameEngine::Initialize(int cmdShow)
    wc.hInstance     = m_inst;
    wc.hIcon         = (HICON)   LoadImageW(m_inst, MAKEINTRESOURCEW(IDI_ICON), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
    wc.hIconSm       = (HICON)   LoadImageW(m_inst, MAKEINTRESOURCEW(IDI_ICON_SM), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR); ;
-   wc.hCursor       = (HCURSOR) LoadImageW(NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
+   wc.hCursor       = (HCURSOR) LoadImageW(nullptr, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
    wc.hbrBackground = (HBRUSH)  (COLOR_WINDOW + 1);
    wc.lpszMenuName  = MAKEINTRESOURCEW(IDR_MENU);
    wc.lpszClassName = m_wndClass;
 
    if ( FAILED(RegisterClassEx(&wc)) )
    {
-      MessageBoxW(NULL, L"Unable to initialize Main Window!", L"ERROR", MB_ICONERROR | MB_OK);
+      MessageBoxW(nullptr, L"Unable to initialize Main Window!", L"ERROR", MB_ICONERROR | MB_OK);
       return E_FAIL;
    }
 
@@ -157,7 +136,7 @@ HRESULT GameEngine::Initialize(int cmdShow)
    windowWidth  += 10;
    windowHeight += 10;
 
-   if ( wc.lpszMenuName != NULL )
+   if ( wc.lpszMenuName != nullptr )
    {
       windowHeight += GetSystemMetrics(SM_CYMENU);
    }
@@ -169,11 +148,11 @@ HRESULT GameEngine::Initialize(int cmdShow)
                          WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
                          windowPosX, windowPosY,
                          windowWidth, windowHeight,
-                         NULL, NULL, m_inst, NULL);
+                         nullptr, nullptr, m_inst, nullptr);
 
-   if ( NULL == m_wnd )
+   if ( nullptr == m_wnd )
    {
-      MessageBoxW(NULL, L"Unable to create Main Window!", L"ERROR", MB_ICONERROR | MB_OK);
+      MessageBoxW(nullptr, L"Unable to create Main Window!", L"ERROR", MB_ICONERROR | MB_OK);
       return E_FAIL;
    }
 
@@ -347,7 +326,7 @@ void GameEngine::CheckJoystick( )
 void GameEngine::AddSprite(Sprite* sprite)
 {
    // add a sprite to the sprite vector
-   if ( sprite != NULL )
+   if ( sprite != nullptr )
    {
       // see if there are sprites already in the sprite vector
       if ( m_sprites.size( ) > 0 )
@@ -432,7 +411,7 @@ Sprite* GameEngine::IsPointInSprite(LONG x, LONG y)
    }
 
    // the point is not in a sprite
-   return NULL;
+   return nullptr;
 }
 
 BOOL GameEngine::CheckSpriteCollision(Sprite* testSprite)

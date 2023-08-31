@@ -7,9 +7,7 @@
 #include "Bitmap.hpp"
 #include "Sprite.hpp"
 
-const static UCHAR str_length = 64;
-
-using JOYSTATE = WORD;
+using JOYSTATE           = WORD;
 const JOYSTATE JOY_NONE  = 0x0000L;
 const JOYSTATE JOY_LEFT  = 0x0001L;
 const JOYSTATE JOY_RIGHT = 0x0002L;
@@ -80,14 +78,14 @@ protected:
    static GameEngine*   m_gameEngine;
    HINSTANCE            m_inst;
    HWND                 m_wnd;
-   WCHAR                m_wndClass[ str_length ];
-   WCHAR                m_title[ str_length ];
+   PCWSTR               m_wndClass;
+   PCWSTR               m_title;
    WORD                 m_icon;
    WORD                 m_smallIcon;
    UINT                 m_width;
    UINT                 m_height;
    UINT                 m_frameDelay;
-   BOOL                 m_sleep;
+   BOOL                 m_asleep;
    UINT                 m_joyID;
    RECT                 m_joyTrip;
    std::vector<Sprite*> m_sprites;
@@ -104,62 +102,26 @@ inline void GameEngine::ErrorQuit(PCWSTR errorMsg)
    PostQuitMessage(0);
 }
 
-inline HINSTANCE GameEngine::GetInstance( ) const
-{
-   return m_inst;
-}
+inline HINSTANCE GameEngine::GetInstance( ) const    { return m_inst; }
 
-inline HWND GameEngine::GetWindow( ) const
-{
-   return m_wnd;
-}
+inline HWND GameEngine::GetWindow( ) const           { return m_wnd; }
 
-inline void GameEngine::SetWindow(HWND wnd)
-{
-   m_wnd = wnd;
-}
+inline void GameEngine::SetWindow(HWND wnd)          { m_wnd = wnd; }
 
-inline PCWSTR GameEngine::GetTitle( )
-{
-   return m_title;
-}
+inline PCWSTR GameEngine::GetTitle( )                { return m_title; }
 
-inline WORD GameEngine::GetIcon( ) const
-{
-   return m_icon;
-}
+inline WORD GameEngine::GetIcon( ) const             { return m_icon; }
 
-inline WORD GameEngine::GetSmallIcon( ) const
-{
-   return m_smallIcon;
-}
+inline WORD GameEngine::GetSmallIcon( ) const        { return m_smallIcon; }
 
-inline UINT GameEngine::GetWidth( ) const
-{
-   return m_width;
-}
+inline UINT GameEngine::GetWidth( ) const            { return m_width; }
 
-inline UINT GameEngine::GetHeight( ) const
-{
-   return m_height;
-}
+inline UINT GameEngine::GetHeight( ) const           { return m_height; }
 
-inline UINT GameEngine::GetFrameDelay( ) const
-{
-   return m_frameDelay;
-}
+inline UINT GameEngine::GetFrameDelay( ) const       { return m_frameDelay; }
 
-inline void GameEngine::SetFrameRate(UINT frameRate)
-{
-   m_frameDelay = 1000 / frameRate;
-}
+inline void GameEngine::SetFrameRate(UINT frameRate) { m_frameDelay = 1000 / frameRate; }
 
-inline BOOL GameEngine::GetSleep( ) const
-{
-   return m_sleep;
-}
+inline BOOL GameEngine::GetSleep( ) const            { return m_asleep; }
 
-inline void GameEngine::SetSleep(BOOL sleep)
-{
-   m_sleep = sleep;
-}
+inline void GameEngine::SetSleep(BOOL asleep)        { m_asleep = asleep; }

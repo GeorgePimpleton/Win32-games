@@ -5,7 +5,7 @@ HRESULT GameInitialize(HINSTANCE inst)
    g_game = new GameEngine(inst, L"Fore 2", L"Managing a World Sprites",
                            IDI_ICON, IDI_ICON_SM, 600, 400);
 
-   if ( NULL == g_game )
+   if ( nullptr == g_game )
    {
       return E_FAIL;
    }
@@ -25,8 +25,8 @@ void GameStart(HWND wnd)
 
    SelectObject(g_offscreenDC, g_offscreenBitmap);
 
-   g_forestBitmap   = new Bitmap(IDB_FOREST, GetModuleHandle(NULL));
-   g_golfBallBitmap = new Bitmap(IDB_GOLFBALL, GetModuleHandle(NULL));
+   g_forestBitmap   = new Bitmap(IDB_FOREST, GetModuleHandle(nullptr));
+   g_golfBallBitmap = new Bitmap(IDB_GOLFBALL, GetModuleHandle(nullptr));
 
    // create the golf ball sprites
    RECT    bounds = { 0, 0, 600, 400 };
@@ -51,7 +51,7 @@ void GameStart(HWND wnd)
    g_game->AddSprite(sprite);
 
    // set the initial drag info
-   g_dragSprite = NULL;
+   g_dragSprite = nullptr;
 }
 
 void GameEnd( )
@@ -126,9 +126,9 @@ void HandleKeys( )
 void MouseButtonDown(LONG x, LONG y, BOOL left)
 {
    // see if a ball was clicked with the left mouse button
-   if ( left && (NULL == g_dragSprite) )
+   if ( left && (nullptr == g_dragSprite) )
    {
-      if ( (g_dragSprite = g_game->IsPointInSprite(x, y)) != NULL )
+      if ( (g_dragSprite = g_game->IsPointInSprite(x, y)) != nullptr )
       {
          // capture the mouse
          SetCapture(g_game->GetWindow( ));
@@ -145,19 +145,19 @@ void MouseButtonUp(LONG x, LONG y, BOOL left)
    ReleaseCapture( );
 
    // stop dragging
-   g_dragSprite = NULL;
+   g_dragSprite = nullptr;
 }
 
 void MouseMove(LONG x, LONG y)
 {
-   if ( g_dragSprite != NULL )
+   if ( g_dragSprite != nullptr )
    {
       // move the sprite to the mouse cursor position
       g_dragSprite->SetPosition(x - (g_dragSprite->GetWidth( ) / 2),
                                 y - (g_dragSprite->GetHeight( ) / 2));
 
       // force a repaint to redraw the sprites
-      InvalidateRect(g_game->GetWindow( ), NULL, FALSE);
+      InvalidateRect(g_game->GetWindow( ), nullptr, FALSE);
    }
 }
 
