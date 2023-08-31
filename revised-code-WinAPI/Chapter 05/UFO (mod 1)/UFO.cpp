@@ -1,11 +1,11 @@
 #include "UFO.hpp"
 
-HRESULT GameInitialize(HINSTANCE hInst)
+HRESULT GameInitialize(HINSTANCE inst)
 {
-   g_game = std::make_unique<GameEngine>(hInst, L"UFO", L"Controlling Games with the Keyboard and Mouse",
-                                          IDI_ICON, IDI_ICON_SM, 500, 400);
+   g_game = std::make_unique<GameEngine>(inst, L"UFO", L"Controlling Games with the Keyboard and Mouse",
+                                         IDI_ICON, IDI_ICON_SM, 500, 400);
 
-   if (NULL == g_game)
+   if (nullptr == g_game)
    {
       return E_FAIL;
    }
@@ -33,19 +33,19 @@ void GameStart(HWND hwnd)
 void GameEnd( )
 { }
 
-void GameActivate(HWND hwnd)
+void GameActivate(HWND wnd)
 { }
 
-void GameDeactivate(HWND hwnd)
+void GameDeactivate(HWND wnd)
 { }
 
-void GamePaint(HDC hDC)
+void GamePaint(HDC dc)
 {
    // draw the background
-   g_background->Draw(hDC, 0, 0);
+   g_background->Draw(dc, 0, 0);
 
    // draw the saucer
-   g_saucer->Draw(hDC, g_saucerX, g_saucerY, TRUE);
+   g_saucer->Draw(dc, g_saucerX, g_saucerY, TRUE);
 }
 
 void GameCycle( )
@@ -54,7 +54,7 @@ void GameCycle( )
    g_saucerX = min(500 - (LONG) g_saucer->GetWidth(), max(0, g_saucerX + g_speedX));
    g_saucerY = min(320, max(0, g_saucerY + g_speedY));
 
-   InvalidateRect(g_game->GetWindow(), NULL, FALSE);
+   InvalidateRect(g_game->GetWindow(), nullptr, FALSE);
 }
 
 void GameMenu(WPARAM wParam)

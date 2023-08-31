@@ -7,17 +7,17 @@ class Bitmap
 public:
             Bitmap( );
             Bitmap(PCWSTR fileName);
-            Bitmap(UINT resID, HINSTANCE hInst);
-            Bitmap(HWND hWnd, LONG width, LONG height, COLORREF color = RGB(0, 0, 0));
+            Bitmap(UINT resID, HINSTANCE inst);
+            Bitmap(HWND wnd, LONG width, LONG height, COLORREF color = RGB(0, 0, 0));
    virtual ~Bitmap( );
 
 public:
    BOOL Create(PCWSTR fileName);
-   BOOL Create(UINT resID, HINSTANCE hInst);
-   BOOL Create(HWND hwnd, LONG width, LONG height, COLORREF color);
+   BOOL Create(UINT resID, HINSTANCE inst);
+   BOOL Create(HWND wnd, LONG width, LONG height, COLORREF color);
 
 public:
-   void Draw(HDC hDC, int x, int y, BOOL trans = FALSE, COLORREF transColor = RGB(255, 0, 255));
+   void Draw(HDC dc, int x, int y, BOOL trans = FALSE, COLORREF transColor = RGB(255, 0, 255));
 
 public:
    LONG  GetWidth();

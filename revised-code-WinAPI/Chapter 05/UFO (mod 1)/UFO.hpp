@@ -1,9 +1,10 @@
 #pragma once
 
+#include "random_toolkit.hpp"
 #include "Bitmap.hpp"
 #include "GameEngine.hpp"
 
-const LONG                  g_MAXSPEED { 8 };
+const LONG                  g_MAXSPEED = 8;
 
 std::unique_ptr<GameEngine> g_game;
 std::unique_ptr<Bitmap>     g_background;
