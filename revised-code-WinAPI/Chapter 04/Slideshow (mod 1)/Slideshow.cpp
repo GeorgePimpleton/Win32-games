@@ -3,9 +3,9 @@
 HRESULT GameInitialize(HINSTANCE hInst)
 {
    g_game = std::make_unique<GameEngine>(hInst, L"Slideshow", L"Drawing Graphical Images",
-                                          IDI_ICON, IDI_ICON_SM);
+                                         IDI_ICON, IDI_ICON_SM);
 
-   if ( g_game == nullptr )
+   if ( nullptr == g_game )
    {
       return E_FAIL;
    }
@@ -19,7 +19,7 @@ void GameStart(HWND hwnd)
 {
    // create/load the slide bitmaps
 
-   // create a blank bitmap
+   // create a blank colored bitmap
    g_slides[ 0 ] = std::make_unique<Bitmap>(g_game->GetWindow(), 640, 480, RGB(128, 128, 64));
 
    // load bitmaps from a file
@@ -28,11 +28,11 @@ void GameStart(HWND hwnd)
    g_slides[ 3 ] = std::make_unique<Bitmap>(L"Res/Image3.bmp");
 
    // load bitmaps as resources
-   HINSTANCE hInst = g_game->GetInstance();
+   HINSTANCE inst = g_game->GetInstance();
 
-   g_slides[ 4 ] = std::make_unique<Bitmap>(IDB_IMAGE4, hInst);
-   g_slides[ 5 ] = std::make_unique<Bitmap>(IDB_IMAGE5, hInst);
-   g_slides[ 6 ] = std::make_unique<Bitmap>(IDB_IMAGE6, hInst);
+   g_slides[ 4 ] = std::make_unique<Bitmap>(IDB_IMAGE4, inst);
+   g_slides[ 5 ] = std::make_unique<Bitmap>(IDB_IMAGE5, inst);
+   g_slides[ 6 ] = std::make_unique<Bitmap>(IDB_IMAGE6, inst);
 
    // set the index to the second slide
    g_currentSlide = 1;

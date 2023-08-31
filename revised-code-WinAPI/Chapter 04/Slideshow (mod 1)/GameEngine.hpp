@@ -1,22 +1,19 @@
 #pragma once
 
 #include <windows.h>
-#include <strsafe.h>
 #include <memory>
-#include <string>
 #include "resource.h"
-#include "random_toolkit.hpp"
 
-int WINAPI       wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE hPrevInst, _In_ PWSTR cmdLine, _In_ int cmdShow);
-LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-BOOL CALLBACK    DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+int WINAPI       wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int cmdShow);
+LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK    DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam);
 
-HRESULT GameInitialize(HINSTANCE hInst);
-void    GameStart(HWND hwnd);
+HRESULT GameInitialize(HINSTANCE inst);
+void    GameStart(HWND wnd);
 void    GameEnd( );
-void    GameActivate(HWND hwnd);
-void    GameDeactivate(HWND hwnd);
-void    GamePaint(HDC hDC);
+void    GameActivate(HWND wnd);
+void    GameDeactivate(HWND wnd);
+void    GamePaint(HDC dc);
 void    GameCycle( );
 void    GameMenu(WPARAM wParam);
 
@@ -37,7 +34,7 @@ public:
    HINSTANCE GetInstance( ) const;
    HWND      GetWindow( ) const;
    void      SetWindow(HWND hwnd);
-   PWSTR     GetTitle( );
+   PCWSTR    GetTitle( );
    WORD      GetIcon( ) const;
    WORD      GetSmallIcon( ) const;
    UINT      GetWidth( ) const;
@@ -45,20 +42,20 @@ public:
    UINT      GetFrameDelay( ) const;
    void      SetFrameRate(UINT frameRate);
    BOOL      GetSleep( ) const;
-   void      SetSleep(BOOL bSleep);
+   void      SetSleep(BOOL asleep);
 
 protected:
    static std::unique_ptr<GameEngine> m_gameEngine;
-   HINSTANCE                          m_hInst;
-   HWND                               m_hwnd;
-   std::wstring                       m_wndClass;
-   std::wstring                       m_title;
+   HINSTANCE                          m_inst;
+   HWND                               m_wnd;
+   PCWSTR                             m_wndClass;
+   PCWSTR                             m_title;
    WORD                               m_icon;
    WORD                               m_smallIcon;
    UINT                               m_width;
    UINT                               m_height;
    UINT                               m_frameDelay;
-   BOOL                               m_sleep;
+   BOOL                               m_asleep;
 };
 
 // notifies the user of an unrecoverable error and quits the program
@@ -70,13 +67,13 @@ inline void GameEngine::ErrorQuit(PCWSTR errorMsg)
 
 inline GameEngine* GameEngine::GetEngine( )          { return m_gameEngine.get(); }
 
-inline HINSTANCE GameEngine::GetInstance( ) const    { return m_hInst; }
+inline HINSTANCE GameEngine::GetInstance( ) const    { return m_inst; }
 
-inline HWND GameEngine::GetWindow( ) const           { return m_hwnd; }
+inline HWND GameEngine::GetWindow( ) const           { return m_wnd; }
 
-inline void GameEngine::SetWindow(HWND hwnd)         { m_hwnd = hwnd; }
+inline void GameEngine::SetWindow(HWND wnd)          { m_wnd = wnd; }
 
-inline PWSTR GameEngine::GetTitle( )                 { return m_title.data(); }
+inline PCWSTR GameEngine::GetTitle( )                { return m_title; }
 
 inline WORD GameEngine::GetIcon( ) const             { return m_icon; }
 
@@ -90,6 +87,6 @@ inline UINT GameEngine::GetFrameDelay( ) const       { return m_frameDelay; }
 
 inline void GameEngine::SetFrameRate(UINT frameRate) { m_frameDelay = 1000 / frameRate; }
 
-inline BOOL GameEngine::GetSleep( ) const            { return m_sleep; }
+inline BOOL GameEngine::GetSleep( ) const            { return m_asleep; }
 
-inline void GameEngine::SetSleep(BOOL sleep)         { m_sleep = sleep; }
+inline void GameEngine::SetSleep(BOOL asleep)        { m_asleep = asleep; }

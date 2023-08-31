@@ -11,16 +11,16 @@ Bitmap::Bitmap(PCWSTR fileName) :
    Create(fileName);
 }
 
-Bitmap::Bitmap(UINT resID, HINSTANCE hInst) :
+Bitmap::Bitmap(UINT resID, HINSTANCE inst) :
    m_bitmap(nullptr), m_width(0), m_height(0)
 {
-   Create(resID, hInst);
+   Create(resID, inst);
 }
 
-Bitmap::Bitmap(HWND hwnd, LONG width, LONG height, COLORREF color)
+Bitmap::Bitmap(HWND wnd, LONG width, LONG height, COLORREF color)
    : m_bitmap(nullptr), m_width(0), m_height(0)
 {
-   Create(hwnd, width, height, color);
+   Create(wnd, width, height, color);
 }
 
 Bitmap::~Bitmap( )
@@ -30,13 +30,13 @@ Bitmap::~Bitmap( )
 
 BOOL Bitmap::Create(PCWSTR fileName)
 {
-   Free();
+   Free( );
 
    m_bitmap = (HBITMAP) LoadImageW(nullptr, fileName, IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION | LR_LOADFROMFILE);
 
-   if (m_bitmap == nullptr)
+   if ( nullptr == m_bitmap )
    {
-      Free();
+      Free( );
 
       return FALSE;
    }
@@ -51,15 +51,15 @@ BOOL Bitmap::Create(PCWSTR fileName)
    return TRUE;
 }
 
-BOOL Bitmap::Create(UINT resID, HINSTANCE hInst)
+BOOL Bitmap::Create(UINT resID, HINSTANCE inst)
 {
    Free( );
 
    m_bitmap = (HBITMAP) LoadImageW(GetModuleHandleW(nullptr), MAKEINTRESOURCEW(resID), IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION);
 
-   if (m_bitmap == nullptr)
+   if ( nullptr == m_bitmap )
    {
-      Free();
+      Free( );
 
       return FALSE;
    }
@@ -74,13 +74,13 @@ BOOL Bitmap::Create(UINT resID, HINSTANCE hInst)
    return TRUE;
 }
 
-BOOL Bitmap::Create(HWND hwnd, LONG width, LONG height, COLORREF color)
+BOOL Bitmap::Create(HWND wnd, LONG width, LONG height, COLORREF color)
 {
-   HDC hDC = GetDC(hwnd);
+   HDC dc = GetDC(wnd);
 
-   m_bitmap = CreateCompatibleBitmap(hDC, width, height);
+   m_bitmap = CreateCompatibleBitmap(dc, width, height);
 
-   if (m_bitmap == nullptr)
+   if ( nullptr == m_bitmap )
    {
       return FALSE;
    }
@@ -88,7 +88,7 @@ BOOL Bitmap::Create(HWND hwnd, LONG width, LONG height, COLORREF color)
    m_width  = width;
    m_height = height;
 
-   HDC     memDC     = CreateCompatibleDC(hDC);
+   HDC     memDC     = CreateCompatibleDC(dc);
    HBRUSH  brush     = CreateSolidBrush(color);
    HBITMAP oldBitmap = (HBITMAP) SelectObject(memDC, m_bitmap);
    RECT    bitmap    = { 0, 0, m_width, m_height };
@@ -104,13 +104,12 @@ BOOL Bitmap::Create(HWND hwnd, LONG width, LONG height, COLORREF color)
 
 void Bitmap::Draw(HDC hDC, int x, int y) const
 {
-   if (m_bitmap != nullptr)
+   if ( m_bitmap != nullptr )
    {
-      HDC memDC = CreateCompatibleDC(hDC);
-
+      HDC     memDC     = CreateCompatibleDC(hDC);
       HBITMAP oldBitmap = (HBITMAP) SelectObject(memDC, m_bitmap);
 
-      BitBlt(hDC, x, y, GetWidth(), GetHeight(), memDC, 0, 0, SRCCOPY);
+      BitBlt(hDC, x, y, GetWidth( ), GetHeight( ), memDC, 0, 0, SRCCOPY);
 
       SelectObject(memDC, oldBitmap);
       DeleteDC(memDC);
@@ -119,9 +118,9 @@ void Bitmap::Draw(HDC hDC, int x, int y) const
 
 void Bitmap::Free( )
 {
-   if (m_bitmap != nullptr)
+   if ( m_bitmap != nullptr )
    {
-       DeleteObject(m_bitmap);
-       m_bitmap = nullptr;
+      DeleteObject(m_bitmap);
+      m_bitmap = nullptr;
    }
 }
