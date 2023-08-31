@@ -1,11 +1,11 @@
 #include "Light Cycles.hpp"
 
-HRESULT GameInitialize(HINSTANCE hInst)
+HRESULT GameInitialize(HINSTANCE inst)
 {
-   g_game = std::make_unique<GameEngine>(hInst, L"Light Cycles", L"Light Cycles",
+   g_game = std::make_unique<GameEngine>(inst, L"Light Cycles", L"Light Cycles",
                                          IDI_ICON, IDI_ICON_SM, 500, 400);
 
-   if ( NULL == g_game )
+   if ( nullptr == g_game )
    {
       return E_FAIL;
    }
@@ -17,20 +17,20 @@ HRESULT GameInitialize(HINSTANCE hInst)
    return S_OK;
 }
 
-void GameStart(HWND hwnd)
+void GameStart(HWND wnd)
 {
    // create and load the background and light cycle bitmaps
-   HINSTANCE hInst { GetModuleHandleW(NULL) };
+   HINSTANCE inst = GetModuleHandleW(nullptr);
 
-   g_background      = std::make_unique<Bitmap>(IDB_BACKGROUND, hInst);
-   g_cycle[ 0 ][ 0 ] = std::make_unique<Bitmap>(IDB_CYCLEBLUE_0, hInst);
-   g_cycle[ 0 ][ 1 ] = std::make_unique<Bitmap>(IDB_CYCLEBLUE_90, hInst);
-   g_cycle[ 0 ][ 2 ] = std::make_unique<Bitmap>(IDB_CYCLEBLUE_180, hInst);
-   g_cycle[ 0 ][ 3 ] = std::make_unique<Bitmap>(IDB_CYCLEBLUE_270, hInst);
-   g_cycle[ 1 ][ 0 ] = std::make_unique<Bitmap>(IDB_CYCLEORANGE_0, hInst);
-   g_cycle[ 1 ][ 1 ] = std::make_unique<Bitmap>(IDB_CYCLEORANGE_90, hInst);
-   g_cycle[ 1 ][ 2 ] = std::make_unique<Bitmap>(IDB_CYCLEORANGE_180, hInst);
-   g_cycle[ 1 ][ 3 ] = std::make_unique<Bitmap>(IDB_CYCLEORANGE_270, hInst);
+   g_background      = std::make_unique<Bitmap>(IDB_BACKGROUND, inst);
+   g_cycle[ 0 ][ 0 ] = std::make_unique<Bitmap>(IDB_CYCLEBLUE_0, inst);
+   g_cycle[ 0 ][ 1 ] = std::make_unique<Bitmap>(IDB_CYCLEBLUE_90, inst);
+   g_cycle[ 0 ][ 2 ] = std::make_unique<Bitmap>(IDB_CYCLEBLUE_180, inst);
+   g_cycle[ 0 ][ 3 ] = std::make_unique<Bitmap>(IDB_CYCLEBLUE_270, inst);
+   g_cycle[ 1 ][ 0 ] = std::make_unique<Bitmap>(IDB_CYCLEORANGE_0, inst);
+   g_cycle[ 1 ][ 1 ] = std::make_unique<Bitmap>(IDB_CYCLEORANGE_90, inst);
+   g_cycle[ 1 ][ 2 ] = std::make_unique<Bitmap>(IDB_CYCLEORANGE_180, inst);
+   g_cycle[ 1 ][ 3 ] = std::make_unique<Bitmap>(IDB_CYCLEORANGE_270, inst);
 
    // start a new game
    NewGame( );
@@ -41,7 +41,6 @@ void GameEnd( )
 
 void GameActivate(HWND hwnd)
 {
-   // capture the joystick
    g_game->CaptureJoystick( );
 }
 
@@ -50,24 +49,24 @@ void GameDeactivate(HWND hwnd)
    g_game->ReleaseJoystick( );
 }
 
-void GamePaint(HDC hDC)
+void GamePaint(HDC dc)
 {
-   g_background->Draw(hDC, 0, 0);
+   g_background->Draw(dc, 0, 0);
 
    // draw the light cycle trails
    for ( int i { }; i < 2; i++ )
    {
       // create a blue/orange pen depending on which trail is being drawn
       HPEN hPen { CreatePen(PS_SOLID, 5, (i == 0) ? RGB(0, 0, 255) : RGB(255, 146, 73)) };
-      SelectObject(hDC, hPen);
+      SelectObject(dc, hPen);
 
       // start at the first point in the trail
-      MoveToEx(hDC, g_cycleTrail[ i ][ 0 ].x, g_cycleTrail[ i ][ 0 ].y, NULL);
+      MoveToEx(dc, g_cycleTrail[ i ][ 0 ].x, g_cycleTrail[ i ][ 0 ].y, nullptr);
 
       // draw a line to each of the remaining points
       for ( int j { 1 }; j < g_trailLength[ i ]; j++ )
       {
-         LineTo(hDC, g_cycleTrail[ i ][ j ].x, g_cycleTrail[ i ][ j ].y);
+         LineTo(dc, g_cycleTrail[ i ][ j ].x, g_cycleTrail[ i ][ j ].y);
       }
 
       // clean up the pen
@@ -77,7 +76,7 @@ void GamePaint(HDC hDC)
    // determine the directions of the light cycles
    int iDirection[ 2 ] = { 0, 0 };
 
-   for ( int i { }; i < 2; i++ )
+   for ( int i = 0; i < 2; i++ )
    {
       if ( g_cycleSpeed[ i ].y < 0 )
       {
@@ -98,8 +97,8 @@ void GamePaint(HDC hDC)
    }
 
    // draw the light cycles
-   g_cycle[ 0 ][ iDirection[ 0 ] ]->Draw(hDC, g_cyclePos[ 0 ].x, g_cyclePos[ 0 ].y, TRUE);
-   g_cycle[ 1 ][ iDirection[ 1 ] ]->Draw(hDC, g_cyclePos[ 1 ].x, g_cyclePos[ 1 ].y, TRUE);
+   g_cycle[ 0 ][ iDirection[ 0 ] ]->Draw(dc, g_cyclePos[ 0 ].x, g_cyclePos[ 0 ].y, TRUE);
+   g_cycle[ 1 ][ iDirection[ 1 ] ]->Draw(dc, g_cyclePos[ 1 ].x, g_cyclePos[ 1 ].y, TRUE);
 }
 
 void GameCycle( )
@@ -109,8 +108,7 @@ void GameCycle( )
       // move the light cycles
       UpdateCycles( );
 
-      // force a repaint to redraw the light cycles
-      InvalidateRect(g_game->GetWindow( ), NULL, FALSE);
+      InvalidateRect(g_game->GetWindow( ), nullptr, FALSE);
    }
 }
 
@@ -214,13 +212,13 @@ void NewGame( )
    g_cycleSpeed[ 0 ].y = -g_SPEED;
 
    // set the initial orange light cycle position and speed
-   g_cyclePos[ 1 ].x = 250 - (g_cycle[ 1 ][ 0 ]->GetWidth( ) / 2);
-   g_cyclePos[ 1 ].y = 0;
+   g_cyclePos[ 1 ].x   = 250 - (g_cycle[ 1 ][ 0 ]-> GetWidth( ) / 2);
+   g_cyclePos[ 1 ].y   = 0;
    g_cycleSpeed[ 1 ].x = 0;
    g_cycleSpeed[ 1 ].y = g_SPEED;
 
    // set the light cycle trail lengths and initial points
-   g_trailLength[ 0 ] = g_trailLength[ 1 ] = 2;
+   g_trailLength[ 0 ]       = g_trailLength[ 1 ] = 2;
    g_cycleTrail[ 0 ][ 0 ].x = g_cycleTrail[ 0 ][ 1 ].x = 250;
    g_cycleTrail[ 0 ][ 0 ].y = g_cycleTrail[ 0 ][ 1 ].y = 400;
    g_cycleTrail[ 1 ][ 0 ].x = g_cycleTrail[ 1 ][ 1 ].x = 250;
@@ -232,7 +230,7 @@ void NewGame( )
 
 void UpdateCycles( )
 {
-   for ( int i { }; i < 2; i++ )
+   for ( int i = 0; i < 2; i++ )
    {
       // update the light cycle position based on its speed
       g_cyclePos[ i ].x = g_cyclePos[ i ].x + g_cycleSpeed[ i ].x;
@@ -244,7 +242,7 @@ void UpdateCycles( )
 
       // see if the light cycle ran into the edge of the screen
       if ( g_cyclePos[ i ].x < 0 || g_cyclePos[ i ].x >(500 - g_cycle[ i ][ 0 ]->GetWidth( )) ||
-          g_cyclePos[ i ].y < 0 || g_cyclePos[ i ].y >(400 - g_cycle[ i ][ 0 ]->GetHeight( )) )
+           g_cyclePos[ i ].y < 0 || g_cyclePos[ i ].y >(400 - g_cycle[ i ][ 0 ]->GetHeight( )) )
       {
          // the game is over
          EndGame(1 - i);
@@ -256,7 +254,7 @@ void UpdateCycles( )
 
       if ( g_trailLength[ i ] > 2 ) // Must have steered at least once
       {
-         for ( int j { }; j < g_trailLength[ i ] - 2; j++ )
+         for ( int j = 0; j < g_trailLength[ i ] - 2; j++ )
          {
             tempTrail.left   = min(g_cycleTrail[ i ][ j ].x, g_cycleTrail[ i ][ j + 1 ].x) - 1;
             tempTrail.right  = max(g_cycleTrail[ i ][ j ].x, g_cycleTrail[ i ][ j + 1 ].x) + 1;
@@ -273,7 +271,7 @@ void UpdateCycles( )
       }
 
       // see if the light cycle collided with the other cycle's trail
-      for ( int j { }; j <= g_trailLength[ 1 - i ] - 2; j++ )
+      for ( int j = 0; j <= g_trailLength[ 1 - i ] - 2; j++ )
       {
          tempTrail.left   = min(g_cycleTrail[ 1 - i ][ j ].x, g_cycleTrail[ 1 - i ][ j + 1 ].x) - 3;
          tempTrail.right  = max(g_cycleTrail[ 1 - i ][ j ].x, g_cycleTrail[ 1 - i ][ j + 1 ].x) + 3;
