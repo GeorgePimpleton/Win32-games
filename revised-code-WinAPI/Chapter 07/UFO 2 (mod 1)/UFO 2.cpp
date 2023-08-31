@@ -1,11 +1,11 @@
 #include "UFO 2.hpp"
 
-HRESULT GameInitialize(HINSTANCE hInst)
+HRESULT GameInitialize(HINSTANCE inst)
 {
-   g_game = std::make_unique<GameEngine>(hInst, L"UFO 2", L"Improving Input with Joysticks",
+   g_game = std::make_unique<GameEngine>(inst, L"UFO 2", L"Improving Input with Joysticks",
                                          IDI_ICON, IDI_ICON_SM, 500, 400);
 
-   if ( NULL == g_game )
+   if ( nullptr == g_game )
    {
       return E_FAIL;
    }
@@ -18,16 +18,16 @@ HRESULT GameInitialize(HINSTANCE hInst)
    return S_OK;
 }
 
-void GameStart(HWND hwnd)
+void GameStart(HWND wnd)
 {
    rtk::srand( );
 
    // create and load the background and saucer bitmaps
-   HINSTANCE hInst = g_game->GetInstance( );
+   HINSTANCE inst = g_game->GetInstance( );
 
-   g_background  = std::make_unique<Bitmap>(IDB_BACKGROUND, hInst);
-   g_saucer[ 0 ] = std::make_unique<Bitmap>(IDB_SAUCER, hInst);
-   g_saucer[ 1 ] = std::make_unique<Bitmap>(IDB_SAUCERFLAME, hInst);
+   g_background  = std::make_unique<Bitmap>(IDB_BACKGROUND, inst);
+   g_saucer[ 0 ] = std::make_unique<Bitmap>(IDB_SAUCER, inst);
+   g_saucer[ 1 ] = std::make_unique<Bitmap>(IDB_SAUCERFLAME, inst);
 
    // set the initial saucer position and speed
    g_saucerX = 250 - (g_saucer[ 0 ]-> GetWidth( ) / 2);
@@ -37,25 +37,24 @@ void GameStart(HWND hwnd)
 }
 
 void GameEnd( )
-{
-}
+{ }
 
-void GameActivate(HWND hwnd)
+void GameActivate(HWND wnd)
 {
    // capture the joystick
    g_game->CaptureJoystick( );
 }
 
-void GameDeactivate(HWND hwnd)
+void GameDeactivate(HWND wnd)
 {
    // release the joystick
    g_game->ReleaseJoystick( );
 }
 
-void GamePaint(HDC hDC)
+void GamePaint(HDC dc)
 {
-   g_background->Draw(hDC, 0, 0);
-   g_saucer[ g_saucerFlame ? 1 : 0 ]->Draw(hDC, g_saucerX, g_saucerY, TRUE);
+   g_background->Draw(dc, 0, 0);
+   g_saucer[ g_saucerFlame ? 1 : 0 ]->Draw(dc, g_saucerX, g_saucerY, TRUE);
 }
 
 void GameCycle( )
@@ -63,7 +62,7 @@ void GameCycle( )
    g_saucerX = min(500 - (LONG) g_saucer[ 0 ]->GetWidth( ), max(0, g_saucerX + g_speedX));
    g_saucerY = min(320, max(0, g_saucerY + g_speedY));
 
-   InvalidateRect(g_game->GetWindow( ), NULL, FALSE);
+   InvalidateRect(g_game->GetWindow( ), nullptr, FALSE);
 }
 
 void GameMenu(WPARAM wParam)
@@ -117,12 +116,10 @@ void MouseButtonDown(LONG x, LONG y, BOOL left)
 }
 
 void MouseButtonUp(LONG x, LONG y, BOOL left)
-{
-}
+{ }
 
 void MouseMove(LONG x, LONG y)
-{
-}
+{ }
 
 // handles a joystick
 void HandleJoystick(JOYSTATE joyState)
