@@ -14,7 +14,7 @@ const JOYSTATE JOY_DOWN  = 0x0008L;
 const JOYSTATE JOY_FIRE1 = 0x0010L;
 const JOYSTATE JOY_FIRE2 = 0x0020L;
 
-int WINAPI       wWinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE hPrevInst, _In_ PWSTR cmdLine, _In_ int cmdShow);
+int WINAPI       wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int cmdShow);
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK    DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam);
 
