@@ -1,8 +1,8 @@
 #include "Brainiac.hpp"
 
-HRESULT GameInitialize(HINSTANCE hInst)
+HRESULT GameInitialize(HINSTANCE inst)
 {
-   g_game = std::make_unique<GameEngine>(hInst, L"Brainiac", L"Example Game: Brainiac",
+   g_game = std::make_unique<GameEngine>(inst, L"Brainiac", L"Example Game: Brainiac",
                                          IDI_ICON, IDI_ICON_SM, 528, 508);
 
    if ( nullptr == g_game )
@@ -16,26 +16,26 @@ HRESULT GameInitialize(HINSTANCE hInst)
    return S_OK;
 }
 
-void GameStart(HWND hwnd)
+void GameStart(HWND wnd)
 {
    rtk::srand();
 
-   HINSTANCE hInst { g_game->GetInstance() };
+   HINSTANCE inst = g_game->GetInstance();
 
-   g_tiles[ 0 ] = std::make_unique<Bitmap>(IDB_TILEBLANK, hInst);
-   g_tiles[ 1 ] = std::make_unique<Bitmap>(IDB_TILE1, hInst);
-   g_tiles[ 2 ] = std::make_unique<Bitmap>(IDB_TILE2, hInst);
-   g_tiles[ 3 ] = std::make_unique<Bitmap>(IDB_TILE3, hInst);
-   g_tiles[ 4 ] = std::make_unique<Bitmap>(IDB_TILE4, hInst);
-   g_tiles[ 5 ] = std::make_unique<Bitmap>(IDB_TILE5, hInst);
-   g_tiles[ 6 ] = std::make_unique<Bitmap>(IDB_TILE6, hInst);
-   g_tiles[ 7 ] = std::make_unique<Bitmap>(IDB_TILE7, hInst);
-   g_tiles[ 8 ] = std::make_unique<Bitmap>(IDB_TILE8, hInst);
+   g_tiles[ 0 ] = std::make_unique<Bitmap>(IDB_TILEBLANK, inst);
+   g_tiles[ 1 ] = std::make_unique<Bitmap>(IDB_TILE1, inst);
+   g_tiles[ 2 ] = std::make_unique<Bitmap>(IDB_TILE2, inst);
+   g_tiles[ 3 ] = std::make_unique<Bitmap>(IDB_TILE3, inst);
+   g_tiles[ 4 ] = std::make_unique<Bitmap>(IDB_TILE4, inst);
+   g_tiles[ 5 ] = std::make_unique<Bitmap>(IDB_TILE5, inst);
+   g_tiles[ 6 ] = std::make_unique<Bitmap>(IDB_TILE6, inst);
+   g_tiles[ 7 ] = std::make_unique<Bitmap>(IDB_TILE7, inst);
+   g_tiles[ 8 ] = std::make_unique<Bitmap>(IDB_TILE8, inst);
 
    // clear the tile states and images
-   for ( UINT i { }; i < 4; i++ )
+   for ( UINT i = 0; i < 4; i++ )
    {
-      for ( UINT j { }; j < 4; j++ )
+      for ( UINT j = 0; j < 4; j++ )
       {
          g_tileState[ i ][ j ] = FALSE;
          g_tile[ i ][ j ]      = 0;
@@ -43,9 +43,9 @@ void GameStart(HWND hwnd)
    }
 
    // initialize the tile images randomly
-   for ( UINT i { }; i < 2; i++ )
+   for ( UINT i = 0; i < 2; i++ )
    {
-      for ( UINT j { 1 }; j < 9; j++ )
+      for ( UINT j = 1; j < 9; j++ )
       {
          int x = rtk::rand(0, 3);
          int y = rtk::rand(0, 3);
@@ -69,30 +69,30 @@ void GameStart(HWND hwnd)
 void GameEnd( )
 { }
 
-void GameActivate(HWND hwnd)
+void GameActivate(HWND wnd)
 { }
 
-void GameDeactivate(HWND hwnd)
+void GameDeactivate(HWND wnd)
 { }
 
-void GamePaint(HDC hDC)
+void GamePaint(HDC dc)
 {
    // draw the tiles
    UINT tileWidth  { (UINT) g_tiles[ 0 ]->GetWidth() };
    UINT tileHeight { (UINT) g_tiles[ 0 ]->GetHeight() };
 
-   for ( UINT i { }; i < 4; i++ )
+   for ( UINT i = 0; i < 4; i++ )
    {
-      for ( UINT j { }; j < 4; j++ )
+      for ( UINT j = 0; j < 4; j++ )
       {
          if ( g_tileState[ i ][ j ] || ((i == g_tile1.x) && (j == g_tile1.y)) ||
              ((i == g_tile2.x) && (j == g_tile2.y)) )
          {
-            g_tiles[ g_tile[ i ][ j ] ]->Draw(hDC, i * tileWidth, j * tileHeight, TRUE);
+            g_tiles[ g_tile[ i ][ j ] ]->Draw(dc, i * tileWidth, j * tileHeight, TRUE);
          }
          else
          {
-            g_tiles[ 0 ]->Draw(hDC, i * tileWidth, j * tileHeight, TRUE);
+            g_tiles[ 0 ]->Draw(dc, i * tileWidth, j * tileHeight, TRUE);
          }
       }
    }

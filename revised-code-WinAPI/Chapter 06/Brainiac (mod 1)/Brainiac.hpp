@@ -5,6 +5,7 @@
 #include "resource.h"
 #include "Bitmap.hpp"
 #include "GameEngine.hpp"
+#include "random_toolkit.hpp"
 
 std::unique_ptr<GameEngine>          g_game;
 std::vector<std::unique_ptr<Bitmap>> g_tiles(9);
