@@ -71,13 +71,10 @@ void GameDeactivate(HWND hWindow)
 
 void GamePaint(HDC dc)
 {
-   // draw the background highway
    g_highwayBitmap->Draw(dc, 0, 0);
 
-   // draw the sprites
    g_game->DrawSprites(dc);
 
-   // draw the number of remaining chicken lives
    for ( UINT i = 0; i < g_numLives; i++ )
    {
       g_chickenHeadBitmap->Draw(dc, 406 + (g_chickenHeadBitmap->GetWidth( ) * i), 382, TRUE);
@@ -88,20 +85,15 @@ void GameCycle( )
 {
    if ( FALSE == g_gameOver )
    {
-      // update the sprites
       g_game->UpdateSprites( );
 
-      // obtain a device context for repainting the game
       HWND wnd = g_game-> GetWindow( );
       HDC  dc  = GetDC(wnd);
 
-      // paint the game to the offscreen device context
       GamePaint(g_offscreenDC);
 
-      // blit the offscreen bitmap to the game screen
       BitBlt(dc, 0, 0, g_game->GetWidth( ), g_game->GetHeight( ), g_offscreenDC, 0, 0, SRCCOPY);
 
-      // cleanup
       ReleaseDC(wnd, dc);
    }
 }
@@ -133,7 +125,6 @@ void HandleKeys( )
 {
    if ( !g_gameOver && (++g_inputDelay > 2) )
    {
-      // move the chicken based upon key presses
       if ( GetAsyncKeyState(VK_LEFT) < 0 )
       {
          MoveChicken(-20, 0);
@@ -159,7 +150,6 @@ void HandleKeys( )
 
 void MouseButtonDown(LONG x, LONG y, BOOL left)
 {
-   // start a new game, if necessary
    if ( g_gameOver )
    {
       NewGame( );
@@ -200,7 +190,6 @@ void HandleJoystick(JOYSTATE joyState)
       g_inputDelay = 0;
    }
 
-   // check the joystick button and start a new game, if necessary
    if ( g_gameOver && (joyState & JOY_FIRE1) )
    {
       NewGame( );
@@ -209,20 +198,16 @@ void HandleJoystick(JOYSTATE joyState)
 
 BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
 {
-   // see if the chicken was hit
    if ( spriteHittee == g_chickenSprite )
    {
-      // move the chicken back to the starting position
       g_chickenSprite->SetPosition(4, 175);
 
-      // see if the game is over
       if ( --g_numLives > 0 )
       {
          MessageBoxW(g_game->GetWindow( ), L"Ouch!", L"Henway", MB_OK);
       }
       else
       {
-         // display game over message
          WCHAR szText[ 64 ];
          wsprintfW(szText, L"Game Over! You scored %d points.", g_score);
          MessageBoxW(g_game->GetWindow( ), szText, L"Henway", MB_OK);
@@ -235,12 +220,10 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
    return TRUE;
 }
 
-// starts a new game
 void NewGame( )
 {
    g_game->CleanupSprites( );
 
-   // create the chicken and car sprites
    Sprite* sprite;
    RECT    bounds = { 0, 0, 465, 400 };
 
@@ -283,13 +266,10 @@ void NewGame( )
 
 void MoveChicken(int xDistance, int yDistance)
 {
-   // move the chicken to its new position
    g_chickenSprite->OffsetPosition(xDistance, yDistance);
 
-   // see if the chicken made it across
    if ( g_chickenSprite->GetPosition( ).left > 400 )
    {
-      // move the chicken back to the start and add to the score
       g_chickenSprite->SetPosition(4, 175);
       g_score += 150;
       MessageBoxW(g_game->GetWindow( ), L"You made it!", L"Henway", MB_OK);
