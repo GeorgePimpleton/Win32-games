@@ -5,7 +5,7 @@ HRESULT GameInitialize(HINSTANCE inst)
    g_game = std::make_unique<GameEngine>(inst, L"Fore", L"Making Things Move with Sprites",
                                          IDI_ICON, IDI_ICON_SM, 600, 400);
 
-   if ( NULL == g_game )
+   if ( nullptr == g_game )
    {
       return E_FAIL;
    }
@@ -19,8 +19,8 @@ void GameStart(HWND wnd)
 {
    rtk::srand( );
 
-   g_forestBitmap   = std::make_unique<Bitmap>(IDB_FOREST, GetModuleHandle(NULL));
-   g_golfBallBitmap = std::make_unique<Bitmap>(IDB_GOLFBALL, GetModuleHandle(NULL));
+   g_forestBitmap   = std::make_unique<Bitmap>(IDB_FOREST, GetModuleHandle(nullptr));
+   g_golfBallBitmap = std::make_unique<Bitmap>(IDB_GOLFBALL, GetModuleHandle(nullptr));
 
    // create the golf ball sprites
    RECT rcBounds { 0, 0, 600, 400 };
@@ -69,7 +69,7 @@ void GamePaint(HDC dc)
    g_forestBitmap->Draw(dc, 0, 0);
 
    // draw the golf ball sprites
-   for ( int i { }; i < 3; i++ )
+   for ( int i = 0; i < 3; i++ )
    {
       g_golfBallSprite[ i ]->Draw(dc);
    }
@@ -78,13 +78,13 @@ void GamePaint(HDC dc)
 void GameCycle( )
 {
    // update the golf ball sprites
-   for ( int i { }; i < 3; i++ )
+   for ( int i = 0; i < 3; i++ )
    {
       g_golfBallSprite[ i ]->Update( );
    }
 
    // force a repaint to redraw the golf balls
-   InvalidateRect(g_game->GetWindow( ), NULL, FALSE);
+   InvalidateRect(g_game->GetWindow( ), nullptr, FALSE);
 }
 
 void GameMenu(WPARAM wParam)
@@ -149,7 +149,7 @@ void MouseMove(LONG x, LONG y)
                                                   y - (g_golfBallBitmap->GetHeight( ) / 2));
 
       // force a repaint to redraw the golf balls
-      InvalidateRect(g_game->GetWindow( ), NULL, FALSE);
+      InvalidateRect(g_game->GetWindow( ), nullptr, FALSE);
    }
 }
 

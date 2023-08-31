@@ -1,10 +1,7 @@
 #include "Sprite.hpp"
 
-using enum BOUNDSACTION;
-
 Sprite::Sprite(Bitmap* bitmap)
 {
-   // Initialize the member variables
    m_bitmap.reset(bitmap);
 
    SetRect(&m_position, 0, 0, bitmap->GetWidth( ), bitmap->GetHeight( ));
@@ -20,9 +17,8 @@ Sprite::Sprite(Bitmap* bitmap)
 
 Sprite::Sprite(Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction)
 {
-   // calculate a random position
-   int xPos { rtk::rand(0, (bounds.right - bounds.left)) };
-   int yPos { rtk::rand(0, (bounds.bottom - bounds.top)) };
+   int xPos = rtk::rand(0, (bounds.right - bounds.left));
+   int yPos = rtk::rand(0, (bounds.bottom - bounds.top));
 
    // initialize the member variables
    m_bitmap.reset(bitmap);
@@ -40,7 +36,6 @@ Sprite::Sprite(Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction)
 
 Sprite::Sprite(Bitmap* bitmap, POINT position, POINT velocity, int zOrder, RECT& bounds, BOUNDSACTION boundsAction)
 {
-   // initialize the member variables
    m_bitmap.reset(bitmap);
 
    SetRect(&m_position, position.x, position.y, position.x + bitmap->GetWidth( ), position.y + bitmap->GetHeight( ));
@@ -59,7 +54,6 @@ Sprite::~Sprite( )
 
 void Sprite::Update( )
 {
-   // update the position
    POINT newPosition;
    POINT spriteSize;
    POINT boundsSize;
@@ -97,8 +91,8 @@ void Sprite::Update( )
    // bounce?
    else if ( BA_BOUNCE == m_boundsAction )
    {
-      BOOL  bounce      { FALSE };
-      POINT newVelocity { m_velocity };
+      BOOL  bounce      = FALSE;
+      POINT newVelocity = m_velocity;
 
       if ( newPosition.x < m_bounds.left )
       {

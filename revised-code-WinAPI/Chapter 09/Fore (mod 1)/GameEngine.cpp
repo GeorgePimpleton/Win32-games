@@ -99,31 +99,8 @@ GameEngine::GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
    m_sleep      = TRUE;
    m_joyID      = 0;
    m_joyTrip    = { };
-
-   size_t  pcch { };
-   HRESULT hRes { StringCchLengthW(wndClass, str_length, &pcch) };
-
-   if ( pcch > 0 )
-   {
-      StringCchCopyW(m_wndClass, str_length, wndClass);
-   }
-   else
-   {
-      StringCchCopyW(m_wndClass, str_length, L"");
-   }
-
-#pragma warning (disable : 28193)
-
-   hRes = StringCchLengthW(title, str_length, &pcch);
-
-   if ( pcch > 0 )
-   {
-      StringCchCopyW(m_title, str_length, title);
-   }
-   else
-   {
-      StringCchCopyW(m_title, str_length, L"");
-   }
+   m_wndClass   = wndClass;
+   m_title      = title;
 }
 
 GameEngine::~GameEngine( )

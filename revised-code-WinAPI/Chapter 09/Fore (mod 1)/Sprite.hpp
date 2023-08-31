@@ -5,7 +5,6 @@
 #include "Bitmap.hpp"
 #include "random_toolkit.hpp"
 
-// CUSTOM DATA TYPES ===========================================================
 //using BOUNDSACTION            = WORD;
 //const BOUNDSACTION  BA_STOP   { 0 };
 //const BOUNDSACTION  BA_WRAP   { 1 };
@@ -21,7 +20,6 @@ enum class BOUNDSACTION : WORD { BA_STOP   = 0,
 // C++20, so you don't have to specify the class name again and again and again.
 using enum BOUNDSACTION;
 
-// Sprite CLASS ================================================================
 class Sprite
 {
 public:
