@@ -5,7 +5,7 @@ HRESULT GameInitialize(HINSTANCE inst)
    g_game = new GameEngine(inst, L"Henway 2", L"Playing MIDI Music",
                            IDI_ICON, IDI_ICON_SM, 465, 400);
 
-   if ( NULL == g_game )
+   if ( nullptr == g_game )
    {
       return E_FAIL;
    }
@@ -26,7 +26,7 @@ void GameStart(HWND wnd)
 
    SelectObject(g_offscreenDC, g_offscreenBitmap);
 
-   HINSTANCE inst = GetModuleHandleW(NULL);
+   HINSTANCE inst = GetModuleHandleW(nullptr);
 
    g_highwayBitmap     = new Bitmap(IDB_HIGHWAY, inst);
    g_chickenBitmap     = new Bitmap(IDB_CHICKEN, inst);
@@ -99,7 +99,7 @@ void GameCycle( )
 {
    if ( !g_gameOver )
    {
-      HINSTANCE inst = GetModuleHandleW(NULL);
+      HINSTANCE inst = GetModuleHandleW(nullptr);
 
       // play a random car sound randomly
       if ( rtk::rand(0, 99) == 0 )
@@ -244,7 +244,7 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
       // move the chicken back to the start
       g_chickenSprite->SetPosition(4, 175);
 
-      HINSTANCE inst = GetModuleHandleW(NULL);
+      HINSTANCE inst = GetModuleHandleW(nullptr);
 
       // see if the game is over
       if ( --g_numLives > 0 )
@@ -282,7 +282,7 @@ void MoveChicken(int xDistance, int yDistance)
    if ( g_chickenSprite->GetPosition( ).left > 400 )
    {
       // play a sound for the chicken making it safely across
-      HINSTANCE inst = GetModuleHandleW(NULL);
+      HINSTANCE inst = GetModuleHandleW(nullptr);
 
       PlaySoundW((PCWSTR) IDW_CELEBRATE, inst, SND_ASYNC | SND_RESOURCE);
 

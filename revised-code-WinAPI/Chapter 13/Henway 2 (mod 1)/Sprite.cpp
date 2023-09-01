@@ -68,7 +68,9 @@ SPRITEACTION Sprite::Update( )
 {
    // update the position
    BOOL  bounce = FALSE;
-   POINT newPosition, spriteSize, boundsSize;
+   POINT newPosition;
+   POINT spriteSize;
+   POINT boundsSize;
 
    newPosition.x = m_position.left + m_velocity.x;
    newPosition.y = m_position.top + m_velocity.y;
@@ -78,8 +80,6 @@ SPRITEACTION Sprite::Update( )
    boundsSize.x = m_bounds.right - m_bounds.left;
    boundsSize.y = m_bounds.bottom - m_bounds.top;
 
-   // check the bounds
-   // wrap?
    if ( BA_WRAP == m_boundsAction )
    {
       if ( (newPosition.x + spriteSize.x) < m_bounds.left )
@@ -100,12 +100,10 @@ SPRITEACTION Sprite::Update( )
          newPosition.y = m_bounds.top - spriteSize.y;
       }
    }
-
-   // bounce?
    else if ( BA_BOUNCE == m_boundsAction )
    {
-      bounce = FALSE;
-      POINT newVelocity = m_velocity;
+      bounce             = FALSE;
+      POINT  newVelocity = m_velocity;
 
       if ( newPosition.x < m_bounds.left )
       {
@@ -138,18 +136,14 @@ SPRITEACTION Sprite::Update( )
          SetVelocity(newVelocity);
       }
    }
-
-   // die?
    else if ( BA_DIE == m_boundsAction )
    {
       if ( (newPosition.x + spriteSize.x) < m_bounds.left || newPosition.x > m_bounds.right ||
-          (newPosition.y + spriteSize.y) < m_bounds.top || newPosition.y > m_bounds.bottom )
+           (newPosition.y + spriteSize.y) < m_bounds.top || newPosition.y > m_bounds.bottom )
       {
          return SA_KILL;
       }
    }
-
-   // stop (default)
    else
    {
       if ( newPosition.x  < m_bounds.left || newPosition.x >(m_bounds.right - spriteSize.x) )
@@ -172,8 +166,7 @@ SPRITEACTION Sprite::Update( )
 
 void Sprite::Draw(HDC dc)
 {
-   // draw the sprite if it isn't hidden
-   if ( m_bitmap != NULL && !m_hidden )
+   if ( m_bitmap != nullptr && !m_hidden )
    {
       m_bitmap->Draw(dc, m_position.left, m_position.top, TRUE);
    }
