@@ -8,7 +8,7 @@ Sprite::Sprite(Bitmap* bitmap)
    CalcCollisionRect( );
 
    m_velocity.x = m_velocity.y = 0;
-   m_zOrder = 0;
+   m_zOrder     = 0;
 
    SetRect(&m_bounds, 0, 0, 640, 480);
 
@@ -66,7 +66,6 @@ void Sprite::CalcCollisionRect( )
 
 SPRITEACTION Sprite::Update( )
 {
-   // update the position
    BOOL  bounce = FALSE;
    POINT newPosition;
    POINT spriteSize;
@@ -79,8 +78,6 @@ SPRITEACTION Sprite::Update( )
    boundsSize.x  = m_bounds.right - m_bounds.left;
    boundsSize.y  = m_bounds.bottom - m_bounds.top;
 
-   // check the bounds
-   // wrap?
    if ( BA_WRAP == m_boundsAction )
    {
       if ( (newPosition.x + spriteSize.x) < m_bounds.left )
@@ -101,8 +98,6 @@ SPRITEACTION Sprite::Update( )
          newPosition.y = m_bounds.top - spriteSize.y;
       }
    }
-
-   // bounce?
    else if ( BA_BOUNCE == m_boundsAction )
    {
       bounce             = FALSE;
@@ -139,8 +134,6 @@ SPRITEACTION Sprite::Update( )
          SetVelocity(newVelocity);
       }
    }
-
-   // die?
    else if ( BA_DIE == m_boundsAction )
    {
       if ( (newPosition.x + spriteSize.x) < m_bounds.left || newPosition.x > m_bounds.right ||
@@ -149,8 +142,6 @@ SPRITEACTION Sprite::Update( )
          return SA_KILL;
       }
    }
-
-   // stop (default)
    else
    {
       if ( newPosition.x  < m_bounds.left || newPosition.x >(m_bounds.right - spriteSize.x) )
@@ -173,7 +164,6 @@ SPRITEACTION Sprite::Update( )
 
 void Sprite::Draw(HDC dc)
 {
-   // draw the sprite if it isn't hidden
    if ( m_bitmap != NULL && !m_hidden )
    {
       m_bitmap->Draw(dc, m_position.left, m_position.top, TRUE);

@@ -5,7 +5,7 @@ HRESULT GameInitialize(HINSTANCE inst)
    g_game = new GameEngine(inst, L"Brainiac2", L"Playing Wave Sounds",
                            IDI_ICON, IDI_ICON_SM, 528, 508);
 
-   if ( NULL == g_game )
+   if ( nullptr == g_game )
    {
       return E_FAIL;
    }
@@ -19,17 +19,17 @@ void GameStart(HWND wnd)
 {
    rtk::srand( );
 
-   HINSTANCE hInstance = GetModuleHandleW(NULL);
+   HINSTANCE inst = GetModuleHandleW(nullptr);
 
-   g_tile[ 0 ] = new Bitmap(IDB_TILEBLANK, hInstance);
-   g_tile[ 1 ] = new Bitmap(IDB_TILE1, hInstance);
-   g_tile[ 2 ] = new Bitmap(IDB_TILE2, hInstance);
-   g_tile[ 3 ] = new Bitmap(IDB_TILE3, hInstance);
-   g_tile[ 4 ] = new Bitmap(IDB_TILE4, hInstance);
-   g_tile[ 5 ] = new Bitmap(IDB_TILE5, hInstance);
-   g_tile[ 6 ] = new Bitmap(IDB_TILE6, hInstance);
-   g_tile[ 7 ] = new Bitmap(IDB_TILE7, hInstance);
-   g_tile[ 8 ] = new Bitmap(IDB_TILE8, hInstance);
+   g_tile[ 0 ] = new Bitmap(IDB_TILEBLANK, inst);
+   g_tile[ 1 ] = new Bitmap(IDB_TILE1, inst);
+   g_tile[ 2 ] = new Bitmap(IDB_TILE2, inst);
+   g_tile[ 3 ] = new Bitmap(IDB_TILE3, inst);
+   g_tile[ 4 ] = new Bitmap(IDB_TILE4, inst);
+   g_tile[ 5 ] = new Bitmap(IDB_TILE5, inst);
+   g_tile[ 6 ] = new Bitmap(IDB_TILE6, inst);
+   g_tile[ 7 ] = new Bitmap(IDB_TILE7, inst);
+   g_tile[ 8 ] = new Bitmap(IDB_TILE8, inst);
 
    NewGame( );
 }
@@ -160,7 +160,7 @@ void MouseButtonDown(LONG x, LONG y, BOOL bLeft)
       }
 
       // force a repaint to update the tiles
-      InvalidateRect(g_game->GetWindow( ), NULL, FALSE);
+      InvalidateRect(g_game->GetWindow( ), nullptr, FALSE);
 
       // check for winner
       if ( g_matches == 8 )
@@ -226,5 +226,5 @@ void NewGame( )
    g_matches = g_tries   = 0;
 
    // force a repaint to update the tiles
-   InvalidateRect(g_game->GetWindow( ), NULL, FALSE);
+   InvalidateRect(g_game->GetWindow( ), nullptr, FALSE);
 }

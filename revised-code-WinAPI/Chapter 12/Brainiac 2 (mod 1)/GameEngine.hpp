@@ -7,8 +7,6 @@
 #include "Bitmap.hpp"
 #include "Sprite.hpp"
 
-const static UCHAR STR_LENGTH = 64;
-
 using JOYSTATE           = WORD;
 const JOYSTATE JOY_NONE  = 0x0000L,
                JOY_LEFT  = 0x0001L,
@@ -81,14 +79,14 @@ protected:
    static GameEngine*   m_gameEngine;
    HINSTANCE            m_inst;
    HWND                 m_wnd;
-   WCHAR                m_wndClass[ STR_LENGTH ];
-   WCHAR                m_title[ STR_LENGTH ];
+   PCWSTR               m_wndClass;
+   PCWSTR               m_title;
    WORD                 m_icon;
    WORD                 m_smallIcon;
    UINT                 m_width;
    UINT                 m_height;
    UINT                 m_frameDelay;
-   BOOL                 m_sleep;
+   BOOL                 m_asleep;
    UINT                 m_joyID;
    RECT                 m_joyTrip;
    std::vector<Sprite*> m_sprites;
@@ -157,10 +155,10 @@ inline void GameEngine::SetFrameRate(UINT frameRate)
 
 inline BOOL GameEngine::GetSleep( ) const
 {
-   return m_sleep;
+   return m_asleep;
 }
 
-inline void GameEngine::SetSleep(BOOL sleep)
+inline void GameEngine::SetSleep(BOOL asleep)
 {
-   m_sleep = sleep;
+   m_asleep = asleep;
 }
