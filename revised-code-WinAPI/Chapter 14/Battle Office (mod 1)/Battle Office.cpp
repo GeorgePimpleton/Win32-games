@@ -5,7 +5,7 @@ HRESULT GameInitialize(HINSTANCE inst)
    g_game = new GameEngine(inst, L"Battle Office", L"Example Game: Battle Office",
                            IDI_ICON, IDI_ICON_SM, 500, 400);
 
-   if ( NULL == g_game )
+   if ( nullptr == g_game )
    {
       return E_FAIL;
    }
@@ -21,14 +21,14 @@ void GameStart(HWND wnd)
 
    // load the custom cursor
    SetClassLongPtrW(wnd, GCLP_HCURSOR,
-                    (LONG64) LoadImageW(GetModuleHandleW(NULL), MAKEINTRESOURCEW(IDC_CURSOR), IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR));
+                    (LONG64) LoadImageW(GetModuleHandleW(nullptr), MAKEINTRESOURCEW(IDC_CURSOR), IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR));
 
    g_offscreenDC     = CreateCompatibleDC(GetDC(wnd));
    g_offscreenBitmap = CreateCompatibleBitmap(GetDC(wnd), g_game-> GetWidth( ), g_game-> GetHeight( ));
 
    SelectObject(g_offscreenDC, g_offscreenBitmap);
 
-   HINSTANCE inst = GetModuleHandleW(NULL);
+   HINSTANCE inst = GetModuleHandleW(nullptr);
 
    g_officeBitmap    = new Bitmap(IDB_OFFICE, inst);
    g_powBitmap       = new Bitmap(IDB_POW, inst);
@@ -85,7 +85,7 @@ void GamePaint(HDC dc)
    g_game->DrawSprites(dc);
 
    // draw the number of guys who were hit
-   WCHAR text[ STR_LENGTH ];
+   WCHAR text[ 64 ];
    RECT  rect = { 237, 360, 301, 390 };
 
    wsprintfW(text, L"%d", g_hits);
@@ -143,7 +143,7 @@ void GameCycle( )
             if ( --g_guyDelay[ i ] == 0 )
             {
                // play a sound for the guy getting away
-               PlaySoundW((PCWSTR) IDW_TAUNT, GetModuleHandle(NULL), SND_ASYNC | SND_RESOURCE);
+               PlaySoundW((PCWSTR) IDW_TAUNT, GetModuleHandle(nullptr), SND_ASYNC | SND_RESOURCE);
 
                // hide the guy
                g_guySprites[ i ]->SetHidden(TRUE);
@@ -152,7 +152,7 @@ void GameCycle( )
                if ( ++g_misses == 5 )
                {
                   // play a sound for the game ending
-                  PlaySoundW((PCWSTR) IDW_BOO, GetModuleHandle(NULL), SND_ASYNC | SND_RESOURCE);
+                  PlaySoundW((PCWSTR) IDW_BOO, GetModuleHandle(nullptr), SND_ASYNC | SND_RESOURCE);
 
                   // end the game
                   for ( int i = 0; i < 5; i++ )
@@ -224,10 +224,10 @@ void MouseButtonDown(LONG x, LONG y, BOOL left)
       // see if a guy sprite was clicked
       Sprite* pSprite;
 
-      if ( (pSprite = g_game->IsPointInSprite(x, y)) != NULL )
+      if ( (pSprite = g_game->IsPointInSprite(x, y)) != nullptr )
       {
          // play a sound for hitting the guy
-         PlaySoundW((PCWSTR) IDW_WHACK, GetModuleHandle(NULL), SND_ASYNC | SND_RESOURCE);
+         PlaySoundW((PCWSTR) IDW_WHACK, GetModuleHandle(nullptr), SND_ASYNC | SND_RESOURCE);
 
          // position and show the pow sprite
          g_powSprite->SetPosition(x - (g_powSprite->GetWidth( ) / 2), y - (g_powSprite->GetHeight( ) / 2));

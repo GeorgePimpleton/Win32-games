@@ -1,22 +1,19 @@
 #pragma once
 
 #include <windows.h>
-#include <strsafe.h>
 #include <vector>
 #include "resource.h"
 #include "Bitmap.hpp"
 #include "Sprite.hpp"
 
-const static UCHAR STR_LENGTH = 64;
-
-using JOYSTATE          = WORD;
-const JOYSTATE JOY_NONE = 0x0000L,
-JOY_LEFT                = 0x0001L,
-JOY_RIGHT               = 0x0002L,
-JOY_UP                  = 0x0004L,
-JOY_DOWN                = 0x0008L,
-JOY_FIRE1               = 0x0010L,
-JOY_FIRE2               = 0x0020L;
+using JOYSTATE           = WORD;
+const JOYSTATE JOY_NONE  = 0x0000L,
+               JOY_LEFT  = 0x0001L,
+               JOY_RIGHT = 0x0002L,
+               JOY_UP    = 0x0004L,
+               JOY_DOWN  = 0x0008L,
+               JOY_FIRE1 = 0x0010L,
+               JOY_FIRE2 = 0x0020L;
 
 int WINAPI       wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int cmdShow);
 LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -67,7 +64,7 @@ public:
    HINSTANCE GetInstance( ) const;
    HWND      GetWindow( ) const;
    void      SetWindow(HWND wnd);
-   LPTSTR    GetTitle( );
+   PCWSTR    GetTitle( );
    WORD      GetIcon( ) const;
    WORD      GetSmallIcon( ) const;
    UINT      GetWidth( ) const;
@@ -84,14 +81,14 @@ protected:
    static GameEngine*   m_gameEngine;
    HINSTANCE            m_inst;
    HWND                 m_wnd;
-   TCHAR                m_wndClass[ STR_LENGTH ];
-   TCHAR                m_title[ STR_LENGTH ];
+   PCWSTR               m_wndClass;
+   PCWSTR               m_title;
    WORD                 m_icon;
    WORD                 m_smallIcon;
    UINT                 m_width;
    UINT                 m_height;
    UINT                 m_frameDelay;
-   BOOL                 m_sleep;
+   BOOL                 m_asleep;
    UINT                 m_joyID;
    RECT                 m_joyTrip;
    std::vector<Sprite*> m_sprites;
@@ -124,7 +121,7 @@ inline void GameEngine::SetWindow(HWND wnd)
    m_wnd = wnd;
 }
 
-inline LPTSTR GameEngine::GetTitle( )
+inline PCWSTR GameEngine::GetTitle( )
 {
    return m_title;
 }
@@ -161,10 +158,10 @@ inline void GameEngine::SetFrameRate(UINT frameRate)
 
 inline BOOL GameEngine::GetSleep( ) const
 {
-   return m_sleep;
+   return m_asleep;
 }
 
-inline void GameEngine::SetSleep(BOOL sleep)
+inline void GameEngine::SetSleep(BOOL asleep)
 {
-   m_sleep = sleep;
+   m_asleep = asleep;
 }

@@ -66,9 +66,10 @@ void Sprite::CalcCollisionRect( )
 
 SPRITEACTION Sprite::Update( )
 {
-   // update the position
    BOOL  bounce = FALSE;
-   POINT newPosition, spriteSize, boundsSize;
+   POINT newPosition;
+   POINT spriteSize;
+   POINT boundsSize;
 
    newPosition.x = m_position.left + m_velocity.x;
    newPosition.y = m_position.top + m_velocity.y;
@@ -79,7 +80,6 @@ SPRITEACTION Sprite::Update( )
    boundsSize.y = m_bounds.bottom - m_bounds.top;
 
    // check the bounds
-   // wrap?
    if ( BA_WRAP == m_boundsAction )
    {
       if ( (newPosition.x + spriteSize.x) < m_bounds.left )
@@ -100,8 +100,6 @@ SPRITEACTION Sprite::Update( )
          newPosition.y = m_bounds.top - spriteSize.y;
       }
    }
-
-   // bounce?
    else if ( BA_BOUNCE == m_boundsAction )
    {
       bounce             = FALSE;
@@ -138,8 +136,6 @@ SPRITEACTION Sprite::Update( )
          SetVelocity(newVelocity);
       }
    }
-
-   // die?
    else if ( BA_DIE == m_boundsAction )
    {
       if ( (newPosition.x + spriteSize.x) < m_bounds.left || newPosition.x > m_bounds.right ||
@@ -148,8 +144,6 @@ SPRITEACTION Sprite::Update( )
          return SA_KILL;
       }
    }
-
-   // stop (default)
    else
    {
       if ( newPosition.x  < m_bounds.left || newPosition.x >(m_bounds.right - spriteSize.x) )
