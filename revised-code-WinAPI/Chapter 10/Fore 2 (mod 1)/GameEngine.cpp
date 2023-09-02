@@ -2,7 +2,7 @@
 
 #include "GameEngine.hpp"
 
-GameEngine* GameEngine::m_gameEngine = nullptr;
+std::unique_ptr<GameEngine> GameEngine::m_gameEngine = nullptr;
 
 int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int cmdShow)
 {
@@ -87,7 +87,8 @@ BOOL CALLBACK DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam)
 GameEngine::GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
                        WORD icon, WORD smallIcon, UINT width, UINT height)
 {
-   m_gameEngine = this;
+   m_gameEngine.reset(this);
+
    m_inst       = inst;
    m_wnd        = nullptr;
    m_icon       = icon;
@@ -388,16 +389,16 @@ void GameEngine::UpdateSprites( )
    }
 }
 
-void GameEngine::CleanupSprites( )
-{
-   // delete and remove the sprites in the sprite vector
-   for ( auto iterSprite = m_sprites.begin( ); iterSprite != m_sprites.end( ); iterSprite++ )
-   {
-      delete (*iterSprite);
-      m_sprites.erase(iterSprite);
-      iterSprite--;
-   }
-}
+//void GameEngine::CleanupSprites( )
+//{
+//   // delete and remove the sprites in the sprite vector
+//   for ( auto iterSprite = m_sprites.begin( ); iterSprite != m_sprites.end( ); iterSprite++ )
+//   {
+//      delete (*iterSprite);
+//      m_sprites.erase(iterSprite);
+//      iterSprite--;
+//   }
+//}
 
 Sprite* GameEngine::IsPointInSprite(LONG x, LONG y)
 {

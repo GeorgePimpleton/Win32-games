@@ -1,6 +1,7 @@
 #pragma once
 
 #include <windows.h>
+#include <memory>
 #include "Bitmap.hpp"
 #include "random_toolkit.hpp"
 
@@ -53,14 +54,14 @@ public:
    RECT& GetCollision( );
 
 protected:
-   Bitmap*      m_bitmap;
-   RECT         m_position;
-   RECT         m_collision;
-   POINT        m_velocity;
-   int          m_zOrder;
-   RECT         m_bounds;
-   BOUNDSACTION m_boundsAction;
-   BOOL         m_hidden;
+   std::unique_ptr<Bitmap> m_bitmap;
+   RECT                    m_position;
+   RECT                    m_collision;
+   POINT                   m_velocity;
+   int                     m_zOrder;
+   RECT                    m_bounds;
+   BOUNDSACTION            m_boundsAction;
+   BOOL                    m_hidden;
 };
 
 inline BOOL Sprite::IsPointInside(LONG x, LONG y)

@@ -31,7 +31,7 @@ Bitmap::~Bitmap( )
 
 void Bitmap::Free( )
 {
-   if ( m_bitmap != nullptr )
+   if ( nullptr != m_bitmap )
    {
       DeleteObject(m_bitmap);
 
@@ -91,7 +91,7 @@ BOOL Bitmap::Create(HWND wnd, LONG width, LONG height, COLORREF color)
 
    m_bitmap = CreateCompatibleBitmap(dc, width, height);
 
-   if ( m_bitmap == nullptr )
+   if ( nullptr == m_bitmap )
    {
       return FALSE;
    }
@@ -114,7 +114,7 @@ BOOL Bitmap::Create(HWND wnd, LONG width, LONG height, COLORREF color)
 
 void Bitmap::Draw(HDC dc, int x, int y, BOOL trans, COLORREF transColor)
 {
-   if ( m_bitmap != nullptr )
+   if ( nullptr != m_bitmap )
    {
       HDC     memDC     = CreateCompatibleDC(dc);
       HBITMAP oldBitmap = (HBITMAP) SelectObject(memDC, m_bitmap);

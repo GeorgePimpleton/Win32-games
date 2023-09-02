@@ -2,7 +2,7 @@
 
 Sprite::Sprite(Bitmap* bitmap)
 {
-   m_bitmap = bitmap;
+   m_bitmap.reset(bitmap);
 
    SetRect(&m_position, 0, 0, bitmap->GetWidth( ), bitmap->GetHeight( ));
    CalcCollisionRect( );
@@ -21,7 +21,7 @@ Sprite::Sprite(Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction)
    int xPos = rtk::rand(0, (bounds.right - bounds.left));
    int yPos = rtk::rand(0, (bounds.bottom - bounds.top));
 
-   m_bitmap = bitmap;
+   m_bitmap.reset(bitmap);
 
    SetRect(&m_position, xPos, yPos, xPos + bitmap->GetWidth( ), yPos + bitmap->GetHeight( ));
    CalcCollisionRect( );
@@ -38,7 +38,7 @@ Sprite::Sprite(Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction)
 Sprite::Sprite(Bitmap* bitmap, POINT position, POINT velocity, int zOrder, RECT& bounds,
                BOUNDSACTION boundsAction)
 {
-   m_bitmap = bitmap;
+   m_bitmap.reset(bitmap);
 
    SetRect(&m_position, position.x, position.y, bitmap->GetWidth( ), bitmap->GetHeight( ));
    CalcCollisionRect( );
@@ -79,7 +79,6 @@ SPRITEACTION Sprite::Update( )
    boundsSize.y  = m_bounds.bottom - m_bounds.top;
 
    // check the bounds
-   // wrap?
    if ( BA_WRAP == m_boundsAction )
    {
       if ( (newPosition.x + spriteSize.x) < m_bounds.left )
@@ -100,8 +99,6 @@ SPRITEACTION Sprite::Update( )
          newPosition.y = m_bounds.top - spriteSize.y;
       }
    }
-
-   // bounce?
    else if ( BA_BOUNCE == m_boundsAction )
    {
       bounce             = FALSE;
@@ -138,8 +135,6 @@ SPRITEACTION Sprite::Update( )
          SetVelocity(newVelocity);
       }
    }
-
-   // die?
    else if ( m_boundsAction == BA_DIE )
    {
       if ( (newPosition.x + spriteSize.x) < m_bounds.left || newPosition.x > m_bounds.right ||
@@ -148,8 +143,6 @@ SPRITEACTION Sprite::Update( )
          return SA_KILL;
       }
    }
-
-   // stop (default)
    else
    {
       if ( newPosition.x  < m_bounds.left || newPosition.x >(m_bounds.right - spriteSize.x) )

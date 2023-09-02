@@ -2,8 +2,8 @@
 
 HRESULT GameInitialize(HINSTANCE inst)
 {
-   g_game = new GameEngine(inst, L"Fore 2", L"Managing a World Sprites",
-                           IDI_ICON, IDI_ICON_SM, 600, 400);
+   g_game = std::make_unique<GameEngine>(inst, L"Fore 2", L"Managing a World Sprites",
+                                         IDI_ICON, IDI_ICON_SM, 600, 400);
 
    if ( nullptr == g_game )
    {
@@ -25,28 +25,28 @@ void GameStart(HWND wnd)
 
    SelectObject(g_offscreenDC, g_offscreenBitmap);
 
-   g_forestBitmap   = new Bitmap(IDB_FOREST, GetModuleHandle(nullptr));
-   g_golfBallBitmap = new Bitmap(IDB_GOLFBALL, GetModuleHandle(nullptr));
+   g_forestBitmap   = std::make_unique<Bitmap>(IDB_FOREST, GetModuleHandle(nullptr));
+   g_golfBallBitmap = std::make_unique<Bitmap>(IDB_GOLFBALL, GetModuleHandle(nullptr));
 
    // create the golf ball sprites
    RECT    bounds = { 0, 0, 600, 400 };
    Sprite* sprite;
 
-   sprite = new Sprite(g_golfBallBitmap, bounds, BA_WRAP);
+   sprite = new Sprite(g_golfBallBitmap.get(), bounds, BA_WRAP);
    sprite->SetVelocity(5, 3);
    g_game->AddSprite(sprite);
 
-   sprite = new Sprite(g_golfBallBitmap, bounds, BA_WRAP);
+   sprite = new Sprite(g_golfBallBitmap.get(), bounds, BA_WRAP);
    sprite->SetVelocity(3, 2);
    g_game->AddSprite(sprite);
 
    bounds.left = 265; bounds.right = 500; bounds.bottom = 335;
-   sprite = new Sprite(g_golfBallBitmap, bounds, BA_BOUNCE);
+   sprite = new Sprite(g_golfBallBitmap.get(), bounds, BA_BOUNCE);
    sprite->SetVelocity(-6, 5);
    g_game->AddSprite(sprite);
 
    bounds.right = 470;
-   sprite = new Sprite(g_golfBallBitmap, bounds, BA_BOUNCE);
+   sprite = new Sprite(g_golfBallBitmap.get(), bounds, BA_BOUNCE);
    sprite->SetVelocity(7, -3);
    g_game->AddSprite(sprite);
 
@@ -59,16 +59,6 @@ void GameEnd( )
    // cleanup the offscreen device context and bitmap
    DeleteObject(g_offscreenBitmap);
    DeleteDC(g_offscreenDC);
-
-   // cleanup the bitmaps
-   delete g_forestBitmap;
-   delete g_golfBallBitmap;
-
-   // cleanup the sprites
-   g_game->CleanupSprites( );
-
-   // cleanup the game engine
-   delete g_game;
 }
 
 void GameActivate(HWND wnd)

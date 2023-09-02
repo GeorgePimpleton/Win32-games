@@ -54,7 +54,7 @@ public:
    void               AddSprite(Sprite* sprite);
    void               DrawSprites(HDC dc);
    void               UpdateSprites( );
-   void               CleanupSprites( );
+// void               CleanupSprites( );
    Sprite*            IsPointInSprite(LONG x, LONG y);
 
 public:
@@ -75,32 +75,29 @@ protected:
    BOOL      CheckSpriteCollision(Sprite* testSprite);
 
 protected:
-   static GameEngine*   m_gameEngine;
-   HINSTANCE            m_inst;
-   HWND                 m_wnd;
-   PCWSTR               m_wndClass;
-   PCWSTR               m_title;
-   WORD                 m_icon;
-   WORD                 m_smallIcon;
-   UINT                 m_width;
-   UINT                 m_height;
-   UINT                 m_frameDelay;
-   BOOL                 m_asleep;
-   UINT                 m_joyID;
-   RECT                 m_joyTrip;
-   std::vector<Sprite*> m_sprites;
+   static std::unique_ptr<GameEngine> m_gameEngine;
+   HINSTANCE                          m_inst;
+   HWND                               m_wnd;
+   PCWSTR                             m_wndClass;
+   PCWSTR                             m_title;
+   WORD                               m_icon;
+   WORD                               m_smallIcon;
+   UINT                               m_width;
+   UINT                               m_height;
+   UINT                               m_frameDelay;
+   BOOL                               m_asleep;
+   UINT                               m_joyID;
+   RECT                               m_joyTrip;
+   std::vector<Sprite*>               m_sprites;
 };
-
-inline GameEngine* GameEngine::GetEngine( )
-{
-   return m_gameEngine;
-}
 
 inline void GameEngine::ErrorQuit(PCWSTR errorMsg)
 {
    MessageBoxW(GetWindow( ), errorMsg, L"Critical Error", MB_OK | MB_ICONERROR);
    PostQuitMessage(0);
 }
+
+inline GameEngine* GameEngine::GetEngine( )          { return m_gameEngine.get(); }
 
 inline HINSTANCE GameEngine::GetInstance( ) const    { return m_inst; }
 
