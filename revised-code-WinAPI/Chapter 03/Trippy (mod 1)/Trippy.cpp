@@ -42,7 +42,7 @@ void GamePaint(HDC hDC)
    for (UINT i = 1; i <= gridLines; i++)
    {
       // draw a horizontal grid line
-      MoveToEx(hDC, g_game->GetWidth() * i / gridLines, 0, NULL);
+      MoveToEx(hDC, g_game->GetWidth() * i / gridLines, 0, nullptr);
       LineTo(hDC, g_game->GetWidth() * i / gridLines, g_game->GetHeight());
 
       // draw a vertical grid line

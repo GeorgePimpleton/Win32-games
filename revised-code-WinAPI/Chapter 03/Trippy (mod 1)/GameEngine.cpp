@@ -4,7 +4,7 @@ std::unique_ptr<GameEngine> GameEngine::m_gameEngine = nullptr;
 
 int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int cmdShow)
 {
-   if ( GameInitialize(inst) == S_OK )
+   if ( S_OK == GameInitialize(inst) )
    {
       if ( GameEngine::GetEngine( )->Initialize(cmdShow) != S_OK )
       {
@@ -38,7 +38,7 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR
          }
          else
          {
-            if ( GameEngine::GetEngine( )->GetSleep( ) == FALSE )
+            if ( FALSE == GameEngine::GetEngine( )->GetSleep( ) )
             {
                static ULONGLONG tickTrigger = 0;
                ULONGLONG        tickCount   = GetTickCount64( );
@@ -64,7 +64,7 @@ LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
    return GameEngine::GetEngine( )->HandleEvent(wnd, msg, wParam, lParam);
 }
 
-BOOL CALLBACK DlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
+BOOL CALLBACK DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam)
 {
    switch ( msg )
    {
@@ -72,7 +72,7 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
       switch ( LOWORD(wParam) )
       {
       case IDOK:
-         EndDialog(hDlg, 0);
+         EndDialog(dlg, 0);
          return TRUE;
       }
    }
@@ -80,12 +80,12 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
    return FALSE;
 }
 
-GameEngine::GameEngine(HINSTANCE hInst, PCWSTR wndClass, PCWSTR title,
+GameEngine::GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
                        WORD icon, WORD smallIcon, UINT width, UINT height)
 {
    m_gameEngine.reset(this);
 
-   m_inst       = hInst;
+   m_inst       = inst;
    m_wnd        = nullptr;
    m_icon       = icon;
    m_smallIcon  = smallIcon;

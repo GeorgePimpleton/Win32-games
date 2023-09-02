@@ -2,7 +2,6 @@
 
 #include <windows.h>
 #include <memory>
-#include <string>
 #include "resource.h"
 
 int WINAPI       wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int cmdShow);
