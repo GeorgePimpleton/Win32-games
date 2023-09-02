@@ -2,7 +2,7 @@
 
 #include "GameEngine.hpp"
 
-std::unique_ptr<GameEngine> GameEngine::m_gameEngine = NULL;
+std::unique_ptr<GameEngine> GameEngine::m_gameEngine = nullptr;
 
 int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, int _In_ cmdShow)
 {
@@ -13,11 +13,11 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR
          return E_FAIL;
       }
 
-      HACCEL accel { LoadAcceleratorsW(inst, MAKEINTRESOURCEW(IDR_ACCELERATORS)) };
+      HACCEL accel = LoadAcceleratorsW(inst, MAKEINTRESOURCEW(IDR_ACCELERATORS));
 
-      if ( NULL == accel )
+      if ( nullptr == accel )
       {
-         MessageBoxW(NULL, L"Unable to Load the Accelerators!", GameEngine::GetEngine( )->GetTitle( ), MB_OK | MB_ICONERROR);
+         MessageBoxW(nullptr, L"Unable to Load the Accelerators!", GameEngine::GetEngine( )->GetTitle( ), MB_OK | MB_ICONERROR);
          return E_FAIL;
       }
 
@@ -25,7 +25,7 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR
 
       while ( TRUE )
       {
-         if ( PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE) != 0 )
+         if ( PeekMessageW(&msg, nullptr, 0, 0, PM_REMOVE) != 0 )
          {
             if ( WM_QUIT == msg.message )
             {
@@ -42,8 +42,8 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR
          {
             if ( GameEngine::GetEngine( )->GetSleep( ) == FALSE )
             {
-               static ULONGLONG tickTrigger { };
-               ULONGLONG        tickCount   { GetTickCount64( ) };
+               static ULONGLONG tickTrigger = 0;
+               ULONGLONG        tickCount   = GetTickCount64( );
 
                if ( tickCount > tickTrigger )
                {
@@ -90,7 +90,7 @@ GameEngine::GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
    m_gameEngine.reset(this);
 
    m_inst       = inst;
-   m_wnd        = NULL;
+   m_wnd        = nullptr;
    m_icon       = icon;
    m_smallIcon  = smallIcon;
    m_width      = width;
@@ -118,40 +118,40 @@ HRESULT GameEngine::Initialize(int iCmdShow)
    wc.hInstance     = m_inst;
    wc.hIcon         = (HICON)   LoadImageW(m_inst, MAKEINTRESOURCEW(IDI_ICON), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
    wc.hIconSm       = (HICON)   LoadImageW(m_inst, MAKEINTRESOURCEW(IDI_ICON_SM), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
-   wc.hCursor       = (HCURSOR) LoadImageW(NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
+   wc.hCursor       = (HCURSOR) LoadImageW(nullptr, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
    wc.hbrBackground = (HBRUSH)  (COLOR_WINDOW + 1);
    wc.lpszMenuName  = MAKEINTRESOURCEW(IDR_MENU);
    wc.lpszClassName = m_wndClass;
 
    if ( FAILED(RegisterClassExW(&wc)) )
    {
-      MessageBoxW(NULL, L"Unable to initialize Main Window!", L"ERROR", MB_ICONERROR | MB_OK);
+      MessageBoxW(nullptr, L"Unable to initialize Main Window!", L"ERROR", MB_ICONERROR | MB_OK);
       return E_FAIL;
    }
 
-   UINT windowWidth  { m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2 };
-   UINT windowHeight { m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 + GetSystemMetrics(SM_CYCAPTION) };
+   UINT windowWidth  = m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2;
+   UINT windowHeight = m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 + GetSystemMetrics(SM_CYCAPTION);
 
    windowWidth  += 10;
    windowHeight += 10;
 
-   if ( wc.lpszMenuName != NULL )
+   if ( wc.lpszMenuName != nullptr )
    {
       windowHeight += GetSystemMetrics(SM_CYMENU);
    }
 
-   UINT windowPosX { (GetSystemMetrics(SM_CXSCREEN) - windowWidth) / 2 };
-   UINT windowPosY { (GetSystemMetrics(SM_CYSCREEN) - windowHeight) / 2 };
+   UINT windowPosX = (GetSystemMetrics(SM_CXSCREEN) - windowWidth) / 2;
+   UINT windowPosY = (GetSystemMetrics(SM_CYSCREEN) - windowHeight) / 2;
 
    m_wnd = CreateWindowW(m_wndClass, m_title,
                          WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
                          windowPosX, windowPosY,
                          windowWidth, windowHeight,
-                         NULL, NULL, m_inst, NULL);
+                         nullptr, nullptr, m_inst, nullptr);
 
-   if ( NULL == m_wnd )
+   if ( nullptr == m_wnd )
    {
-      MessageBoxW(NULL, L"Unable to create Main Window!", L"ERROR", MB_ICONERROR | MB_OK);
+      MessageBoxW(nullptr, L"Unable to create Main Window!", L"ERROR", MB_ICONERROR | MB_OK);
       return E_FAIL;
    }
 
@@ -230,7 +230,7 @@ HRESULT GameEngine::InitJoystick( )
 {
    UINT numJoysticks;
 
-   if ( (numJoysticks = joyGetNumDevs( )) == 0 )
+   if ( 0 == (numJoysticks = joyGetNumDevs( )) )
    {
       return E_FAIL;
    }
@@ -250,8 +250,8 @@ HRESULT GameEngine::InitJoystick( )
 
    joyGetDevCaps(m_joyID, &joyCaps, sizeof(JOYCAPS));
 
-   WORD xCenter { (WORD) (((WORD) joyCaps.wXmin + joyCaps.wXmax) / 2) };
-   WORD yCenter { (WORD) (((WORD) joyCaps.wYmin + joyCaps.wYmax) / 2) };
+   WORD xCenter = (WORD) (((WORD) joyCaps.wXmin + joyCaps.wXmax) / 2);
+   WORD yCenter = (WORD) (((WORD) joyCaps.wYmin + joyCaps.wYmax) / 2);
 
    m_joyTrip.left   = (joyCaps.wXmin + (WORD) xCenter) / 2;
    m_joyTrip.right  = (joyCaps.wXmax + (WORD) xCenter) / 2;

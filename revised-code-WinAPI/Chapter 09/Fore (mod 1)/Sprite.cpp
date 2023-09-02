@@ -20,7 +20,6 @@ Sprite::Sprite(Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction)
    int xPos = rtk::rand(0, (bounds.right - bounds.left));
    int yPos = rtk::rand(0, (bounds.bottom - bounds.top));
 
-   // initialize the member variables
    m_bitmap.reset(bitmap);
 
    SetRect(&m_position, xPos, yPos, xPos + bitmap->GetWidth( ), yPos + bitmap->GetHeight( ));
@@ -88,6 +87,7 @@ void Sprite::Update( )
          newPosition.y = m_bounds.top - spriteSize.y;
       }
    }
+
    // bounce?
    else if ( BA_BOUNCE == m_boundsAction )
    {
@@ -125,6 +125,7 @@ void Sprite::Update( )
          SetVelocity(newVelocity);
       }
    }
+
    // stop (default)
    else
    {
@@ -134,6 +135,7 @@ void Sprite::Update( )
 
          SetVelocity(0, 0);
       }
+
       if ( newPosition.y  < m_bounds.top || newPosition.y >(m_bounds.bottom - spriteSize.y) )
       {
          newPosition.y = max(m_bounds.top, min(newPosition.y, m_bounds.bottom - spriteSize.y));
@@ -148,7 +150,7 @@ void Sprite::Update( )
 void Sprite::Draw(HDC dc)
 {
    // draw the sprite if it isn't hidden
-   if ( m_bitmap != NULL && !m_hidden )
+   if ( m_bitmap != nullptr && !m_hidden )
    {
       m_bitmap->Draw(dc, m_position.left, m_position.top, TRUE);
    }

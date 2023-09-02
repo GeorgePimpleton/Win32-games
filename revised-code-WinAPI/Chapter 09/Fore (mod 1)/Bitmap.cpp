@@ -31,7 +31,7 @@ Bitmap::~Bitmap( )
 
 void Bitmap::Free( )
 {
-   if ( m_bitmap != nullptr )
+   if ( nullptr != m_bitmap )
    {
       DeleteObject(m_bitmap);
 
@@ -68,7 +68,7 @@ BOOL Bitmap::Create(UINT resID, HINSTANCE inst)
 
    m_bitmap = (HBITMAP) LoadImageW(GetModuleHandleW(nullptr), MAKEINTRESOURCEW(resID), IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION);
 
-   if ( m_bitmap == nullptr )
+   if ( nullptr == m_bitmap )
    {
       Free( );
 
@@ -87,8 +87,8 @@ BOOL Bitmap::Create(UINT resID, HINSTANCE inst)
 
 BOOL Bitmap::Create(HWND wnd, LONG width, LONG height, COLORREF color)
 {
-   HDC dc { GetDC(wnd) };
-   m_bitmap = CreateCompatibleBitmap(dc, width, height);
+   HDC      dc = GetDC(wnd);
+   m_bitmap    = CreateCompatibleBitmap(dc, width, height);
 
    if ( nullptr == m_bitmap )
    {
@@ -98,10 +98,10 @@ BOOL Bitmap::Create(HWND wnd, LONG width, LONG height, COLORREF color)
    m_width  = width;
    m_height = height;
 
-   HDC     memDC     { CreateCompatibleDC(dc) };
-   HBRUSH  brush     { CreateSolidBrush(color) };
-   HBITMAP oldBitmap { (HBITMAP) SelectObject(memDC, m_bitmap) };
-   RECT    bitmap    { 0, 0, m_width, m_height };
+   HDC     memDC     = CreateCompatibleDC(dc);
+   HBRUSH  brush     = CreateSolidBrush(color);
+   HBITMAP oldBitmap = (HBITMAP) SelectObject(memDC, m_bitmap);
+   RECT    bitmap    = { 0, 0, m_width, m_height };
 
    FillRect(memDC, &bitmap, brush);
 
@@ -116,8 +116,8 @@ void Bitmap::Draw(HDC dc, int x, int y, BOOL trans, COLORREF transColor)
 {
    if ( m_bitmap != nullptr )
    {
-      HDC     memDC     { CreateCompatibleDC(dc) };
-      HBITMAP oldBitmap { (HBITMAP) SelectObject(memDC, m_bitmap) };
+      HDC     memDC     = CreateCompatibleDC(dc);
+      HBITMAP oldBitmap = (HBITMAP) SelectObject(memDC, m_bitmap);
 
       if ( trans )
       {

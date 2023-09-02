@@ -32,12 +32,6 @@ protected:
    LONG    m_height;
 };
 
-inline LONG Bitmap::GetWidth( )
-{
-   return m_width;
-};
+inline LONG Bitmap::GetWidth( )  { return m_width; };
 
-inline LONG Bitmap::GetHeight( )
-{
-   return m_height;
-};
+inline LONG Bitmap::GetHeight( ) { return m_height; };
