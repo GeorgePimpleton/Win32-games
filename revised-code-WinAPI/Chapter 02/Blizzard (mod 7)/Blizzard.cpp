@@ -2,7 +2,7 @@
 
 HRESULT GameInitialize(HINSTANCE inst)
 {
-   g_game = std::make_unique<GameEngine>(inst, L"Blizzard", L"Creating An Engine For Games",
+   g_game = std::make_unique<GameEngine>(inst, L"Blizzard", L"Blizzard: Creating An Engine For Games",
                                           IDI_ICON, IDI_ICON_SM);
 
    if (nullptr == g_game)

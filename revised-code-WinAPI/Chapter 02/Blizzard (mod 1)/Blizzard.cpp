@@ -15,7 +15,7 @@ BOOL GameInitialize(HINSTANCE hInstance)
 {
   // Create the game engine
   g_pGame = new GameEngine(hInstance, TEXT("Blizzard"),
-    TEXT("Blizzard"), IDI_BLIZZARD, IDI_BLIZZARD_SM);
+    TEXT("Blizzard: Creating An Engine For Games"), IDI_BLIZZARD, IDI_BLIZZARD_SM);
   if (g_pGame == NULL)
     return FALSE;
 
