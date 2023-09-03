@@ -14,7 +14,7 @@
 BOOL GameInitialize(HINSTANCE hInstance)
 {
    // Create the game engine
-   _pGame = new GameEngine(hInstance, TEXT("Trippy"), TEXT("Trippy"), IDI_TRIPPY, IDI_TRIPPY_SM);
+   _pGame = new GameEngine(hInstance, TEXT("Trippy"), TEXT("Trippy: Learning to Draw Basic Graphics"), IDI_TRIPPY, IDI_TRIPPY_SM);
    if ( _pGame == NULL )
       return FALSE;
 
