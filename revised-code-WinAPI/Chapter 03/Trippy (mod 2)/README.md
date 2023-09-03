@@ -17,9 +17,7 @@ Trippy shows how to do basic drawing using Win32 GDI.  From the 2003 CD.  There 
 
 0. original CD game files written in 2003.
 1. minimum revisions needed to work with modern Windows© compilers.
-2. updated with menus/About... dialog, fully modern WinAPI compliance and using smart pointers
-
-Personally I like Blizzard, trying to update 2004's exmaple is a lot of hard work when using the RTK header.
+2. **updated with menus/About... dialog, fully modern WinAPI compliance and using smart pointers.** *<----- this example*
 
 ### Notes
 
