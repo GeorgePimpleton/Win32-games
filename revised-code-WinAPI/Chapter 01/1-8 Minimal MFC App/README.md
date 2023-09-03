@@ -22,7 +22,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 The 'Microsoft Foundation Classes', MFC, an encapsulation of the WinAPI in C++ classes.
 
-For  minimal app 'completeness' only here, no custom assets like menus or icons/cursors, the WinAPI games don't use MFC.  Though it could be possible.
+For  minimal programming 'completeness' here, no custom assets like menus or icons/cursors, the WinAPI games don't use MFC.  Though it could be possible.
 
 Nah, they won't.
 
