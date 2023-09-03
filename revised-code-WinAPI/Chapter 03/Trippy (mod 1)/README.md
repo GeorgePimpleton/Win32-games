@@ -16,7 +16,7 @@ Trippy shows how to do basic drawing using Win32 GDI.  From the 2003 CD.  There 
 ### Trippy Versions
 
 0. original CD game files written in 2003.
-1. minimum revisions needed to work with modern Windows© compilers.
+1. **minimum revisions needed to work with modern Windows© compilers.** *<----- this example*
 
 ### Notes
 
