@@ -1,7 +1,6 @@
 #pragma once
 
 #include <windows.h>
-#include <strsafe.h>
 #include <memory>
 #include <string>
 #include "resource.h"
@@ -25,8 +24,8 @@ protected:
    static std::unique_ptr<GameEngine> m_gameEngine;
    HINSTANCE                          m_inst;
    HWND                               m_wnd;
-   std::wstring                       m_wndClass;
-   std::wstring                       m_title;
+   PCWSTR                             m_wndClass;
+   PCWSTR                             m_title;
    WORD                               m_icon;
    WORD                               m_smallIcon;
    UINT                               m_width;
@@ -62,7 +61,7 @@ inline GameEngine* GameEngine::GetEngine( )          { return m_gameEngine.get()
 inline HINSTANCE GameEngine::GetInstance( ) const    { return m_inst; }
 inline HWND GameEngine::GetWindow( ) const           { return m_wnd; }
 inline void GameEngine::SetWindow(HWND wnd)          { m_wnd = wnd; }
-inline PCWSTR GameEngine::GetTitle( ) const          { return m_title.c_str(); }
+inline PCWSTR GameEngine::GetTitle( ) const          { return m_title; }
 inline WORD GameEngine::GetIcon( ) const             { return m_icon; }
 inline WORD GameEngine::GetSmallIcon( ) const        { return m_smallIcon; }
 inline UINT GameEngine::GetWidth( ) const            { return m_width; }

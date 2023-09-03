@@ -33,6 +33,8 @@ I use Visual Studio 2022 (Community) to update and test the game code, setting t
 
 I've been working with the games source code from both books for years, plinking around and trying out newer C++ features as I've run across them.  Most of the example code is the same between the books, so I've combined the examples into one representative example for each chapter.
 
+The main difference between the books is the orientation of the animated sprite bitmaps.  When dealing with animated sprites all the source code is from the 2004 book.
+
 ### Notes
 
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.

@@ -60,7 +60,8 @@ void GamePaint(HDC dc)
 void GameCycle()
 {
    HWND wnd = g_game->GetWindow();
-   HDC  dc  = GetDC(wnd);
+
+   HDC dc { GetDC(wnd) };
 
    DrawIcon(dc, rtk::rand(0, g_game->GetWidth()), rtk::rand(0, g_game->GetHeight()),
             (HICON) GetClassLongPtrW(wnd, GCLP_HICON));

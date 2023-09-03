@@ -12,13 +12,8 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 ### Example Game: Light Cycles
 
 0. Chapter 8 on 2004 CD.
-1. modernized code...
 
 Remember the light cycle duel from the movie "Tron?"
-
-Is this the final version?  Probably, but maybe not.  Depends on later game code that is updated from the original.
-
-Possible updated version(s), use GDI+ and/or DirectX.  DX input control is different than the Win32 methods.
 
 ### Notes
 

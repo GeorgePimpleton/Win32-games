@@ -11,12 +11,11 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 ### Fore: Making Things Move with Sprites
 
-0. Chapter 10 on 2003 CD. A visually different example, Planets, on 2004 CD as chapter 9.
-1. modernized code...
+0. Chapter 10 on 2003 CD. A different example, Planets, on 2004 CD as chapter 9.
 
-Is this the final version?  Probably, but maybe not.  Depends on later game code that is updated from the original.
+I personally prefer the look of Fore vs. Planets.  Less cumbersome dealing with a single sprite.
 
-Possible updated version(s), use GDI+ and/or DirectX.  DX input control is different than the Win32 methods.
+I might change my mind at a future date.
 
 ### Notes
 

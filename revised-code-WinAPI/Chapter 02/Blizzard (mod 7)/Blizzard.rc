@@ -1,8 +1,8 @@
 #include <windows.h>
 #include "resource.h"
 
-IDI_ICON    ICON "Res/Blizzard.ico"
-IDI_ICON_SM ICON "Res/Blizzard_sm.ico"
+IDI_ICON    ICON "Res\Blizzard.ico"
+IDI_ICON_SM ICON "Res\Blizzard_sm.ico"
 
 IDD_ABOUT DIALOG 32, 32, 180, 102
 CAPTION "About..."

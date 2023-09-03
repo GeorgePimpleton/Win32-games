@@ -4,26 +4,26 @@ std::unique_ptr<GameEngine> GameEngine::m_gameEngine = nullptr;
 
 int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int cmdShow)
 {
-   if ( GameInitialize(inst) == S_OK )
+   if ( S_OK == GameInitialize(inst) )
    {
+      if ( S_OK != GameEngine::GetEngine( )->Initialize(cmdShow) )
+      {
+         return E_FAIL;
+      }
+
+      HACCEL accel =  LoadAcceleratorsW(inst, MAKEINTRESOURCEW(IDR_ACCEL)) ;
+
+      if ( nullptr == accel )
+      {
+         MessageBoxW(nullptr, L"Unable to Load the Accelerators!", GameEngine::GetEngine( )->GetTitle( ), MB_OK | MB_ICONERROR);
+         return E_FAIL;
+      }
+
       MSG msg;
-
-      if ( GameEngine::GetEngine( )->Initialize(cmdShow) != S_OK )
-      {
-         return E_FAIL;
-      }
-
-      HACCEL accel { LoadAcceleratorsW(inst, MAKEINTRESOURCEW(IDR_ACCEL)) };
-
-      if ( NULL == accel )
-      {
-         MessageBoxW(NULL, L"Unable to Load the Accelerators!", GameEngine::GetEngine( )->GetTitle( ), MB_OK | MB_ICONERROR);
-         return E_FAIL;
-      }
 
       while ( TRUE )
       {
-         if ( PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE) )
+         if ( PeekMessageW(&msg, nullptr, 0, 0, PM_REMOVE) )
          {
             if ( WM_QUIT == msg.message )
             {
@@ -40,8 +40,8 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR
          {
             if ( !GameEngine::GetEngine( )->GetSleep( ) )
             {
-               static ULONGLONG tickTrigger { };
-               ULONGLONG        tickCount   { GetTickCount64( ) };
+               static ULONGLONG tickTrigger = 0;
+               ULONGLONG        tickCount   = GetTickCount64( );
 
                if ( tickCount > tickTrigger )
                {
@@ -88,7 +88,7 @@ GameEngine::GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
    m_gameEngine.reset(this);
 
    m_inst       = inst;
-   m_wnd        = NULL;
+   m_wnd        = nullptr;
    m_icon       = icon;
    m_smallIcon  = smallIcon;
    m_width      = width;
@@ -115,35 +115,35 @@ HRESULT GameEngine::Initialize(int cmdShow)
    wc.hInstance     = m_inst;
    wc.hIcon         = (HICON)   LoadImageW(m_inst, MAKEINTRESOURCEW(GetIcon( )), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
    wc.hIconSm       = (HICON)   LoadImageW(m_inst, MAKEINTRESOURCEW(GetSmallIcon( )), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
-   wc.hCursor       = (HCURSOR) LoadImageW(NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
+   wc.hCursor       = (HCURSOR) LoadImageW(nullptr, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
    wc.hbrBackground = (HBRUSH)  (COLOR_WINDOW + 1);
    wc.lpszMenuName  = MAKEINTRESOURCEW(IDR_MENU);
-   wc.lpszClassName = m_wndClass.c_str( );
+   wc.lpszClassName = m_wndClass;
 
    if ( !RegisterClassExW(&wc) )
    {
       return E_FAIL;
    }
 
-   UINT windowWidth  { m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2 };
-   UINT windowHeight { m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 + GetSystemMetrics(SM_CYCAPTION) };
+   UINT windowWidth  = m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2;
+   UINT windowHeight = m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 + GetSystemMetrics(SM_CYCAPTION);
 
    windowWidth  += 10;
    windowHeight += 10;
 
-   if ( wc.lpszMenuName != NULL )
+   if ( wc.lpszMenuName != nullptr )
    {
       windowHeight += GetSystemMetrics(SM_CYMENU);
    }
 
-   UINT xWindowPos { (GetSystemMetrics(SM_CXSCREEN) - windowWidth) / 2 };
-   UINT yWindowPos { (GetSystemMetrics(SM_CYSCREEN) - windowHeight) / 2 };
+   UINT xWindowPos = (GetSystemMetrics(SM_CXSCREEN) - windowWidth) / 2;
+   UINT yWindowPos = (GetSystemMetrics(SM_CYSCREEN) - windowHeight) / 2;
 
-   m_wnd = CreateWindowW(m_wndClass.c_str( ), m_title.c_str( ),
+   m_wnd = CreateWindowW(m_wndClass, m_title,
                          WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
                          xWindowPos, yWindowPos,
                          windowWidth, windowHeight,
-                         NULL, NULL, m_inst, NULL);
+                         nullptr, nullptr, m_inst, nullptr);
 
    if ( !m_wnd )
    {

@@ -12,11 +12,6 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 ### Brainiac 2: Playing Digital Sound Effects/Wave Files
 
 0. Chapter 14 on 2003 CD, chapter 12 on 2004 CD.
-1. modernized code...
-
-Is this the final version?  Probably, but maybe not.  Depends on later game code that is updated from the original.
-
-Possible updated version(s), use GDI+ and/or DirectX.  DX input control is different than the Win32 methods.
 
 ### Notes
 

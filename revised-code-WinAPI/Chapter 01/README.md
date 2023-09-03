@@ -12,13 +12,20 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 ### Possible types of apps that can be created on Windows
 
 1. console mode using C++
-2. Windows© MessageBox
-3. minimum Win API app
-4. minimal skeletal Win API app
-5. realistic skeletal Win API app with custom assets
-6. skeletal Win API app using C++ wide strings using modernized C++ practices 
-7. minimum MFC app
-8. using a custom C++ header file to use C++11 (and later) random engine features instead of the C library
+2. using a custom C++ header file to use C++11 (and later) random engine features instead of the C library functions
+3. a Windows© MessageBox
+4. a minimum Win API app
+5. a minimal skeletal Win API app
+6. a realistic skeletal Win API app with custom assets
+7. a skeletal Win API app using C++ wide strings using modernized C++ practices 
+8. a minimum MFC app
+
+Some examples on the basics of C/C++ & rudimentary Win API programming.
+
+The Win API has a lot of custom data types available.  You should familiarize yourself with them,  I will be using them.
+
+https://learn.microsoft.com/en-us/windows/win32/winprog/windows-data-types
+https://learn.microsoft.com/en-us/windows/win32/winprog64/the-new-data-types
 
 ### Notes
 

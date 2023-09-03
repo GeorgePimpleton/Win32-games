@@ -11,16 +11,12 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 ### Trippy: Learning to Draw Basic Graphics
 
-Trippy shows how to do basic drawing using Win32 GDI.  From the 2003 CD.
+Trippy shows how to do basic drawing using Win32 GDI.  From the 2003 CD.  There is a different example on the 2004 CD, CropCircles.
 
 ### Trippy Versions
 
 0. Original CD game files written in 2003.
 1. update the old code to the new standard I set for Blizzard.
-
-Is this the final version?  Probably, but maybe not.  Depends on later game code that is updated from the original.
-
-Possible updated version(s), use GDI+ and/or DirectX instead of GDI.
 
 ### Notes
 

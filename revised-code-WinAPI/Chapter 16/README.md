@@ -12,15 +12,6 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 ### Roids: Creating Backgrounds for Your Sprites
 
 0. Chapter 18 on 2003 CD, chapter 16 on 2004 CD.
-1. modernized code...
-
-Is this the final version?  Probably, but maybe not.  Depends on later game code that is updated from the original.
-
-Possible updated version(s), use GDI+ and/or DirectX.  DX input control is different than the Win32 methods.
-
-## WARNING!
-
-The layout of the frames in the bitmap files between the two editions are different, with the animation code in the game engine being different!  "There be dragons here!" if you mix and match bitmap files and game source code from the 2003 and 2004 versions.  I use the game source from the 2004 edition.
 
 ### Notes
 

@@ -12,25 +12,25 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 ### The Game Code in 24 (or so) Chapters
 
 1. A Programming Primer (Not just WinAPI)
-   + More About WinAPI Programming Primer
-2. Creating An Engine For Games
-3. Learning to Draw Basic Graphics
-4. Drawing Graphical Images
-5. Controlling Games with the Keyboard and Mouse
-6. Example Game: Brainiac
-7. UFO 2: Improving Input with Joysticks
-8. Example Game: Light Cycles
-9. Fore: Making Things Move with Sprites
-10. Fore 2: Managing a World of Sprites
-11. Example Game: Henway
-12. Brainiac 2: Playing Digital Sound Effects/Wave Files
-13. Henway 2: Playing MIDI Music
-14. Example Game: Battle Office
-15. Battle Office 2: Animating the Appearance of Sprites
-16. Roids: Creating Backgrounds for Your Sprites
+   + 1a. More About WinAPI Programming Primer
 
 ![under construction](construction.gif)
 
+2. Creating An Engine For Games \****under construction***\*
+3. Learning to Draw Basic Graphics \****under construction***\*
+4. Drawing Graphical Images \****under construction***\*
+5. Controlling Games with the Keyboard and Mouse \****under construction***\*
+6. Example Game: Brainiac \****under construction***\*
+7. UFO 2: Improving Input with Joysticks \****under construction***\*
+8. Example Game: Light Cycles \****under construction***\*
+9. Fore: Making Things Move with Sprites \****under construction***\*
+10. Fore 2: Managing a World of Sprites \****under construction***\*
+11. Example Game: Henway \****under construction***\*
+12. Brainiac 2: Playing Digital Sound Effects/Wave Files \****under construction***\*
+13. Henway 2: Playing MIDI Music \****under construction***\*
+14. Example Game: Battle Office \****under construction***\*
+15. Battle Office 2: Animating the Appearance of Sprites \****under construction***\*
+16. Roids: Creating Backgrounds for Your Sprites \****under construction***\*
 17. Example Game: Meteor Defense \****under construction***\*
 18. Roids 2: Teaching Games to Think \****under construction***\*
 19. Example Game: Space Out \****under construction***\*
@@ -39,6 +39,10 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 22. Space Out 4: Keeping Track of High Scores \****under construction***\*
 23. Wanderer: Changing Perspective with Scrolling Backgrounds \****under construction***\*
 24. Example Game: Stunt Jumper \****under construction***\*
+
+### Caveat on the original source code
+
+Since the original source code for the Win Games was written in 2003/2004 the examples aren't likely to compile with a modern compiler such as Visual Studio 2022. The WinAPI has changed a lot to work for x64 processors.  The first pass in each chapter will be the bare minimum needed to work now for both x86 (32-bit) and x64.
 
 ### Notes
 

@@ -12,15 +12,12 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 ### Battle Office 2: Animating the Appearance of Sprites
 
 0. Chapter 17 on 2003 CD, chapter 15 on 2004 CD.
-1. modernized code...
-
-Is this the final version?  Probably, but maybe not.  Depends on later game code that is updated from the original.
-
-Possible updated version(s), use GDI+ and/or DirectX.  DX input control is different than the Win32 methods.
 
 ## WARNING!
 
-The layout of the frames in the bitmap files between the two editions are different, with the animation code in the game engine being different!  "There be dragons here!" if you mix and match bitmap files and game source code from the 2003 and 2004 versions.  I use the game source from the 2003 edition.
+The layout of the frames in the bitmap files between the two editions are different, with the animation code in the game engine being different!  "There be dragons here!" if you mix and match bitmap files and game source code from the 2003 and 2004 versions.  Since every game going forward using animated sprite code for the rest of the games I use the game source from the 2004 edition.
+
+What's the difference in frame layout?  2003 has horizontal frames, 2004 is vertical.
 
 ### Notes
 
