@@ -33,12 +33,12 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 16. Roids: Creating Backgrounds for Your Sprites
 17. Example Game: Meteor Defense
 18. Roids 2: Teaching Games to Think
-19. Example Game: Space Out \****under construction***\*
-20. Space Out 2: Adding Pizzazz to Your Game with a Splash Screen \****under construction***\*
-21. Space Out 3: Showing Off Your Game with Demo Mode \****under construction***\*
-22. Space Out 4: Keeping Track of High Scores \****under construction***\*
-23. Wanderer: Changing Perspective with Scrolling Backgrounds \****under construction***\*
-24. Example Game: Stunt Jumper \****under construction***\*
+19. Example Game: Space Out
+20. Space Out 2: Adding Pizzazz to Your Game with a Splash Screen
+21. Space Out 3: Showing Off Your Game with Demo Mode
+22. Space Out 4: Keeping Track of High Scores
+23. Wanderer: Changing Perspective with Scrolling Backgrounds
+24. Example Game: Stunt Jumper
 
 ### Caveat on the original source code
 
