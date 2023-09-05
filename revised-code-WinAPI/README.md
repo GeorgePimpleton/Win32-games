@@ -17,10 +17,10 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 3. Trippy: Learning to Draw Basic Graphics
 4. Slideshow: Drawing Graphical Images
 5. UFO: Controlling Games with the Keyboard and Mouse
+6. Example Game: Brainiac
 
 ![under construction](construction.gif)
 
-6. Example Game: Brainiac
 7. UFO 2: Improving Input with Joysticks
 8. Example Game: Light Cycles
 9. Fore: Making Things Move with Sprites
