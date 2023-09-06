@@ -15,6 +15,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 1. Minimal WinAPI updates
 2. modernized code...
 3. Added "New Game" menu feature
+4. Updated the logic so a new game can only be started when a previous game was won
 
 ### Notes
 

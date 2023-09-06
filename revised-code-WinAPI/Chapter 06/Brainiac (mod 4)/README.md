@@ -12,10 +12,10 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 ### Example Game: Brainiac
 
 0. Chapter 8 on 2003 CD.  The program files are also on Chapter 6 2004 CD.
-1. Minimal WinAPI updates *<----- this example*
+1. Minimal WinAPI updates
 2. modernized code...
 3. Added "New Game" menu feature
-4. Updated the logic so a new game can only be started when a previous game was won
+4. Updated the logic so a new game can only be started when a previous game was won *<----- this example*
 
 ### Notes
 
