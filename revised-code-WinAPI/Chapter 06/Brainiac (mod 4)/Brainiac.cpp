@@ -72,12 +72,15 @@ void GameNew( )
       // initialize the tile selections and match/try count
       g_tile1.x = g_tile1.y = -1;
       g_tile2.x = g_tile2.y = -1;
-      g_matches = g_tries = 0;
+      g_matches = g_tries   = 0;
+
+      g_gameOver = FALSE;
+
+      // disable the new game menu item
+      EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
 
       // force a repaint to update the tiles
       InvalidateRect(g_game->GetWindow( ), nullptr, FALSE);
-
-      g_gameOver = FALSE;
    }
 }
 
@@ -196,6 +199,10 @@ void MouseButtonDown(LONG x, LONG y, BOOL left)
          wsprintfW(szText, L"You won in %d tries.", g_tries);
          MessageBoxW(g_game->GetWindow(), szText, L"Brainiac", MB_OK);
          g_gameOver = TRUE;
+
+         // enable the new game menu item so it can be selected
+         EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_ENABLED);
+
       }
    }
 }
