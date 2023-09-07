@@ -12,9 +12,9 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 ### Example Game: Light Cycles
 
 0. Chapter 8 on 2004 CD.
-1. **minimal update...** *<----- this example*
+1. minimal update...
 2. modernized code...
-3. Updated game menu...
+3. **Updated game menu...** *<----- this example*
 
 ### Notes
 
