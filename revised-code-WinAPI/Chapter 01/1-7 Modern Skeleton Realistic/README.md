@@ -12,13 +12,22 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 ### Possible types of apps that can be created on Windows
 
 1. console mode using C++
+    + console mode using C++20's modules
 2. using a custom C++ header file to use C++11 (and later) random engine features instead of the C library functions
-3. a Windows© MessageBox
-4. a minimum Win API app
+    + using a custom C\+\+20 module to use C++11 (and later) random engine features instead of the C library functions
+3. a Windows API MessageBox
+    + a WinAPI MessageBox using modern coding
+4. a minimal WinAPI app
+     + a minimal WinAPI app using modern coding
 5. a minimal skeletal Win API app
 6. a realistic skeletal Win API app with custom assets
 7. **a skeletal Win API app using C++ wide strings using modernized C++ practices** *<----- this example*
 8. a minimum MFC app
+9. modularizing WinAPI
+10. modularizing WinAPI
+11. modularizing WinAPI
+12. modularizing WinAPI
+13. modularizing WinAPI
 
 This was more of an experiment with C++ than anything really useful when using the WinAPI.  The Win API already has wide string data types, PCWSTR for example.  A pointer to a constant wide string array.  I will be using the Win API data types. 
 

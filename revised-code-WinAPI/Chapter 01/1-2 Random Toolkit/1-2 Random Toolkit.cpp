@@ -1,4 +1,4 @@
-﻿// requires C++20 for the following code, the toolkit header doesn't
+﻿// the following program code requires C++20, the toolkit header does not
 
 #include <array>
 #include <iostream>

@@ -1,4 +1,4 @@
-# Programming Windows© Games, Chapter 1a
+# Programming Windows© Games, Chapter 1
 
 [![Language](https://img.shields.io/badge/Language%20-C++-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
@@ -9,26 +9,29 @@ Win9X/Me is officially dead!  Windows API ANSI encoding is dead!  Windows XP and
 
 Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
-### Ruminations on modularizing Win API code
+### Possible types of apps that can be created on Windows
+
+1. console mode using C++
+    + console mode using C++20's modules
+2. using a custom C++ header file to use C++11 (and later) random engine features instead of the C library functions
+    + using a custom C\+\+20 module to use C++11 (and later) random engine features instead of the C library functions
+3. a Windows API MessageBox
+    + a WinAPI MessageBox using modern coding
+4. a minimal WinAPI app
+     + a minimal WinAPI app using modern coding
+5. a minimal skeletal WinAPI app
+6. a realistic skeletal WinAPI app with custom assets
+7. a skeletal WinAPI app using C++ wide strings using modernized C++ practices 
+8. a minimum MFC app
+9. **modularizing WinAPI** *<----- this example*
+10. modularizing WinAPI
+11. modularizing WinAPI
+12. modularizing WinAPI
+13. modularizing WinAPI
 
 Standard boiler-plate C/C++ WinAPI code is cumbersome to read and difficult to maintain as the code's functionality increases.  Only two functions are required for a WinAPI compliant app, WinMain and WndProc. Those 2 functions do more than one simple task. Good functions should do one task as much as possible, simple and short.
 
-This sub-chapter shows several ways to modularize code into separate "one task only" functions.
-
-There is also a very brief primer on using C++20's modules.
-
-1. console mode using C++20's modules
-2. **a simple toolkit for using the C++ <random> library written as a C++20 module interface file.** *<----- this example*
-3. minimal WinAPI single file used as a template for modularizing.
-4. first version of modular WinAPI code.
-5. second version of modular WinAPI code split into multiple files.
-6. third version of modular WinAPI code further split into multiple files.
-7. fourth version of modular WinAPI code, creating functions to process WM_ messages.
-8. rewriting #7 to allow for idle-time processing.
-
-This example uses a header only toolkit to make it easier to use the C++ random engine features, using a module interface file.
-
-The example code requires C++20, including the module interface file.
+The beginning modularization example, the app initialization and message loop in WinMain are placed into separate functions.
 
 ### Notes
 

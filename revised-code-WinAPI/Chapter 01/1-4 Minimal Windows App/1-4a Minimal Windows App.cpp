@@ -69,7 +69,7 @@ LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
       RECT rect;
       GetClientRect(wnd, &rect);
 
-      DrawTextW(dc, L"Hello, Windows©!", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+      DrawTextW(dc, L"Hello, Windows!", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
       EndPaint(wnd, &ps);
 

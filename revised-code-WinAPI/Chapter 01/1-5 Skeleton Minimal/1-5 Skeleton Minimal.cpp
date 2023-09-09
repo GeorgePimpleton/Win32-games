@@ -68,7 +68,7 @@ LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
       GetClientRect(wnd, &rect);
 
-      DrawTextW(dc, L"This is a minimal Windows© skeleton application!", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+      DrawTextW(dc, L"This is a minimal Windows skeleton application!", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
       EndPaint(wnd, &ps);
       return S_OK;

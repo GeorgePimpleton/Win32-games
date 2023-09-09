@@ -15,12 +15,19 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 1. console mode using C++
 2. using a custom C++ header file to use C++11 (and later) random engine features instead of the C library functions
-3. **Windows© MessageBox**  *<---- This example*
-4. a minimum Win API app
-5. a minimal skeletal Win API app
-6. a realistic skeletal Win API app with custom assets
-7. a skeletal Win API app using C++ wide strings using modernized C++ practices 
+3. **a Windows MessageBox**  *<---- this example*
+    + **a WinAPI MessageBox using modern coding** *<----- this example*
+4. a minimum WinAPI app
+     + a minimum WinAPI app using modern coding
+5. a minimal skeletal WinAPI app
+6. a realistic skeletal WinAPI app with custom assets
+7. a skeletal WinAPI app using C++ wide strings using modernized C++ practices 
 8. a minimum MFC app
+9. modularizing WinAPI
+10. modularizing WinAPI
+11. modularizing WinAPI
+12. modularizing WinAPI
+13. modularizing WinAPI
 
 The two examples shows the bare minimum needed to recreate the "Hello World" console example using a WinAPI message box.  The first example shows older WinAPI usages, allowing for ANSI and Unicode encodings for the WinAPI functio ns.  This is original style WinAPI coding as done by Charles Petzold back in the Win9X/Me days.  This style should be dead and buried.
 

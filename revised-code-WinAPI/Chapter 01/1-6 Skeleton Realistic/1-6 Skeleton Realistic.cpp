@@ -1,12 +1,8 @@
-// disable the "accel could be zero" whinging
-// this is just a low-level warning, the code will still compile
-#pragma warning(disable : 6387)
-
-#include "1-5 Skeleton Realistic.hpp"
+#include "1-6 Skeleton Realistic.hpp"
 
 int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int cmdShow)
 {
-   static WCHAR appName[ ] { L"Realistic Windows© Skeleton" };
+   static WCHAR appName[ ] = L"Realistic Windows Skeleton";
 
    WNDCLASSEXW wc { };
 
@@ -29,13 +25,13 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR
       return E_FAIL;
    }
 
-   static WCHAR appTitle[ ] { L"A Realistic Windows© Skeleton Application" };
+   static WCHAR appTitle[ ] = L"A Realistic Windows Skeleton Application";
 
-   HWND wnd { CreateWindowW(appName, appTitle,
+   HWND wnd = CreateWindowW(appName, appTitle,
                             WS_OVERLAPPEDWINDOW,
                             CW_USEDEFAULT, CW_USEDEFAULT,
                             CW_USEDEFAULT, CW_USEDEFAULT,
-                            NULL, NULL, inst, NULL) };
+                            NULL, NULL, inst, NULL);
 
    if ( NULL == wnd )
    {
@@ -47,7 +43,7 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR
    UpdateWindow(wnd);
 
    // load the accelerators
-   HACCEL accel { LoadAcceleratorsW(inst, MAKEINTRESOURCEW(IDR_ACCEL)) };
+   HACCEL accel = LoadAcceleratorsW(inst, MAKEINTRESOURCEW(IDR_ACCEL));
 
    // check accelerators are loaded
    // the app can still run without accelerators
@@ -94,7 +90,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
    case WM_COMMAND:
       switch ( LOWORD(wParam) )
       {
-      case IDM_GAME_EXIT:
+      case IDM_APP_EXIT:
          PostQuitMessage(0);
 
          return S_OK;
@@ -121,7 +117,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
       RECT rect;
       GetClientRect(hwnd, &rect);
-      DrawTextW(hdc, L"This is a realistic skeletal Windows® application!", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+      DrawTextW(hdc, L"This is a realistic skeletal Windows application!", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
       EndPaint(hwnd, &ps);
       return S_OK;
@@ -148,7 +144,6 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
       case IDOK:
          // the OK button was pushed, exit the dialog box
          EndDialog(hDlg, 0);
-
          return TRUE;
       }
    }

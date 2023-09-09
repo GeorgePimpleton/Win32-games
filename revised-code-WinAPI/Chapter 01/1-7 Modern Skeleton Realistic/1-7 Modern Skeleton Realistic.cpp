@@ -1,10 +1,8 @@
-#pragma warning(disable : 6387)
-
-#include "1-6 Modern Skeleton Realistic.hpp"
+#include "1-7 Modern Skeleton Realistic.hpp"
 
 int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int cmdShow)
 {
-   static std::wstring appName { L"C++ Modernized Realistic Windows Skeleton" };
+   static std::wstring appName = L"C++ Modernized Realistic Windows Skeleton";
 
    WNDCLASSEXW wc { };
 
@@ -27,7 +25,7 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR
       return E_FAIL;
    }
 
-   static std::wstring appTitle { L"A C++ Monderized Realistic Windows© Skeleton Application" };
+   static std::wstring appTitle = L"A C++ Monderized Realistic Windows Skeleton Application";
 
    HWND wnd { CreateWindowW(appName.data( ), appTitle.data( ),
                             WS_OVERLAPPEDWINDOW,
@@ -44,7 +42,7 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR
    ShowWindow(wnd, cmdShow);
    UpdateWindow(wnd);
 
-   HACCEL accel { LoadAcceleratorsW(inst, MAKEINTRESOURCEW(IDR_ACCEL)) };
+   HACCEL accel = LoadAcceleratorsW(inst, MAKEINTRESOURCEW(IDR_ACCEL));
 
    if ( nullptr == accel )
    {
@@ -81,14 +79,12 @@ LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
    case WM_COMMAND:
       switch ( LOWORD(wParam) )
       {
-      case IDM_GAME_EXIT:
+      case IDM_APP_EXIT:
          PostQuitMessage(0);
-
          return S_OK;
 
       case IDM_HELP_ABOUT:
          DialogBoxW((HINSTANCE) GetWindowLongPtrW(wnd, GWLP_HINSTANCE), MAKEINTRESOURCEW(IDD_ABOUT), wnd, (DLGPROC) DlgProc);
-
          return S_OK;
       }
       break;
@@ -96,7 +92,6 @@ LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
    case WM_CREATE:
       SetClassLongPtrW(wnd, GCLP_HCURSOR,
                        (LONG64) LoadImageW(GetModuleHandleW(nullptr), MAKEINTRESOURCEW(IDC_CURSOR), IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR));
-
       return S_OK;
 
    case WM_PAINT:
@@ -106,17 +101,13 @@ LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
       RECT        rect;
 
       GetClientRect(wnd, &rect);
-
-      DrawTextW(dc, L"This is a C++ modernized realistic skeletal Windows® application!", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
-
+      DrawTextW(dc, L"This is a C++ modernized realistic skeletal Windows application!", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
       EndPaint(wnd, &ps);
-
       return S_OK;
    }
 
    case WM_DESTROY:
       PostQuitMessage(0);
-
       return S_OK;
    }
 
@@ -132,7 +123,6 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
       {
       case IDOK:
          EndDialog(hDlg, 0);
-
          return TRUE;
       }
    }
