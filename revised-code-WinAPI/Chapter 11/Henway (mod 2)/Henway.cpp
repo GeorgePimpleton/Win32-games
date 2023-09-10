@@ -2,8 +2,8 @@
 
 HRESULT GameInitialize(HINSTANCE inst)
 {
-   g_game = new GameEngine(inst, L"Henway", L"Example Game: Henway",
-                           IDI_ICON, IDI_ICON_SM, 465, 400);
+   g_game = std::make_unique<GameEngine>(inst, L"Henway", L"Example Game: Henway",
+                                        IDI_ICON, IDI_ICON_SM, 465, 400);
 
    if ( NULL == g_game )
    {
@@ -28,13 +28,13 @@ void GameStart(HWND wnd)
 
    HINSTANCE inst = GetModuleHandleW(NULL);
 
-   g_highwayBitmap     = new Bitmap(IDB_HIGHWAY, inst);
-   g_chickenBitmap     = new Bitmap(IDB_CHICKEN, inst);
-   g_carBitmaps[ 0 ]   = new Bitmap(IDB_CAR1, inst);
-   g_carBitmaps[ 1 ]   = new Bitmap(IDB_CAR2, inst);
-   g_carBitmaps[ 2 ]   = new Bitmap(IDB_CAR3, inst);
-   g_carBitmaps[ 3 ]   = new Bitmap(IDB_CAR4, inst);
-   g_chickenHeadBitmap = new Bitmap(IDB_CHICKENHEAD, inst);
+   g_highwayBitmap     = std::make_unique<Bitmap>(IDB_HIGHWAY, inst);
+   g_chickenBitmap     = std::make_unique<Bitmap>(IDB_CHICKEN, inst);
+   g_carBitmaps[ 0 ]   = std::make_unique<Bitmap>(IDB_CAR1, inst);
+   g_carBitmaps[ 1 ]   = std::make_unique<Bitmap>(IDB_CAR2, inst);
+   g_carBitmaps[ 2 ]   = std::make_unique<Bitmap>(IDB_CAR3, inst);
+   g_carBitmaps[ 3 ]   = std::make_unique<Bitmap>(IDB_CAR4, inst);
+   g_chickenHeadBitmap = std::make_unique<Bitmap>(IDB_CHICKENHEAD, inst);
 
    GameNew( );
 }
@@ -46,31 +46,31 @@ void GameNew( )
    Sprite* sprite;
    RECT    bounds = { 0, 0, 465, 400 };
 
-   g_chickenSprite = new Sprite(g_chickenBitmap, bounds, BA_STOP);
+   g_chickenSprite = new Sprite(g_chickenBitmap.get( ), bounds, BA_STOP);
    g_chickenSprite->SetPosition(4, 175);
    g_chickenSprite->SetVelocity(0, 0);
    g_chickenSprite->SetZOrder(1);
    g_game->AddSprite(g_chickenSprite);
 
-   sprite = new Sprite(g_carBitmaps[ 0 ], bounds, BA_WRAP);
+   sprite = new Sprite(g_carBitmaps[ 0 ].get( ), bounds, BA_WRAP);
    sprite->SetPosition(70, 0);
    sprite->SetVelocity(0, 7);
    sprite->SetZOrder(2);
    g_game->AddSprite(sprite);
 
-   sprite = new Sprite(g_carBitmaps[ 1 ], bounds, BA_WRAP);
+   sprite = new Sprite(g_carBitmaps[ 1 ].get( ), bounds, BA_WRAP);
    sprite->SetPosition(160, 0);
    sprite->SetVelocity(0, 3);
    sprite->SetZOrder(2);
    g_game->AddSprite(sprite);
 
-   sprite = new Sprite(g_carBitmaps[ 2 ], bounds, BA_WRAP);
+   sprite = new Sprite(g_carBitmaps[ 2 ].get( ), bounds, BA_WRAP);
    sprite->SetPosition(239, 400);
    sprite->SetVelocity(0, -5);
    sprite->SetZOrder(2);
    g_game->AddSprite(sprite);
 
-   sprite = new Sprite(g_carBitmaps[ 3 ], bounds, BA_WRAP);
+   sprite = new Sprite(g_carBitmaps[ 3 ].get ( ), bounds, BA_WRAP);
    sprite->SetPosition(329, 400);
    sprite->SetVelocity(0, -10);
    sprite->SetZOrder(2);
@@ -87,24 +87,7 @@ void GameNew( )
 }
 
 void GameEnd( )
-{
-   DeleteObject(g_offscreenBitmap);
-   DeleteDC(g_offscreenDC);
-
-   delete g_highwayBitmap;
-   delete g_chickenBitmap;
-
-   for ( int i = 0; i < 4; i++ )
-   {
-      delete g_carBitmaps[ i ];
-   }
-
-   delete g_chickenHeadBitmap;
-
-   g_game->CleanupSprites( );
-
-   delete g_game;
-}
+{ }
 
 void GameActivate(HWND wnd)
 {
