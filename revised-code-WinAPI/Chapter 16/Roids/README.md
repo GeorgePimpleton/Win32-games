@@ -11,7 +11,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 ### Roids: Creating Backgrounds for Your Sprites
 
-0. Chapter 18 on 2003 CD, chapter 16 on 2004 CD.
+0. **Chapter 18 on 2003 CD, chapter 16 on 2004 CD.** *<----- this example*
 1. minimal revisions...
 2. modernized code...
 
