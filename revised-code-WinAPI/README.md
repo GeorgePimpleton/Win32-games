@@ -27,11 +27,12 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 14. Example Game: Battle Office
 15. Battle Office 2: Animating the Appearance of Sprites
 16. Roids: Creating Backgrounds for Your Sprites
+
+\*\* ***under construction*** \*\*  ![under construction](construction.gif)
+
 17. Example Game: Meteor Defense
 
-![under construction](construction.gif)
-
-\*\* ***under construction*** \*\*
+\*\* ***in the queue*** \*\*
 
 18. Roids 2: Teaching Games to Think
 19. Example Game: Space Out
