@@ -1,12 +1,23 @@
+//-----------------------------------------------------------------
+// Meteor Defense Application
+// C++ Header - MeteorDefense.h
+//-----------------------------------------------------------------
+
 #pragma once
 
+//-----------------------------------------------------------------
+// Include Files
+//-----------------------------------------------------------------
 #include <windows.h>
-#include "resource.h"
+#include "Resource.h"
 #include "GameEngine.h"
 #include "Bitmap.h"
 #include "Sprite.h"
 #include "Background.h"
 
+//-----------------------------------------------------------------
+// Global Variables
+//-----------------------------------------------------------------
 HINSTANCE         g_hInstance;
 GameEngine*       g_pGame;
 HDC               g_hOffscreenDC;
@@ -23,5 +34,8 @@ Sprite*           g_pTargetSprite;
 int               g_iNumCities, g_iScore, g_iDifficulty;
 BOOL              g_bGameOver;
 
+//-----------------------------------------------------------------
+// Function Declarations
+//-----------------------------------------------------------------
 void NewGame();
 void AddMeteor();

@@ -1,7 +1,19 @@
+//-----------------------------------------------------------------
+// Sprite Object
+// C++ Source - Sprite.cpp
+//-----------------------------------------------------------------
+
+//-----------------------------------------------------------------
+// Include Files
+//-----------------------------------------------------------------
 #include "Sprite.h"
 
+//-----------------------------------------------------------------
+// Sprite Constructor(s)/Destructor
+//-----------------------------------------------------------------
 Sprite::Sprite(Bitmap* pBitmap)
 {
+  // Initialize the member variables
   m_pBitmap = pBitmap;
   m_iNumFrames = 1;
   m_iCurFrame = m_iFrameDelay = m_iFrameTrigger = 0;
@@ -18,9 +30,11 @@ Sprite::Sprite(Bitmap* pBitmap)
 
 Sprite::Sprite(Bitmap* pBitmap, RECT& rcBounds, BOUNDSACTION baBoundsAction)
 {
+  // Calculate a random position
   int iXPos = rand() % (rcBounds.right - rcBounds.left);
   int iYPos = rand() % (rcBounds.bottom - rcBounds.top);
 
+  // Initialize the member variables
   m_pBitmap = pBitmap;
   m_iNumFrames = 1;
   m_iCurFrame = m_iFrameDelay = m_iFrameTrigger = 0;
@@ -39,6 +53,7 @@ Sprite::Sprite(Bitmap* pBitmap, RECT& rcBounds, BOUNDSACTION baBoundsAction)
 Sprite::Sprite(Bitmap* pBitmap, POINT ptPosition, POINT ptVelocity, int iZOrder,
     RECT& rcBounds, BOUNDSACTION baBoundsAction)
 {
+  // Initialize the member variables
   m_pBitmap = pBitmap;
   m_iNumFrames = 1;
   m_iCurFrame = m_iFrameDelay = m_iFrameTrigger = 0;
@@ -55,15 +70,22 @@ Sprite::Sprite(Bitmap* pBitmap, POINT ptPosition, POINT ptVelocity, int iZOrder,
 }
 
 Sprite::~Sprite()
-{ }
+{
+}
 
+//-----------------------------------------------------------------
+// Sprite General Methods
+//-----------------------------------------------------------------
 SPRITEACTION Sprite::Update()
 {
+  // See if the sprite needs to be killed
   if (m_bDying)
     return SA_KILL;
 
+  // Update the frame
   UpdateFrame();
 
+  // Update the position
   POINT ptNewPosition, ptSpriteSize, ptBoundsSize;
   ptNewPosition.x = m_rcPosition.left + m_ptVelocity.x;
   ptNewPosition.y = m_rcPosition.top + m_ptVelocity.y;
@@ -151,8 +173,10 @@ SPRITEACTION Sprite::Update()
 
 void Sprite::Draw(HDC hDC)
 {
+  // Draw the sprite if it isn't hidden
   if (m_pBitmap != NULL && !m_bHidden)
   {
+    // Draw the appropriate frame, if necessary
     if (m_iNumFrames == 1)
       m_pBitmap->Draw(hDC, m_rcPosition.left, m_rcPosition.top, TRUE);
     else

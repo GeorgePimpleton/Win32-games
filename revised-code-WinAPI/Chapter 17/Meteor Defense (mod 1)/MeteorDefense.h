@@ -20,7 +20,9 @@ Bitmap*           g_pExplosionBitmap;
 Bitmap*           g_pGameOverBitmap;
 StarryBackground* g_pBackground;
 Sprite*           g_pTargetSprite;
-int               g_iNumCities, g_iScore, g_iDifficulty;
+int               g_iNumCities;
+int               g_iScore;
+int               g_iDifficulty;
 BOOL              g_bGameOver;
 
 void NewGame();
