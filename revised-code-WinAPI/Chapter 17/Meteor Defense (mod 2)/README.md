@@ -15,6 +15,8 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 1. minimal revisions...
 2. **modernized code...** *<----- this example*
 
+Modernizing this example is proving to be a real PITA.  The revisions will be done incrementally.
+
 ## WARNING!
 
 The layout of the frames in the bitmap files between the two editions are different, with the animation code in the game engine being incompatible!  "There be dragons here!" if you mix and match bitmap files and game source code from the 2003 and 2004 versions.  I use the game source from the 2004 edition.
