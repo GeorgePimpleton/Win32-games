@@ -11,7 +11,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 ### Why this repository exists
 
-I own a couple of OLD (© 2003 & 2004) books about creating 2D games using the Windows API.
+I own a couple of \*\****OLD***\*\* (© 2003 & 2004) books about creating 2D games using the Windows API.
 
 ![Sams Teach Yourself Game Programming in 24 Hours (2003)](tygp24h.jpg) ![Sams Beginning Game Programming (2004)](bgp.jpg)
 
@@ -33,7 +33,7 @@ I use Visual Studio 2022 (Community) to update and test the game code, setting t
 
 I've been working with the games source code from both books for years, plinking around and trying out newer C++ features as I've run across them.  Most of the example code is the same between the books, so I've combined the examples into one representative example for each chapter.
 
-The main difference between the books is the orientation of the animated sprite bitmaps.  When dealing with animated sprites all the source code is from the 2004 book.
+The main difference between the books is the orientation of the animated sprite bitmaps.  When dealing with animated sprites all the source code is from the 2004 book, except for the first game example.  That one uses the code from 2003.
 
 ### Notes
 
@@ -46,3 +46,5 @@ If you find better ways to rework the code don't hesitate to let me know.
 ### Musings on Windows© Games
 
 To be honest the game engine created so many years ago is hard to convert to modern C++ practices.  It isn't bad code, it just resists being modernized.  More and more it is looking like the game engine needs to be rewritten from top to bottom from scratch.  *UGH*
+
+Or I just need a bigger hammer and crowbar.  *sigh*

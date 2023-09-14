@@ -1,4 +1,4 @@
-# Programming Windows© Games
+Programming Windows© Games
 
 [![Language](https://img.shields.io/badge/Language%20-C++-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
@@ -42,9 +42,9 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 23. Wanderer: Changing Perspective with Scrolling Backgrounds
 24. Example Game: Stunt Jumper
 
-### Caveat on the original source code
+### Caveat on the original 2003 & 2004 source code
 
-Since the original source code for the Win Games was written in 2003/2004 the examples aren't likely to compile with a modern compiler such as Visual Studio 2022. The WinAPI has changed a lot to work for x64 processors.  The first pass in each chapter will be the bare minimum needed to work now for both x86 (32-bit) and x64.
+Since the original source code for the Win Games was written in 2003/2004 the game examples aren't likely to compile with a modern compiler such as Visual Studio 2022. The WinAPI has changed a lot to work for x64 processors as well as other changes for the 21st Century.  The first pass in each chapter will be the bare minimum needed to work now for both x86 (32-bit) and x64.
 
 ### Notes
 
@@ -59,3 +59,5 @@ If you find better ways to rework the code please drop me a note and let me know
 ### Musings on Windows© Games
 
 To be honest the game engine created so many years ago is hard to convert to modern C++ practices.  It isn't bad code, it just resists being modernized.  More and more it is looking like the game engine needs to be rewritten from top to bottom from scratch.  *UGH*
+
+Or I just need a bigger hammer and crowbar.  *sigh*
