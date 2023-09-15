@@ -2,7 +2,7 @@
 
 #include "GameEngine.hpp"
 
-GameEngine* GameEngine::m_pGameEngine = NULL;
+GameEngine* GameEngine::m_gameEngine = NULL;
 
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ PWSTR szCmdLine, _In_ int iCmdShow)
 {
@@ -80,22 +80,22 @@ GameEngine::GameEngine(HINSTANCE hInstance, PCWSTR szWindowClass, PCWSTR szTitle
                        WORD wIcon, WORD wSmallIcon, int iWidth, int iHeight)
 {
    // Set the member variables for the game engine
-   m_pGameEngine    = this;
-   m_hInstance      = hInstance;
-   m_hWindow        = NULL;
-   m_szWindowClass  = szWindowClass;
-   m_szTitle        = szTitle;
-   m_wIcon          = wIcon;
-   m_wSmallIcon     = wSmallIcon;
-   m_iWidth         = iWidth;
-   m_iHeight        = iHeight;
-   m_iFrameDelay    = 50;   // 20 FPS default
-   m_bSleep         = TRUE;
-   m_uiJoystickID   = 0;
-   m_rcJoystickTrip = { };
-   m_uiMIDIPlayerID = 0;
+   m_gameEngine    = this;
+   m_inst      = hInstance;
+   m_wnd        = NULL;
+   m_wndClass  = szWindowClass;
+   m_title        = szTitle;
+   m_icon          = wIcon;
+   m_smallIcon     = wSmallIcon;
+   m_width         = iWidth;
+   m_height        = iHeight;
+   m_frameDelay    = 50;   // 20 FPS default
+   m_asleep         = TRUE;
+   m_joyID   = 0;
+   m_joyTrip = { };
+   m_MIDIPlayerID = 0;
 
-   m_vSprites.reserve(100);
+   m_sprites.reserve(100);
 }
 
 GameEngine::~GameEngine( )
@@ -111,13 +111,13 @@ BOOL GameEngine::Initialize(int iCmdShow)
    wndclass.lpfnWndProc   = WndProc;
    wndclass.cbClsExtra    = 0;
    wndclass.cbWndExtra    = 0;
-   wndclass.hInstance     = m_hInstance;
-   wndclass.hIcon         = LoadIcon(m_hInstance, MAKEINTRESOURCE(GetIcon( )));
-   wndclass.hIconSm       = LoadIcon(m_hInstance, MAKEINTRESOURCE(GetSmallIcon( )));
+   wndclass.hInstance     = m_inst;
+   wndclass.hIcon         = LoadIcon(m_inst, MAKEINTRESOURCE(GetIcon( )));
+   wndclass.hIconSm       = LoadIcon(m_inst, MAKEINTRESOURCE(GetSmallIcon( )));
    wndclass.hCursor       = LoadCursor(NULL, IDC_ARROW);
    wndclass.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1);
    wndclass.lpszMenuName  = MAKEINTRESOURCEW(IDR_MENU);
-   wndclass.lpszClassName = m_szWindowClass;
+   wndclass.lpszClassName = m_wndClass;
 
    // Register the window class
    if ( !RegisterClassEx(&wndclass) )
@@ -126,8 +126,8 @@ BOOL GameEngine::Initialize(int iCmdShow)
    }
 
    // Calculate the window size and position based upon the game size
-   int iWindowWidth = m_iWidth + GetSystemMetrics(SM_CXFIXEDFRAME) * 2,
-       iWindowHeight = m_iHeight + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 +
+   int iWindowWidth = m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2,
+       iWindowHeight = m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 +
                        GetSystemMetrics(SM_CYCAPTION);
 
    if ( wndclass.lpszMenuName != NULL )
@@ -142,17 +142,17 @@ BOOL GameEngine::Initialize(int iCmdShow)
      iYWindowPos = (GetSystemMetrics(SM_CYSCREEN) - iWindowHeight) / 2;
 
    // Create the window
-   m_hWindow = CreateWindow(m_szWindowClass, m_szTitle, WS_POPUPWINDOW |
+   m_wnd = CreateWindow(m_wndClass, m_title, WS_POPUPWINDOW |
                             WS_CAPTION | WS_MINIMIZEBOX, iXWindowPos, iYWindowPos, iWindowWidth,
-                            iWindowHeight, NULL, NULL, m_hInstance, NULL);
-   if ( !m_hWindow )
+                            iWindowHeight, NULL, NULL, m_inst, NULL);
+   if ( !m_wnd )
    {
       return FALSE;
    }
 
    // Show and update the window
-   ShowWindow(m_hWindow, iCmdShow);
-   UpdateWindow(m_hWindow);
+   ShowWindow(m_wnd, iCmdShow);
+   UpdateWindow(m_wnd);
 
    return TRUE;
 }
@@ -240,7 +240,7 @@ BOOL GameEngine::InitJoystick( )
 
    if ( joyGetPos(JOYSTICKID1, &jiInfo) != JOYERR_UNPLUGGED )
    {
-      m_uiJoystickID = JOYSTICKID1;
+      m_joyID = JOYSTICKID1;
    }
    else
    {
@@ -250,15 +250,15 @@ BOOL GameEngine::InitJoystick( )
    // Calculate the trip values
    JOYCAPS jcCaps;
 
-   joyGetDevCaps(m_uiJoystickID, &jcCaps, sizeof(JOYCAPS));
+   joyGetDevCaps(m_joyID, &jcCaps, sizeof(JOYCAPS));
 
    DWORD dwXCenter = ((DWORD) jcCaps.wXmin + jcCaps.wXmax) / 2;
    DWORD dwYCenter = ((DWORD) jcCaps.wYmin + jcCaps.wYmax) / 2;
 
-   m_rcJoystickTrip.left   = (jcCaps.wXmin + (WORD) dwXCenter) / 2;
-   m_rcJoystickTrip.right  = (jcCaps.wXmax + (WORD) dwXCenter) / 2;
-   m_rcJoystickTrip.top    = (jcCaps.wYmin + (WORD) dwYCenter) / 2;
-   m_rcJoystickTrip.bottom = (jcCaps.wYmax + (WORD) dwYCenter) / 2;
+   m_joyTrip.left   = (jcCaps.wXmin + (WORD) dwXCenter) / 2;
+   m_joyTrip.right  = (jcCaps.wXmax + (WORD) dwXCenter) / 2;
+   m_joyTrip.top    = (jcCaps.wYmin + (WORD) dwYCenter) / 2;
+   m_joyTrip.bottom = (jcCaps.wYmax + (WORD) dwYCenter) / 2;
 
    return TRUE;
 }
@@ -266,44 +266,44 @@ BOOL GameEngine::InitJoystick( )
 void GameEngine::CaptureJoystick( )
 {
    // Capture the joystick
-   if ( m_uiJoystickID == JOYSTICKID1 )
+   if ( m_joyID == JOYSTICKID1 )
    {
-      joySetCapture(m_hWindow, m_uiJoystickID, NULL, TRUE);
+      joySetCapture(m_wnd, m_joyID, NULL, TRUE);
    }
 }
 
 void GameEngine::ReleaseJoystick( )
 {
    // Release the joystick
-   if ( m_uiJoystickID == JOYSTICKID1 )
-{      joyReleaseCapture(m_uiJoystickID);
+   if ( m_joyID == JOYSTICKID1 )
+{      joyReleaseCapture(m_joyID);
 }}
 
 void GameEngine::CheckJoystick( )
 {
-   if ( m_uiJoystickID == JOYSTICKID1 )
+   if ( m_joyID == JOYSTICKID1 )
    {
       JOYINFO jiInfo;
       JOYSTATE jsJoystickState = 0;
 
-      if ( joyGetPos(m_uiJoystickID, &jiInfo) == JOYERR_NOERROR )
+      if ( joyGetPos(m_joyID, &jiInfo) == JOYERR_NOERROR )
       {
          // Check horizontal movement
-         if ( jiInfo.wXpos < (WORD) m_rcJoystickTrip.left )
+         if ( jiInfo.wXpos < (WORD) m_joyTrip.left )
          {
             jsJoystickState |= JOY_LEFT;
          }
-         else if ( jiInfo.wXpos > (WORD)m_rcJoystickTrip.right )
+         else if ( jiInfo.wXpos > (WORD)m_joyTrip.right )
          {
             jsJoystickState |= JOY_RIGHT;
          }
 
          // Check vertical movement
-         if ( jiInfo.wYpos < (WORD) m_rcJoystickTrip.top )
+         if ( jiInfo.wYpos < (WORD) m_joyTrip.top )
          {
             jsJoystickState |= JOY_UP;
          }
-         else if ( jiInfo.wYpos > (WORD)m_rcJoystickTrip.bottom )
+         else if ( jiInfo.wYpos > (WORD)m_joyTrip.bottom )
          {
             jsJoystickState |= JOY_DOWN;
          }
@@ -331,29 +331,29 @@ void GameEngine::AddSprite(Sprite* pSprite)
    if ( pSprite != NULL )
    {
       // See if there are sprites already in the sprite vector
-      if ( m_vSprites.size( ) > 0 )
+      if ( m_sprites.size( ) > 0 )
       {
          // Find a spot in the sprite vector to insert the sprite by its z-order
-         for ( auto siSprite = m_vSprites.begin( ); siSprite != m_vSprites.end( ); siSprite++ )
+         for ( auto siSprite = m_sprites.begin( ); siSprite != m_sprites.end( ); siSprite++ )
          {
             if ( pSprite->GetZOrder( ) < (*siSprite)->GetZOrder( ) )
             {
                // Insert the sprite into the sprite vector
-               m_vSprites.insert(siSprite, pSprite);
+               m_sprites.insert(siSprite, pSprite);
                return;
             }
          }
       }
 
       // The sprite's z-order is highest, so add it to the end of the vector
-      m_vSprites.push_back(pSprite);
+      m_sprites.push_back(pSprite);
    }
 }
 
 void GameEngine::DrawSprites(HDC hDC)
 {
    // Draw the sprites in the sprite vector
-   for ( auto siSprite = m_vSprites.begin( ); siSprite != m_vSprites.end( ); siSprite++ )
+   for ( auto siSprite = m_sprites.begin( ); siSprite != m_sprites.end( ); siSprite++ )
    {
       (*siSprite)->Draw(hDC);
    }
@@ -362,16 +362,16 @@ void GameEngine::DrawSprites(HDC hDC)
 void GameEngine::UpdateSprites( )
 {
    // Check to see if the sprite vector needs to grow
-   if ( m_vSprites.size( ) >= (m_vSprites.capacity( ) / 2) )
+   if ( m_sprites.size( ) >= (m_sprites.capacity( ) / 2) )
    {
-      m_vSprites.reserve(m_vSprites.capacity( ) * 2);
+      m_sprites.reserve(m_sprites.capacity( ) * 2);
    }
 
    // Update the sprites in the sprite vector
    RECT         rcOldSpritePos;
    SPRITEACTION saSpriteAction;
 
-   for ( auto siSprite = m_vSprites.begin( ); siSprite != m_vSprites.end( ); siSprite++ )
+   for ( auto siSprite = m_sprites.begin( ); siSprite != m_sprites.end( ); siSprite++ )
    {
       // Save the old sprite position in case we need to restore it
       rcOldSpritePos = (*siSprite)->GetPosition( );
@@ -387,7 +387,7 @@ void GameEngine::UpdateSprites( )
 
          // Kill the sprite
          delete (*siSprite);
-         m_vSprites.erase(siSprite);
+         m_sprites.erase(siSprite);
          siSprite--;
          continue;
       }
@@ -403,10 +403,10 @@ void GameEngine::UpdateSprites( )
 void GameEngine::CleanupSprites( )
 {
    // Delete and remove the sprites in the sprite vector
-   for ( auto siSprite = m_vSprites.begin( ); siSprite != m_vSprites.end( ); siSprite++ )
+   for ( auto siSprite = m_sprites.begin( ); siSprite != m_sprites.end( ); siSprite++ )
    {
       delete (*siSprite);
-      m_vSprites.erase(siSprite);
+      m_sprites.erase(siSprite);
       siSprite--;
    }
 }
@@ -414,7 +414,7 @@ void GameEngine::CleanupSprites( )
 Sprite* GameEngine::IsPointInSprite(int x, int y)
 {
    // See if the point is in a sprite in the sprite vector
-   for ( auto siSprite = m_vSprites.rbegin( ); siSprite != m_vSprites.rend( ); siSprite++ )
+   for ( auto siSprite = m_sprites.rbegin( ); siSprite != m_sprites.rend( ); siSprite++ )
    {
       if ( !(*siSprite)->IsHidden( ) && (*siSprite)->IsPointInside(x, y) )
       {
@@ -429,7 +429,7 @@ Sprite* GameEngine::IsPointInSprite(int x, int y)
 BOOL GameEngine::CheckSpriteCollision(Sprite* pTestSprite)
 {
    // See if the sprite has collided with any other sprites
-   for ( auto siSprite = m_vSprites.begin( ); siSprite != m_vSprites.end( ); siSprite++ )
+   for ( auto siSprite = m_sprites.begin( ); siSprite != m_sprites.end( ); siSprite++ )
    {
       // Make sure not to check for collision with itself
       if ( pTestSprite == (*siSprite) )
@@ -448,22 +448,22 @@ BOOL GameEngine::CheckSpriteCollision(Sprite* pTestSprite)
    return FALSE;
 }
 
-void GameEngine::PlayMIDISong(PCTSTR szMIDIFileName, BOOL bRestart)
+void GameEngine::PlayMIDISong(PCWSTR MIDIFileName, BOOL restart)
 {
    // See if the MIDI player needs to be opened
-   if ( m_uiMIDIPlayerID == 0 )
+   if ( m_MIDIPlayerID == 0 )
    {
       // Open the MIDI player by specifying the device and filename
-      MCI_OPEN_PARMS mciOpenParms;
+      MCI_OPEN_PARMSW mciOpenParms;
 
       mciOpenParms.lpstrDeviceType = L"sequencer";
-      mciOpenParms.lpstrElementName = szMIDIFileName;
+      mciOpenParms.lpstrElementName = MIDIFileName;
 
-      if ( mciSendCommand(NULL, MCI_OPEN, MCI_OPEN_TYPE | MCI_OPEN_ELEMENT,
-                          (DWORD_PTR) &mciOpenParms) == 0 )
+      if ( mciSendCommandW(NULL, MCI_OPEN, MCI_OPEN_TYPE | MCI_OPEN_ELEMENT,
+                           (DWORD_PTR) &mciOpenParms) == 0 )
       {
          // Get the ID for the MIDI player
-         m_uiMIDIPlayerID = mciOpenParms.wDeviceID;
+         m_MIDIPlayerID = mciOpenParms.wDeviceID;
       }
       else
       {
@@ -473,11 +473,11 @@ void GameEngine::PlayMIDISong(PCTSTR szMIDIFileName, BOOL bRestart)
    }
 
    // Restart the MIDI song, if necessary
-   if ( bRestart )
+   if ( restart )
    {
       MCI_SEEK_PARMS mciSeekParms;
 
-      if ( mciSendCommand(m_uiMIDIPlayerID, MCI_SEEK, MCI_SEEK_TO_START,
+      if ( mciSendCommandW(m_MIDIPlayerID, MCI_SEEK, MCI_SEEK_TO_START,
                           (DWORD_PTR) &mciSeekParms) != 0 )
       {
          // There was a problem, so close the MIDI player
@@ -488,7 +488,7 @@ void GameEngine::PlayMIDISong(PCTSTR szMIDIFileName, BOOL bRestart)
    // Play the MIDI song
    MCI_PLAY_PARMS mciPlayParms;
 
-   if ( mciSendCommand(m_uiMIDIPlayerID, MCI_PLAY, 0,
+   if ( mciSendCommandW(m_MIDIPlayerID, MCI_PLAY, 0,
                        (DWORD_PTR) &mciPlayParms) != 0 )
    {
       // There was a problem, so close the MIDI player
@@ -499,18 +499,18 @@ void GameEngine::PlayMIDISong(PCTSTR szMIDIFileName, BOOL bRestart)
 void GameEngine::PauseMIDISong( )
 {
    // Pause the currently playing song, if possible
-   if ( m_uiMIDIPlayerID != 0 )
+   if ( m_MIDIPlayerID != 0 )
    {
-      mciSendCommand(m_uiMIDIPlayerID, MCI_PAUSE, 0, NULL);
+      mciSendCommandW(m_MIDIPlayerID, MCI_PAUSE, 0, NULL);
    }
 }
 
 void GameEngine::CloseMIDIPlayer( )
 {
    // Close the MIDI player, if possible
-   if ( m_uiMIDIPlayerID != 0 )
+   if ( m_MIDIPlayerID != 0 )
    {
-      mciSendCommand(m_uiMIDIPlayerID, MCI_CLOSE, 0, NULL);
-      m_uiMIDIPlayerID = 0;
+      mciSendCommandW(m_MIDIPlayerID, MCI_CLOSE, 0, NULL);
+      m_MIDIPlayerID = 0;
    }
 }
