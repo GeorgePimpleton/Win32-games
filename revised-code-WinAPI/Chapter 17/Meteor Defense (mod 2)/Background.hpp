@@ -1,39 +1,53 @@
 #pragma once
 
 #include <windows.h>
+#include "random_toolkit.hpp"
 #include "Bitmap.hpp"
+
+//using STARSIZE           = WORD;
+//const STARSIZE SS_SMALL  = 0;
+//const STARSIZE SS_MEDIUM = 1;
+//const STARSIZE SS_LARGE  = 2;
+
+enum class STARSIZE : WORD { SS_SMALL  = 0,
+                             SS_MEDIUM = 1,
+                             SS_LARGE  = 3 };
+
+using enum STARSIZE;
 
 class Background
 {
 protected:
-   int      m_iWidth;
-   int      m_iHeight;
-   COLORREF m_crColor;
-   Bitmap*  m_pBitmap;
+   Bitmap*  m_bitmap;
+   COLORREF m_color;
+   int      m_width;
+   int      m_height;
 
 public:
-            Background(int iWidth, int iHeight, COLORREF crColor);
-            Background(Bitmap* pBitmap);
+            Background(int width, int height, COLORREF color);
+            Background(Bitmap* bitmap);
    virtual ~Background( );
 
    virtual void Update( );
    virtual void Draw(HDC hDC);
 
-   int GetWidth( )  { return m_iWidth; };
-   int GetHeight( ) { return m_iHeight; };
+   int GetWidth( ) const  { return m_width; };
+   int GetHeight( ) const { return m_height; };
 };
 
 class StarryBackground : Background
 {
 protected:
-   int      m_iNumStars;
-   int      m_iTwinkleDelay;
-   POINT    m_ptStars[ 100 ];
-   COLORREF m_crStarColors[ 100 ];
+   int      m_numStars;
+   int      m_twinkleDelay;
+   POINT    m_stars[ 100 ];
+   COLORREF m_starColors[ 100 ];
+   STARSIZE m_sizeStars[ 100 ];
 
 public:
-            StarryBackground(int iWidth, int iHeight, int iNumStars = 100,
-                             int iTwinkleDelay = 50);
+            StarryBackground(int width, int height,
+                             int numStars = 100,
+                             int twinkleDelay = 50);
    virtual ~StarryBackground( );
 
    virtual void Update( );
