@@ -4,7 +4,6 @@
 #include "resource.h"
 #include <mmsystem.h>
 #include <vector>
-using namespace std;
 #include "Sprite.hpp"
 
 typedef WORD    JOYSTATE;
@@ -16,16 +15,19 @@ const JOYSTATE  JOY_NONE  = 0x0000L,
                 JOY_FIRE1 = 0x0010L,
                 JOY_FIRE2 = 0x0020L;
 
-int WINAPI        wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ PWSTR szCmdLine, _In_ int iCmdShow);
-LRESULT CALLBACK  WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+int     WINAPI   wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int cmdShow);
+LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
+BOOL    CALLBACK DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam);
 
 BOOL GameInitialize(HINSTANCE hInstance);
 void GameStart(HWND hWindow);
+void GameNew( );
 void GameEnd( );
 void GameActivate(HWND hWindow);
 void GameDeactivate(HWND hWindow);
 void GamePaint(HDC hDC);
 void GameCycle( );
+void GameMenu(WPARAM wParam);
 void HandleKeys( );
 void MouseButtonDown(int x, int y, BOOL bLeft);
 void MouseButtonUp(int x, int y, BOOL bLeft);
@@ -50,7 +52,7 @@ protected:
    BOOL               m_bSleep;
    UINT               m_uiJoystickID;
    RECT               m_rcJoystickTrip;
-   vector<Sprite*>    m_vSprites;
+   std::vector<Sprite*>    m_vSprites;
    UINT               m_uiMIDIPlayerID;
 
    BOOL CheckSpriteCollision(Sprite* pTestSprite);

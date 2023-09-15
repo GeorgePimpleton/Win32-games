@@ -41,7 +41,7 @@ void GameStart(HWND hWindow)
 
    g_pGame->PlayMIDISong(L"Music.mid");
 
-   NewGame( );
+   GameNew( );
 }
 
 void GameEnd( )
@@ -136,9 +136,30 @@ void GameCycle( )
    }
 }
 
-void HandleKeys( )
+void GameMenu(WPARAM wParam)
 {
+   switch ( LOWORD(wParam) )
+   {
+   case IDM_GAME_NEW:
+      if ( g_bGameOver )
+      {
+         GameNew( );
+      }
+      return;
+
+   case IDM_GAME_EXIT:
+      GameEnd( );
+      PostQuitMessage(0);
+      return;
+
+   case IDM_HELP_ABOUT:
+      DialogBoxW(g_pGame->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT), g_pGame->GetWindow( ), (DLGPROC) DlgProc);
+      return;
+   }
 }
+
+void HandleKeys( )
+{ }
 
 void MouseButtonDown(int x, int y, BOOL bLeft)
 {
@@ -172,7 +193,7 @@ void MouseButtonDown(int x, int y, BOOL bLeft)
    }
    else if ( g_bGameOver && !bLeft )
       // Start a new game
-      NewGame( );
+      GameNew( );
 }
 
 void MouseButtonUp(int x, int y, BOOL bLeft)
@@ -242,7 +263,7 @@ void SpriteDying(Sprite* pSpriteDying)
    }
 }
 
-void NewGame( )
+void GameNew( )
 {
    // Clear the sprites
    g_pGame->CleanupSprites( );

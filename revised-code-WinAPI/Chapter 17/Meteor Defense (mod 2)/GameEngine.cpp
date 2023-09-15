@@ -60,27 +60,19 @@ LRESULT CALLBACK WndProc(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam)
    return GameEngine::GetEngine( )->HandleEvent(hWindow, msg, wParam, lParam);
 }
 
-BOOL GameEngine::CheckSpriteCollision(Sprite* pTestSprite)
+BOOL CALLBACK DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-   // See if the sprite has collided with any other sprites
-   vector<Sprite*>::iterator siSprite;
-
-   for ( siSprite = m_vSprites.begin( ); siSprite != m_vSprites.end( ); siSprite++ )
+   switch ( msg )
    {
-      // Make sure not to check for collision with itself
-      if ( pTestSprite == (*siSprite) )
+   case WM_COMMAND:
+      switch ( LOWORD(wParam) )
       {
-         continue;
-      }
-
-      // Test the collision
-      if ( pTestSprite->TestCollision(*siSprite) )
-      {        // Collision detected
-         return SpriteCollision((*siSprite), pTestSprite);
+      case IDOK:
+         EndDialog(dlg, 0);
+         return TRUE;
       }
    }
 
-   // No collision
    return FALSE;
 }
 
@@ -342,9 +334,7 @@ void GameEngine::AddSprite(Sprite* pSprite)
       if ( m_vSprites.size( ) > 0 )
       {
          // Find a spot in the sprite vector to insert the sprite by its z-order
-         vector<Sprite*>::iterator siSprite;
-
-         for ( siSprite = m_vSprites.begin( ); siSprite != m_vSprites.end( ); siSprite++ )
+         for ( auto siSprite = m_vSprites.begin( ); siSprite != m_vSprites.end( ); siSprite++ )
          {
             if ( pSprite->GetZOrder( ) < (*siSprite)->GetZOrder( ) )
             {
@@ -363,9 +353,7 @@ void GameEngine::AddSprite(Sprite* pSprite)
 void GameEngine::DrawSprites(HDC hDC)
 {
    // Draw the sprites in the sprite vector
-   vector<Sprite*>::iterator siSprite;
-
-   for ( siSprite = m_vSprites.begin( ); siSprite != m_vSprites.end( ); siSprite++ )
+   for ( auto siSprite = m_vSprites.begin( ); siSprite != m_vSprites.end( ); siSprite++ )
    {
       (*siSprite)->Draw(hDC);
    }
@@ -383,9 +371,7 @@ void GameEngine::UpdateSprites( )
    RECT         rcOldSpritePos;
    SPRITEACTION saSpriteAction;
 
-   vector<Sprite*>::iterator siSprite;
-
-   for ( siSprite = m_vSprites.begin( ); siSprite != m_vSprites.end( ); siSprite++ )
+   for ( auto siSprite = m_vSprites.begin( ); siSprite != m_vSprites.end( ); siSprite++ )
    {
       // Save the old sprite position in case we need to restore it
       rcOldSpritePos = (*siSprite)->GetPosition( );
@@ -417,9 +403,7 @@ void GameEngine::UpdateSprites( )
 void GameEngine::CleanupSprites( )
 {
    // Delete and remove the sprites in the sprite vector
-   vector<Sprite*>::iterator siSprite;
-
-   for ( siSprite = m_vSprites.begin( ); siSprite != m_vSprites.end( ); siSprite++ )
+   for ( auto siSprite = m_vSprites.begin( ); siSprite != m_vSprites.end( ); siSprite++ )
    {
       delete (*siSprite);
       m_vSprites.erase(siSprite);
@@ -430,9 +414,7 @@ void GameEngine::CleanupSprites( )
 Sprite* GameEngine::IsPointInSprite(int x, int y)
 {
    // See if the point is in a sprite in the sprite vector
-   vector<Sprite*>::reverse_iterator siSprite;
-
-   for ( siSprite = m_vSprites.rbegin( ); siSprite != m_vSprites.rend( ); siSprite++ )
+   for ( auto siSprite = m_vSprites.rbegin( ); siSprite != m_vSprites.rend( ); siSprite++ )
    {
       if ( !(*siSprite)->IsHidden( ) && (*siSprite)->IsPointInside(x, y) )
       {
@@ -442,6 +424,28 @@ Sprite* GameEngine::IsPointInSprite(int x, int y)
 
    // The point is not in a sprite
    return NULL;
+}
+
+BOOL GameEngine::CheckSpriteCollision(Sprite* pTestSprite)
+{
+   // See if the sprite has collided with any other sprites
+   for ( auto siSprite = m_vSprites.begin( ); siSprite != m_vSprites.end( ); siSprite++ )
+   {
+      // Make sure not to check for collision with itself
+      if ( pTestSprite == (*siSprite) )
+      {
+         continue;
+      }
+
+      // Test the collision
+      if ( pTestSprite->TestCollision(*siSprite) )
+      {        // Collision detected
+         return SpriteCollision((*siSprite), pTestSprite);
+      }
+   }
+
+   // No collision
+   return FALSE;
 }
 
 void GameEngine::PlayMIDISong(PCTSTR szMIDIFileName, BOOL bRestart)

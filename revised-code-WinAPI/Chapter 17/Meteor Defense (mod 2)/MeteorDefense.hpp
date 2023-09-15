@@ -23,5 +23,4 @@ int               g_iScore;
 int               g_iDifficulty;
 BOOL              g_bGameOver;
 
-void NewGame();
 void AddMeteor();
