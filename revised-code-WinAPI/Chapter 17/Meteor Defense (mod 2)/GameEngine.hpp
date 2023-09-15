@@ -39,21 +39,21 @@ void SpriteDying(Sprite* spriteDying);
 class GameEngine
 {
 protected:
-   static GameEngine* m_gameEngine;
-   HINSTANCE          m_inst;
-   HWND               m_wnd;
-   PCWSTR            m_wndClass;
-   PCWSTR             m_title;
-   WORD               m_icon;
-   WORD               m_smallIcon;
-   int                m_width;
-   int                m_height;
-   int                m_frameDelay;
-   BOOL               m_asleep;
-   UINT               m_joyID;
-   RECT               m_joyTrip;
-   std::vector<Sprite*>    m_sprites;
-   UINT               m_MIDIPlayerID;
+   static GameEngine*   m_gameEngine;
+   HINSTANCE            m_inst;
+   HWND                 m_wnd;
+   PCWSTR               m_wndClass;
+   PCWSTR               m_title;
+   WORD                 m_icon;
+   WORD                 m_smallIcon;
+   int                  m_width;
+   int                  m_height;
+   int                  m_frameDelay;
+   BOOL                 m_asleep;
+   UINT                 m_joyID;
+   RECT                 m_joyTrip;
+   std::vector<Sprite*> m_sprites;
+   UINT                 m_MIDIPlayerID;
 
    BOOL CheckSpriteCollision(Sprite* testSprite);
 
@@ -62,8 +62,8 @@ public:
                        WORD icon, WORD smallIcon, int width = 640, int height = 480);
    virtual ~GameEngine( );
 
-   static GameEngine* GetEngine( )                       { return m_gameEngine; };
-   BOOL               Initialize(int iCmdShow);
+   static GameEngine* GetEngine( )                     { return m_gameEngine; };
+   BOOL               Initialize(int cmdShow);
    LRESULT            HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
    BOOL               InitJoystick( );
    void               CaptureJoystick( );
@@ -78,16 +78,16 @@ public:
    void               PauseMIDISong( );
    void               CloseMIDIPlayer( );
 
-   HINSTANCE GetInstance( )               { return m_inst; };
-   HWND      GetWindow( )                 { return m_wnd; };
-   void      SetWindow(HWND wnd)      { m_wnd = wnd; };
-   PCWSTR    GetTitle( )                  { return m_title; };
-   WORD      GetIcon( ) const                   { return m_icon; };
-   WORD      GetSmallIcon( ) const             { return m_smallIcon; };
-   int       GetWidth( ) const                 { return m_width; };
-   int       GetHeight( ) const                { return m_height; };
-   int       GetFrameDelay( ) const             { return m_frameDelay; };
+   HINSTANCE GetInstance( )              { return m_inst; };
+   HWND      GetWindow( )                { return m_wnd; };
+   void      SetWindow(HWND wnd)         { m_wnd = wnd; };
+   PCWSTR    GetTitle( )                 { return m_title; };
+   WORD      GetIcon( ) const            { return m_icon; };
+   WORD      GetSmallIcon( ) const       { return m_smallIcon; };
+   int       GetWidth( ) const           { return m_width; };
+   int       GetHeight( ) const          { return m_height; };
+   int       GetFrameDelay( ) const      { return m_frameDelay; };
    void      SetFrameRate(int frameRate) { m_frameDelay = 1000 / frameRate; };
-   BOOL      GetSleep( ) const                 { return m_asleep; };
-   void      SetSleep(BOOL asleep)        { m_asleep = asleep; };
+   BOOL      GetSleep( ) const           { return m_asleep; };
+   void      SetSleep(BOOL asleep)       { m_asleep = asleep; };
 };
