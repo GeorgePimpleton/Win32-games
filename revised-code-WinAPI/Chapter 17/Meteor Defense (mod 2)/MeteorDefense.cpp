@@ -3,7 +3,7 @@
 BOOL GameInitialize(HINSTANCE hInstance)
 {
    g_pGame = new GameEngine(hInstance, L"Meteor Defense", L"Example Game: Meteor Defense",
-                            IDI_METEORDEFENSE, IDI_METEORDEFENSE_SM, 600, 450);
+                            IDI_ICON, IDI_ICON_SM, 600, 450);
 
    if ( NULL == g_pGame )
    {
@@ -21,7 +21,7 @@ void GameStart(HWND hWindow)
 {
    srand((UINT)GetTickCount64( ));
 
-   SetClassLongPtrW(hWindow, GCLP_HCURSOR, (LONG64) LoadImageW(GetModuleHandleW(NULL), MAKEINTRESOURCEW(IDC_METEORDEFENSE), IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR));
+   SetClassLongPtrW(hWindow, GCLP_HCURSOR, (LONG64) LoadImageW(GetModuleHandleW(NULL), MAKEINTRESOURCEW(IDC_CURSOR), IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR));
 
    g_hOffscreenDC     = CreateCompatibleDC(GetDC(hWindow));
    g_hOffscreenBitmap = CreateCompatibleBitmap(GetDC(hWindow), g_pGame-> GetWidth( ), g_pGame-> GetHeight( ));
