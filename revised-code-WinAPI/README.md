@@ -1,15 +1,15 @@
-Programming Windows© Games
+# Programming Windows© Games
 
 [![Language](https://img.shields.io/badge/Language%20-C++-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 
-### Background
+## Background
 
 Win9X/Me is officially dead!  Windows API ANSI encoding is dead!  Windows XP and later now use Unicode!
 
 Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
-### The Game Code in 24 (or so) Chapters
+## The Game Code in 24 (or so) Chapters
 
 1. A Programming Primer (Not just WinAPI)
 2. Blizzard: Creating An Engine For Games
@@ -27,10 +27,9 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 14. Example Game: Battle Office
 15. Battle Office 2: Animating the Appearance of Sprites
 16. Roids: Creating Backgrounds for Your Sprites
+17. Example Game: Meteor Defense
 
 \*\* ***under construction*** \*\*  ![under construction](construction.gif)
-
-17. Example Game: Meteor Defense
 
 \*\* ***in the queue*** \*\*
 
@@ -42,10 +41,12 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 23. Wanderer: Changing Perspective with Scrolling Backgrounds
 24. Example Game: Stunt Jumper
 
+----
 ### Caveat on the original 2003 & 2004 source code
 
 Since the original source code for the Win Games was written in 2003/2004 the game examples aren't likely to compile with a modern compiler such as Visual Studio 2022. The WinAPI has changed a lot to work for x64 processors as well as other changes for the 21st Century.  The first pass in each chapter will be the bare minimum needed to work now for both x86 (32-bit) and x64.
 
+----
 ### Notes
 
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.
