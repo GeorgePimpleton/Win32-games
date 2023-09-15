@@ -124,7 +124,7 @@ BOOL GameEngine::Initialize(int iCmdShow)
    wndclass.hIconSm       = LoadIcon(m_hInstance, MAKEINTRESOURCE(GetSmallIcon( )));
    wndclass.hCursor       = LoadCursor(NULL, IDC_ARROW);
    wndclass.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1);
-   wndclass.lpszMenuName  = NULL;
+   wndclass.lpszMenuName  = MAKEINTRESOURCEW(IDR_MENU);
    wndclass.lpszClassName = m_szWindowClass;
 
    // Register the window class
@@ -142,6 +142,9 @@ BOOL GameEngine::Initialize(int iCmdShow)
    {
       iWindowHeight += GetSystemMetrics(SM_CYMENU);
    }
+
+   iWindowWidth += 10;
+   iWindowHeight += 10;
 
  int iXWindowPos = (GetSystemMetrics(SM_CXSCREEN) - iWindowWidth) / 2,
      iYWindowPos = (GetSystemMetrics(SM_CYSCREEN) - iWindowHeight) / 2;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <windows.h>
+#include "resource.h"
 #include <mmsystem.h>
 #include <vector>
 using namespace std;

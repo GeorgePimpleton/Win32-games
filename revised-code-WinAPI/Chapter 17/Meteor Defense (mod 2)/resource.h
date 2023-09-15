@@ -15,12 +15,12 @@
 #define IDW_EXPLODE        3002
 #define IDW_BIGEXPLODE     3003
 
-#define  IDR_MENU          4001
-#define  IDM_GAME_NEW      4002
-#define  IDM_GAME_EXIT     4003
-#define  IDM_HELP_ABOUT    4004
-
 #define  IDD_ABOUT         4001
 #define  IDC_STATIC        -1
 
-#define  IDR_ACCELERATORS  5001
+#define  IDR_MENU          5001
+#define  IDM_GAME_NEW      5002
+#define  IDM_GAME_EXIT     5003
+#define  IDM_HELP_ABOUT    5004
+
+#define  IDR_ACCELERATORS  6001
