@@ -2,8 +2,8 @@
 
 BOOL GameInitialize(HINSTANCE hInstance)
 {
-   g_pGame = new GameEngine(hInstance, TEXT("Roids 2"), TEXT("Roids 2: Teaching Games to Think"),
-                            IDI_ROIDS, IDI_ROIDS_SM, 500, 400);
+   g_pGame = new GameEngine(hInstance, L"Roids 2", L"Roids 2: Teaching Games to Think",
+                            IDI_ICON, IDI_ICON_SM, 500, 400);
 
    if ( g_pGame == NULL )
    {

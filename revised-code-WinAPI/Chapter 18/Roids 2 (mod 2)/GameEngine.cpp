@@ -119,7 +119,7 @@ BOOL GameEngine::Initialize(int iCmdShow)
    wndclass.hIconSm       = LoadIcon(m_hInstance, MAKEINTRESOURCE(GetSmallIcon( )));
    wndclass.hCursor       = LoadCursor(NULL, IDC_ARROW);
    wndclass.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1);
-   wndclass.lpszMenuName  = NULL;
+   wndclass.lpszMenuName  = MAKEINTRESOURCEW(IDR_MENU);
    wndclass.lpszClassName = m_szWindowClass;
 
    if ( !RegisterClassEx(&wndclass) )
