@@ -55,9 +55,9 @@ void GameNew( )
 {
    g_game->CleanupSprites( );
 
-   RECT rcBounds = { 0, 0, 600, 450 };
+   RECT bounds = { 0, 0, 600, 450 };
 
-   g_carSprite = new Sprite(g_carBitmap, rcBounds, BA_WRAP);
+   g_carSprite = new Sprite(g_carBitmap, bounds, BA_WRAP);
    g_carSprite->SetPosition(300, 405);
    g_game->AddSprite(g_carSprite);
 
@@ -98,12 +98,12 @@ void GameEnd( )
    delete g_game;
 }
 
-void GameActivate(HWND hWindow)
+void GameActivate(HWND wnd)
 {
    g_game->PlayMIDISong(L"", FALSE);
 }
 
-void GameDeactivate(HWND hWindow)
+void GameDeactivate(HWND wnd)
 {
    g_game->PauseMIDISong( );
 }
@@ -116,14 +116,14 @@ void GamePaint(HDC dc)
 
    g_game->DrawSprites(dc);
 
-   WCHAR szText[ 64 ];
+   WCHAR text[ 64 ];
    RECT  rect = { 460, 0, 510, 30 };
 
-   wsprintfW(szText, L"%d", g_score);
+   wsprintfW(text, L"%d", g_score);
    SetBkMode(dc, TRANSPARENT);
    SetTextColor(dc, RGB(255, 255, 255));
 
-   DrawTextW(dc, szText, -1, &rect, DT_SINGLELINE | DT_RIGHT | DT_VCENTER);
+   DrawTextW(dc, text, -1, &rect, DT_SINGLELINE | DT_RIGHT | DT_VCENTER);
 
    for ( int i = 0; i < g_numLives; i++ )
    {
@@ -240,35 +240,40 @@ void MouseMove(int x, int y)
 void HandleJoystick(JOYSTATE jsJoystickState)
 { }
 
-BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
+BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
 {
    // see if a player missile and an alien have collided
-   Bitmap* pHitter = pSpriteHitter->GetBitmap( );
-   Bitmap* pHittee = pSpriteHittee->GetBitmap( );
-   if ( (pHitter == g_missileBitmap && (pHittee == g_BlobboBitmap ||
-                                         pHittee == g_JellyBitmap || pHittee == g_TimmyBitmap)) ||
-       (pHittee == g_missileBitmap && (pHitter == g_BlobboBitmap ||
-                                        pHitter == g_JellyBitmap || pHitter == g_TimmyBitmap)) )
+   Bitmap* hitter = spriteHitter->GetBitmap( );
+   Bitmap* hittee = spriteHittee->GetBitmap( );
+   if ( (hitter == g_missileBitmap && (hittee == g_BlobboBitmap ||
+                                       hittee == g_JellyBitmap || hittee == g_TimmyBitmap)) ||
+       (hittee == g_missileBitmap && (hitter == g_BlobboBitmap ||
+                                      hitter == g_JellyBitmap || hitter == g_TimmyBitmap)) )
    {
       // play the small explosion sound
-      PlaySoundW((PCWSTR) IDW_LGEXPLODE, g_inst, SND_ASYNC | SND_RESOURCE);
+      PlaySoundW((PCWSTR) IDW_SMEXPLODE, g_inst, SND_ASYNC | SND_RESOURCE);
 
       // kill both sprites
-      pSpriteHitter->Kill( );
-      pSpriteHittee->Kill( );
+      spriteHitter->Kill( );
+      spriteHittee->Kill( );
 
       // create a large explosion sprite at the alien's position
-      RECT rcBounds = { 0, 0, 600, 450 };
-      RECT rcPos;
+      RECT bounds = { 0, 0, 600, 450 };
+      RECT pos;
 
-      if ( pHitter == g_missileBitmap )
-         rcPos = pSpriteHittee->GetPosition( );
+      if ( hitter == g_missileBitmap )
+      {
+         pos = spriteHittee->GetPosition( );
+      }
       else
-         rcPos = pSpriteHitter->GetPosition( );
-      Sprite* pSprite = new Sprite(g_largeExplosionBitmap, rcBounds);
-      pSprite->SetNumFrames(8, TRUE);
-      pSprite->SetPosition(rcPos.left, rcPos.top);
-      g_game->AddSprite(pSprite);
+      {
+         pos = spriteHitter->GetPosition( );
+      }
+
+      Sprite* sprite = new Sprite(g_largeExplosionBitmap, bounds);
+      sprite->SetNumFrames(8, TRUE);
+      sprite->SetPosition(pos.left, pos.top);
+      g_game->AddSprite(sprite);
 
       // update the score
       g_score      += 25;
@@ -276,31 +281,41 @@ BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
    }
 
    // see if an alien missile has collided with the car
-   if ( (pHitter == g_carBitmap && (pHittee == g_BMissileBitmap ||
-                                     pHittee == g_JMissileBitmap || pHittee == g_TMissileBitmap)) ||
-       (pHittee == g_carBitmap && (pHitter == g_BMissileBitmap ||
-                                    pHitter == g_JMissileBitmap || pHitter == g_TMissileBitmap)) )
+   if ( (hitter == g_carBitmap && (hittee == g_BMissileBitmap ||
+                                   hittee == g_JMissileBitmap || hittee == g_TMissileBitmap)) ||
+       (hittee == g_carBitmap && (hitter == g_BMissileBitmap ||
+                                  hitter == g_JMissileBitmap || hitter == g_TMissileBitmap)) )
    {
       // play the large explosion sound
       PlaySoundW((PCWSTR) IDW_LGEXPLODE, g_inst, SND_ASYNC | SND_RESOURCE);
 
       // kill the missile sprite
-      if ( pHitter == g_carBitmap )
-         pSpriteHittee->Kill( );
+      if ( hitter == g_carBitmap )
+      {
+         spriteHittee->Kill( );
+      }
       else
-         pSpriteHitter->Kill( );
+      {
+         spriteHitter->Kill( );
+      }
 
       // create a large explosion sprite at the car's position
-      RECT rcBounds = { 0, 0, 600, 480 };
-      RECT rcPos;
-      if ( pHitter == g_carBitmap )
-         rcPos = pSpriteHitter->GetPosition( );
+      RECT bounds = { 0, 0, 600, 480 };
+      RECT pos;
+
+      if ( hitter == g_carBitmap )
+      {
+         pos = spriteHitter->GetPosition( );
+      }
       else
-         rcPos = pSpriteHittee->GetPosition( );
-      Sprite* pSprite = new Sprite(g_largeExplosionBitmap, rcBounds);
-      pSprite->SetNumFrames(8, TRUE);
-      pSprite->SetPosition(rcPos.left, rcPos.top);
-      g_game->AddSprite(pSprite);
+      {
+         pos = spriteHittee->GetPosition( );
+      }
+
+      Sprite* sprite = new Sprite(g_largeExplosionBitmap, bounds);
+      sprite->SetNumFrames(8, TRUE);
+      sprite->SetPosition(pos.left, pos.top);
+      g_game->AddSprite(sprite);
 
       // move the car back to the start
       g_carSprite->SetPosition(300, 405);
@@ -330,47 +345,49 @@ void SpriteDying(Sprite* spriteDying)
       PlaySound((PCWSTR) IDW_SMEXPLODE, g_inst, SND_ASYNC | SND_RESOURCE | SND_NOSTOP);
 
       // create a small explosion sprite at the missile's position
-      RECT rcBounds = { 0, 0, 600, 450 };
-      RECT rcPos = spriteDying->GetPosition( );
-      Sprite* pSprite = new Sprite(g_smallExplosionBitmap, rcBounds);
-      pSprite->SetNumFrames(8, TRUE);
-      pSprite->SetPosition(rcPos.left, rcPos.top);
-      g_game->AddSprite(pSprite);
+      RECT bounds = { 0, 0, 600, 450 };
+      RECT pos    = spriteDying-> GetPosition( );
+
+      Sprite* sprite = new Sprite(g_smallExplosionBitmap, bounds);
+      sprite->SetNumFrames(8, TRUE);
+      sprite->SetPosition(pos.left, pos.top);
+      g_game->AddSprite(sprite);
    }
 }
 
 void AddAlien( )
 {
    // create a new random alien sprite
-   RECT          rcBounds = { 0, 0, 600, 410 };
-   AlienSprite* pSprite = { };
+   RECT         bounds = { 0, 0, 600, 410 };
+   AlienSprite* sprite = { };
+
    switch ( rtk::rand(0, 3) )
    {
    case 0:
       // Blobbo
-      pSprite = new AlienSprite(g_BlobboBitmap, rcBounds, BA_BOUNCE);
-      pSprite->SetNumFrames(8);
-      pSprite->SetPosition(((rtk::rand(0, 2)) == 0) ? 0 : 600, rtk::rand(0, 370));
-      pSprite->SetVelocity(rtk::rand(-2, 5), rtk::rand(-2, 5));
+      sprite = new AlienSprite(g_BlobboBitmap, bounds, BA_BOUNCE);
+      sprite->SetNumFrames(8);
+      sprite->SetPosition(((rtk::rand(0, 2)) == 0) ? 0 : 600, rtk::rand(0, 370));
+      sprite->SetVelocity(rtk::rand(-2, 5), rtk::rand(-2, 5));
       break;
 
    case 1:
       // Jelly
-      pSprite = new AlienSprite(g_JellyBitmap, rcBounds, BA_BOUNCE);
-      pSprite->SetNumFrames(8);
-      pSprite->SetPosition(rtk::rand(0, 600), rtk::rand(0, 370));
-      pSprite->SetVelocity(rtk::rand(-2, 3), rtk::rand(3, 8));
+      sprite = new AlienSprite(g_JellyBitmap, bounds, BA_BOUNCE);
+      sprite->SetNumFrames(8);
+      sprite->SetPosition(rtk::rand(0, 600), rtk::rand(0, 370));
+      sprite->SetVelocity(rtk::rand(-2, 3), rtk::rand(3, 8));
       break;
 
    case 2:
       // Timmy
-      pSprite = new AlienSprite(g_TimmyBitmap, rcBounds, BA_WRAP);
-      pSprite->SetNumFrames(8);
-      pSprite->SetPosition(rtk::rand(0, 600), rtk::rand(0, 370));
-      pSprite->SetVelocity(rtk::rand(3, 10), 0);
+      sprite = new AlienSprite(g_TimmyBitmap, bounds, BA_WRAP);
+      sprite->SetNumFrames(8);
+      sprite->SetPosition(rtk::rand(0, 600), rtk::rand(0, 370));
+      sprite->SetVelocity(rtk::rand(3, 10), 0);
       break;
    }
 
    // add the alien sprite
-   g_game->AddSprite(pSprite);
+   g_game->AddSprite(sprite);
 }
