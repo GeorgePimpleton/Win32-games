@@ -2,19 +2,21 @@
 
 #include <windows.h>
 #include "resource.h"
+#include "random_toolkit.hpp"
+#include <memory>
+#include <vector>
 #include "GameEngine.hpp"
 #include "Bitmap.hpp"
 #include "Sprite.hpp"
 #include "Background.hpp"
 
-HINSTANCE         g_hInstance;
-GameEngine*       g_pGame;
-HDC               g_hOffscreenDC;
-HBITMAP           g_hOffscreenBitmap;
-Bitmap*           g_pAsteroidBitmap;
-Bitmap*           g_pSaucerBitmap;
-StarryBackground* g_pBackground;
-Sprite*           g_pAsteroids[ 3 ];
-Sprite*           g_pSaucer;
+std::unique_ptr<GameEngine>          g_game;
+HDC                                  g_offscreenDC;
+HBITMAP                              g_offscreenBitmap;
+std::unique_ptr<Bitmap>              g_asteroidBitmap;
+std::unique_ptr<Bitmap>              g_saucerBitmap;
+std::unique_ptr<StarryBackground>    g_background;
+std::vector<std::unique_ptr<Sprite>> g_asteroids(3);
+std::unique_ptr<Sprite>              g_saucer;
 
 void UpdateSaucer( );
