@@ -17,6 +17,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
          return FALSE;
       }
 
+      HACCEL accel = LoadAcceleratorsW(hInstance, MAKEINTRESOURCEW(IDR_ACCELERATORS));
+
+      if ( NULL == accel )
+      {
+         MessageBoxW(NULL, L"Unable to Load the Accelerators!", GameEngine::GetEngine( )->GetTitle( ), MB_OK | MB_ICONERROR);
+         return E_FAIL;
+      }
+
       while ( TRUE )
       {
          if ( PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) )
@@ -26,8 +34,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
                break;
             }
 
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+            if ( 0 == TranslateAcceleratorW(GameEngine::GetEngine( )->GetWindow( ), accel, &msg) )
+            {
+               TranslateMessage(&msg);
+               DispatchMessageW(&msg);
+            }
          }
          else
          {
@@ -57,6 +68,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
 LRESULT CALLBACK WndProc(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam)
 {
    return GameEngine::GetEngine( )->HandleEvent(hWindow, msg, wParam, lParam);
+}
+
+BOOL CALLBACK DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+   switch ( msg )
+   {
+   case WM_COMMAND:
+      switch ( LOWORD(wParam) )
+      {
+      case IDOK:
+         EndDialog(dlg, 0);
+         return TRUE;
+      }
+   }
+
+   return FALSE;
 }
 
 BOOL GameEngine::CheckSpriteCollision(Sprite* pTestSprite)
@@ -161,19 +188,25 @@ LRESULT GameEngine::HandleEvent(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lP
    switch ( msg )
    {
    case WM_CREATE:
-      // Set the game window and start the game
       SetWindow(hWindow);
       GameStart(hWindow);
       return 0;
 
-   case WM_SETFOCUS:
-      GameActivate(hWindow);
-      SetSleep(FALSE);
+   case WM_ACTIVATE:
+      if ( wParam != WA_INACTIVE )
+      {
+         GameActivate(hWindow);
+         SetSleep(FALSE);
+      }
+      else
+      {
+         GameDeactivate(hWindow);
+         SetSleep(TRUE);
+      }
       return 0;
 
-   case WM_KILLFOCUS:
-      GameDeactivate(hWindow);
-      SetSleep(TRUE);
+   case WM_COMMAND:
+      GameMenu(wParam);
       return 0;
 
    case WM_PAINT:

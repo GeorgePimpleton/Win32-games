@@ -63,6 +63,9 @@ void GameStart(HWND hWindow)
    g_pGame->AddSprite(g_pSaucer);
 }
 
+void GameNew( )
+{ }
+
 void GameEnd( )
 {
    DeleteObject(g_hOffscreenBitmap);
@@ -108,6 +111,25 @@ void GameCycle( )
           g_hOffscreenDC, 0, 0, SRCCOPY);
 
    ReleaseDC(hWindow, hDC);
+}
+
+void GameMenu(WPARAM wParam)
+{
+   switch ( LOWORD(wParam) )
+   {
+   case IDM_GAME_NEW:
+      GameNew( );
+      return;
+
+   case IDM_GAME_EXIT:
+      GameEnd( );
+      PostQuitMessage(0);
+      return;
+
+   case IDM_HELP_ABOUT:
+      DialogBoxW(g_pGame->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT), g_pGame->GetWindow( ), (DLGPROC) DlgProc);
+      return;
+   }
 }
 
 void HandleKeys( )
