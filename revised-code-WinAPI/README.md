@@ -34,7 +34,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 19. Example Game: Space Out
 
-\*\* ***in the queue*** \*\*
+![queue](queue.gif)  \*\* ***in the queue*** \*\*  ![queue](queue.gif)
 
 20. Space Out 2: Adding Pizzazz to Your Game with a Splash Screen
 21. Space Out 3: Showing Off Your Game with Demo Mode
