@@ -24,7 +24,7 @@ void GameStart(HWND wnd)
                                         IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR));
 
    g_offscreenDC     = CreateCompatibleDC(GetDC(wnd));
-   g_offscreenBitmap = CreateCompatibleBitmap(GetDC(wnd), g_game-> GetWidth( ), g_game-> GetHeight( ));
+   g_offscreenBitmap = CreateCompatibleBitmap(GetDC(wnd), g_game->GetWidth( ), g_game->GetHeight( ));
 
    SelectObject(g_offscreenDC, g_offscreenBitmap);
 
