@@ -1,12 +1,12 @@
 #include "AlienSprite.hpp"
 
-extern Bitmap* g_pBlobboBitmap;
-extern Bitmap* g_pBMissileBitmap;
-extern Bitmap* g_pJellyBitmap;
-extern Bitmap* g_pJMissileBitmap;
-extern Bitmap* g_pTimmyBitmap;
-extern Bitmap* g_pTMissileBitmap;
-extern int     g_iDifficulty;
+extern Bitmap* g_BlobboBitmap;
+extern Bitmap* g_BMissileBitmap;
+extern Bitmap* g_JellyBitmap;
+extern Bitmap* g_JMissileBitmap;
+extern Bitmap* g_TimmyBitmap;
+extern Bitmap* g_TMissileBitmap;
+extern int     g_difficulty;
 
 AlienSprite::AlienSprite(Bitmap* pBitmap, RECT& rcBounds,
                          BOUNDSACTION baBoundsAction)
@@ -23,7 +23,7 @@ SPRITEACTION AlienSprite::Update( )
    saSpriteAction = Sprite::Update( );
 
    // See if the alien should fire a missile
-   if ( (rand( ) % (g_iDifficulty / 2)) == 0 )
+   if ( (rand( ) % (g_difficulty / 2)) == 0 )
       saSpriteAction |= SA_ADDSPRITE;
 
    return saSpriteAction;
@@ -35,22 +35,22 @@ Sprite* AlienSprite::AddSprite( )
    RECT    rcBounds = { 0, 0, 640, 410 };
    RECT    rcPos = GetPosition( );
    Sprite* pSprite = NULL;
-   if ( GetBitmap( ) == g_pBlobboBitmap )
+   if ( GetBitmap( ) == g_BlobboBitmap )
    {
       // Blobbo missile
-      pSprite = new Sprite(g_pBMissileBitmap, rcBounds, BA_DIE);
+      pSprite = new Sprite(g_BMissileBitmap, rcBounds, BA_DIE);
       pSprite->SetVelocity(0, 7);
    }
-   else if ( GetBitmap( ) == g_pJellyBitmap )
+   else if ( GetBitmap( ) == g_JellyBitmap )
    {
       // Jelly missile
-      pSprite = new Sprite(g_pJMissileBitmap, rcBounds, BA_DIE);
+      pSprite = new Sprite(g_JMissileBitmap, rcBounds, BA_DIE);
       pSprite->SetVelocity(0, 5);
    }
    else
    {
       // Timmy missile
-      pSprite = new Sprite(g_pTMissileBitmap, rcBounds, BA_DIE);
+      pSprite = new Sprite(g_TMissileBitmap, rcBounds, BA_DIE);
       pSprite->SetVelocity(0, 3);
    }
 
