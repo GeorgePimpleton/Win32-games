@@ -13,13 +13,13 @@ protected:
 
 public:
             Bitmap( );
-            Bitmap(HDC dc, PCWSTR fileName);
-            Bitmap(HDC dc, UINT resID, HINSTANCE inst);
+            Bitmap(PCWSTR fileName);
+            Bitmap(UINT resID, HINSTANCE inst);
             Bitmap(HDC dc, int width, int height, COLORREF color = RGB(0, 0, 0));
    virtual ~Bitmap( );
 
-   BOOL Create(HDC dc, PCWSTR fileName);
-   BOOL Create(HDC dc, UINT resID, HINSTANCE inst);
+   BOOL Create(PCWSTR fileName);
+   BOOL Create(UINT resID, HINSTANCE inst);
    BOOL Create(HDC dc, int width, int height, COLORREF color);
 
    void Draw(HDC dc, int x, int y, BOOL trans = FALSE, COLORREF transColor = RGB(255, 0, 255));

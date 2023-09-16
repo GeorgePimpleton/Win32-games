@@ -29,8 +29,8 @@ void GameStart(HWND hWindow)
 
    HDC hDC = GetDC(hWindow);
 
-   g_pAsteroidBitmap = new Bitmap(hDC, IDB_ASTEROID, g_hInstance);
-   g_pSaucerBitmap = new Bitmap(hDC, IDB_SAUCER, g_hInstance);
+   g_pAsteroidBitmap = new Bitmap(IDB_ASTEROID, g_hInstance);
+   g_pSaucerBitmap = new Bitmap(IDB_SAUCER, g_hInstance);
 
    g_pBackground = new StarryBackground(500, 400);
 
