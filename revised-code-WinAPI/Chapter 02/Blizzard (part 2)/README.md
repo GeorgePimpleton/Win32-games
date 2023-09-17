@@ -15,11 +15,11 @@ Blizzard, creates and uses the Game Engine class.  From the 2004 CD.
 
 ### Blizzard Versions
 
-2. Added my Random Toolkit to generate random numbers the C++ way.
+2. Added my Random Toolkit header to help generate random numbers the C++ way.
 
 I removed more comments.  By now you should know what the code does.
 
-I some variable declarations closer to first usage, as C++ allows.
+I moved some variable declarations closer to first usage, as C++ allows.
 
 ### Notes
 

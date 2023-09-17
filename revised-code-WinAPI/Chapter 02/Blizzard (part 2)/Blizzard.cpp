@@ -27,12 +27,10 @@ void GameEnd( )
 
 void GameActivate(HWND hWindow)
 {
-   HDC  hDC;
+   HDC  hDC = GetDC(hWindow);
    RECT rect;
 
    GetClientRect(hWindow, &rect);
-
-   hDC = GetDC(hWindow);
 
    DrawText(hDC, TEXT("Here comes the blizzard!"), -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
@@ -41,12 +39,10 @@ void GameActivate(HWND hWindow)
 
 void GameDeactivate(HWND hWindow)
 {
-   HDC  hDC;
+   HDC  hDC = GetDC(hWindow);
    RECT rect;
 
    GetClientRect(hWindow, &rect);
-
-   hDC = GetDC(hWindow);
 
    DrawText(hDC, TEXT("The blizzard has passed."), -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
@@ -58,11 +54,11 @@ void GamePaint(HDC hDC)
 
 void GameCycle( )
 {
-   HDC  hDC;
    HWND hWindow = g_pGame-> GetWindow( );
+   HDC  hDC     = GetDC(hWindow);
 
-   hDC = GetDC(hWindow);
    DrawIcon(hDC, rtk::rand(0, g_pGame->GetWidth( )), rtk::rand(0, g_pGame->GetHeight( )),
             (HICON) GetClassLongPtr(hWindow, GCLP_HICON));
+
    ReleaseDC(hWindow, hDC);
 }
