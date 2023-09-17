@@ -2,9 +2,11 @@
 
 #include <windows.h>
 
-int     WINAPI   WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow);
-LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+int WINAPI        WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+                          PSTR szCmdLine, int iCmdShow);
+LRESULT CALLBACK  WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
+// Game Engine Function Declarations
 BOOL GameInitialize(HINSTANCE hInstance);
 void GameStart(HWND hWindow);
 void GameEnd( );
@@ -13,6 +15,7 @@ void GameDeactivate(HWND hWindow);
 void GamePaint(HDC hDC);
 void GameCycle( );
 
+// GameEngine Class
 class GameEngine
 {
 protected:
@@ -29,7 +32,7 @@ protected:
    BOOL               m_bSleep;
 
 public:
-            GameEngine(HINSTANCE hInstance, LPCTSTR szWindowClass, LPCTSTR szTitle,
+            GameEngine(HINSTANCE hInstance, PCTSTR szWindowClass, PCTSTR szTitle,
                        WORD wIcon, WORD wSmallIcon, int iWidth = 640, int iHeight = 480);
    virtual ~GameEngine( );
 
