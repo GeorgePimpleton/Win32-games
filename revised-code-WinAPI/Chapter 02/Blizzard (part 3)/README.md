@@ -17,7 +17,7 @@ Blizzard, creates and uses the Game Engine class.  From the 2004 CD.
 
 3. Changed file names.
 
-.h to .hpp.  While not necessary it indicates if a header file is C or C++.
+.h to .hpp.  While not necessary it indicates if a header file is C or C++.  Something I consider "essential" for readability.
 
 ### Notes
 
