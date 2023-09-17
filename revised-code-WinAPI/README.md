@@ -10,14 +10,13 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 ## The Game Code in 24 (or so) Chapters
 
 1. A Programming Primer (Not just WinAPI)
+2. Blizzard: Creating An Engine For Games
+3. Trippy: Learning to Draw Basic Graphics
 
 ![under construction](construction.gif)  \*\* ***under construction*** \*\*  ![under construction](construction.gif)
 
-2. Blizzard: Creating An Engine For Games
-
 ![queue](queue.jpg)  \*\* ***in the queue*** \*\*  ![queue](queue.jpg)
 
-3. Trippy: Learning to Draw Basic Graphics
 4. Slideshow: Drawing Graphical Images
 5. UFO: Controlling Games with the Keyboard and Mouse
 6. Example Game: Brainiac
