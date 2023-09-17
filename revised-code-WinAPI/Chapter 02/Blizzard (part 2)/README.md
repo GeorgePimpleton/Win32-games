@@ -1,4 +1,4 @@
-# Win32 Games, Chapter 2
+# Win32 Games, Chapter 2, part 2
 
 [![Language](https://img.shields.io/badge/Language%20-C++-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
@@ -15,12 +15,11 @@ Blizzard, creates and uses the Game Engine class.  From the 2004 CD.
 
 ### Blizzard Versions
 
-4. Refined the code for Unicode only and modern Windows OSes.
+2. Added my Random Toolkit to generate random numbers the C++ way.
 
-- Changed WinMain to wWinMain, the Unicode entry point for a WinAPI program.  Have to change the command-line parameter type from PSTR to PWSTR.
-- Added SAL notation to WinMain since Visual Studio 2022 "whinges" about "[i]nconsistent annotation for 'WinMain'".
+I removed more comments.  By now you should know what the code does.
 
-[Using SAL Annotations to Reduce C/C++ Code Defects](https://learn.microsoft.com/en-us/cpp/code-quality/using-sal-annotations-to-reduce-c-cpp-code-defects)
+I some variable declarations closer to first usage, as C++ allows.
 
 ### Notes
 

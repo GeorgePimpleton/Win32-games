@@ -17,16 +17,16 @@ class GameEngine
 {
 protected:
    static GameEngine* m_pGameEngine;
-   HINSTANCE           m_hInstance;
-   HWND                m_hWindow;
-   TCHAR               m_szWindowClass[ 64 ];
-   TCHAR               m_szTitle[ 64 ];
-   WORD                m_wIcon;
-   WORD m_wSmallIcon;
-   int                 m_iWidth;
-   int m_iHeight;
-   int                 m_iFrameDelay;
-   BOOL                m_bSleep;
+   HINSTANCE          m_hInstance;
+   HWND               m_hWindow;
+   TCHAR              m_szWindowClass[ 64 ];
+   TCHAR              m_szTitle[ 64 ];
+   WORD               m_wIcon;
+   WORD               m_wSmallIcon;
+   int                m_iWidth;
+   int                m_iHeight;
+   int                m_iFrameDelay;
+   BOOL               m_bSleep;
 
 public:
             GameEngine(HINSTANCE hInstance, LPCTSTR szWindowClass, LPCTSTR szTitle,
