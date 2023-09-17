@@ -5,9 +5,9 @@ GameEngine* GameEngine::m_pGameEngine = NULL;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow)
 {
-   MSG         msg;
-   static int  iTickTrigger = 0;
-   int         iTickCount;
+   MSG        msg;
+   static int iTickTrigger = 0;
+   int        iTickCount;
 
    if ( GameInitialize(hInstance) )
    {
@@ -112,14 +112,16 @@ BOOL GameEngine::Initialize(int iCmdShow)
    }
 
    // calculate the window size and position based upon the game size
-   int iWindowWidth = m_iWidth + GetSystemMetrics(SM_CXFIXEDFRAME) * 2,
-      iWindowHeight = m_iHeight + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 + GetSystemMetrics(SM_CYCAPTION);
+   int iWindowWidth  = m_iWidth + GetSystemMetrics(SM_CXFIXEDFRAME) * 2;
+   int iWindowHeight = m_iHeight + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 + GetSystemMetrics(SM_CYCAPTION);
 
    if ( wndclass.lpszMenuName != NULL )
+   {
       iWindowHeight += GetSystemMetrics(SM_CYMENU);
+   }
 
-   int iXWindowPos = (GetSystemMetrics(SM_CXSCREEN) - iWindowWidth) / 2,
-      iYWindowPos = (GetSystemMetrics(SM_CYSCREEN) - iWindowHeight) / 2;
+   int iXWindowPos = (GetSystemMetrics(SM_CXSCREEN) - iWindowWidth) / 2;
+   int iYWindowPos = (GetSystemMetrics(SM_CYSCREEN) - iWindowHeight) / 2;
 
    // create the window
    m_hWindow = CreateWindow(m_szWindowClass, m_szTitle, WS_POPUPWINDOW |

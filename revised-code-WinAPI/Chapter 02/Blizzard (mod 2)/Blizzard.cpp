@@ -2,7 +2,6 @@
 
 BOOL GameInitialize(HINSTANCE hInstance)
 {
-   // create the game engine
    g_pGame = new GameEngine(hInstance, TEXT("Blizzard"), TEXT("Blizzard"),
                             IDI_BLIZZARD, IDI_BLIZZARD_SM);
 
@@ -11,7 +10,6 @@ BOOL GameInitialize(HINSTANCE hInstance)
       return FALSE;
    }
 
-   // set the frame rate
    g_pGame->SetFrameRate(15);
 
    return TRUE;
@@ -19,22 +17,19 @@ BOOL GameInitialize(HINSTANCE hInstance)
 
 void GameStart(HWND hWindow)
 {
-   // seed the random number generator
    rtk::srand( );
 }
 
 void GameEnd( )
 {
-   // cleanup the game engine
    delete g_pGame;
 }
 
 void GameActivate(HWND hWindow)
 {
-   HDC   hDC;
-   RECT  rect;
+   HDC  hDC;
+   RECT rect;
 
-   // draw activation text on the game screen
    GetClientRect(hWindow, &rect);
 
    hDC = GetDC(hWindow);
@@ -46,10 +41,9 @@ void GameActivate(HWND hWindow)
 
 void GameDeactivate(HWND hWindow)
 {
-   HDC   hDC;
-   RECT  rect;
+   HDC  hDC;
+   RECT rect;
 
-   // draw deactivation text on the game screen
    GetClientRect(hWindow, &rect);
 
    hDC = GetDC(hWindow);
@@ -67,7 +61,6 @@ void GameCycle( )
    HDC  hDC;
    HWND hWindow = g_pGame-> GetWindow( );
 
-   // draw the snowflake icon at random positions on the game screen
    hDC = GetDC(hWindow);
    DrawIcon(hDC, rtk::rand(0, g_pGame->GetWidth( )), rtk::rand(0, g_pGame->GetHeight( )),
             (HICON) GetClassLongPtr(hWindow, GCLP_HICON));

@@ -31,8 +31,8 @@ void GameEnd( )
 
 void GameActivate(HWND hWindow)
 {
-   HDC   hDC;
-   RECT  rect;
+   HDC  hDC;
+   RECT rect;
 
    // draw activation text on the game screen
    GetClientRect(hWindow, &rect);
@@ -46,8 +46,8 @@ void GameActivate(HWND hWindow)
 
 void GameDeactivate(HWND hWindow)
 {
-   HDC   hDC;
-   RECT  rect;
+   HDC  hDC;
+   RECT rect;
 
    // draw deactivation text on the game screen
    GetClientRect(hWindow, &rect);
