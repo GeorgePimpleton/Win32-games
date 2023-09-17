@@ -16,10 +16,8 @@ Blizzard, creates and uses the Game Engine class.  From the 2004 CD.
 3. Changed file names.
 4. Added my Random Toolkit header to help generate random numbers the C++ way.
 5. Refined the code for Unicode only and modern Windows OSes.
-6. Added menus, inline the setters and getters and other misc. changes.
-7. Use C++ smart pointers, shared and unique, instead of raw pointers.
-8. Changed the shared pointers to unique, any WCHAR string arrays in the Game Engine class are now std::wstring.
-9. Changed the wide strings to PCWSTRs.
+6. Added a main menu with accelerators.
+7. Use C++ smart pointers instead of raw pointers.
 
 ### Notes
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.
