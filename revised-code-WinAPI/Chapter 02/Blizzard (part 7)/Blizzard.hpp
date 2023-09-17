@@ -4,5 +4,6 @@
 #include "resource.h"
 #include "GameEngine.hpp"
 #include "random_toolkit.hpp"
+#include <memory>
 
-GameEngine* g_game;
+std::unique_ptr<GameEngine> g_game;
