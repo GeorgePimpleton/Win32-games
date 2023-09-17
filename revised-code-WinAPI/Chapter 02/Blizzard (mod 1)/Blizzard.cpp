@@ -69,8 +69,6 @@ void GameCycle( )
 
    // draw the snowflake icon at random positions on the game screen
    hDC = GetDC(hWindow);
-
    DrawIcon(hDC, rand( ) % g_pGame->GetWidth( ), rand( ) % g_pGame->GetHeight( ), (HICON) GetClassLongPtr(hWindow, GCLP_HICON));
-
    ReleaseDC(hWindow, hDC);
 }

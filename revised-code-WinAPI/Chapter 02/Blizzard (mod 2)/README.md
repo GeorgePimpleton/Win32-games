@@ -15,15 +15,7 @@ Blizzard, creates and uses the Game Engine class.  From the 2004 CD.
 
 ### Blizzard Versions
 
-0. Original CD game files written in 2004.
-1. The bare minimum changes to work with modern C++/WinAPI x86 & x64.
 2. Added my Random Toolkit to generate random numbers the C++ way.
-3. Changed file names, refining the code for Unicode and modern Windows OSes.
-4. Added menus, inline the setters and getters and other misc. changes.
-5. Use C++ smart pointers, shared and unique, instead of raw pointers.
-6. Changed the shared pointers to unique, any WCHAR string arrays in the Game Engine class are now std::wstring.
-7. Changed the wide strings to PCWSTRs.
-8. Removed the old WinAPI Hungarian Notation from variables.  Even MS recommends not using it.
 
 ### Notes
 
