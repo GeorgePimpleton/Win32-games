@@ -13,9 +13,7 @@ Even MS recommends not using it with new code, C++ guidelines certainly suggest 
 
 If you see old WinAPI code you will see Hungarian Notation used.  Lots and lots of it.
 
-I will use a form of notation to indicate when a variable is a class data member or a global.
-
-I changed the macro definition numbers.
+I will use a minor form of notation to indicate when a variable is a class data member or a global.
 
 ### Notes
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.

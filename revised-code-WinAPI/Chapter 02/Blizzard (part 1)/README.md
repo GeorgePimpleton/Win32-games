@@ -14,7 +14,7 @@
 
 The following changes had to happen to be compileable:
 + Changed two of the GameEngine ctor's parameter types from LPTSTR to LPCTSTR.
-+ Changed one of the WinAPI DrawIcon parameters from (HICON) (WORD) GetClassLong(hWindow, GCL_HICON) to (HICON) GetClassLongPtr(hWindow, GCLP_HICON).
++ Changed one of the WinAPI DrawIcon parameters from `(HICON) (WORD) GetClassLong(hWindow, GCL_HICON)` to `(HICON) GetClassLongPtr(hWindow, GCLP_HICON)`.
 
 ### Notes
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.
