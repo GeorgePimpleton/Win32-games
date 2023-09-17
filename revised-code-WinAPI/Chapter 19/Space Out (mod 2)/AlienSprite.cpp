@@ -1,16 +1,15 @@
 #include "AlienSprite.hpp"
 
-extern Bitmap* g_BlobboBitmap;
-extern Bitmap* g_BMissileBitmap;
-extern Bitmap* g_JellyBitmap;
-extern Bitmap* g_JMissileBitmap;
-extern Bitmap* g_TimmyBitmap;
-extern Bitmap* g_TMissileBitmap;
-extern int     g_difficulty;
+extern std::unique_ptr<Bitmap> g_BlobboBitmap;
+extern std::unique_ptr<Bitmap> g_BMissileBitmap;
+extern std::unique_ptr<Bitmap> g_JellyBitmap;
+extern std::unique_ptr<Bitmap> g_JMissileBitmap;
+extern std::unique_ptr<Bitmap> g_TimmyBitmap;
+extern std::unique_ptr<Bitmap> g_TMissileBitmap;
+extern int                     g_difficulty;
 
-AlienSprite::AlienSprite(Bitmap* pBitmap, RECT& rcBounds,
-                         BOUNDSACTION baBoundsAction)
-   : Sprite(pBitmap, rcBounds, baBoundsAction)
+AlienSprite::AlienSprite(Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction)
+   : Sprite(bitmap, bounds, boundsAction)
 { }
 
 AlienSprite::~AlienSprite( )
@@ -18,43 +17,45 @@ AlienSprite::~AlienSprite( )
 
 SPRITEACTION AlienSprite::Update( )
 {
-   // Call the base sprite Update() method
-   SPRITEACTION saSpriteAction;
-   saSpriteAction = Sprite::Update( );
+   // call the base sprite update() method
+   SPRITEACTION spriteAction = Sprite::Update( );
 
-   // See if the alien should fire a missile
-   if ( (rand( ) % (g_difficulty / 2)) == 0 )
-      saSpriteAction |= SA_ADDSPRITE;
+   // see if the alien should fire a missile
+   if ( rtk::rand(0, g_difficulty / 2) == 0 )
+   {
+      spriteAction |= SA_ADDSPRITE;
+   }
 
-   return saSpriteAction;
+   return spriteAction;
 }
 
 Sprite* AlienSprite::AddSprite( )
 {
-   // Create a new missile sprite
-   RECT    rcBounds = { 0, 0, 640, 410 };
-   RECT    rcPos = GetPosition( );
-   Sprite* pSprite = NULL;
-   if ( GetBitmap( ) == g_BlobboBitmap )
+   // create a new missile sprite
+   RECT    bounds = { 0, 0, 640, 410 };
+   RECT    pos = GetPosition( );
+   Sprite* sprite = NULL;
+
+ if ( GetBitmap( ) == g_BlobboBitmap.get( ) )
    {
       // Blobbo missile
-      pSprite = new Sprite(g_BMissileBitmap, rcBounds, BA_DIE);
-      pSprite->SetVelocity(0, 7);
+      sprite = new Sprite(g_BMissileBitmap.get( ), bounds, BA_DIE);
+      sprite->SetVelocity(0, 7);
    }
-   else if ( GetBitmap( ) == g_JellyBitmap )
+   else if ( GetBitmap( ) == g_JellyBitmap.get( ) )
    {
       // Jelly missile
-      pSprite = new Sprite(g_JMissileBitmap, rcBounds, BA_DIE);
-      pSprite->SetVelocity(0, 5);
+      sprite = new Sprite(g_JMissileBitmap.get( ), bounds, BA_DIE);
+      sprite->SetVelocity(0, 5);
    }
    else
    {
       // Timmy missile
-      pSprite = new Sprite(g_TMissileBitmap, rcBounds, BA_DIE);
-      pSprite->SetVelocity(0, 3);
+      sprite = new Sprite(g_TMissileBitmap.get( ), bounds, BA_DIE);
+      sprite->SetVelocity(0, 3);
    }
 
    // Set the missile sprite's position and return it
-   pSprite->SetPosition(rcPos.left + (GetWidth( ) / 2), rcPos.bottom);
-   return pSprite;
+   sprite->SetPosition(pos.left + (GetWidth( ) / 2), pos.bottom);
+   return sprite;
 }

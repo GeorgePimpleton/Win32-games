@@ -19,22 +19,22 @@ int WINAPI       wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_
 LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
 BOOL    CALLBACK DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam);
 
-BOOL GameInitialize(HINSTANCE hInstance);
-void GameStart(HWND hWindow);
+BOOL GameInitialize(HINSTANCE inst);
+void GameStart(HWND wnd);
 void GameNew( );
 void GameEnd( );
-void GameActivate(HWND hWindow);
-void GameDeactivate(HWND hWindow);
-void GamePaint(HDC hDC);
+void GameActivate(HWND wnd);
+void GameDeactivate(HWND wnd);
+void GamePaint(HDC dc);
 void GameCycle( );
 void GameMenu(WPARAM wParam);
 void HandleKeys( );
-void MouseButtonDown(int x, int y, BOOL bLeft);
-void MouseButtonUp(int x, int y, BOOL bLeft);
+void MouseButtonDown(int x, int y, BOOL left);
+void MouseButtonUp(int x, int y, BOOL left);
 void MouseMove(int x, int y);
-void HandleJoystick(JOYSTATE jsJoystickState);
-BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee);
-void SpriteDying(Sprite* pSpriteDying);
+void HandleJoystick(JOYSTATE joyState);
+BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee);
+void SpriteDying(Sprite* spriteDying);
 
 class GameEngine
 {
@@ -80,7 +80,7 @@ public:
 
    HINSTANCE GetInstance( )              { return m_inst; };
    HWND      GetWindow( )                { return m_wnd; };
-   void      SetWindow(HWND hWindow)     { m_wnd = hWindow; };
+   void      SetWindow(HWND wnd)         { m_wnd = wnd; };
    PCWSTR    GetTitle( )                 { return m_title; };
    WORD      GetIcon( )                  { return m_icon; };
    WORD      GetSmallIcon( )             { return m_smallIcon; };

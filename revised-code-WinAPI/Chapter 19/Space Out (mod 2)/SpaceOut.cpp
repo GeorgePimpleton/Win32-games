@@ -1,18 +1,18 @@
 #include "SpaceOut.hpp"
 
-BOOL GameInitialize(HINSTANCE hInstance)
+BOOL GameInitialize(HINSTANCE inst)
 {
-   g_game = new GameEngine(hInstance, L"Space Out", L"Example Game: Space Out",
-                            IDI_ICON, IDI_ICON_SM, 600, 450);
+   g_game = std::make_unique<GameEngine>(inst, L"Space Out", L"Example Game: Space Out",
+                                         IDI_ICON, IDI_ICON_SM, 600, 450);
 
-   if ( g_game == NULL )
+   if ( NULL == g_game )
    {
       return FALSE;
    }
 
    g_game->SetFrameRate(30);
 
-   g_inst = hInstance;
+   g_inst = inst;
 
    return TRUE;
 }
@@ -26,23 +26,23 @@ void GameStart(HWND wnd)
 
    SelectObject(g_offscreenDC, g_offscreenBitmap);
 
-   HDC hDC = GetDC(wnd);
+   HINSTANCE inst = g_game->GetInstance( );
 
-   g_desertBitmap         = new Bitmap(hDC, IDB_DESERT, g_inst);
-   g_carBitmap            = new Bitmap(hDC, IDB_CAR, g_inst);
-   g_smallCarBitmap       = new Bitmap(hDC, IDB_SMCAR, g_inst);
-   g_missileBitmap        = new Bitmap(hDC, IDB_MISSILE, g_inst);
-   g_BlobboBitmap         = new Bitmap(hDC, IDB_BLOBBO, g_inst);
-   g_BMissileBitmap       = new Bitmap(hDC, IDB_BMISSILE, g_inst);
-   g_JellyBitmap          = new Bitmap(hDC, IDB_JELLY, g_inst);
-   g_JMissileBitmap       = new Bitmap(hDC, IDB_JMISSILE, g_inst);
-   g_TimmyBitmap          = new Bitmap(hDC, IDB_TIMMY, g_inst);
-   g_TMissileBitmap       = new Bitmap(hDC, IDB_TMISSILE, g_inst);
-   g_smallExplosionBitmap = new Bitmap(hDC, IDB_SMEXPLOSION, g_inst);
-   g_largeExplosionBitmap = new Bitmap(hDC, IDB_LGEXPLOSION, g_inst);
-   g_gameOverBitmap       = new Bitmap(hDC, IDB_GAMEOVER, g_inst);
+   g_desertBitmap         = std::make_unique<Bitmap>(IDB_DESERT, inst);
+   g_carBitmap            = std::make_unique<Bitmap>(IDB_CAR, inst);
+   g_smallCarBitmap       = std::make_unique<Bitmap>(IDB_SMCAR, inst);
+   g_missileBitmap        = std::make_unique<Bitmap>(IDB_MISSILE, inst);
+   g_BlobboBitmap         = std::make_unique<Bitmap>(IDB_BLOBBO, inst);
+   g_BMissileBitmap       = std::make_unique<Bitmap>(IDB_BMISSILE, inst);
+   g_JellyBitmap          = std::make_unique<Bitmap>(IDB_JELLY, inst);
+   g_JMissileBitmap       = std::make_unique<Bitmap>(IDB_JMISSILE, inst);
+   g_TimmyBitmap          = std::make_unique<Bitmap>(IDB_TIMMY, inst);
+   g_TMissileBitmap       = std::make_unique<Bitmap>(IDB_TMISSILE, inst);
+   g_smallExplosionBitmap = std::make_unique<Bitmap>(IDB_SMEXPLOSION, inst);
+   g_largeExplosionBitmap = std::make_unique<Bitmap>(IDB_LGEXPLOSION, inst);
+   g_gameOverBitmap       = std::make_unique<Bitmap>(IDB_GAMEOVER, inst);
 
-   g_background = new StarryBackground(600, 450);
+   g_background = std::make_unique<StarryBackground>(600, 450);
 
    EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
 
@@ -57,7 +57,7 @@ void GameNew( )
 
    RECT bounds = { 0, 0, 600, 450 };
 
-   g_carSprite = new Sprite(g_carBitmap, bounds, BA_WRAP);
+   g_carSprite = new Sprite(g_carBitmap.get( ), bounds, BA_WRAP);
    g_carSprite->SetPosition(300, 405);
    g_game->AddSprite(g_carSprite);
 
@@ -77,25 +77,7 @@ void GameEnd( )
    DeleteObject(g_offscreenBitmap);
    DeleteDC(g_offscreenDC);
 
-   delete g_desertBitmap;
-   delete g_carBitmap;
-   delete g_smallCarBitmap;
-   delete g_missileBitmap;
-   delete g_BlobboBitmap;
-   delete g_BMissileBitmap;
-   delete g_JellyBitmap;
-   delete g_JMissileBitmap;
-   delete g_TimmyBitmap;
-   delete g_TMissileBitmap;
-   delete g_smallExplosionBitmap;
-   delete g_largeExplosionBitmap;
-   delete g_gameOverBitmap;
-
-   delete g_background;
-
    g_game->CleanupSprites( );
-
-   delete g_game;
 }
 
 void GameActivate(HWND wnd)
@@ -207,7 +189,7 @@ void HandleKeys( )
          // create a new missile sprite
          RECT    bounds = { 0, 0, 600, 450 };
          RECT    pos    = g_carSprite-> GetPosition( );
-         Sprite* sprite = new Sprite(g_missileBitmap, bounds, BA_DIE);
+         Sprite* sprite = new Sprite(g_missileBitmap.get( ), bounds, BA_DIE);
          sprite->SetPosition(pos.left + 15, 400);
          sprite->SetVelocity(0, -7);
          g_game->AddSprite(sprite);
@@ -245,10 +227,10 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
    // see if a player missile and an alien have collided
    Bitmap* hitter = spriteHitter->GetBitmap( );
    Bitmap* hittee = spriteHittee->GetBitmap( );
-   if ( (hitter == g_missileBitmap && (hittee == g_BlobboBitmap ||
-                                       hittee == g_JellyBitmap || hittee == g_TimmyBitmap)) ||
-       (hittee == g_missileBitmap && (hitter == g_BlobboBitmap ||
-                                      hitter == g_JellyBitmap || hitter == g_TimmyBitmap)) )
+   if ( (hitter == g_missileBitmap.get( ) && (hittee == g_BlobboBitmap.get( ) ||
+                                       hittee == g_JellyBitmap.get( ) || hittee == g_TimmyBitmap.get( ))) ||
+       (hittee == g_missileBitmap.get( ) && (hitter == g_BlobboBitmap.get( ) ||
+                                      hitter == g_JellyBitmap.get( ) || hitter == g_TimmyBitmap.get( ))) )
    {
       // play the small explosion sound
       PlaySoundW((PCWSTR) IDW_SMEXPLODE, g_inst, SND_ASYNC | SND_RESOURCE);
@@ -261,7 +243,7 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
       RECT bounds = { 0, 0, 600, 450 };
       RECT pos;
 
-      if ( hitter == g_missileBitmap )
+      if ( hitter == g_missileBitmap.get( ) )
       {
          pos = spriteHittee->GetPosition( );
       }
@@ -270,7 +252,7 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
          pos = spriteHitter->GetPosition( );
       }
 
-      Sprite* sprite = new Sprite(g_largeExplosionBitmap, bounds);
+      Sprite* sprite = new Sprite(g_largeExplosionBitmap.get( ), bounds);
       sprite->SetNumFrames(8, TRUE);
       sprite->SetPosition(pos.left, pos.top);
       g_game->AddSprite(sprite);
@@ -281,16 +263,16 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
    }
 
    // see if an alien missile has collided with the car
-   if ( (hitter == g_carBitmap && (hittee == g_BMissileBitmap ||
-                                   hittee == g_JMissileBitmap || hittee == g_TMissileBitmap)) ||
-       (hittee == g_carBitmap && (hitter == g_BMissileBitmap ||
-                                  hitter == g_JMissileBitmap || hitter == g_TMissileBitmap)) )
+   if ( (hitter == g_carBitmap.get( ) && (hittee == g_BMissileBitmap.get( ) ||
+                                   hittee == g_JMissileBitmap.get( ) || hittee == g_TMissileBitmap.get( ))) ||
+       (hittee == g_carBitmap.get( ) && (hitter == g_BMissileBitmap.get( ) ||
+                                  hitter == g_JMissileBitmap.get( ) || hitter == g_TMissileBitmap.get( ))) )
    {
       // play the large explosion sound
       PlaySoundW((PCWSTR) IDW_LGEXPLODE, g_inst, SND_ASYNC | SND_RESOURCE);
 
       // kill the missile sprite
-      if ( hitter == g_carBitmap )
+      if ( hitter == g_carBitmap.get( ) )
       {
          spriteHittee->Kill( );
       }
@@ -303,7 +285,7 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
       RECT bounds = { 0, 0, 600, 480 };
       RECT pos;
 
-      if ( hitter == g_carBitmap )
+      if ( hitter == g_carBitmap.get( ) )
       {
          pos = spriteHitter->GetPosition( );
       }
@@ -312,7 +294,7 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
          pos = spriteHittee->GetPosition( );
       }
 
-      Sprite* sprite = new Sprite(g_largeExplosionBitmap, bounds);
+      Sprite* sprite = new Sprite(g_largeExplosionBitmap.get( ), bounds);
       sprite->SetNumFrames(8, TRUE);
       sprite->SetPosition(pos.left, pos.top);
       g_game->AddSprite(sprite);
@@ -337,9 +319,9 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
 void SpriteDying(Sprite* spriteDying)
 {
    // see if an alien missile sprite is dying
-   if ( spriteDying->GetBitmap( ) == g_BMissileBitmap ||
-        spriteDying->GetBitmap( ) == g_JMissileBitmap ||
-        spriteDying->GetBitmap( ) == g_TMissileBitmap )
+   if ( spriteDying->GetBitmap( ) == g_BMissileBitmap.get( ) ||
+        spriteDying->GetBitmap( ) == g_JMissileBitmap.get( ) ||
+        spriteDying->GetBitmap( ) == g_TMissileBitmap.get( ) )
    {
       // play the small explosion sound
       PlaySound((PCWSTR) IDW_SMEXPLODE, g_inst, SND_ASYNC | SND_RESOURCE | SND_NOSTOP);
@@ -348,7 +330,7 @@ void SpriteDying(Sprite* spriteDying)
       RECT bounds = { 0, 0, 600, 450 };
       RECT pos    = spriteDying-> GetPosition( );
 
-      Sprite* sprite = new Sprite(g_smallExplosionBitmap, bounds);
+      Sprite* sprite = new Sprite(g_smallExplosionBitmap.get( ), bounds);
       sprite->SetNumFrames(8, TRUE);
       sprite->SetPosition(pos.left, pos.top);
       g_game->AddSprite(sprite);
@@ -365,7 +347,7 @@ void AddAlien( )
    {
    case 0:
       // Blobbo
-      sprite = new AlienSprite(g_BlobboBitmap, bounds, BA_BOUNCE);
+      sprite = new AlienSprite(g_BlobboBitmap.get( ), bounds, BA_BOUNCE);
       sprite->SetNumFrames(8);
       sprite->SetPosition(((rtk::rand(0, 2)) == 0) ? 0 : 600, rtk::rand(0, 370));
       sprite->SetVelocity(rtk::rand(-2, 5), rtk::rand(-2, 5));
@@ -373,7 +355,7 @@ void AddAlien( )
 
    case 1:
       // Jelly
-      sprite = new AlienSprite(g_JellyBitmap, bounds, BA_BOUNCE);
+      sprite = new AlienSprite(g_JellyBitmap.get( ), bounds, BA_BOUNCE);
       sprite->SetNumFrames(8);
       sprite->SetPosition(rtk::rand(0, 600), rtk::rand(0, 370));
       sprite->SetVelocity(rtk::rand(-2, 3), rtk::rand(3, 8));
@@ -381,7 +363,7 @@ void AddAlien( )
 
    case 2:
       // Timmy
-      sprite = new AlienSprite(g_TimmyBitmap, bounds, BA_WRAP);
+      sprite = new AlienSprite(g_TimmyBitmap.get( ), bounds, BA_WRAP);
       sprite->SetNumFrames(8);
       sprite->SetPosition(rtk::rand(0, 600), rtk::rand(0, 370));
       sprite->SetVelocity(rtk::rand(3, 10), 0);
