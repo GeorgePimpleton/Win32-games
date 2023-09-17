@@ -19,6 +19,10 @@ Blizzard, creates and uses the Game Engine class.  From the 2004 CD.
 
 - Changed WinMain to wWinMain, the Unicode entry point for a WinAPI program.  Have to change the command-line parameter type from PSTR to PWSTR.
 - Added SAL notation to WinMain since Visual Studio 2022 "whinges" about "[i]nconsistent annotation for 'WinMain'".
+- Changed WinAPI structs and function calls to use the specific Unicode versions.
+   - PeekMessageW, DispatchMessageW, GetTickCount64, WNDCLASSEXW, RegisterClassExW, CreateWindowW, DefWindowProcW
+- Changed the two TCHAR arrays to PCWSTR.  That means lstrlen() is no longer needed, direct assignment is now possible.
+- Changed the Windows message handling when the game window is deactivated and deactivated to a single Win message.
 
 [Using SAL Annotations to Reduce C/C++ Code Defects](https://learn.microsoft.com/en-us/cpp/code-quality/using-sal-annotations-to-reduce-c-cpp-code-defects)
 

@@ -21,6 +21,8 @@ I removed more comments.  By now you should know what the code does.
 
 I moved some variable declarations closer to first usage, as C++ allows.
 
+I changed conditional comparisons so it is harder to accidentally make an assignment instead of an equals comparison, etc.
+
 ### Notes
 
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.
