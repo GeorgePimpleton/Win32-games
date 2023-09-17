@@ -15,9 +15,9 @@ Blizzard, creates and uses the Game Engine class.  From the 2004 CD.
 
 ### Blizzard Versions
 
-3. Changed file names, refined the code for Unicode only and modern Windows OSes.
+3. Changed file names.
 
-I also moved some variable declarations closer to first usage the C++ way.
+.h to .hpp.  While not necessary it indicates if a header file is C or C++.
 
 ### Notes
 
