@@ -151,7 +151,7 @@ void GameCycle( )
 
       g_game->UpdateSprites( );
 
-      HWND wnd = g_game-> GetWindow( );
+      HWND wnd = g_game->GetWindow( );
       HDC  dc  = GetDC(wnd);
 
       GamePaint(g_offscreenDC);
@@ -188,7 +188,7 @@ void HandleKeys( )
       {
          // create a new missile sprite
          RECT    bounds = { 0, 0, 600, 450 };
-         RECT    pos    = g_carSprite-> GetPosition( );
+         RECT    pos    = g_carSprite->GetPosition( );
          Sprite* sprite = new Sprite(g_missileBitmap.get( ), bounds, BA_DIE);
          sprite->SetPosition(pos.left + 15, 400);
          sprite->SetVelocity(0, -7);
@@ -227,6 +227,7 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
    // see if a player missile and an alien have collided
    Bitmap* hitter = spriteHitter->GetBitmap( );
    Bitmap* hittee = spriteHittee->GetBitmap( );
+
    if ( (hitter == g_missileBitmap.get( ) && (hittee == g_BlobboBitmap.get( ) ||
                                        hittee == g_JellyBitmap.get( ) || hittee == g_TimmyBitmap.get( ))) ||
        (hittee == g_missileBitmap.get( ) && (hitter == g_BlobboBitmap.get( ) ||
@@ -328,7 +329,7 @@ void SpriteDying(Sprite* spriteDying)
 
       // create a small explosion sprite at the missile's position
       RECT bounds = { 0, 0, 600, 450 };
-      RECT pos    = spriteDying-> GetPosition( );
+      RECT pos    = spriteDying->GetPosition( );
 
       Sprite* sprite = new Sprite(g_smallExplosionBitmap.get( ), bounds);
       sprite->SetNumFrames(8, TRUE);
@@ -345,24 +346,21 @@ void AddAlien( )
 
    switch ( rtk::rand(0, 3) )
    {
-   case 0:
-      // Blobbo
+   case 0: // Blobbo
       sprite = new AlienSprite(g_BlobboBitmap.get( ), bounds, BA_BOUNCE);
       sprite->SetNumFrames(8);
       sprite->SetPosition(((rtk::rand(0, 2)) == 0) ? 0 : 600, rtk::rand(0, 370));
       sprite->SetVelocity(rtk::rand(-2, 5), rtk::rand(-2, 5));
       break;
 
-   case 1:
-      // Jelly
+   case 1: // Jelly
       sprite = new AlienSprite(g_JellyBitmap.get( ), bounds, BA_BOUNCE);
       sprite->SetNumFrames(8);
       sprite->SetPosition(rtk::rand(0, 600), rtk::rand(0, 370));
       sprite->SetVelocity(rtk::rand(-2, 3), rtk::rand(3, 8));
       break;
 
-   case 2:
-      // Timmy
+   case 2: // Timmy
       sprite = new AlienSprite(g_TimmyBitmap.get( ), bounds, BA_WRAP);
       sprite->SetNumFrames(8);
       sprite->SetPosition(rtk::rand(0, 600), rtk::rand(0, 370));
