@@ -15,9 +15,7 @@ Blizzard, creates and uses the Game Engine class.  From the 2004 CD.
 
 ### Blizzard Versions
 
-0. Original CD game files written in 2004.
-
-Has it been nearly 20 years and multiple C++ revisions since this code was created?  Yes, it has.
+1. The bare minimum changes to work with modern C++/WinAPI x86 & x64.
 
 ### Notes
 
