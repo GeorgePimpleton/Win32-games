@@ -39,7 +39,6 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 22. Space Out 4: Keeping Track of High Scores
 23. Wanderer: Changing Perspective with Scrolling Backgrounds
 24. Example Game: Stunt Jumper
-
 ----
 ### Caveat on the original 2003 & 2004 source code
 Since the original source code for the Win Games was written in 2003/2004 the game examples aren't likely to compile with a modern compiler such as Visual Studio 2022. The WinAPI has changed a lot to work for x64 processors as well as other changes for the 21st Century.  The first pass in each chapter will be the bare minimum needed to work now for both x86 (32-bit) and x64.
