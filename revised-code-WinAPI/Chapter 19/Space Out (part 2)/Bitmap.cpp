@@ -3,25 +3,25 @@
 #include "Bitmap.hpp"
 
 Bitmap::Bitmap( )
-   : m_hBitmap(NULL), m_iWidth(0), m_iHeight(0)
+   : m_bitmap(NULL), m_width(0), m_height(0)
 { }
 
-Bitmap::Bitmap(HDC hDC, PCWSTR szFileName)
-   : m_hBitmap(NULL), m_iWidth(0), m_iHeight(0)
+Bitmap::Bitmap(HDC dc, PCWSTR fileName)
+   : m_bitmap(NULL), m_width(0), m_height(0)
 {
-   Create(hDC, szFileName);
+   Create(dc, fileName);
 }
 
-Bitmap::Bitmap(HDC hDC, UINT uiResID, HINSTANCE hInstance)
-   : m_hBitmap(NULL), m_iWidth(0), m_iHeight(0)
+Bitmap::Bitmap(HDC dc, UINT resID, HINSTANCE inst)
+   : m_bitmap(NULL), m_width(0), m_height(0)
 {
-   Create(hDC, uiResID, hInstance);
+   Create(dc, resID, inst);
 }
 
-Bitmap::Bitmap(HDC hDC, int iWidth, int iHeight, COLORREF crColor)
-   : m_hBitmap(NULL), m_iWidth(0), m_iHeight(0)
+Bitmap::Bitmap(HDC dc, int width, int height, COLORREF color)
+   : m_bitmap(NULL), m_width(0), m_height(0)
 {
-   Create(hDC, iWidth, iHeight, crColor);
+   Create(dc, width, height, color);
 }
 
 Bitmap::~Bitmap( )
@@ -31,20 +31,20 @@ Bitmap::~Bitmap( )
 
 void Bitmap::Free( )
 {
-   if ( m_hBitmap != NULL )
+   if ( m_bitmap != NULL )
    {
-      DeleteObject(m_hBitmap);
-      m_hBitmap = NULL;
+      DeleteObject(m_bitmap);
+      m_bitmap = NULL;
    }
 }
 
-BOOL Bitmap::Create(HDC hDC, PCWSTR szFileName)
+BOOL Bitmap::Create(HDC dc, PCWSTR fileName)
 {
    // Free any previous bitmap info
    Free( );
 
    // Open the bitmap file
-   HANDLE hFile = CreateFile(szFileName, GENERIC_READ, FILE_SHARE_READ, NULL,
+   HANDLE hFile = CreateFile(fileName, GENERIC_READ, FILE_SHARE_READ, NULL,
                              OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
    if ( hFile == INVALID_HANDLE_VALUE )
       return FALSE;
@@ -75,14 +75,14 @@ BOOL Bitmap::Create(HDC hDC, PCWSTR szFileName)
       }
 
       // Store the width and height of the bitmap
-      m_iWidth = (int) pBitmapInfo->bmiHeader.biWidth;
-      m_iHeight = (int) pBitmapInfo->bmiHeader.biHeight;
+      m_width = (int) pBitmapInfo->bmiHeader.biWidth;
+      m_height = (int) pBitmapInfo->bmiHeader.biHeight;
 
       // Get a handle to the bitmap and copy the image bits
       PBYTE pBitmapBits;
-      m_hBitmap = CreateDIBSection(hDC, pBitmapInfo, DIB_RGB_COLORS,
+      m_bitmap = CreateDIBSection(dc, pBitmapInfo, DIB_RGB_COLORS,
                                    (PVOID*) &pBitmapBits, NULL, 0);
-      if ( (m_hBitmap != NULL) && (pBitmapBits != NULL) )
+      if ( (m_bitmap != NULL) && (pBitmapBits != NULL) )
       {
          SetFilePointer(hFile, bmfHeader.bfOffBits, NULL, FILE_BEGIN);
          bOK = ReadFile(hFile, pBitmapBits, pBitmapInfo->bmiHeader.biSizeImage,
@@ -97,17 +97,17 @@ BOOL Bitmap::Create(HDC hDC, PCWSTR szFileName)
    return FALSE;
 }
 
-BOOL Bitmap::Create(HDC hDC, UINT uiResID, HINSTANCE hInstance)
+BOOL Bitmap::Create(HDC dc, UINT resID, HINSTANCE inst)
 {
    Free( );
 
    // Find the bitmap resource
-   HRSRC hResInfo = FindResource(hInstance, MAKEINTRESOURCE(uiResID), RT_BITMAP);
+   HRSRC hResInfo = FindResource(inst, MAKEINTRESOURCE(resID), RT_BITMAP);
    if ( hResInfo == NULL )
       return FALSE;
 
    // Load the bitmap resource
-   HGLOBAL hMemBitmap = LoadResource(hInstance, hResInfo);
+   HGLOBAL hMemBitmap = LoadResource(inst, hResInfo);
    if ( hMemBitmap == NULL )
       return FALSE;
 
@@ -121,14 +121,14 @@ BOOL Bitmap::Create(HDC hDC, UINT uiResID, HINSTANCE hInstance)
 
    // Store the width and height of the bitmap
    BITMAPINFO* pBitmapInfo = (BITMAPINFO*) pBitmapImage;
-   m_iWidth = (int) pBitmapInfo->bmiHeader.biWidth;
-   m_iHeight = (int) pBitmapInfo->bmiHeader.biHeight;
+   m_width = (int) pBitmapInfo->bmiHeader.biWidth;
+   m_height = (int) pBitmapInfo->bmiHeader.biHeight;
 
    // Get a handle to the bitmap and copy the image bits
    PBYTE pBitmapBits;
-   m_hBitmap = CreateDIBSection(hDC, pBitmapInfo, DIB_RGB_COLORS,
+   m_bitmap = CreateDIBSection(dc, pBitmapInfo, DIB_RGB_COLORS,
                                 (PVOID*) &pBitmapBits, NULL, 0);
-   if ( (m_hBitmap != NULL) && (pBitmapBits != NULL) )
+   if ( (m_bitmap != NULL) && (pBitmapBits != NULL) )
    {
       const PBYTE pTempBits = pBitmapImage + pBitmapInfo->bmiHeader.biSize +
          pBitmapInfo->bmiHeader.biClrUsed * sizeof(RGBQUAD);
@@ -147,24 +147,24 @@ BOOL Bitmap::Create(HDC hDC, UINT uiResID, HINSTANCE hInstance)
    return FALSE;
 }
 
-BOOL Bitmap::Create(HDC hDC, int iWidth, int iHeight, COLORREF crColor)
+BOOL Bitmap::Create(HDC dc, int width, int height, COLORREF color)
 {
-   m_hBitmap = CreateCompatibleBitmap(hDC, iWidth, iHeight);
+   m_bitmap = CreateCompatibleBitmap(dc, width, height);
 
-   if ( m_hBitmap == NULL )
+   if ( m_bitmap == NULL )
    {
       return FALSE;
    }
 
-   m_iWidth = iWidth;
-   m_iHeight = iHeight;
+   m_width = width;
+   m_height = height;
 
-   HDC hMemDC = CreateCompatibleDC(hDC);
-   HBRUSH hBrush = CreateSolidBrush(crColor);
+   HDC hMemDC = CreateCompatibleDC(dc);
+   HBRUSH hBrush = CreateSolidBrush(color);
 
-   HBITMAP hOldBitmap = (HBITMAP) SelectObject(hMemDC, m_hBitmap);
+   HBITMAP hOldBitmap = (HBITMAP) SelectObject(hMemDC, m_bitmap);
 
-   RECT rcBitmap = { 0, 0, m_iWidth, m_iHeight };
+   RECT rcBitmap = { 0, 0, m_width, m_height };
    FillRect(hMemDC, &rcBitmap, hBrush);
 
    SelectObject(hMemDC, hOldBitmap);
@@ -174,28 +174,28 @@ BOOL Bitmap::Create(HDC hDC, int iWidth, int iHeight, COLORREF crColor)
    return TRUE;
 }
 
-void Bitmap::Draw(HDC hDC, int x, int y, BOOL bTrans, COLORREF crTransColor)
+void Bitmap::Draw(HDC dc, int x, int y, BOOL trans, COLORREF transColor)
 {
-   DrawPart(hDC, x, y, 0, 0, GetWidth( ), GetHeight( ), bTrans, crTransColor);
+   DrawPart(dc, x, y, 0, 0, GetWidth( ), GetHeight( ), trans, transColor);
 }
 
-void Bitmap::DrawPart(HDC hDC, int x, int y, int xPart, int yPart,
-                      int wPart, int hPart, BOOL bTrans, COLORREF crTransColor)
+void Bitmap::DrawPart(HDC dc, int x, int y, int xPart, int yPart,
+                      int wPart, int hPart, BOOL trans, COLORREF transColor)
 {
-   if ( m_hBitmap != NULL )
+   if ( m_bitmap != NULL )
    {
-      HDC hMemDC = CreateCompatibleDC(hDC);
+      HDC hMemDC = CreateCompatibleDC(dc);
 
-      HBITMAP hOldBitmap = (HBITMAP) SelectObject(hMemDC, m_hBitmap);
+      HBITMAP hOldBitmap = (HBITMAP) SelectObject(hMemDC, m_bitmap);
 
-      if ( bTrans )
+      if ( trans )
       {
-         TransparentBlt(hDC, x, y, wPart, hPart, hMemDC, xPart, yPart,
-                        wPart, hPart, crTransColor);
+         TransparentBlt(dc, x, y, wPart, hPart, hMemDC, xPart, yPart,
+                        wPart, hPart, transColor);
       }
       else
       {
-         BitBlt(hDC, x, y, wPart, hPart, hMemDC, xPart, yPart, SRCCOPY);
+         BitBlt(dc, x, y, wPart, hPart, hMemDC, xPart, yPart, SRCCOPY);
       }
 
       SelectObject(hMemDC, hOldBitmap);

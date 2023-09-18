@@ -8,7 +8,7 @@
 #include "Background.hpp"
 #include "AlienSprite.hpp"
 
-HINSTANCE         g_hInstance;
+HINSTANCE         g_inst;
 GameEngine*       g_pGame;
 HDC               g_hOffscreenDC;
 HBITMAP           g_hOffscreenBitmap;

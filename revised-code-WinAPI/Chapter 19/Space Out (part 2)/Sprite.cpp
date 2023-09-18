@@ -184,17 +184,17 @@ Sprite* Sprite::AddSprite()
   return NULL;
 }
 
-void Sprite::Draw(HDC hDC)
+void Sprite::Draw(HDC dc)
 {
    if ( m_pBitmap != NULL && !m_bHidden )
    {
       if ( m_iNumFrames == 1 )
       {
-         m_pBitmap->Draw(hDC, m_rcPosition.left, m_rcPosition.top, TRUE);
+         m_pBitmap->Draw(dc, m_rcPosition.left, m_rcPosition.top, TRUE);
       }
       else
       {
-         m_pBitmap->DrawPart(hDC, m_rcPosition.left, m_rcPosition.top,
+         m_pBitmap->DrawPart(dc, m_rcPosition.left, m_rcPosition.top,
                              0, m_iCurFrame * GetHeight( ), GetWidth( ), GetHeight( ), TRUE);
       }
    }

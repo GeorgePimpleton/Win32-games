@@ -1,8 +1,8 @@
 #include "SpaceOut.hpp"
 
-BOOL GameInitialize(HINSTANCE hInstance)
+BOOL GameInitialize(HINSTANCE inst)
 {
-  g_pGame = new GameEngine(hInstance, TEXT("Space Out"), TEXT("Example Game: Space Out"),
+  g_pGame = new GameEngine(inst, TEXT("Space Out"), TEXT("Example Game: Space Out"),
                            IDI_ICON, IDI_ICON_SM, 600, 450);
 
   if ( g_pGame == NULL )
@@ -12,7 +12,7 @@ BOOL GameInitialize(HINSTANCE hInstance)
 
   g_pGame->SetFrameRate(30);
 
-  g_hInstance = hInstance;
+  g_inst = inst;
 
   return TRUE;
 }
@@ -27,21 +27,21 @@ void GameStart(HWND hWindow)
 
   SelectObject(g_hOffscreenDC, g_hOffscreenBitmap);
 
-  HDC hDC = GetDC(hWindow);
+  HDC dc = GetDC(hWindow);
 
-  g_pDesertBitmap      = new Bitmap(hDC, IDB_DESERT, g_hInstance);
-  g_pCarBitmap         = new Bitmap(hDC, IDB_CAR, g_hInstance);
-  g_pSmCarBitmap       = new Bitmap(hDC, IDB_SMCAR, g_hInstance);
-  g_pMissileBitmap     = new Bitmap(hDC, IDB_MISSILE, g_hInstance);
-  g_pBlobboBitmap      = new Bitmap(hDC, IDB_BLOBBO, g_hInstance);
-  g_pBMissileBitmap    = new Bitmap(hDC, IDB_BMISSILE, g_hInstance);
-  g_pJellyBitmap       = new Bitmap(hDC, IDB_JELLY, g_hInstance);
-  g_pJMissileBitmap    = new Bitmap(hDC, IDB_JMISSILE, g_hInstance);
-  g_pTimmyBitmap       = new Bitmap(hDC, IDB_TIMMY, g_hInstance);
-  g_pTMissileBitmap    = new Bitmap(hDC, IDB_TMISSILE, g_hInstance);
-  g_pSmExplosionBitmap = new Bitmap(hDC, IDB_SMEXPLOSION, g_hInstance);
-  g_pLgExplosionBitmap = new Bitmap(hDC, IDB_LGEXPLOSION, g_hInstance);
-  g_pGameOverBitmap    = new Bitmap(hDC, IDB_GAMEOVER, g_hInstance);
+  g_pDesertBitmap      = new Bitmap(dc, IDB_DESERT, g_inst);
+  g_pCarBitmap         = new Bitmap(dc, IDB_CAR, g_inst);
+  g_pSmCarBitmap       = new Bitmap(dc, IDB_SMCAR, g_inst);
+  g_pMissileBitmap     = new Bitmap(dc, IDB_MISSILE, g_inst);
+  g_pBlobboBitmap      = new Bitmap(dc, IDB_BLOBBO, g_inst);
+  g_pBMissileBitmap    = new Bitmap(dc, IDB_BMISSILE, g_inst);
+  g_pJellyBitmap       = new Bitmap(dc, IDB_JELLY, g_inst);
+  g_pJMissileBitmap    = new Bitmap(dc, IDB_JMISSILE, g_inst);
+  g_pTimmyBitmap       = new Bitmap(dc, IDB_TIMMY, g_inst);
+  g_pTMissileBitmap    = new Bitmap(dc, IDB_TMISSILE, g_inst);
+  g_pSmExplosionBitmap = new Bitmap(dc, IDB_SMEXPLOSION, g_inst);
+  g_pLgExplosionBitmap = new Bitmap(dc, IDB_LGEXPLOSION, g_inst);
+  g_pGameOverBitmap    = new Bitmap(dc, IDB_GAMEOVER, g_inst);
 
   g_pBackground = new StarryBackground(600, 450);
 
@@ -88,33 +88,33 @@ void GameDeactivate(HWND hWindow)
   g_pGame->PauseMIDISong();
 }
 
-void GamePaint(HDC hDC)
+void GamePaint(HDC dc)
 {
-  g_pBackground->Draw(hDC);
+  g_pBackground->Draw(dc);
 
-  g_pDesertBitmap->Draw(hDC, 0, 371);
+  g_pDesertBitmap->Draw(dc, 0, 371);
 
-  g_pGame->DrawSprites(hDC);
+  g_pGame->DrawSprites(dc);
 
   TCHAR szText[64];
   RECT  rect = { 460, 0, 510, 30 };
 
   wsprintf(szText, TEXT("%d"), g_iScore);
 
-  SetBkMode(hDC, TRANSPARENT);
-  SetTextColor(hDC, RGB(255, 255, 255));
+  SetBkMode(dc, TRANSPARENT);
+  SetTextColor(dc, RGB(255, 255, 255));
 
-  DrawText(hDC, szText, -1, &rect, DT_SINGLELINE | DT_RIGHT | DT_VCENTER);
+  DrawText(dc, szText, -1, &rect, DT_SINGLELINE | DT_RIGHT | DT_VCENTER);
 
   for ( int i = 0; i < g_iNumLives; i++ )
   {
-     g_pSmCarBitmap->Draw(hDC, 520 + (g_pSmCarBitmap->GetWidth( ) * i),
+     g_pSmCarBitmap->Draw(dc, 520 + (g_pSmCarBitmap->GetWidth( ) * i),
                           10, TRUE);
   }
 
   if ( g_bGameOver )
   {
-     g_pGameOverBitmap->Draw(hDC, 190, 149, TRUE);
+     g_pGameOverBitmap->Draw(dc, 190, 149, TRUE);
   }
 }
 
@@ -132,14 +132,14 @@ void GameCycle()
     g_pGame->UpdateSprites();
 
     HWND  hWindow = g_pGame->GetWindow();
-    HDC   hDC = GetDC(hWindow);
+    HDC   dc = GetDC(hWindow);
 
     GamePaint(g_hOffscreenDC);
 
-    BitBlt(hDC, 0, 0, g_pGame->GetWidth(), g_pGame->GetHeight(),
+    BitBlt(dc, 0, 0, g_pGame->GetWidth(), g_pGame->GetHeight(),
       g_hOffscreenDC, 0, 0, SRCCOPY);
 
-    ReleaseDC(hWindow, hDC);
+    ReleaseDC(hWindow, dc);
   }
 }
 
@@ -188,7 +188,7 @@ void HandleKeys()
       pSprite->SetVelocity(0, -7);
       g_pGame->AddSprite(pSprite);
 
-      PlaySound((PCWSTR)IDW_MISSILE, g_hInstance, SND_ASYNC |
+      PlaySound((PCWSTR)IDW_MISSILE, g_inst, SND_ASYNC |
         SND_RESOURCE | SND_NOSTOP);
 
       g_iFireInputDelay = 0;
@@ -223,7 +223,7 @@ BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
     (pHittee == g_pMissileBitmap && (pHitter == g_pBlobboBitmap ||
     pHitter == g_pJellyBitmap || pHitter == g_pTimmyBitmap)))
   {
-    PlaySound((PCWSTR)IDW_LGEXPLODE, g_hInstance, SND_ASYNC |
+    PlaySound((PCWSTR)IDW_LGEXPLODE, g_inst, SND_ASYNC |
       SND_RESOURCE);
 
     pSpriteHitter->Kill();
@@ -255,7 +255,7 @@ BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
     (pHittee == g_pCarBitmap && (pHitter == g_pBMissileBitmap ||
     pHitter == g_pJMissileBitmap || pHitter == g_pTMissileBitmap)))
   {
-    PlaySound((PCWSTR)IDW_LGEXPLODE, g_hInstance, SND_ASYNC |
+    PlaySound((PCWSTR)IDW_LGEXPLODE, g_inst, SND_ASYNC |
       SND_RESOURCE);
 
     if ( pHitter == g_pCarBitmap )
@@ -288,7 +288,7 @@ BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
 
     if (--g_iNumLives == 0)
     {
-      PlaySound((PCWSTR)IDW_GAMEOVER, g_hInstance, SND_ASYNC |
+      PlaySound((PCWSTR)IDW_GAMEOVER, g_inst, SND_ASYNC |
         SND_RESOURCE);
       g_bGameOver = TRUE;
     }
@@ -303,7 +303,7 @@ void SpriteDying(Sprite* pSpriteDying)
     pSpriteDying->GetBitmap() == g_pJMissileBitmap ||
     pSpriteDying->GetBitmap() == g_pTMissileBitmap)
   {
-    PlaySound((PCWSTR)IDW_SMEXPLODE, g_hInstance, SND_ASYNC |
+    PlaySound((PCWSTR)IDW_SMEXPLODE, g_inst, SND_ASYNC |
       SND_RESOURCE | SND_NOSTOP);
 
     RECT rcBounds = { 0, 0, 600, 450 };

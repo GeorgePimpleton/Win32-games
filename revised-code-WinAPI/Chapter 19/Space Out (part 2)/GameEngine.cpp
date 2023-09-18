@@ -4,17 +4,17 @@
 
 GameEngine* GameEngine::m_pGameEngine = NULL;
 
-int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
+int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE hPrevInstance,
                     _In_ PWSTR szCmdLine, _In_ int iCmdShow)
 {
-   if ( GameInitialize(hInstance) )
+   if ( GameInitialize(inst) )
    {
       if ( !GameEngine::GetEngine( )->Initialize(iCmdShow) )
       {
          return FALSE;
       }
 
-      HACCEL accel = LoadAcceleratorsW(hInstance, MAKEINTRESOURCEW(IDR_ACCELERATORS));
+      HACCEL accel = LoadAcceleratorsW(inst, MAKEINTRESOURCEW(IDR_ACCELERATORS));
 
       if ( NULL == accel )
       {
@@ -104,18 +104,18 @@ BOOL GameEngine::CheckSpriteCollision(Sprite* pTestSprite)
    return FALSE;
 }
 
-GameEngine::GameEngine(HINSTANCE hInstance, PCWSTR szWindowClass, PCWSTR szTitle,
-                       WORD wIcon, WORD wSmallIcon, int iWidth, int iHeight)
+GameEngine::GameEngine(HINSTANCE inst, PCWSTR szWindowClass, PCWSTR szTitle,
+                       WORD wIcon, WORD wSmallIcon, int width, int height)
 {
    m_pGameEngine    = this;
-   m_hInstance      = hInstance;
+   m_inst      = inst;
    m_hWindow        = NULL;
    m_szWindowClass  = szWindowClass;
    m_szTitle        = szTitle;
    m_wIcon          = wIcon;
    m_wSmallIcon     = wSmallIcon;
-   m_iWidth         = iWidth;
-   m_iHeight        = iHeight;
+   m_width         = width;
+   m_height        = height;
    m_iFrameDelay    = 50;   // 20 FPS default
    m_bSleep         = TRUE;
    m_uiJoystickID   = 0;
@@ -137,9 +137,9 @@ BOOL GameEngine::Initialize(int iCmdShow)
    wndclass.lpfnWndProc = WndProc;
    wndclass.cbClsExtra = 0;
    wndclass.cbWndExtra = 0;
-   wndclass.hInstance = m_hInstance;
-   wndclass.hIcon = LoadIcon(m_hInstance, MAKEINTRESOURCE(GetIcon( )));
-   wndclass.hIconSm = LoadIcon(m_hInstance, MAKEINTRESOURCE(GetSmallIcon( )));
+   wndclass.hInstance = m_inst;
+   wndclass.hIcon = LoadIcon(m_inst, MAKEINTRESOURCE(GetIcon( )));
+   wndclass.hIconSm = LoadIcon(m_inst, MAKEINTRESOURCE(GetSmallIcon( )));
    wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
    wndclass.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1);
    wndclass.lpszMenuName = MAKEINTRESOURCEW(IDR_MENU);
@@ -150,8 +150,8 @@ BOOL GameEngine::Initialize(int iCmdShow)
       return FALSE;
    }
 
-   int iWindowWidth = m_iWidth + GetSystemMetrics(SM_CXFIXEDFRAME) * 2;
-   int iWindowHeight = m_iHeight + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 +
+   int iWindowWidth = m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2;
+   int iWindowHeight = m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 +
       GetSystemMetrics(SM_CYCAPTION);
 
    iWindowWidth += 10;
@@ -167,7 +167,7 @@ BOOL GameEngine::Initialize(int iCmdShow)
 
    m_hWindow = CreateWindow(m_szWindowClass, m_szTitle, WS_POPUPWINDOW |
                             WS_CAPTION | WS_MINIMIZEBOX, iXWindowPos, iYWindowPos, iWindowWidth,
-                            iWindowHeight, NULL, NULL, m_hInstance, NULL);
+                            iWindowHeight, NULL, NULL, m_inst, NULL);
 
    if ( !m_hWindow )
    {
@@ -207,11 +207,11 @@ LRESULT GameEngine::HandleEvent(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lP
       return 0;
 
    case WM_PAINT:
-      HDC         hDC;
+      HDC         dc;
       PAINTSTRUCT ps;
-      hDC = BeginPaint(hWindow, &ps);
+      dc = BeginPaint(hWindow, &ps);
 
-      GamePaint(hDC);
+      GamePaint(dc);
 
       EndPaint(hWindow, &ps);
       return 0;
@@ -359,12 +359,12 @@ void GameEngine::AddSprite(Sprite* pSprite)
    }
 }
 
-void GameEngine::DrawSprites(HDC hDC)
+void GameEngine::DrawSprites(HDC dc)
 {
    vector<Sprite*>::iterator siSprite;
    for ( siSprite = m_vSprites.begin( ); siSprite != m_vSprites.end( ); siSprite++ )
    {
-      (*siSprite)->Draw(hDC);
+      (*siSprite)->Draw(dc);
    }
 }
 
