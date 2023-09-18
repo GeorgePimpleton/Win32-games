@@ -1,24 +1,13 @@
-//-----------------------------------------------------------------
-// Space Out 2 Application
-// C++ Header - SpaceOut.h
-//-----------------------------------------------------------------
-
 #pragma once
 
-//-----------------------------------------------------------------
-// Include Files
-//-----------------------------------------------------------------
 #include <windows.h>
-#include "Resource.h"
+#include "resource.h"
 #include "GameEngine.h"
 #include "Bitmap.h"
 #include "Sprite.h"
 #include "Background.h"
 #include "AlienSprite.h"
 
-//-----------------------------------------------------------------
-// Global Variables
-//-----------------------------------------------------------------
 HINSTANCE         g_hInstance;
 GameEngine*       g_pGame;
 HDC               g_hOffscreenDC;
@@ -44,8 +33,5 @@ int               g_iNumLives, g_iScore, g_iDifficulty;
 BOOL              g_bGameOver;
 BOOL              g_bSplash;
 
-//-----------------------------------------------------------------
-// Function Declarations
-//-----------------------------------------------------------------
-void NewGame();
-void AddAlien();
+void NewGame( );
+void AddAlien( );
