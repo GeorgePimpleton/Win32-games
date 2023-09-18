@@ -8,9 +8,9 @@ extern Bitmap* g_pTimmyBitmap;
 extern Bitmap* g_pTMissileBitmap;
 extern int     g_iDifficulty;
 
-AlienSprite::AlienSprite(Bitmap* pBitmap, RECT& rcBounds,
+AlienSprite::AlienSprite(Bitmap* bitmap, RECT& rcBounds,
                          BOUNDSACTION baBoundsAction)
-   : Sprite(pBitmap, rcBounds, baBoundsAction)
+   : Sprite(bitmap, rcBounds, baBoundsAction)
 { }
 
 AlienSprite::~AlienSprite( )

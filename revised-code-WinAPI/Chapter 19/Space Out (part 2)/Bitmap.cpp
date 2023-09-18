@@ -61,11 +61,11 @@ BOOL Bitmap::Create(HDC dc, PCWSTR fileName)
       return FALSE;
    }
 
-   BITMAPINFO* pBitmapInfo = (new BITMAPINFO);
-   if ( pBitmapInfo != NULL )
+   BITMAPINFO* bitmapInfo = (new BITMAPINFO);
+   if ( bitmapInfo != NULL )
    {
       // Read the bitmap info header
-      bOK = ReadFile(hFile, pBitmapInfo, sizeof(BITMAPINFOHEADER),
+      bOK = ReadFile(hFile, bitmapInfo, sizeof(BITMAPINFOHEADER),
                      &dwBytesRead, NULL);
       if ( (!bOK) || (dwBytesRead != sizeof(BITMAPINFOHEADER)) )
       {
@@ -75,17 +75,17 @@ BOOL Bitmap::Create(HDC dc, PCWSTR fileName)
       }
 
       // Store the width and height of the bitmap
-      m_width = (int) pBitmapInfo->bmiHeader.biWidth;
-      m_height = (int) pBitmapInfo->bmiHeader.biHeight;
+      m_width = (int) bitmapInfo->bmiHeader.biWidth;
+      m_height = (int) bitmapInfo->bmiHeader.biHeight;
 
       // Get a handle to the bitmap and copy the image bits
-      PBYTE pBitmapBits;
-      m_bitmap = CreateDIBSection(dc, pBitmapInfo, DIB_RGB_COLORS,
-                                   (PVOID*) &pBitmapBits, NULL, 0);
-      if ( (m_bitmap != NULL) && (pBitmapBits != NULL) )
+      PBYTE bitmapBits;
+      m_bitmap = CreateDIBSection(dc, bitmapInfo, DIB_RGB_COLORS,
+                                   (PVOID*) &bitmapBits, NULL, 0);
+      if ( (m_bitmap != NULL) && (bitmapBits != NULL) )
       {
          SetFilePointer(hFile, bmfHeader.bfOffBits, NULL, FILE_BEGIN);
-         bOK = ReadFile(hFile, pBitmapBits, pBitmapInfo->bmiHeader.biSizeImage,
+         bOK = ReadFile(hFile, bitmapBits, bitmapInfo->bmiHeader.biSizeImage,
                         &dwBytesRead, NULL);
          if ( bOK )
             return TRUE;
@@ -112,27 +112,27 @@ BOOL Bitmap::Create(HDC dc, UINT resID, HINSTANCE inst)
       return FALSE;
 
    // Lock the resource and access the entire bitmap image
-   PBYTE pBitmapImage = (BYTE*) LockResource(hMemBitmap);
-   if ( pBitmapImage == NULL )
+   PBYTE bitmapImage = (BYTE*) LockResource(hMemBitmap);
+   if ( bitmapImage == NULL )
    {
       FreeResource(hMemBitmap);
       return FALSE;
    }
 
    // Store the width and height of the bitmap
-   BITMAPINFO* pBitmapInfo = (BITMAPINFO*) pBitmapImage;
-   m_width = (int) pBitmapInfo->bmiHeader.biWidth;
-   m_height = (int) pBitmapInfo->bmiHeader.biHeight;
+   BITMAPINFO* bitmapInfo = (BITMAPINFO*) bitmapImage;
+   m_width = (int) bitmapInfo->bmiHeader.biWidth;
+   m_height = (int) bitmapInfo->bmiHeader.biHeight;
 
    // Get a handle to the bitmap and copy the image bits
-   PBYTE pBitmapBits;
-   m_bitmap = CreateDIBSection(dc, pBitmapInfo, DIB_RGB_COLORS,
-                                (PVOID*) &pBitmapBits, NULL, 0);
-   if ( (m_bitmap != NULL) && (pBitmapBits != NULL) )
+   PBYTE bitmapBits;
+   m_bitmap = CreateDIBSection(dc, bitmapInfo, DIB_RGB_COLORS,
+                                (PVOID*) &bitmapBits, NULL, 0);
+   if ( (m_bitmap != NULL) && (bitmapBits != NULL) )
    {
-      const PBYTE pTempBits = pBitmapImage + pBitmapInfo->bmiHeader.biSize +
-         pBitmapInfo->bmiHeader.biClrUsed * sizeof(RGBQUAD);
-      CopyMemory(pBitmapBits, pTempBits, pBitmapInfo->bmiHeader.biSizeImage);
+      const PBYTE pTempBits = bitmapImage + bitmapInfo->bmiHeader.biSize +
+         bitmapInfo->bmiHeader.biClrUsed * sizeof(RGBQUAD);
+      CopyMemory(bitmapBits, pTempBits, bitmapInfo->bmiHeader.biSizeImage);
 
       // Unlock and free the bitmap graphics object
       UnlockResource(hMemBitmap);

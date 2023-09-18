@@ -6,7 +6,7 @@
 class AlienSprite : public Sprite
 {
 public:
-            AlienSprite(Bitmap* pBitmap, RECT& rcBounds,
+            AlienSprite(Bitmap* bitmap, RECT& rcBounds,
                         BOUNDSACTION baBoundsAction = BA_STOP);
    virtual ~AlienSprite( );
 
