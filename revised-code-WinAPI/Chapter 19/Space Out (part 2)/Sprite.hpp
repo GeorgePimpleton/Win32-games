@@ -17,20 +17,20 @@ const BOUNDSACTION  BA_STOP   = 0,
 class Sprite
 {
 protected:
-       Bitmap*      m_pBitmap;
-       int          m_iNumFrames;
-       int          m_iCurFrame;
-       int          m_iFrameDelay;
-       int          m_iFrameTrigger;
-       RECT         m_rcPosition;
-       RECT         m_rcCollision;
-       POINT        m_ptVelocity;
-       int          m_iZOrder;
-       RECT         m_rcBounds;
-       BOUNDSACTION m_baBoundsAction;
-       BOOL         m_bHidden;
-       BOOL         m_bDying;
-       BOOL         m_bOneCycle;
+   Bitmap*      m_pBitmap;
+   int          m_iNumFrames;
+   int          m_iCurFrame;
+   int          m_iFrameDelay;
+   int          m_iFrameTrigger;
+   RECT         m_rcPosition;
+   RECT         m_rcCollision;
+   POINT        m_ptVelocity;
+   int          m_iZOrder;
+   RECT         m_rcBounds;
+   BOUNDSACTION m_baBoundsAction;
+   BOOL         m_bHidden;
+   BOOL         m_bDying;
+   BOOL         m_bOneCycle;
 
    void         UpdateFrame( );
    virtual void CalcCollisionRect( );

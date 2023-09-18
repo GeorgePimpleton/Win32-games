@@ -8,7 +8,8 @@ extern Bitmap* g_pTimmyBitmap;
 extern Bitmap* g_pTMissileBitmap;
 extern int     g_iDifficulty;
 
-AlienSprite::AlienSprite(Bitmap* pBitmap, RECT& rcBounds, BOUNDSACTION baBoundsAction)
+AlienSprite::AlienSprite(Bitmap* pBitmap, RECT& rcBounds,
+                         BOUNDSACTION baBoundsAction)
    : Sprite(pBitmap, rcBounds, baBoundsAction)
 { }
 
@@ -53,7 +54,6 @@ Sprite* AlienSprite::AddSprite( )
       pSprite->SetVelocity(0, 3);
    }
 
-   // Set the missile sprite's position and return it
    pSprite->SetPosition(rcPos.left + (GetWidth( ) / 2), rcPos.bottom);
    return pSprite;
 }

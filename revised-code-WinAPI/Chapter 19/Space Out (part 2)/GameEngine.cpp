@@ -78,29 +78,30 @@ BOOL GameEngine::CheckSpriteCollision(Sprite* pTestSprite)
    return FALSE;
 }
 
-//-----------------------------------------------------------------
-// GameEngine Constructor(s)/Destructor
-//-----------------------------------------------------------------
 GameEngine::GameEngine(HINSTANCE hInstance, PCTSTR szWindowClass, PCTSTR szTitle,
                        WORD wIcon, WORD wSmallIcon, int iWidth, int iHeight)
 {
    m_pGameEngine = this;
-   m_hInstance   = hInstance;
-   m_hWindow     = NULL;
+   m_hInstance = hInstance;
+   m_hWindow = NULL;
 
    if ( lstrlen(szWindowClass) > 0 )
+   {
       lstrcpy(m_szWindowClass, szWindowClass);
+   }
 
    if ( lstrlen(szTitle) > 0 )
+   {
       lstrcpy(m_szTitle, szTitle);
+   }
 
-   m_wIcon          = wIcon;
-   m_wSmallIcon     = wSmallIcon;
-   m_iWidth         = iWidth;
-   m_iHeight        = iHeight;
-   m_iFrameDelay    = 50;   // 20 FPS default
-   m_bSleep         = TRUE;
-   m_uiJoystickID   = 0;
+   m_wIcon = wIcon;
+   m_wSmallIcon = wSmallIcon;
+   m_iWidth = iWidth;
+   m_iHeight = iHeight;
+   m_iFrameDelay = 50;   // 20 FPS default
+   m_bSleep = TRUE;
+   m_uiJoystickID = 0;
    m_uiMIDIPlayerID = 0;
 
    m_vSprites.reserve(100);
@@ -113,17 +114,17 @@ BOOL GameEngine::Initialize(int iCmdShow)
 {
    WNDCLASSEX wndclass;
 
-   wndclass.cbSize        = sizeof(wndclass);
-   wndclass.style         = CS_HREDRAW | CS_VREDRAW;
-   wndclass.lpfnWndProc   = WndProc;
-   wndclass.cbClsExtra    = 0;
-   wndclass.cbWndExtra    = 0;
-   wndclass.hInstance     = m_hInstance;
-   wndclass.hIcon         = LoadIcon(m_hInstance, MAKEINTRESOURCE(GetIcon( )));
-   wndclass.hIconSm       = LoadIcon(m_hInstance, MAKEINTRESOURCE(GetSmallIcon( )));
-   wndclass.hCursor       = LoadCursor(NULL, IDC_ARROW);
+   wndclass.cbSize = sizeof(wndclass);
+   wndclass.style = CS_HREDRAW | CS_VREDRAW;
+   wndclass.lpfnWndProc = WndProc;
+   wndclass.cbClsExtra = 0;
+   wndclass.cbWndExtra = 0;
+   wndclass.hInstance = m_hInstance;
+   wndclass.hIcon = LoadIcon(m_hInstance, MAKEINTRESOURCE(GetIcon( )));
+   wndclass.hIconSm = LoadIcon(m_hInstance, MAKEINTRESOURCE(GetSmallIcon( )));
+   wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
    wndclass.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1);
-   wndclass.lpszMenuName  = NULL;
+   wndclass.lpszMenuName = NULL;
    wndclass.lpszClassName = m_szWindowClass;
 
    if ( !RegisterClassEx(&wndclass) )
@@ -135,13 +136,16 @@ BOOL GameEngine::Initialize(int iCmdShow)
    int iWindowHeight = m_iHeight + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 +
       GetSystemMetrics(SM_CYCAPTION);
 
+   iWindowWidth += 10;
+   iWindowHeight += 10;
+
    if ( wndclass.lpszMenuName != NULL )
    {
       iWindowHeight += GetSystemMetrics(SM_CYMENU);
    }
 
- int iXWindowPos = (GetSystemMetrics(SM_CXSCREEN) - iWindowWidth) / 2;
- int iYWindowPos = (GetSystemMetrics(SM_CYSCREEN) - iWindowHeight) / 2;
+   int iXWindowPos = (GetSystemMetrics(SM_CXSCREEN) - iWindowWidth) / 2;
+   int iYWindowPos = (GetSystemMetrics(SM_CYSCREEN) - iWindowHeight) / 2;
 
    m_hWindow = CreateWindow(m_szWindowClass, m_szTitle, WS_POPUPWINDOW |
                             WS_CAPTION | WS_MINIMIZEBOX, iXWindowPos, iYWindowPos, iWindowWidth,
@@ -215,9 +219,14 @@ LRESULT GameEngine::HandleEvent(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lP
    return DefWindowProc(hWindow, msg, wParam, lParam);
 }
 
+void GameEngine::ErrorQuit(PCTSTR szErrorMsg)
+{
+   MessageBox(GetWindow( ), szErrorMsg, TEXT("Critical Error"), MB_OK | MB_ICONERROR);
+   PostQuitMessage(0);
+}
+
 BOOL GameEngine::InitJoystick( )
 {
-
    UINT uiNumJoysticks;
 
    if ( (uiNumJoysticks = joyGetNumDevs( )) == 0 )
@@ -347,8 +356,8 @@ void GameEngine::UpdateSprites( )
       m_vSprites.reserve(m_vSprites.capacity( ) * 2);
    }
 
-   RECT          rcOldSpritePos;
-   SPRITEACTION  saSpriteAction;
+   RECT         rcOldSpritePos;
+   SPRITEACTION saSpriteAction;
 
    vector<Sprite*>::iterator siSprite;
    for ( siSprite = m_vSprites.begin( ); siSprite != m_vSprites.end( ); siSprite++ )
@@ -408,8 +417,8 @@ void GameEngine::PlayMIDISong(PCTSTR szMIDIFileName, BOOL bRestart)
 {
    if ( m_uiMIDIPlayerID == 0 )
    {
-      // Open the MIDI player by specifying the device and filename
       MCI_OPEN_PARMS mciOpenParms;
+
       mciOpenParms.lpstrDeviceType = TEXT("sequencer");
       mciOpenParms.lpstrElementName = szMIDIFileName;
 
