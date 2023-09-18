@@ -166,24 +166,24 @@ void HandleKeys()
 {
   if (!g_bGameOver)
   {
-    POINT ptVelocity = g_pCarSprite->GetVelocity();
+    POINT velocity = g_pCarSprite->GetVelocity();
 
     if (GetAsyncKeyState(VK_LEFT) < 0)
     {
-      ptVelocity.x = max(ptVelocity.x - 1, -4);
-      g_pCarSprite->SetVelocity(ptVelocity);
+      velocity.x = max(velocity.x - 1, -4);
+      g_pCarSprite->SetVelocity(velocity);
     }
     else if (GetAsyncKeyState(VK_RIGHT) < 0)
     {
-      ptVelocity.x = min(ptVelocity.x + 2, 6);
-      g_pCarSprite->SetVelocity(ptVelocity);
+      velocity.x = min(velocity.x + 2, 6);
+      g_pCarSprite->SetVelocity(velocity);
     }
 
     if ((++g_iFireInputDelay > 6) && GetAsyncKeyState(VK_SPACE) < 0)
     {
-      RECT  rcBounds = { 0, 0, 600, 450 };
+      RECT  bounds = { 0, 0, 600, 450 };
       RECT  rcPos = g_pCarSprite->GetPosition();
-      Sprite* pSprite = new Sprite(g_pMissileBitmap, rcBounds, BA_DIE);
+      Sprite* pSprite = new Sprite(g_pMissileBitmap, bounds, BA_DIE);
       pSprite->SetPosition(rcPos.left + 15, 400);
       pSprite->SetVelocity(0, -7);
       g_game->AddSprite(pSprite);
@@ -229,7 +229,7 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
     spriteHitter->Kill();
     spriteHittee->Kill();
 
-    RECT rcBounds = { 0, 0, 600, 450 };
+    RECT bounds = { 0, 0, 600, 450 };
     RECT rcPos;
 
     if ( pHitter == g_pMissileBitmap )
@@ -241,7 +241,7 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
        rcPos = spriteHitter->GetPosition( );
     }
 
-    Sprite* pSprite = new Sprite(g_pLgExplosionBitmap, rcBounds);
+    Sprite* pSprite = new Sprite(g_pLgExplosionBitmap, bounds);
     pSprite->SetNumFrames(8, TRUE);
     pSprite->SetPosition(rcPos.left, rcPos.top);
     g_game->AddSprite(pSprite);
@@ -267,7 +267,7 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
        spriteHitter->Kill( );
     }
 
-    RECT rcBounds = { 0, 0, 600, 480 };
+    RECT bounds = { 0, 0, 600, 480 };
     RECT rcPos;
 
     if ( pHitter == g_pCarBitmap )
@@ -279,7 +279,7 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
        rcPos = spriteHittee->GetPosition( );
     }
 
-    Sprite* pSprite = new Sprite(g_pLgExplosionBitmap, rcBounds);
+    Sprite* pSprite = new Sprite(g_pLgExplosionBitmap, bounds);
     pSprite->SetNumFrames(8, TRUE);
     pSprite->SetPosition(rcPos.left, rcPos.top);
     g_game->AddSprite(pSprite);
@@ -306,9 +306,9 @@ void SpriteDying(Sprite* spriteDying)
     PlaySound((PCWSTR)IDW_SMEXPLODE, g_inst, SND_ASYNC |
       SND_RESOURCE | SND_NOSTOP);
 
-    RECT rcBounds = { 0, 0, 600, 450 };
+    RECT bounds = { 0, 0, 600, 450 };
     RECT rcPos = spriteDying->GetPosition();
-    Sprite* pSprite = new Sprite(g_pSmExplosionBitmap, rcBounds);
+    Sprite* pSprite = new Sprite(g_pSmExplosionBitmap, bounds);
     pSprite->SetNumFrames(8, TRUE);
     pSprite->SetPosition(rcPos.left, rcPos.top);
     g_game->AddSprite(pSprite);
@@ -319,8 +319,8 @@ void NewGame()
 {
   g_game->CleanupSprites();
 
-  RECT rcBounds = { 0, 0, 600, 450 };
-  g_pCarSprite = new Sprite(g_pCarBitmap, rcBounds, BA_WRAP);
+  RECT bounds = { 0, 0, 600, 450 };
+  g_pCarSprite = new Sprite(g_pCarBitmap, bounds, BA_WRAP);
   g_pCarSprite->SetPosition(300, 405);
   g_game->AddSprite(g_pCarSprite);
 
@@ -335,14 +335,14 @@ void NewGame()
 
 void AddAlien()
 {
-  RECT         rcBounds = { 0, 0, 600, 410 };
+  RECT         bounds = { 0, 0, 600, 410 };
   AlienSprite* pSprite  = NULL;
 
   switch(rand() % 3)
   {
   case 0:
     // Blobbo
-    pSprite = new AlienSprite(g_pBlobboBitmap, rcBounds, BA_BOUNCE);
+    pSprite = new AlienSprite(g_pBlobboBitmap, bounds, BA_BOUNCE);
     pSprite->SetNumFrames(8);
     pSprite->SetPosition(((rand() % 2) == 0) ? 0 : 600, rand() % 370);
     pSprite->SetVelocity((rand() % 7) - 2, (rand() % 7) - 2);
@@ -350,7 +350,7 @@ void AddAlien()
 
   case 1:
     // Jelly
-    pSprite = new AlienSprite(g_pJellyBitmap, rcBounds, BA_BOUNCE);
+    pSprite = new AlienSprite(g_pJellyBitmap, bounds, BA_BOUNCE);
     pSprite->SetNumFrames(8);
     pSprite->SetPosition(rand() % 600, rand() % 370);
     pSprite->SetVelocity((rand() % 5) - 2, (rand() % 5) + 3);
@@ -358,7 +358,7 @@ void AddAlien()
 
   case 2:
     // Timmy
-    pSprite = new AlienSprite(g_pTimmyBitmap, rcBounds, BA_WRAP);
+    pSprite = new AlienSprite(g_pTimmyBitmap, bounds, BA_WRAP);
     pSprite->SetNumFrames(8);
     pSprite->SetPosition(rand() % 600, rand() % 370);
     pSprite->SetVelocity((rand() % 7) + 3, 0);

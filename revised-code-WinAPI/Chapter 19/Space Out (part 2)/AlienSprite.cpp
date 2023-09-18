@@ -8,9 +8,9 @@ extern Bitmap* g_pTimmyBitmap;
 extern Bitmap* g_pTMissileBitmap;
 extern int     g_iDifficulty;
 
-AlienSprite::AlienSprite(Bitmap* bitmap, RECT& rcBounds,
-                         BOUNDSACTION baBoundsAction)
-   : Sprite(bitmap, rcBounds, baBoundsAction)
+AlienSprite::AlienSprite(Bitmap* bitmap, RECT& bounds,
+                         BOUNDSACTION boundsAction)
+   : Sprite(bitmap, bounds, boundsAction)
 { }
 
 AlienSprite::~AlienSprite( )
@@ -18,10 +18,9 @@ AlienSprite::~AlienSprite( )
 
 SPRITEACTION AlienSprite::Update( )
 {
-   SPRITEACTION saSpriteAction;
-   saSpriteAction = Sprite::Update( );
+   SPRITEACTION saSpriteAction = Sprite::Update( );
 
-   if ( (rand( ) % (g_iDifficulty / 2)) == 0 )
+   if ( (rtk::rand(0, (g_iDifficulty / 2))) == 0 )
    {
       saSpriteAction |= SA_ADDSPRITE;
    }
@@ -31,29 +30,29 @@ SPRITEACTION AlienSprite::Update( )
 
 Sprite* AlienSprite::AddSprite( )
 {
-   RECT    rcBounds = { 0, 0, 640, 410 };
-   RECT    rcPos = GetPosition( );
-   Sprite* pSprite = NULL;
+   RECT    bounds = { 0, 0, 640, 410 };
+   RECT    pos    = GetPosition( );
+   Sprite* sprite = NULL;
 
    if ( GetBitmap( ) == g_pBlobboBitmap )
    {
       // Blobbo missile
-      pSprite = new Sprite(g_pBMissileBitmap, rcBounds, BA_DIE);
-      pSprite->SetVelocity(0, 7);
+      sprite = new Sprite(g_pBMissileBitmap, bounds, BA_DIE);
+      sprite->SetVelocity(0, 7);
    }
    else if ( GetBitmap( ) == g_pJellyBitmap )
    {
       // Jelly missile
-      pSprite = new Sprite(g_pJMissileBitmap, rcBounds, BA_DIE);
-      pSprite->SetVelocity(0, 5);
+      sprite = new Sprite(g_pJMissileBitmap, bounds, BA_DIE);
+      sprite->SetVelocity(0, 5);
    }
    else
    {
       // Timmy missile
-      pSprite = new Sprite(g_pTMissileBitmap, rcBounds, BA_DIE);
-      pSprite->SetVelocity(0, 3);
+      sprite = new Sprite(g_pTMissileBitmap, bounds, BA_DIE);
+      sprite->SetVelocity(0, 3);
    }
 
-   pSprite->SetPosition(rcPos.left + (GetWidth( ) / 2), rcPos.bottom);
-   return pSprite;
+   sprite->SetPosition(pos.left + (GetWidth( ) / 2), pos.bottom);
+   return sprite;
 }
