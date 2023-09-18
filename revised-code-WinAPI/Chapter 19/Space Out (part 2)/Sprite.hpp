@@ -20,7 +20,7 @@ protected:
    Bitmap*      m_pBitmap;
    int          m_iNumFrames;
    int          m_iCurFrame;
-   int          m_iFrameDelay;
+   int          m_frameDelay;
    int          m_iFrameTrigger;
    RECT         m_rcPosition;
    RECT         m_rcCollision;
@@ -47,12 +47,12 @@ public:
    virtual Sprite*      AddSprite( );
    void                 Draw(HDC dc);
    BOOL                 IsPointInside(int x, int y);
-   BOOL                 TestCollision(Sprite* pTestSprite);
+   BOOL                 TestCollision(Sprite* testSprite);
    void                 Kill( ) { m_bDying = TRUE; };
 
    Bitmap* GetBitmap( )                                { return m_pBitmap; };
    void    SetNumFrames(int iNumFrames, BOOL bOneCycle = FALSE);
-   void    SetFrameDelay(int iFrameDelay)              { m_iFrameDelay = iFrameDelay; };
+   void    SetFrameDelay(int iFrameDelay)              { m_frameDelay = iFrameDelay; };
    RECT&   GetPosition( )                              { return m_rcPosition; };
    void    SetPosition(int x, int y);
    void    SetPosition(POINT ptPosition);
@@ -74,9 +74,9 @@ public:
 
 inline void Sprite::UpdateFrame( )
 {
-   if ( (m_iFrameDelay >= 0) && (--m_iFrameTrigger <= 0) )
+   if ( (m_frameDelay >= 0) && (--m_iFrameTrigger <= 0) )
    {
-      m_iFrameTrigger = m_iFrameDelay;
+      m_iFrameTrigger = m_frameDelay;
 
       if ( ++m_iCurFrame >= m_iNumFrames )
       {
@@ -101,9 +101,9 @@ inline void Sprite::CalcCollisionRect( )
    InflateRect(&m_rcCollision, iXShrink, iYShrink);
 }
 
-inline BOOL Sprite::TestCollision(Sprite* pTestSprite)
+inline BOOL Sprite::TestCollision(Sprite* testSprite)
 {
-   RECT& rcTest = pTestSprite->GetCollision( );
+   RECT& rcTest = testSprite->GetCollision( );
 
    return m_rcCollision.left <= rcTest.right &&
       rcTest.left <= m_rcCollision.right &&

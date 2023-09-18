@@ -9,7 +9,7 @@
 #include "AlienSprite.hpp"
 
 HINSTANCE         g_inst;
-GameEngine*       g_pGame;
+GameEngine*       g_game;
 HDC               g_hOffscreenDC;
 HBITMAP           g_hOffscreenBitmap;
 Bitmap*           g_pDesertBitmap;
@@ -24,7 +24,7 @@ Bitmap*           g_pTimmyBitmap;
 Bitmap*           g_pTMissileBitmap;
 Bitmap*           g_pSmExplosionBitmap;
 Bitmap*           g_pLgExplosionBitmap;
-Bitmap*           g_pGameOverBitmap;
+Bitmap*           g_gameOverBitmap;
 StarryBackground* g_pBackground;
 Sprite*           g_pCarSprite;
 int               g_iFireInputDelay;

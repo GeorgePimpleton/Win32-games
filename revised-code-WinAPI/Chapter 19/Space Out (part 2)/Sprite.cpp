@@ -4,7 +4,7 @@ Sprite::Sprite(Bitmap* pBitmap)
 {
   m_pBitmap = pBitmap;
   m_iNumFrames = 1;
-  m_iCurFrame = m_iFrameDelay = m_iFrameTrigger = 0;
+  m_iCurFrame = m_frameDelay = m_iFrameTrigger = 0;
   SetRect(&m_rcPosition, 0, 0, pBitmap->GetWidth(), pBitmap->GetHeight());
   CalcCollisionRect();
   m_ptVelocity.x = m_ptVelocity.y = 0;
@@ -23,7 +23,7 @@ Sprite::Sprite(Bitmap* pBitmap, RECT& rcBounds, BOUNDSACTION baBoundsAction)
 
   m_pBitmap = pBitmap;
   m_iNumFrames = 1;
-  m_iCurFrame = m_iFrameDelay = m_iFrameTrigger = 0;
+  m_iCurFrame = m_frameDelay = m_iFrameTrigger = 0;
 
   SetRect(&m_rcPosition, iXPos, iYPos, iXPos + pBitmap->GetWidth(),
     iYPos + pBitmap->GetHeight());
@@ -45,7 +45,7 @@ Sprite::Sprite(Bitmap* pBitmap, POINT ptPosition, POINT ptVelocity, int iZOrder,
 {
   m_pBitmap = pBitmap;
   m_iNumFrames = 1;
-  m_iCurFrame = m_iFrameDelay = m_iFrameTrigger = 0;
+  m_iCurFrame = m_frameDelay = m_iFrameTrigger = 0;
 
   SetRect(&m_rcPosition, ptPosition.x, ptPosition.y,
     ptPosition.x + pBitmap->GetWidth(), ptPosition.y + pBitmap->GetHeight());
