@@ -17,20 +17,20 @@ const BOUNDSACTION  BA_STOP   = 0,
 class Sprite
 {
 protected:
-   Bitmap*      m_pBitmap;
-   int          m_iNumFrames;
-   int          m_iCurFrame;
-   int          m_iFrameDelay;
-   int          m_iFrameTrigger;
-   RECT         m_rcPosition;
-   RECT         m_rcCollision;
-   POINT        m_ptVelocity;
-   int          m_iZOrder;
-   RECT         m_rcBounds;
-   BOUNDSACTION m_baBoundsAction;
-   BOOL         m_bHidden;
-   BOOL         m_bDying;
-   BOOL         m_bOneCycle;
+       Bitmap*      m_pBitmap;
+       int          m_iNumFrames;
+       int          m_iCurFrame;
+       int          m_iFrameDelay;
+       int          m_iFrameTrigger;
+       RECT         m_rcPosition;
+       RECT         m_rcCollision;
+       POINT        m_ptVelocity;
+       int          m_iZOrder;
+       RECT         m_rcBounds;
+       BOUNDSACTION m_baBoundsAction;
+       BOOL         m_bHidden;
+       BOOL         m_bDying;
+       BOOL         m_bOneCycle;
 
    void         UpdateFrame( );
    virtual void CalcCollisionRect( );
@@ -81,9 +81,13 @@ inline void Sprite::UpdateFrame( )
       if ( ++m_iCurFrame >= m_iNumFrames )
       {
          if ( m_bOneCycle )
+         {
             m_bDying = TRUE;
+         }
          else
+         {
             m_iCurFrame = 0;
+         }
       }
    }
 }
@@ -92,6 +96,7 @@ inline void Sprite::CalcCollisionRect( )
 {
    int iXShrink = (m_rcPosition.left - m_rcPosition.right) / 12;
    int iYShrink = (m_rcPosition.top - m_rcPosition.bottom) / 12;
+
    CopyRect(&m_rcCollision, &m_rcPosition);
    InflateRect(&m_rcCollision, iXShrink, iYShrink);
 }
@@ -99,6 +104,7 @@ inline void Sprite::CalcCollisionRect( )
 inline BOOL Sprite::TestCollision(Sprite* pTestSprite)
 {
    RECT& rcTest = pTestSprite->GetCollision( );
+
    return m_rcCollision.left <= rcTest.right &&
       rcTest.left <= m_rcCollision.right &&
       m_rcCollision.top <= rcTest.bottom &&
@@ -108,8 +114,10 @@ inline BOOL Sprite::TestCollision(Sprite* pTestSprite)
 inline BOOL Sprite::IsPointInside(int x, int y)
 {
    POINT ptPoint;
+
    ptPoint.x = x;
    ptPoint.y = y;
+
    return PtInRect(&m_rcPosition, ptPoint);
 }
 

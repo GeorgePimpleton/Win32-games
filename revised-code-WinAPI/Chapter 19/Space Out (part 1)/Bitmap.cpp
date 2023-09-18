@@ -4,10 +4,9 @@
 
 Bitmap::Bitmap( )
    : m_hBitmap(NULL), m_iWidth(0), m_iHeight(0)
-{
-}
+{ }
 
-Bitmap::Bitmap(HDC hDC, PCWSTR szFileName)
+Bitmap::Bitmap(HDC hDC, PCTSTR szFileName)
    : m_hBitmap(NULL), m_iWidth(0), m_iHeight(0)
 {
    Create(hDC, szFileName);
@@ -39,19 +38,22 @@ void Bitmap::Free( )
    }
 }
 
-BOOL Bitmap::Create(HDC hDC, PCWSTR szFileName)
+BOOL Bitmap::Create(HDC hDC, PCTSTR szFileName)
 {
    Free( );
 
    HANDLE hFile = CreateFile(szFileName, GENERIC_READ, FILE_SHARE_READ, NULL,
                              OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
    if ( hFile == INVALID_HANDLE_VALUE )
+   {
       return FALSE;
+   }
 
    BITMAPFILEHEADER  bmfHeader;
    DWORD             dwBytesRead;
    BOOL bOK = ReadFile(hFile, &bmfHeader, sizeof(BITMAPFILEHEADER),
                        &dwBytesRead, NULL);
+
    if ( (!bOK) || (dwBytesRead != sizeof(BITMAPFILEHEADER)) ||
        (bmfHeader.bfType != 0x4D42) )
    {
@@ -60,10 +62,12 @@ BOOL Bitmap::Create(HDC hDC, PCWSTR szFileName)
    }
 
    BITMAPINFO* pBitmapInfo = (new BITMAPINFO);
+
    if ( pBitmapInfo != NULL )
    {
       bOK = ReadFile(hFile, pBitmapInfo, sizeof(BITMAPINFOHEADER),
                      &dwBytesRead, NULL);
+
       if ( (!bOK) || (dwBytesRead != sizeof(BITMAPINFOHEADER)) )
       {
          CloseHandle(hFile);
@@ -77,13 +81,16 @@ BOOL Bitmap::Create(HDC hDC, PCWSTR szFileName)
       PBYTE pBitmapBits;
       m_hBitmap = CreateDIBSection(hDC, pBitmapInfo, DIB_RGB_COLORS,
                                    (PVOID*) &pBitmapBits, NULL, 0);
+
       if ( (m_hBitmap != NULL) && (pBitmapBits != NULL) )
       {
          SetFilePointer(hFile, bmfHeader.bfOffBits, NULL, FILE_BEGIN);
          bOK = ReadFile(hFile, pBitmapBits, pBitmapInfo->bmiHeader.biSizeImage,
                         &dwBytesRead, NULL);
          if ( bOK )
+         {
             return TRUE;
+         }
       }
    }
 
@@ -96,14 +103,21 @@ BOOL Bitmap::Create(HDC hDC, UINT uiResID, HINSTANCE hInstance)
    Free( );
 
    HRSRC hResInfo = FindResource(hInstance, MAKEINTRESOURCE(uiResID), RT_BITMAP);
+
    if ( hResInfo == NULL )
+   {
       return FALSE;
+   }
 
    HGLOBAL hMemBitmap = LoadResource(hInstance, hResInfo);
+
    if ( hMemBitmap == NULL )
+   {
       return FALSE;
+   }
 
    PBYTE pBitmapImage = (BYTE*) LockResource(hMemBitmap);
+
    if ( pBitmapImage == NULL )
    {
       FreeResource(hMemBitmap);
@@ -117,6 +131,7 @@ BOOL Bitmap::Create(HDC hDC, UINT uiResID, HINSTANCE hInstance)
    PBYTE pBitmapBits;
    m_hBitmap = CreateDIBSection(hDC, pBitmapInfo, DIB_RGB_COLORS,
                                 (PVOID*) &pBitmapBits, NULL, 0);
+
    if ( (m_hBitmap != NULL) && (pBitmapBits != NULL) )
    {
       const PBYTE pTempBits = pBitmapImage + pBitmapInfo->bmiHeader.biSize +
@@ -138,7 +153,9 @@ BOOL Bitmap::Create(HDC hDC, int iWidth, int iHeight, COLORREF crColor)
 {
    m_hBitmap = CreateCompatibleBitmap(hDC, iWidth, iHeight);
    if ( m_hBitmap == NULL )
+   {
       return FALSE;
+   }
 
    m_iWidth = iWidth;
    m_iHeight = iHeight;
@@ -174,10 +191,14 @@ void Bitmap::DrawPart(HDC hDC, int x, int y, int xPart, int yPart,
       HBITMAP hOldBitmap = (HBITMAP) SelectObject(hMemDC, m_hBitmap);
 
       if ( bTrans )
+      {
          TransparentBlt(hDC, x, y, wPart, hPart, hMemDC, xPart, yPart,
                         wPart, hPart, crTransColor);
+      }
       else
+      {
          BitBlt(hDC, x, y, wPart, hPart, hMemDC, xPart, yPart, SRCCOPY);
+      }
 
       SelectObject(hMemDC, hOldBitmap);
       DeleteDC(hMemDC);

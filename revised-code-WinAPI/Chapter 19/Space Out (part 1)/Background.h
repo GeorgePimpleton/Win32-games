@@ -6,10 +6,10 @@
 class Background
 {
 protected:
-   Bitmap*  m_pBitmap;
-   COLORREF m_crColor;
    int      m_iWidth;
    int      m_iHeight;
+   COLORREF m_crColor;
+   Bitmap*  m_pBitmap;
 
 public:
             Background(int iWidth, int iHeight, COLORREF crColor);
@@ -19,7 +19,7 @@ public:
    virtual void Update( );
    virtual void Draw(HDC hDC);
 
-   int GetWidth( ) { return m_iWidth; };
+   int GetWidth( )  { return m_iWidth; };
    int GetHeight( ) { return m_iHeight; };
 };
 

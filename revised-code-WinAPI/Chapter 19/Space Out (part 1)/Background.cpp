@@ -27,7 +27,9 @@ void Background::Update( )
 void Background::Draw(HDC hDC)
 {
    if ( m_pBitmap != NULL )
+   {
       m_pBitmap->Draw(hDC, 0, 0);
+   }
    else
    {
       RECT    rect = { 0, 0, m_iWidth, m_iHeight };
@@ -57,12 +59,15 @@ StarryBackground::~StarryBackground( )
 void StarryBackground::Update( )
 {
    int iRGB;
+
    for ( int i = 0; i < m_iNumStars; i++ )
+   {
       if ( (rand( ) % m_iTwinkleDelay) == 0 )
       {
          iRGB = rand( ) % 256;
          m_crStarColors[ i ] = RGB(iRGB, iRGB, iRGB);
       }
+   }
 }
 
 void StarryBackground::Draw(HDC hDC)
@@ -73,5 +78,7 @@ void StarryBackground::Draw(HDC hDC)
    DeleteObject(hBrush);
 
    for ( int i = 0; i < m_iNumStars; i++ )
+   {
       SetPixel(hDC, m_ptStars[ i ].x, m_ptStars[ i ].y, m_crStarColors[ i ]);
+   }
 }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <windows.h>
-#include "Resource.h"
+#include "resource.h"
 #include "GameEngine.h"
 #include "Bitmap.h"
 #include "Sprite.h"
@@ -12,6 +12,7 @@ HINSTANCE         g_hInstance;
 GameEngine*       g_pGame;
 HDC               g_hOffscreenDC;
 HBITMAP           g_hOffscreenBitmap;
+Bitmap*           g_pSplashBitmap;
 Bitmap*           g_pDesertBitmap;
 Bitmap*           g_pCarBitmap;
 Bitmap*           g_pSmCarBitmap;
@@ -28,10 +29,9 @@ Bitmap*           g_pGameOverBitmap;
 StarryBackground* g_pBackground;
 Sprite*           g_pCarSprite;
 int               g_iFireInputDelay;
-int               g_iNumLives;
-int               g_iScore;
-int               g_iDifficulty;
+int               g_iNumLives, g_iScore, g_iDifficulty;
 BOOL              g_bGameOver;
+BOOL              g_bSplash;
 
 void NewGame( );
 void AddAlien( );

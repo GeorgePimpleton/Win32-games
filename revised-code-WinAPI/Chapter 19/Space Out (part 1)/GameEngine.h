@@ -15,8 +15,8 @@ const JOYSTATE  JOY_NONE  = 0x0000L,
                 JOY_FIRE1 = 0x0010L,
                 JOY_FIRE2 = 0x0020L;
 
-int WINAPI        WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow);
-LRESULT CALLBACK  WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+int WINAPI       WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow);
+LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 BOOL GameInitialize(HINSTANCE hInstance);
 void GameStart(HWND hWindow);
@@ -39,8 +39,8 @@ protected:
    static GameEngine* m_pGameEngine;
    HINSTANCE          m_hInstance;
    HWND               m_hWindow;
-   PCWSTR             m_szWindowClass;
-   PCWSTR             m_szTitle;
+   TCHAR              m_szWindowClass[ 64 ];
+   TCHAR              m_szTitle[ 64 ];
    WORD               m_wIcon;
    WORD               m_wSmallIcon;
    int                m_iWidth;
@@ -55,7 +55,7 @@ protected:
    BOOL CheckSpriteCollision(Sprite* pTestSprite);
 
 public:
-            GameEngine(HINSTANCE hInstance, PCWSTR szWindowClass, PCWSTR szTitle,
+            GameEngine(HINSTANCE hInstance, PCTSTR szWindowClass, PCTSTR szTitle,
                        WORD wIcon, WORD wSmallIcon, int iWidth = 640, int iHeight = 480);
    virtual ~GameEngine( );
 
@@ -71,14 +71,14 @@ public:
    void               UpdateSprites( );
    void               CleanupSprites( );
    Sprite*            IsPointInSprite(int x, int y);
-   void               PlayMIDISong(PCWSTR szMIDIFileName = L"", BOOL bRestart = TRUE);
+   void               PlayMIDISong(PCTSTR szMIDIFileName = TEXT(""), BOOL bRestart = TRUE);
    void               PauseMIDISong( );
    void               CloseMIDIPlayer( );
 
    HINSTANCE GetInstance( )               { return m_hInstance; };
    HWND      GetWindow( )                 { return m_hWindow; };
    void      SetWindow(HWND hWindow)      { m_hWindow = hWindow; };
-   PCWSTR    GetTitle( )                  { return m_szTitle; };
+   PCTSTR    GetTitle( )                  { return m_szTitle; };
    WORD      GetIcon( )                   { return m_wIcon; };
    WORD      GetSmallIcon( )              { return m_wSmallIcon; };
    int       GetWidth( )                  { return m_iWidth; };

@@ -8,8 +8,7 @@ extern Bitmap* g_pTimmyBitmap;
 extern Bitmap* g_pTMissileBitmap;
 extern int     g_iDifficulty;
 
-AlienSprite::AlienSprite(Bitmap* pBitmap, RECT& rcBounds,
-                         BOUNDSACTION baBoundsAction)
+AlienSprite::AlienSprite(Bitmap* pBitmap, RECT& rcBounds, BOUNDSACTION baBoundsAction)
    : Sprite(pBitmap, rcBounds, baBoundsAction)
 { }
 
@@ -18,23 +17,23 @@ AlienSprite::~AlienSprite( )
 
 SPRITEACTION AlienSprite::Update( )
 {
-   // Call the base sprite Update() method
    SPRITEACTION saSpriteAction;
    saSpriteAction = Sprite::Update( );
 
-   // See if the alien should fire a missile
    if ( (rand( ) % (g_iDifficulty / 2)) == 0 )
+   {
       saSpriteAction |= SA_ADDSPRITE;
+   }
 
    return saSpriteAction;
 }
 
 Sprite* AlienSprite::AddSprite( )
 {
-   // Create a new missile sprite
    RECT    rcBounds = { 0, 0, 640, 410 };
    RECT    rcPos = GetPosition( );
    Sprite* pSprite = NULL;
+
    if ( GetBitmap( ) == g_pBlobboBitmap )
    {
       // Blobbo missile
