@@ -1,7 +1,6 @@
 # Programming Windows© Games
 [![Language](https://img.shields.io/badge/Language%20-C++-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
-
 ### Background
 Win9X/Me is officially dead!  Windows API ANSI encoding is dead!  Windows XP and later now use Unicode!
 
@@ -21,7 +20,7 @@ There are no executables included, you need to create them by compiling the sour
 There are 3 directories of revised game code sources.  The original WinAPI dir, and two additional dirs for revised code using GDI+ and Direct2D.  Currently the GDI+ & D2D dirs are empty placeholders.
 
 ### Compiler used
-I use Visual Studio 2022 (Community) to update and test the game code, setting the C++ language standard to C++20.  You should think about using it too.  It's free for the Community edition.
+I've used Visual Studio 2015, 2017 and 2022 (Community) to update and test the game code, setting the C++ language standard to C++20.  You should think about using VS2022 as well.  It's free for the Community edition.
 
 [Visual Studio 2022 Community download](https://visualstudio.microsoft.com/vs/community/)
 
@@ -38,6 +37,4 @@ This is a "work in progress", there is no guarantee the entirety of the entire c
 If you find better ways to rework the code don't hesitate to let me know.
 
 ### Musings on Windows© Games
-To be honest the game engine created so many years ago is hard to convert to modern C++ practices.  It isn't bad code, it just resists being modernized.  More and more it is looking like the game engine needs to be rewritten from top to bottom from scratch.  \**UGH*\*
-
-Or I may just need a bigger hammer and crowbar.  \**sigh*\*
+To be honest the game engine created so many years ago is hard to convert to modern C++ practices.  It isn't bad code, it just resists being modernized.  \**UGH*\*
