@@ -43,12 +43,13 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
          {
             if ( !GameEngine::GetEngine( )->GetSleep( ) )
             {
-               static ULONGLONG iTickTrigger = 0;
-               ULONGLONG        iTickCount   = GetTickCount64( );
+               static ULONGLONG tickTrigger = 0;
+               ULONGLONG        tickCount   = GetTickCount64( );
 
-               if ( iTickCount > iTickTrigger )
+               if ( tickCount > tickTrigger )
                {
-                  iTickTrigger = iTickCount + GameEngine::GetEngine( )->GetFrameDelay( );
+                  tickTrigger = tickCount + GameEngine::GetEngine( )->GetFrameDelay( );
+
                   HandleKeys( );
                   GameEngine::GetEngine( )->CheckJoystick( );
                   GameCycle( );
@@ -251,9 +252,9 @@ BOOL GameEngine::InitJoystick( )
       return FALSE;
    }
 
-   JOYINFO jiInfo;
+   JOYINFO joyInfo;
 
-   if ( joyGetPos(JOYSTICKID1, &jiInfo) != JOYERR_UNPLUGGED )
+   if ( joyGetPos(JOYSTICKID1, &joyInfo) != JOYERR_UNPLUGGED )
    {
       m_joyID = JOYSTICKID1;
    }
