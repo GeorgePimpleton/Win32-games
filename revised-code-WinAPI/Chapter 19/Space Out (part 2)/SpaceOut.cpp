@@ -3,7 +3,7 @@
 BOOL GameInitialize(HINSTANCE hInstance)
 {
   g_pGame = new GameEngine(hInstance, TEXT("Space Out"), TEXT("Example Game: Space Out"),
-                           IDI_SPACEOUT, IDI_SPACEOUT_SM, 600, 450);
+                           IDI_ICON, IDI_ICON_SM, 600, 450);
 
   if ( g_pGame == NULL )
   {
