@@ -20,7 +20,7 @@ There are no executables included, you need to create them by compiling the sour
 There are 3 directories of revised game code sources.  The original WinAPI dir, and two additional dirs for revised code using GDI+ and Direct2D.  Currently the GDI+ & D2D dirs are mostly empty placeholders.
 
 ### Compiler used
-I've used Visual Studio 2015, 2017 and 2022 (Community) to update and test the game code, setting the C++ language standard to C++20.  You should think about using VS2022 as well.  It's free for the Community edition.
+I've used Visual Studio 2015, 2017, 2019 and 2022 (Community) to update and test the game code, setting the C++ language standard to C++20.  You should think about using VS2022 as well.  It's free for the Community edition.
 
 [Visual Studio 2022 Community download](https://visualstudio.microsoft.com/vs/community/)
 
