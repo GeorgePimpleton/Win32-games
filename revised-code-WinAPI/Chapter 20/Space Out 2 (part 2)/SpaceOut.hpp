@@ -9,7 +9,7 @@
 #include "AlienSprite.hpp"
 
 HINSTANCE         g_hInstance;
-GameEngine*       g_pGame;
+GameEngine*       g_game;
 HDC               g_hOffscreenDC;
 HBITMAP           g_hOffscreenBitmap;
 Bitmap*           g_pSplashBitmap;
@@ -33,5 +33,5 @@ int               g_iNumLives, g_iScore, g_iDifficulty;
 BOOL              g_bGameOver;
 BOOL              g_bSplash;
 
-void NewGame( );
+void GameNew( );
 void AddAlien( );

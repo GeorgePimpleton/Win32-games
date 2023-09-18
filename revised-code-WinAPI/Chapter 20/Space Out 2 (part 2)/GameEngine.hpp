@@ -5,6 +5,7 @@
 #include <vector>
 using namespace std;
 #include "Sprite.hpp"
+#include "resource.h"
 
 typedef WORD    JOYSTATE;
 const JOYSTATE  JOY_NONE  = 0x0000L,
@@ -17,6 +18,7 @@ const JOYSTATE  JOY_NONE  = 0x0000L,
 
 int WINAPI       WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow);
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+BOOL    CALLBACK DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam);
 
 BOOL GameInitialize(HINSTANCE hInstance);
 void GameStart(HWND hWindow);
@@ -25,6 +27,7 @@ void GameActivate(HWND hWindow);
 void GameDeactivate(HWND hWindow);
 void GamePaint(HDC hDC);
 void GameCycle( );
+void GameMenu(WPARAM wParam);
 void HandleKeys( );
 void MouseButtonDown(int x, int y, BOOL bLeft);
 void MouseButtonUp(int x, int y, BOOL bLeft);

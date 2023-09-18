@@ -2,15 +2,15 @@
 
 BOOL GameInitialize(HINSTANCE hInstance)
 {
-   g_pGame = new GameEngine(hInstance, TEXT("Space Out 2"), TEXT("Space Out 2"),
-                            IDI_SPACEOUT, IDI_SPACEOUT_SM, 600, 450);
+   g_game = new GameEngine(hInstance, TEXT("Space Out 2"), TEXT("Space Out 2"),
+                            IDI_ICON, IDI_ICON_SM, 600, 450);
 
-   if ( g_pGame == NULL )
+   if ( g_game == NULL )
    {
       return FALSE;
    }
 
-   g_pGame->SetFrameRate(30);
+   g_game->SetFrameRate(30);
 
    g_hInstance = hInstance;
 
@@ -23,7 +23,7 @@ void GameStart(HWND hWindow)
 
    g_hOffscreenDC = CreateCompatibleDC(GetDC(hWindow));
    g_hOffscreenBitmap = CreateCompatibleBitmap(GetDC(hWindow),
-                                               g_pGame->GetWidth( ), g_pGame->GetHeight( ));
+                                               g_game->GetWidth( ), g_game->GetHeight( ));
 
    SelectObject(g_hOffscreenDC, g_hOffscreenBitmap);
 
@@ -52,7 +52,7 @@ void GameStart(HWND hWindow)
 
 void GameEnd( )
 {
-   g_pGame->CloseMIDIPlayer( );
+   g_game->CloseMIDIPlayer( );
 
    DeleteObject(g_hOffscreenBitmap);
    DeleteDC(g_hOffscreenDC);
@@ -74,16 +74,16 @@ void GameEnd( )
 
    delete g_pBackground;
 
-   g_pGame->CleanupSprites( );
+   g_game->CleanupSprites( );
 
-   delete g_pGame;
+   delete g_game;
 }
 
 void GameActivate(HWND hWindow)
 {
    if ( !g_bSplash )
    {
-      g_pGame->PlayMIDISong(TEXT(""), FALSE);
+      g_game->PlayMIDISong(TEXT(""), FALSE);
    }
 }
 
@@ -91,7 +91,7 @@ void GameDeactivate(HWND hWindow)
 {
    if ( !g_bSplash )
    {
-      g_pGame->PauseMIDISong( );
+      g_game->PauseMIDISong( );
    }
 }
 
@@ -107,7 +107,7 @@ void GamePaint(HDC hDC)
    }
    else
    {
-      g_pGame->DrawSprites(hDC);
+      g_game->DrawSprites(hDC);
 
       TCHAR szText[ 64 ];
       RECT  rect = { 460, 0, 510, 30 };
@@ -143,17 +143,36 @@ void GameCycle( )
 
       g_pBackground->Update( );
 
-      g_pGame->UpdateSprites( );
+      g_game->UpdateSprites( );
 
-      HWND  hWindow = g_pGame->GetWindow( );
+      HWND  hWindow = g_game->GetWindow( );
       HDC   hDC = GetDC(hWindow);
 
       GamePaint(g_hOffscreenDC);
 
-      BitBlt(hDC, 0, 0, g_pGame->GetWidth( ), g_pGame->GetHeight( ),
+      BitBlt(hDC, 0, 0, g_game->GetWidth( ), g_game->GetHeight( ),
              g_hOffscreenDC, 0, 0, SRCCOPY);
 
       ReleaseDC(hWindow, hDC);
+   }
+}
+
+void GameMenu(WPARAM wParam)
+{
+   switch ( LOWORD(wParam) )
+   {
+   case IDM_GAME_NEW:
+      GameNew( );
+      return;
+
+   case IDM_GAME_EXIT:
+      GameEnd( );
+      PostQuitMessage(0);
+      return;
+
+   case IDM_HELP_ABOUT:
+      DialogBoxW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT), g_game->GetWindow( ), (DLGPROC) DlgProc);
+      return;
    }
 }
 
@@ -181,7 +200,7 @@ void HandleKeys( )
          Sprite* pSprite = new Sprite(g_pMissileBitmap, rcBounds, BA_DIE);
          pSprite->SetPosition(rcPos.left + 15, 400);
          pSprite->SetVelocity(0, -7);
-         g_pGame->AddSprite(pSprite);
+         g_game->AddSprite(pSprite);
 
          PlaySound((PCTSTR) IDW_MISSILE, g_hInstance, SND_ASYNC |
                    SND_RESOURCE | SND_NOSTOP);
@@ -195,11 +214,11 @@ void HandleKeys( )
       if ( g_bSplash )
       {
          g_bSplash = FALSE;
-         NewGame( );
+         GameNew( );
       }
       else if ( g_bGameOver )
       {
-         NewGame( );
+         GameNew( );
       }
    }
 }
@@ -247,7 +266,7 @@ BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
       Sprite* pSprite = new Sprite(g_pLgExplosionBitmap, rcBounds);
       pSprite->SetNumFrames(8, TRUE);
       pSprite->SetPosition(rcPos.left, rcPos.top);
-      g_pGame->AddSprite(pSprite);
+      g_game->AddSprite(pSprite);
 
       g_iScore += 25;
       g_iDifficulty = max(80 - (g_iScore / 20), 20);
@@ -285,7 +304,7 @@ BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
       Sprite* pSprite = new Sprite(g_pLgExplosionBitmap, rcBounds);
       pSprite->SetNumFrames(8, TRUE);
       pSprite->SetPosition(rcPos.left, rcPos.top);
-      g_pGame->AddSprite(pSprite);
+      g_game->AddSprite(pSprite);
 
       g_pCarSprite->SetPosition(300, 405);
 
@@ -314,13 +333,13 @@ void SpriteDying(Sprite* pSpriteDying)
       Sprite* pSprite = new Sprite(g_pSmExplosionBitmap, rcBounds);
       pSprite->SetNumFrames(8, TRUE);
       pSprite->SetPosition(rcPos.left, rcPos.top);
-      g_pGame->AddSprite(pSprite);
+      g_game->AddSprite(pSprite);
    }
 }
 
-void NewGame( )
+void GameNew( )
 {
-   g_pGame->CleanupSprites( );
+   g_game->CleanupSprites( );
 
    g_iFireInputDelay = 0;
    g_iScore = 0;
@@ -331,9 +350,9 @@ void NewGame( )
    RECT rcBounds = { 0, 0, 600, 450 };
    g_pCarSprite = new Sprite(g_pCarBitmap, rcBounds, BA_WRAP);
    g_pCarSprite->SetPosition(300, 405);
-   g_pGame->AddSprite(g_pCarSprite);
+   g_game->AddSprite(g_pCarSprite);
 
-   g_pGame->PlayMIDISong(TEXT("Music.mid"));
+   g_game->PlayMIDISong(TEXT("Music.mid"));
 }
 
 void AddAlien( )
@@ -368,5 +387,5 @@ void AddAlien( )
       break;
    }
 
-   g_pGame->AddSprite(pSprite);
+   g_game->AddSprite(pSprite);
 }

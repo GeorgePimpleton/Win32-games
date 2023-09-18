@@ -7,16 +7,22 @@ GameEngine* GameEngine::m_pGameEngine = NULL;
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
                    PSTR szCmdLine, int iCmdShow)
 {
-   MSG        msg;
-   static int iTickTrigger = 0;
-   int        iTickCount;
-
    if ( GameInitialize(hInstance) )
    {
       if ( !GameEngine::GetEngine( )->Initialize(iCmdShow) )
       {
          return FALSE;
       }
+
+      HACCEL accel = LoadAcceleratorsW(hInstance, MAKEINTRESOURCEW(IDR_ACCELERATORS));
+
+      if ( NULL == accel )
+      {
+         MessageBoxW(NULL, L"Unable to Load the Accelerators!", GameEngine::GetEngine( )->GetTitle( ), MB_OK | MB_ICONERROR);
+         return E_FAIL;
+      }
+
+      MSG msg;
 
       while ( TRUE )
       {
@@ -27,18 +33,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
                break;
             }
 
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+            if ( 0 == TranslateAcceleratorW(GameEngine::GetEngine( )->GetWindow( ), accel, &msg) )
+            {
+               TranslateMessage(&msg);
+               DispatchMessageW(&msg);
+            }
          }
          else
          {
             if ( !GameEngine::GetEngine( )->GetSleep( ) )
             {
-               iTickCount = GetTickCount( );
+               static int iTickTrigger = 0;
+               int        iTickCount   = GetTickCount( );
 
                if ( iTickCount > iTickTrigger )
                {
                   iTickTrigger = iTickCount + GameEngine::GetEngine( )->GetFrameDelay( );
+
                   HandleKeys( );
                   GameEngine::GetEngine( )->CheckJoystick( );
                   GameCycle( );
@@ -57,6 +68,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 LRESULT CALLBACK WndProc(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam)
 {
    return GameEngine::GetEngine( )->HandleEvent(hWindow, msg, wParam, lParam);
+}
+
+BOOL CALLBACK DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+   switch ( msg )
+   {
+   case WM_COMMAND:
+      switch ( LOWORD(wParam) )
+      {
+      case IDOK:
+         EndDialog(dlg, 0);
+         return TRUE;
+      }
+   }
+
+   return FALSE;
 }
 
 BOOL GameEngine::CheckSpriteCollision(Sprite* pTestSprite)
@@ -78,9 +105,6 @@ BOOL GameEngine::CheckSpriteCollision(Sprite* pTestSprite)
    return FALSE;
 }
 
-//-----------------------------------------------------------------
-// GameEngine Constructor(s)/Destructor
-//-----------------------------------------------------------------
 GameEngine::GameEngine(HINSTANCE hInstance, PCTSTR szWindowClass, PCTSTR szTitle,
                        WORD wIcon, WORD wSmallIcon, int iWidth, int iHeight)
 {
@@ -123,7 +147,7 @@ BOOL GameEngine::Initialize(int iCmdShow)
    wndclass.hIconSm       = LoadIcon(m_hInstance, MAKEINTRESOURCE(GetSmallIcon( )));
    wndclass.hCursor       = LoadCursor(NULL, IDC_ARROW);
    wndclass.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1);
-   wndclass.lpszMenuName  = NULL;
+   wndclass.lpszMenuName  = MAKEINTRESOURCEW(IDR_MENU);
    wndclass.lpszClassName = m_szWindowClass;
 
    if ( !RegisterClassEx(&wndclass) )
@@ -134,6 +158,9 @@ BOOL GameEngine::Initialize(int iCmdShow)
    int iWindowWidth = m_iWidth + GetSystemMetrics(SM_CXFIXEDFRAME) * 2;
    int iWindowHeight = m_iHeight + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 +
       GetSystemMetrics(SM_CYCAPTION);
+
+   iWindowWidth += 10;
+   iWindowHeight += 10;
 
    if ( wndclass.lpszMenuName != NULL )
    {
@@ -158,33 +185,40 @@ BOOL GameEngine::Initialize(int iCmdShow)
    return TRUE;
 }
 
-LRESULT GameEngine::HandleEvent(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT GameEngine::HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
    switch ( msg )
    {
    case WM_CREATE:
-      SetWindow(hWindow);
-      GameStart(hWindow);
+      SetWindow(wnd);
+      GameStart(wnd);
       return 0;
 
-   case WM_SETFOCUS:
-      GameActivate(hWindow);
-      SetSleep(FALSE);
+   case WM_ACTIVATE:
+      if ( wParam != WA_INACTIVE )
+      {
+         GameActivate(wnd);
+         SetSleep(FALSE);
+      }
+      else
+      {
+         GameDeactivate(wnd);
+         SetSleep(TRUE);
+      }
       return 0;
 
-   case WM_KILLFOCUS:
-      GameDeactivate(hWindow);
-      SetSleep(TRUE);
+   case WM_COMMAND:
+      GameMenu(wParam);
       return 0;
 
    case WM_PAINT:
       HDC         hDC;
       PAINTSTRUCT ps;
-      hDC = BeginPaint(hWindow, &ps);
+      hDC = BeginPaint(wnd, &ps);
 
       GamePaint(hDC);
 
-      EndPaint(hWindow, &ps);
+      EndPaint(wnd, &ps);
       return 0;
 
    case WM_LBUTTONDOWN:
@@ -212,7 +246,7 @@ LRESULT GameEngine::HandleEvent(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lP
       PostQuitMessage(0);
       return 0;
    }
-   return DefWindowProc(hWindow, msg, wParam, lParam);
+   return DefWindowProc(wnd, msg, wParam, lParam);
 }
 
 BOOL GameEngine::InitJoystick( )
