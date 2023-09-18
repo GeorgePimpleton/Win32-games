@@ -19,7 +19,7 @@ BOOL GameInitialize(HINSTANCE hInstance)
 
 void GameStart(HWND hWindow)
 {
-  srand(GetTickCount());
+  srand((UINT)GetTickCount64());
 
   g_hOffscreenDC = CreateCompatibleDC(GetDC(hWindow));
   g_hOffscreenBitmap = CreateCompatibleBitmap(GetDC(hWindow),
@@ -143,6 +143,25 @@ void GameCycle()
   }
 }
 
+void GameMenu(WPARAM wParam)
+{
+   switch ( LOWORD(wParam) )
+   {
+   case IDM_GAME_NEW:
+      NewGame( );
+      return;
+
+   case IDM_GAME_EXIT:
+      GameEnd( );
+      PostQuitMessage(0);
+      return;
+
+   case IDM_HELP_ABOUT:
+      DialogBoxW(g_pGame->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT), g_pGame->GetWindow( ), (DLGPROC) DlgProc);
+      return;
+   }
+}
+
 void HandleKeys()
 {
   if (!g_bGameOver)
@@ -169,7 +188,7 @@ void HandleKeys()
       pSprite->SetVelocity(0, -7);
       g_pGame->AddSprite(pSprite);
 
-      PlaySound((PCTSTR)IDW_MISSILE, g_hInstance, SND_ASYNC |
+      PlaySound((PCWSTR)IDW_MISSILE, g_hInstance, SND_ASYNC |
         SND_RESOURCE | SND_NOSTOP);
 
       g_iFireInputDelay = 0;
@@ -204,7 +223,7 @@ BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
     (pHittee == g_pMissileBitmap && (pHitter == g_pBlobboBitmap ||
     pHitter == g_pJellyBitmap || pHitter == g_pTimmyBitmap)))
   {
-    PlaySound((PCTSTR)IDW_LGEXPLODE, g_hInstance, SND_ASYNC |
+    PlaySound((PCWSTR)IDW_LGEXPLODE, g_hInstance, SND_ASYNC |
       SND_RESOURCE);
 
     pSpriteHitter->Kill();
@@ -236,7 +255,7 @@ BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
     (pHittee == g_pCarBitmap && (pHitter == g_pBMissileBitmap ||
     pHitter == g_pJMissileBitmap || pHitter == g_pTMissileBitmap)))
   {
-    PlaySound((PCTSTR)IDW_LGEXPLODE, g_hInstance, SND_ASYNC |
+    PlaySound((PCWSTR)IDW_LGEXPLODE, g_hInstance, SND_ASYNC |
       SND_RESOURCE);
 
     if ( pHitter == g_pCarBitmap )
@@ -269,7 +288,7 @@ BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
 
     if (--g_iNumLives == 0)
     {
-      PlaySound((PCTSTR)IDW_GAMEOVER, g_hInstance, SND_ASYNC |
+      PlaySound((PCWSTR)IDW_GAMEOVER, g_hInstance, SND_ASYNC |
         SND_RESOURCE);
       g_bGameOver = TRUE;
     }
@@ -284,7 +303,7 @@ void SpriteDying(Sprite* pSpriteDying)
     pSpriteDying->GetBitmap() == g_pJMissileBitmap ||
     pSpriteDying->GetBitmap() == g_pTMissileBitmap)
   {
-    PlaySound((PCTSTR)IDW_SMEXPLODE, g_hInstance, SND_ASYNC |
+    PlaySound((PCWSTR)IDW_SMEXPLODE, g_hInstance, SND_ASYNC |
       SND_RESOURCE | SND_NOSTOP);
 
     RECT rcBounds = { 0, 0, 600, 450 };

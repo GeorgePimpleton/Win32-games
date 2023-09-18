@@ -4,13 +4,9 @@
 
 GameEngine* GameEngine::m_pGameEngine = NULL;
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-                   PSTR szCmdLine, int iCmdShow)
+int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
+                    _In_ PWSTR szCmdLine, _In_ int iCmdShow)
 {
-   MSG        msg;
-   static int iTickTrigger = 0;
-   int        iTickCount;
-
    if ( GameInitialize(hInstance) )
    {
       if ( !GameEngine::GetEngine( )->Initialize(iCmdShow) )
@@ -18,23 +14,37 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
          return FALSE;
       }
 
+      HACCEL accel = LoadAcceleratorsW(hInstance, MAKEINTRESOURCEW(IDR_ACCELERATORS));
+
+      if ( NULL == accel )
+      {
+         MessageBoxW(NULL, L"Unable to Load the Accelerators!", GameEngine::GetEngine( )->GetTitle( ), MB_OK | MB_ICONERROR);
+         return E_FAIL;
+      }
+
+      MSG msg;
+
       while ( TRUE )
       {
-         if ( PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) )
+         if ( PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE) )
          {
             if ( msg.message == WM_QUIT )
             {
                break;
             }
 
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+            if ( 0 == TranslateAcceleratorW(GameEngine::GetEngine( )->GetWindow( ), accel, &msg) )
+            {
+               TranslateMessage(&msg);
+               DispatchMessageW(&msg);
+            }
          }
          else
          {
             if ( !GameEngine::GetEngine( )->GetSleep( ) )
             {
-               iTickCount = GetTickCount( );
+               static ULONGLONG iTickTrigger = 0;
+               ULONGLONG        iTickCount   = GetTickCount64( );
 
                if ( iTickCount > iTickTrigger )
                {
@@ -59,6 +69,22 @@ LRESULT CALLBACK WndProc(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam)
    return GameEngine::GetEngine( )->HandleEvent(hWindow, msg, wParam, lParam);
 }
 
+BOOL CALLBACK DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+   switch ( msg )
+   {
+   case WM_COMMAND:
+      switch ( LOWORD(wParam) )
+      {
+      case IDOK:
+         EndDialog(dlg, 0);
+         return TRUE;
+      }
+   }
+
+   return FALSE;
+}
+
 BOOL GameEngine::CheckSpriteCollision(Sprite* pTestSprite)
 {
    vector<Sprite*>::iterator siSprite;
@@ -78,30 +104,22 @@ BOOL GameEngine::CheckSpriteCollision(Sprite* pTestSprite)
    return FALSE;
 }
 
-GameEngine::GameEngine(HINSTANCE hInstance, PCTSTR szWindowClass, PCTSTR szTitle,
+GameEngine::GameEngine(HINSTANCE hInstance, PCWSTR szWindowClass, PCWSTR szTitle,
                        WORD wIcon, WORD wSmallIcon, int iWidth, int iHeight)
 {
-   m_pGameEngine = this;
-   m_hInstance = hInstance;
-   m_hWindow = NULL;
-
-   if ( lstrlen(szWindowClass) > 0 )
-   {
-      lstrcpy(m_szWindowClass, szWindowClass);
-   }
-
-   if ( lstrlen(szTitle) > 0 )
-   {
-      lstrcpy(m_szTitle, szTitle);
-   }
-
-   m_wIcon = wIcon;
-   m_wSmallIcon = wSmallIcon;
-   m_iWidth = iWidth;
-   m_iHeight = iHeight;
-   m_iFrameDelay = 50;   // 20 FPS default
-   m_bSleep = TRUE;
-   m_uiJoystickID = 0;
+   m_pGameEngine    = this;
+   m_hInstance      = hInstance;
+   m_hWindow        = NULL;
+   m_szWindowClass  = szWindowClass;
+   m_szTitle        = szTitle;
+   m_wIcon          = wIcon;
+   m_wSmallIcon     = wSmallIcon;
+   m_iWidth         = iWidth;
+   m_iHeight        = iHeight;
+   m_iFrameDelay    = 50;   // 20 FPS default
+   m_bSleep         = TRUE;
+   m_uiJoystickID   = 0;
+   m_rcJoystickTrip = { };
    m_uiMIDIPlayerID = 0;
 
    m_vSprites.reserve(100);
@@ -112,7 +130,7 @@ GameEngine::~GameEngine( )
 
 BOOL GameEngine::Initialize(int iCmdShow)
 {
-   WNDCLASSEX wndclass;
+   WNDCLASSEX wndclass { };
 
    wndclass.cbSize = sizeof(wndclass);
    wndclass.style = CS_HREDRAW | CS_VREDRAW;
@@ -124,7 +142,7 @@ BOOL GameEngine::Initialize(int iCmdShow)
    wndclass.hIconSm = LoadIcon(m_hInstance, MAKEINTRESOURCE(GetSmallIcon( )));
    wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
    wndclass.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1);
-   wndclass.lpszMenuName = NULL;
+   wndclass.lpszMenuName = MAKEINTRESOURCEW(IDR_MENU);
    wndclass.lpszClassName = m_szWindowClass;
 
    if ( !RegisterClassEx(&wndclass) )
@@ -171,14 +189,21 @@ LRESULT GameEngine::HandleEvent(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lP
       GameStart(hWindow);
       return 0;
 
-   case WM_SETFOCUS:
-      GameActivate(hWindow);
-      SetSleep(FALSE);
+   case WM_ACTIVATE:
+      if ( wParam != WA_INACTIVE )
+      {
+         GameActivate(hWindow);
+         SetSleep(FALSE);
+      }
+      else
+      {
+         GameDeactivate(hWindow);
+         SetSleep(TRUE);
+      }
       return 0;
 
-   case WM_KILLFOCUS:
-      GameDeactivate(hWindow);
-      SetSleep(TRUE);
+   case WM_COMMAND:
+      GameMenu(wParam);
       return 0;
 
    case WM_PAINT:
@@ -217,12 +242,6 @@ LRESULT GameEngine::HandleEvent(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lP
       return 0;
    }
    return DefWindowProc(hWindow, msg, wParam, lParam);
-}
-
-void GameEngine::ErrorQuit(PCTSTR szErrorMsg)
-{
-   MessageBox(GetWindow( ), szErrorMsg, TEXT("Critical Error"), MB_OK | MB_ICONERROR);
-   PostQuitMessage(0);
 }
 
 BOOL GameEngine::InitJoystick( )
@@ -413,11 +432,11 @@ Sprite* GameEngine::IsPointInSprite(int x, int y)
    return NULL;
 }
 
-void GameEngine::PlayMIDISong(PCTSTR szMIDIFileName, BOOL bRestart)
+void GameEngine::PlayMIDISong(PCWSTR szMIDIFileName, BOOL bRestart)
 {
    if ( m_uiMIDIPlayerID == 0 )
    {
-      MCI_OPEN_PARMS mciOpenParms;
+      MCI_OPEN_PARMS mciOpenParms { };
 
       mciOpenParms.lpstrDeviceType = TEXT("sequencer");
       mciOpenParms.lpstrElementName = szMIDIFileName;
@@ -435,7 +454,7 @@ void GameEngine::PlayMIDISong(PCTSTR szMIDIFileName, BOOL bRestart)
 
    if ( bRestart )
    {
-      MCI_SEEK_PARMS mciSeekParms;
+      MCI_SEEK_PARMS mciSeekParms { };
 
       if ( mciSendCommand(m_uiMIDIPlayerID, MCI_SEEK, MCI_SEEK_TO_START,
                           (DWORD_PTR) &mciSeekParms) != 0 )
@@ -444,7 +463,7 @@ void GameEngine::PlayMIDISong(PCTSTR szMIDIFileName, BOOL bRestart)
       }
    }
 
-   MCI_PLAY_PARMS mciPlayParms;
+   MCI_PLAY_PARMS mciPlayParms { };
 
    if ( mciSendCommand(m_uiMIDIPlayerID, MCI_PLAY, 0,
                        (DWORD_PTR) &mciPlayParms) != 0 )
