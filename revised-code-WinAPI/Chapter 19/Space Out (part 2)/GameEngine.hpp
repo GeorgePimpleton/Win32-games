@@ -23,6 +23,7 @@ BOOL    CALLBACK DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam);
 
 BOOL GameInitialize(HINSTANCE inst);
 void GameStart(HWND wnd);
+void GameNew( );
 void GameEnd( );
 void GameActivate(HWND wnd);
 void GameDeactivate(HWND wnd);

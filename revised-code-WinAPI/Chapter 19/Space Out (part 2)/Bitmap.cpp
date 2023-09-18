@@ -6,16 +6,16 @@ Bitmap::Bitmap( )
    : m_bitmap(NULL), m_width(0), m_height(0)
 { }
 
-Bitmap::Bitmap(HDC dc, PCWSTR fileName)
+Bitmap::Bitmap(PCWSTR fileName)
    : m_bitmap(NULL), m_width(0), m_height(0)
 {
-   Create(dc, fileName);
+   Create(fileName);
 }
 
-Bitmap::Bitmap(HDC dc, UINT resID, HINSTANCE inst)
+Bitmap::Bitmap(UINT resID, HINSTANCE inst)
    : m_bitmap(NULL), m_width(0), m_height(0)
 {
-   Create(dc, resID, inst);
+   Create(resID, inst);
 }
 
 Bitmap::Bitmap(HDC dc, int width, int height, COLORREF color)
@@ -38,113 +38,50 @@ void Bitmap::Free( )
    }
 }
 
-BOOL Bitmap::Create(HDC dc, PCWSTR fileName)
+BOOL Bitmap::Create(PCWSTR fileName)
 {
-   // Free any previous bitmap info
    Free( );
 
-   // Open the bitmap file
-   HANDLE hFile = CreateFile(fileName, GENERIC_READ, FILE_SHARE_READ, NULL,
-                             OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-   if ( hFile == INVALID_HANDLE_VALUE )
-      return FALSE;
+   m_bitmap = (HBITMAP) LoadImageW(NULL, fileName, IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION | LR_LOADFROMFILE);
 
-   // Read the bitmap file header
-   BITMAPFILEHEADER  bmfHeader;
-   DWORD             dwBytesRead;
-   BOOL bOK = ReadFile(hFile, &bmfHeader, sizeof(BITMAPFILEHEADER),
-                       &dwBytesRead, NULL);
-   if ( (!bOK) || (dwBytesRead != sizeof(BITMAPFILEHEADER)) ||
-       (bmfHeader.bfType != 0x4D42) )
+   if ( NULL == m_bitmap )
    {
-      CloseHandle(hFile);
+      Free( );
+
       return FALSE;
    }
 
-   BITMAPINFO* bitmapInfo = (new BITMAPINFO);
-   if ( bitmapInfo != NULL )
-   {
-      // Read the bitmap info header
-      bOK = ReadFile(hFile, bitmapInfo, sizeof(BITMAPINFOHEADER),
-                     &dwBytesRead, NULL);
-      if ( (!bOK) || (dwBytesRead != sizeof(BITMAPINFOHEADER)) )
-      {
-         CloseHandle(hFile);
-         Free( );
-         return FALSE;
-      }
+   BITMAP bitmap;
 
-      // Store the width and height of the bitmap
-      m_width = (int) bitmapInfo->bmiHeader.biWidth;
-      m_height = (int) bitmapInfo->bmiHeader.biHeight;
+   GetObjectW(m_bitmap, sizeof(BITMAP), &bitmap);
 
-      // Get a handle to the bitmap and copy the image bits
-      PBYTE bitmapBits;
-      m_bitmap = CreateDIBSection(dc, bitmapInfo, DIB_RGB_COLORS,
-                                   (PVOID*) &bitmapBits, NULL, 0);
-      if ( (m_bitmap != NULL) && (bitmapBits != NULL) )
-      {
-         SetFilePointer(hFile, bmfHeader.bfOffBits, NULL, FILE_BEGIN);
-         bOK = ReadFile(hFile, bitmapBits, bitmapInfo->bmiHeader.biSizeImage,
-                        &dwBytesRead, NULL);
-         if ( bOK )
-            return TRUE;
-      }
-   }
+   m_width = bitmap.bmWidth;
+   m_height = bitmap.bmHeight;
 
-   // Something went wrong, so cleanup everything
-   Free( );
-   return FALSE;
+   return TRUE;
 }
 
-BOOL Bitmap::Create(HDC dc, UINT resID, HINSTANCE inst)
+BOOL Bitmap::Create(UINT resID, HINSTANCE inst)
 {
    Free( );
 
-   // Find the bitmap resource
-   HRSRC hResInfo = FindResource(inst, MAKEINTRESOURCE(resID), RT_BITMAP);
-   if ( hResInfo == NULL )
-      return FALSE;
+   m_bitmap = (HBITMAP) LoadImageW(GetModuleHandleW(NULL), MAKEINTRESOURCEW(resID), IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION);
 
-   // Load the bitmap resource
-   HGLOBAL hMemBitmap = LoadResource(inst, hResInfo);
-   if ( hMemBitmap == NULL )
-      return FALSE;
-
-   // Lock the resource and access the entire bitmap image
-   PBYTE bitmapImage = (BYTE*) LockResource(hMemBitmap);
-   if ( bitmapImage == NULL )
+   if ( NULL == m_bitmap )
    {
-      FreeResource(hMemBitmap);
+      Free( );
+
       return FALSE;
    }
 
-   // Store the width and height of the bitmap
-   BITMAPINFO* bitmapInfo = (BITMAPINFO*) bitmapImage;
-   m_width = (int) bitmapInfo->bmiHeader.biWidth;
-   m_height = (int) bitmapInfo->bmiHeader.biHeight;
+   BITMAP bitmap;
 
-   // Get a handle to the bitmap and copy the image bits
-   PBYTE bitmapBits;
-   m_bitmap = CreateDIBSection(dc, bitmapInfo, DIB_RGB_COLORS,
-                                (PVOID*) &bitmapBits, NULL, 0);
-   if ( (m_bitmap != NULL) && (bitmapBits != NULL) )
-   {
-      const PBYTE pTempBits = bitmapImage + bitmapInfo->bmiHeader.biSize +
-         bitmapInfo->bmiHeader.biClrUsed * sizeof(RGBQUAD);
-      CopyMemory(bitmapBits, pTempBits, bitmapInfo->bmiHeader.biSizeImage);
+   GetObjectW(m_bitmap, sizeof(BITMAP), &bitmap);
 
-      // Unlock and free the bitmap graphics object
-      UnlockResource(hMemBitmap);
-      FreeResource(hMemBitmap);
-      return TRUE;
-   }
+   m_width = bitmap.bmWidth;
+   m_height = bitmap.bmHeight;
 
-   // Something went wrong, so cleanup everything
-   UnlockResource(hMemBitmap);
-   FreeResource(hMemBitmap);
-   Free( );
-   return FALSE;
+   return TRUE;
 }
 
 BOOL Bitmap::Create(HDC dc, int width, int height, COLORREF color)
