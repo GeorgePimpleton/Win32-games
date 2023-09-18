@@ -1,9 +1,8 @@
-#include "Resource.h"
+#include "resource.h"
 
 IDI_SPACEOUT          ICON         "Res/SpaceOut.ico"
 IDI_SPACEOUT_SM       ICON         "Res/SpaceOut_sm.ico"
 
-IDB_SPLASH            BITMAP       "Res/Splash.bmp"
 IDB_DESERT            BITMAP       "Res/Desert.bmp"
 IDB_CAR               BITMAP       "Res/Car.bmp"
 IDB_SMCAR             BITMAP       "Res/SmCar.bmp"

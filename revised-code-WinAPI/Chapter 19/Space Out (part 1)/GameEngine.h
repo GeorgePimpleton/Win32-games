@@ -15,8 +15,8 @@ const JOYSTATE  JOY_NONE  = 0x0000L,
                 JOY_FIRE1 = 0x0010L,
                 JOY_FIRE2 = 0x0020L;
 
-int WINAPI       WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow);
-LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+int WINAPI        WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow);
+LRESULT CALLBACK  WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 BOOL GameInitialize(HINSTANCE hInstance);
 void GameStart(HWND hWindow);
@@ -55,13 +55,14 @@ protected:
    BOOL CheckSpriteCollision(Sprite* pTestSprite);
 
 public:
-            GameEngine(HINSTANCE hInstance, PCTSTR szWindowClass, PCTSTR szTitle,
-                       WORD wIcon, WORD wSmallIcon, int iWidth = 640, int iHeight = 480);
+         GameEngine(HINSTANCE hInstance, PCTSTR szWindowClass, PCTSTR szTitle,
+                    WORD wIcon, WORD wSmallIcon, int iWidth = 640, int iHeight = 480);
    virtual ~GameEngine( );
 
    static GameEngine* GetEngine( )                       { return m_pGameEngine; };
    BOOL               Initialize(int iCmdShow);
    LRESULT            HandleEvent(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam);
+   void               ErrorQuit(PCTSTR szErrorMsg);
    BOOL               InitJoystick( );
    void               CaptureJoystick( );
    void               ReleaseJoystick( );
@@ -84,7 +85,6 @@ public:
    int       GetWidth( )                  { return m_iWidth; };
    int       GetHeight( )                 { return m_iHeight; };
    int       GetFrameDelay( )             { return m_iFrameDelay; };
-   void      SetFrameRate(int iFrameRate) { m_iFrameDelay = 1000 / iFrameRate; };
-   BOOL      GetSleep( )                  { return m_bSleep; };
+   void      SetFrameRate(int iFrameRate) { m_iFrameDelay = 1000 / iFrameRate; }; BOOL GetSleep( ) { return m_bSleep; };
    void      SetSleep(BOOL bSleep)        { m_bSleep = bSleep; };
 };
