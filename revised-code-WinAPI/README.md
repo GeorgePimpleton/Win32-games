@@ -40,7 +40,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 24. Example Game: Stunt Jumper
 ----
 ### Caveat on the original 2003 & 2004 source code
-Since the original source code for the Win Games was written in 2003/2004 the game examples aren't likely to compile with a modern compiler such as Visual Studio 2022. The WinAPI has changed a lot to work for x64 processors as well as other changes for the 21st Century.  The first pass in each chapter will be the bare minimum needed to work now for both x86 (32-bit) and x64.
+Since the original source code for the Win Games was written in 2003/2004 the game examples aren't likely to compile with a modern compiler such as Visual Studio 2022. The WinAPI has changed a lot to work for x64 processors as well as other changes for the 21st Century.  The first pass in each chapter will be the bare minimum needed to work now for both x86 (32-bit) and x64, with some minor reformatting and excessive comment cleanup.
 
 There is a difference in the frame layout for the animated sprites between the two books.  I used the 2003 source code for the first animated sprite example, for all the rest of the examples that have versions in both books I use the source from the 2004 book.  The last two examples are only in the 2004 book
 
