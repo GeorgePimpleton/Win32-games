@@ -6,16 +6,16 @@ Bitmap::Bitmap( )
    : m_bitmap(NULL), m_width(0), m_height(0)
 { }
 
-Bitmap::Bitmap(HDC dc, PCWSTR fileName)
+Bitmap::Bitmap(PCWSTR fileName)
    : m_bitmap(NULL), m_width(0), m_height(0)
 {
-   Create(dc, fileName);
+   Create(fileName);
 }
 
-Bitmap::Bitmap(HDC dc, UINT resID, HINSTANCE inst)
+Bitmap::Bitmap(UINT resID, HINSTANCE inst)
    : m_bitmap(NULL), m_width(0), m_height(0)
 {
-   Create(dc, resID, inst);
+   Create(resID, inst);
 }
 
 Bitmap::Bitmap(HDC dc, int width, int height, COLORREF color)
@@ -38,7 +38,7 @@ void Bitmap::Free( )
    }
 }
 
-BOOL Bitmap::Create(HDC dc, PCWSTR fileName)
+BOOL Bitmap::Create(PCWSTR fileName)
 {
    Free( );
 
@@ -61,7 +61,7 @@ BOOL Bitmap::Create(HDC dc, PCWSTR fileName)
    return TRUE;
 }
 
-BOOL Bitmap::Create(HDC dc, UINT resID, HINSTANCE inst)
+BOOL Bitmap::Create(UINT resID, HINSTANCE inst)
 {
    Free( );
 

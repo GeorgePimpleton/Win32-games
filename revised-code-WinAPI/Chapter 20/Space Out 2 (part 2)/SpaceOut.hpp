@@ -29,7 +29,7 @@ std::unique_ptr<Bitmap>           g_smallExplosionBitmap;
 std::unique_ptr<Bitmap>           g_largeExplosionBitmap;
 std::unique_ptr<Bitmap>           g_gameOverBitmap;
 std::unique_ptr<StarryBackground> g_background;
-std::unique_ptr<Sprite>           g_carSprite;
+Sprite*                           g_carSprite;
 int                               g_fireInputDelay;
 int                               g_numLives;
 int                               g_score;

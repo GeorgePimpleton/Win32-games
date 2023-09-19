@@ -29,20 +29,20 @@ void GameStart(HWND wnd)
 
    HDC dc = GetDC(wnd);
 
-   g_splashBitmap         = std::make_unique<Bitmap>(dc, IDB_SPLASH, g_inst);
-   g_desertBitmap         = std::make_unique<Bitmap>(dc, IDB_DESERT, g_inst);
-   g_carBitmap            = std::make_unique<Bitmap>(dc, IDB_CAR, g_inst);
-   g_smallCarBitmap       = std::make_unique<Bitmap>(dc, IDB_SMCAR, g_inst);
-   g_missileBitmap        = std::make_unique<Bitmap>(dc, IDB_MISSILE, g_inst);
-   g_BlobboBitmap         = std::make_unique<Bitmap>(dc, IDB_BLOBBO, g_inst);
-   g_BMissileBitmap       = std::make_unique<Bitmap>(dc, IDB_BMISSILE, g_inst);
-   g_JellyBitmap          = std::make_unique<Bitmap>(dc, IDB_JELLY, g_inst);
-   g_JMissileBitmap       = std::make_unique<Bitmap>(dc, IDB_JMISSILE, g_inst);
-   g_TimmyBitmap          = std::make_unique<Bitmap>(dc, IDB_TIMMY, g_inst);
-   g_TMissileBitmap       = std::make_unique<Bitmap>(dc, IDB_TMISSILE, g_inst);
-   g_smallExplosionBitmap = std::make_unique<Bitmap>(dc, IDB_SMEXPLOSION, g_inst);
-   g_largeExplosionBitmap = std::make_unique<Bitmap>(dc, IDB_LGEXPLOSION, g_inst);
-   g_gameOverBitmap       = std::make_unique<Bitmap>(dc, IDB_GAMEOVER, g_inst);
+   g_splashBitmap         = std::make_unique<Bitmap>(IDB_SPLASH, g_inst);
+   g_desertBitmap         = std::make_unique<Bitmap>(IDB_DESERT, g_inst);
+   g_carBitmap            = std::make_unique<Bitmap>(IDB_CAR, g_inst);
+   g_smallCarBitmap       = std::make_unique<Bitmap>(IDB_SMCAR, g_inst);
+   g_missileBitmap        = std::make_unique<Bitmap>(IDB_MISSILE, g_inst);
+   g_BlobboBitmap         = std::make_unique<Bitmap>(IDB_BLOBBO, g_inst);
+   g_BMissileBitmap       = std::make_unique<Bitmap>(IDB_BMISSILE, g_inst);
+   g_JellyBitmap          = std::make_unique<Bitmap>(IDB_JELLY, g_inst);
+   g_JMissileBitmap       = std::make_unique<Bitmap>(IDB_JMISSILE, g_inst);
+   g_TimmyBitmap          = std::make_unique<Bitmap>(IDB_TIMMY, g_inst);
+   g_TMissileBitmap       = std::make_unique<Bitmap>(IDB_TMISSILE, g_inst);
+   g_smallExplosionBitmap = std::make_unique<Bitmap>(IDB_SMEXPLOSION, g_inst);
+   g_largeExplosionBitmap = std::make_unique<Bitmap>(IDB_LGEXPLOSION, g_inst);
+   g_gameOverBitmap       = std::make_unique<Bitmap>(IDB_GAMEOVER, g_inst);
 
    g_background = std::make_unique<StarryBackground>(600, 450);
 
@@ -293,8 +293,11 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
      if ( --g_numLives == 0 )
       {
          PlaySoundW((PCWSTR) IDW_GAMEOVER, g_inst, SND_ASYNC | SND_RESOURCE);
+
          g_gameOver = TRUE;
-      }
+
+         EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_ENABLED);
+     }
    }
 
    return FALSE;
@@ -328,9 +331,11 @@ void GameNew( )
    g_gameOver       = FALSE;
 
    RECT bounds  = { 0, 0, 600, 450 };
-   g_carSprite = std::make_unique<Sprite>(g_carBitmap.get( ), bounds, BA_WRAP);
+   g_carSprite = new Sprite(g_carBitmap.get( ), bounds, BA_WRAP);
    g_carSprite->SetPosition(300, 405);
-   g_game->AddSprite(g_carSprite.get( ));
+   g_game->AddSprite(g_carSprite);
+
+   EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
 
    g_game->PlayMIDISong(L"Music.mid");
 }
