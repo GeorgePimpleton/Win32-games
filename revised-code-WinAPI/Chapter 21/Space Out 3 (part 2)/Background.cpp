@@ -1,107 +1,132 @@
-//-----------------------------------------------------------------
-// Background Object
-// C++ Source - Background.cpp
-//-----------------------------------------------------------------
+#include "Background.hpp"
 
-//-----------------------------------------------------------------
-// Include Files
-//-----------------------------------------------------------------
-#include "Background.h"
-
-//-----------------------------------------------------------------
-// Background Constructor(s)/Destructor
-//-----------------------------------------------------------------
-Background::Background(int iWidth, int iHeight, COLORREF crColor)
+Background::Background(int width, int height, COLORREF color)
 {
-  // Initialize the member variables
-  m_iWidth = iWidth;
-  m_iHeight = iHeight;
-  m_crColor = crColor;
-  m_pBitmap = NULL;
+   m_width  = width;
+   m_height = height;
+   m_color  = color;
+   m_bitmap = NULL;
 }
 
-Background::Background(Bitmap* pBitmap)
+Background::Background(Bitmap* bitmap)
 {
-  // Initialize the member variables
-  m_crColor = 0;
-  m_pBitmap = pBitmap;
-  m_iWidth = pBitmap->GetWidth();
-  m_iHeight = pBitmap->GetHeight();
+   m_color  = 0;
+   m_bitmap = bitmap;
+   m_width  = bitmap-> GetWidth( );
+   m_height = bitmap-> GetHeight( );
 }
 
-Background::~Background()
+Background::~Background( )
+{ }
+
+void Background::Update( )
 {
+   // do nothing since the basic background is not animated
 }
 
-//-----------------------------------------------------------------
-// Background General Methods
-//-----------------------------------------------------------------
-void Background::Update()
+void Background::Draw(HDC dc)
 {
-  // Do nothing since the basic background is not animated
+   if ( m_bitmap != NULL )
+   {
+      m_bitmap->Draw(dc, 0, 0);
+   }
+   else
+   {
+      HBRUSH brush = CreateSolidBrush(m_color);
+      RECT   rect  = { 0, 0, m_width, m_height };
+
+      FillRect(dc, &rect, brush);
+
+      DeleteObject(brush);
+   }
 }
 
-void Background::Draw(HDC hDC)
+StarryBackground::StarryBackground(int width, int height, int numStars, int twinkleDelay)
+   : Background(width, height, 0)
 {
-  // Draw the background
-  if (m_pBitmap != NULL)
-    m_pBitmap->Draw(hDC, 0, 0);
-  else
-  {
-    RECT    rect = { 0, 0, m_iWidth, m_iHeight };
-    HBRUSH  hBrush = CreateSolidBrush(m_crColor);
-    FillRect(hDC, &rect, hBrush);
-    DeleteObject(hBrush);
-  }
+   m_numStars     = min(numStars, 100);
+   m_twinkleDelay = twinkleDelay;
+
+   for ( int i = 0; i < m_numStars; i++ )
+   {
+      m_stars[ i ].x    = rtk::rand(0, width);
+      m_stars[ i ].y    = rtk::rand(0, height);
+      m_starColors[ i ] = RGB(128, 128, 128);
+
+      m_sizeStars[ i ] = SS_SMALL;
+
+      if ( rtk::rand(0, 100) < 20 )
+      {
+         m_sizeStars[ i ] = SS_MEDIUM;
+      }
+      else if ( rtk::rand(0, 100) < 5 )
+      {
+         m_sizeStars[ i ] = SS_LARGE;
+      }
+   }
 }
 
-//-----------------------------------------------------------------
-// StarryBackground Constructor
-//-----------------------------------------------------------------
-StarryBackground::StarryBackground(int iWidth, int iHeight, int iNumStars,
-  int iTwinkleDelay) : Background(iWidth, iHeight, 0)
-{
-  // Initialize the member variables
-  m_iNumStars = min(iNumStars, 100);
-  m_iTwinkleDelay = iTwinkleDelay;
+StarryBackground::~StarryBackground( )
+{ }
 
-  // Create the stars
-  for (int i = 0; i < iNumStars; i++)
-  {
-    m_ptStars[i].x = rand() % iWidth;
-    m_ptStars[i].y = rand() % iHeight;
-    m_crStarColors[i] = RGB(128, 128, 128);
-  }
+void StarryBackground::Update( )
+{
+   for ( int i = 0; i < m_numStars; i++ )
+   {
+      if ( 0 == (rtk::rand(0, m_twinkleDelay)) )
+      {
+         int iRGB          = rtk::rand(0, 255);
+         m_starColors[ i ] = RGB(iRGB, iRGB, iRGB);
+         m_sizeStars[ i ]  = SS_SMALL;
+
+         if ( rtk::rand(0, 100) < 20 )
+         {
+            m_sizeStars[ i ] = SS_MEDIUM;
+         }
+         else if ( rtk::rand(0, 100) < 5 )
+         {
+            m_sizeStars[ i ] = SS_LARGE;
+         }
+      }
+   }
 }
 
-StarryBackground::~StarryBackground()
+void StarryBackground::Draw(HDC dc)
 {
-}
+   HBRUSH brush = CreateSolidBrush(RGB(0, 0, 0));
+   RECT   rect  = { 0, 0, m_width, m_height };
 
-//-----------------------------------------------------------------
-// StarryBackground General Methods
-//-----------------------------------------------------------------
-void StarryBackground::Update()
-{
-  // Randomly change the shade of the stars so that they twinkle
-  int iRGB;
-  for (int i = 0; i < m_iNumStars; i++)
-    if ((rand() % m_iTwinkleDelay) == 0)
-    {
-      iRGB = rand() % 256;
-      m_crStarColors[i] = RGB(iRGB, iRGB, iRGB);
-    }
-}
+   FillRect(dc, &rect, brush);
+   DeleteObject(brush);
 
-void StarryBackground::Draw(HDC hDC)
-{
-  // Draw the solid black background
-  RECT    rect = { 0, 0, m_iWidth, m_iHeight };
-  HBRUSH  hBrush = CreateSolidBrush(RGB(0, 0, 0));
-  FillRect(hDC, &rect, hBrush);
-  DeleteObject(hBrush);
+   for ( int i = 0; i < m_numStars; i++ )
+   {
+      SetPixel(dc, m_stars[ i ].x, m_stars[ i ].y, m_starColors[ i ]);
 
-  // Draw the stars
-  for (int i = 0; i < m_iNumStars; i++)
-    SetPixel(hDC, m_ptStars[i].x, m_ptStars[i].y, m_crStarColors[i]);
+      if ( m_sizeStars[ i ] == SS_MEDIUM )
+      {
+         for ( int x = -1; x < 2; x++ )
+         {
+            for ( int y = -1; y < 2; y++ )
+            {
+               SetPixel(dc, m_stars[ i ].x + x, m_stars[ i ].y + y, m_starColors[ i ]);
+            }
+         }
+      }
+      else if ( m_sizeStars[ i ] == SS_LARGE )
+      {
+         for ( int x = -2; x < 3; x++ )
+         {
+            for ( int y = -2; y < 3; y++ )
+            {
+               if ( (abs(x) == 2) && (abs(y) == 2) )
+               {
+                  break;
+               }
+
+               SetPixel(dc, m_stars[ i ].x + x, m_stars[ i ].y + y, m_starColors[ i ]);
+            }
+         }
+      }
+   }
 }

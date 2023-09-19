@@ -1,79 +1,58 @@
-//-----------------------------------------------------------------
-// Alien Sprite Object
-// C++ Source - AlienSprite.cpp
-//-----------------------------------------------------------------
+#include "AlienSprite.hpp"
 
-//-----------------------------------------------------------------
-// Include Files
-//-----------------------------------------------------------------
-#include "AlienSprite.h"
+extern std::unique_ptr<Bitmap> g_BlobboBitmap;
+extern std::unique_ptr<Bitmap> g_BMissileBitmap;
+extern std::unique_ptr<Bitmap> g_JellyBitmap;
+extern std::unique_ptr<Bitmap> g_JMissileBitmap;
+extern std::unique_ptr<Bitmap> g_TimmyBitmap;
+extern std::unique_ptr<Bitmap> g_TMissileBitmap;
+extern int     g_difficulty;
 
-//-----------------------------------------------------------------
-// External Global Variables
-//-----------------------------------------------------------------
-extern Bitmap* g_pBlobboBitmap;
-extern Bitmap* g_pBMissileBitmap;
-extern Bitmap* g_pJellyBitmap;
-extern Bitmap* g_pJMissileBitmap;
-extern Bitmap* g_pTimmyBitmap;
-extern Bitmap* g_pTMissileBitmap;
-extern int     g_iDifficulty;
+AlienSprite::AlienSprite(Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction)
+   : Sprite(bitmap, bounds, boundsAction)
+{ }
 
-//-----------------------------------------------------------------
-// AlienSprite Constructor(s)/Destructor
-//-----------------------------------------------------------------
-AlienSprite::AlienSprite(Bitmap* pBitmap, RECT& rcBounds,
-  BOUNDSACTION baBoundsAction) : Sprite(pBitmap, rcBounds,
-  baBoundsAction)
+AlienSprite::~AlienSprite( )
+{ }
+
+SPRITEACTION AlienSprite::Update( )
 {
+   SPRITEACTION spriteAction = Sprite::Update( );
+
+   if ( (rtk::rand(0, g_difficulty / 2)) == 0 )
+   {
+      spriteAction |= SA_ADDSPRITE;
+   }
+
+   return spriteAction;
 }
 
-AlienSprite::~AlienSprite()
+Sprite* AlienSprite::AddSprite( )
 {
-}
+   RECT    bounds = { 0, 0, 640, 410 };
+   RECT    pos    = GetPosition( );
+   Sprite* sprite = NULL;
 
-//-----------------------------------------------------------------
-// AlienSprite General Methods
-//-----------------------------------------------------------------
-SPRITEACTION AlienSprite::Update()
-{
-  // Call the base sprite Update() method
-  SPRITEACTION saSpriteAction;
-  saSpriteAction = Sprite::Update();
+   if ( GetBitmap( ) == g_BlobboBitmap.get( ) )
+   {
+      // Blobbo missile
+      sprite = new Sprite(g_BMissileBitmap.get( ), bounds, BA_DIE);
+      sprite->SetVelocity(0, 7);
+   }
+   else if ( GetBitmap( ) == g_JellyBitmap.get( ) )
+   {
+      // Jelly missile
+      sprite = new Sprite(g_JMissileBitmap.get( ), bounds, BA_DIE);
+      sprite->SetVelocity(0, 5);
+   }
+   else
+   {
+      // Timmy missile
+      sprite = new Sprite(g_TMissileBitmap.get( ), bounds, BA_DIE);
+      sprite->SetVelocity(0, 3);
+   }
 
-  // See if the alien should fire a missile
-  if ((rand() % (g_iDifficulty / 2)) == 0)
-    saSpriteAction |= SA_ADDSPRITE;
-
-  return saSpriteAction;
-}
-
-Sprite* AlienSprite::AddSprite()
-{
-  // Create a new missile sprite
-  RECT    rcBounds = { 0, 0, 640, 410 };
-  RECT    rcPos = GetPosition();
-  Sprite* pSprite = NULL;
-  if (GetBitmap() == g_pBlobboBitmap)
-  {
-    // Blobbo missile
-    pSprite = new Sprite(g_pBMissileBitmap, rcBounds, BA_DIE);
-    pSprite->SetVelocity(0, 7);
-  }
-  else if (GetBitmap() == g_pJellyBitmap)
-  {
-    // Jelly missile
-    pSprite = new Sprite(g_pJMissileBitmap, rcBounds, BA_DIE);
-    pSprite->SetVelocity(0, 5);
-  }
-  else
-  {
-    // Timmy missile
-    pSprite = new Sprite(g_pTMissileBitmap, rcBounds, BA_DIE);
-    pSprite->SetVelocity(0, 3);
-  }
-
-  // Set the missile sprite's position and return it
-  pSprite->SetPosition(rcPos.left + (GetWidth() / 2), rcPos.bottom);
-  return pSprite;
+   // Set the missile sprite's position and return it
+   sprite->SetPosition(pos.left + (GetWidth( ) / 2), pos.bottom);
+   return sprite;
 }
