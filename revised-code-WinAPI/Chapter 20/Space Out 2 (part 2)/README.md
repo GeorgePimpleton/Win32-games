@@ -1,4 +1,4 @@
-# Win32 Games, Chapter 20
+# Win32 Games, Chapter 20, part 2
 [![Language](https://img.shields.io/badge/Language%20-C++-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 ### Space Out 2: Adding Pizzazz to Your Game with a Splash Screen
