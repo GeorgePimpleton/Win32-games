@@ -71,7 +71,7 @@ void GameEnd()
 
   // Cleanup the offscreen device context and bitmap
   DeleteObject(g_hOffscreenBitmap);
-  DeleteDC(g_hOffscreenDC);  
+  DeleteDC(g_hOffscreenDC);
 
   // Cleanup the bitmaps
   delete g_pSplashBitmap;
@@ -134,7 +134,7 @@ void GamePaint(HDC hDC)
     // Draw the score
     TCHAR szText[64];
     RECT  rect = { 460, 0, 510, 30 };
-    wsprintf(szText, "%d", g_iScore);
+    wsprintf(szText, TEXT("%d"), g_iScore);
     SetBkMode(hDC, TRANSPARENT);
     SetTextColor(hDC, RGB(255, 255, 255));
     DrawText(hDC, szText, -1, &rect, DT_SINGLELINE | DT_RIGHT | DT_VCENTER);
@@ -222,7 +222,7 @@ void HandleKeys()
       g_pGame->AddSprite(pSprite);
 
       // Play the missile (fire) sound
-      PlaySound((LPCSTR)IDW_MISSILE, g_hInstance, SND_ASYNC |
+      PlaySound((PCTSTR)IDW_MISSILE, g_hInstance, SND_ASYNC |
         SND_RESOURCE | SND_NOSTOP);
 
       // Reset the input delay
@@ -272,7 +272,7 @@ BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
     pHitter == g_pJellyBitmap || pHitter == g_pTimmyBitmap)))
   {
     // Play the small explosion sound
-    PlaySound((LPCSTR)IDW_LGEXPLODE, g_hInstance, SND_ASYNC |
+    PlaySound((PCTSTR)IDW_LGEXPLODE, g_hInstance, SND_ASYNC |
       SND_RESOURCE);
 
     // Kill both sprites
@@ -303,7 +303,7 @@ BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
     pHitter == g_pJMissileBitmap || pHitter == g_pTMissileBitmap)))
   {
     // Play the large explosion sound
-    PlaySound((LPCSTR)IDW_LGEXPLODE, g_hInstance, SND_ASYNC |
+    PlaySound((PCTSTR)IDW_LGEXPLODE, g_hInstance, SND_ASYNC |
       SND_RESOURCE);
 
     // Kill the missile sprite
@@ -331,7 +331,7 @@ BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
     if (--g_iNumLives == 0)
     {
       // Play the game over sound
-      PlaySound((LPCSTR)IDW_GAMEOVER, g_hInstance, SND_ASYNC |
+      PlaySound((PCTSTR)IDW_GAMEOVER, g_hInstance, SND_ASYNC |
         SND_RESOURCE);
       g_bGameOver = TRUE;
       g_iGameOverDelay = 150;
@@ -350,7 +350,7 @@ void SpriteDying(Sprite* pSpriteDying)
   {
     // Play the small explosion sound
     if (!g_bDemo)
-      PlaySound((LPCSTR)IDW_SMEXPLODE, g_hInstance, SND_ASYNC |
+      PlaySound((PCTSTR)IDW_SMEXPLODE, g_hInstance, SND_ASYNC |
         SND_RESOURCE | SND_NOSTOP);
 
     // Create a small explosion sprite at the missile's position
@@ -401,7 +401,8 @@ void AddAlien()
 {
   // Create a new random alien sprite
   RECT          rcBounds = { 0, 0, 600, 410 };
-  AlienSprite*  pSprite;
+  AlienSprite*  pSprite = NULL;;
+
   switch(rand() % 3)
   {
   case 0:

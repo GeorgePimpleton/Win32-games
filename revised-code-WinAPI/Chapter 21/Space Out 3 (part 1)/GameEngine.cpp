@@ -1,11 +1,5 @@
-//-----------------------------------------------------------------
-// Game Engine Object
-// C++ Source - GameEngine.cpp
-//-----------------------------------------------------------------
+#pragma comment(lib, "winmm.lib")
 
-//-----------------------------------------------------------------
-// Include Files
-//-----------------------------------------------------------------
 #include "GameEngine.h"
 
 //-----------------------------------------------------------------
@@ -99,8 +93,8 @@ BOOL GameEngine::CheckSpriteCollision(Sprite* pTestSprite)
 //-----------------------------------------------------------------
 // GameEngine Constructor(s)/Destructor
 //-----------------------------------------------------------------
-GameEngine::GameEngine(HINSTANCE hInstance, LPTSTR szWindowClass,
-  LPTSTR szTitle, WORD wIcon, WORD wSmallIcon, int iWidth, int iHeight)
+GameEngine::GameEngine(HINSTANCE hInstance, PCTSTR szWindowClass,
+  PCTSTR szTitle, WORD wIcon, WORD wSmallIcon, int iWidth, int iHeight)
 {
   // Set the member variables for the game engine
   m_pGameEngine = this;
@@ -243,7 +237,7 @@ LRESULT GameEngine::HandleEvent(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lP
   return DefWindowProc(hWindow, msg, wParam, lParam);
 }
 
-void GameEngine::ErrorQuit(LPTSTR szErrorMsg)
+void GameEngine::ErrorQuit(PCTSTR szErrorMsg)
 {
   MessageBox(GetWindow(), szErrorMsg, TEXT("Critical Error"), MB_OK | MB_ICONERROR);
   PostQuitMessage(0);
@@ -421,14 +415,14 @@ Sprite* GameEngine::IsPointInSprite(int x, int y)
   return NULL;
 }
 
-void GameEngine::PlayMIDISong(LPTSTR szMIDIFileName, BOOL bRestart)
+void GameEngine::PlayMIDISong(PCTSTR szMIDIFileName, BOOL bRestart)
 {
   // See if the MIDI player needs to be opened
   if (m_uiMIDIPlayerID == 0)
   {
     // Open the MIDI player by specifying the device and filename
     MCI_OPEN_PARMS mciOpenParms;
-    mciOpenParms.lpstrDeviceType = "sequencer";
+    mciOpenParms.lpstrDeviceType = TEXT("sequencer");
     mciOpenParms.lpstrElementName = szMIDIFileName;
     if (mciSendCommand(NULL, MCI_OPEN, MCI_OPEN_TYPE | MCI_OPEN_ELEMENT,
       (DWORD_PTR)&mciOpenParms) == 0)

@@ -77,7 +77,7 @@ protected:
 
 public:
   // Constructor(s)/Destructor
-          GameEngine(HINSTANCE hInstance, LPTSTR szWindowClass, LPTSTR szTitle,
+          GameEngine(HINSTANCE hInstance, PCTSTR szWindowClass, PCTSTR szTitle,
             WORD wIcon, WORD wSmallIcon, int iWidth = 640, int iHeight = 480);
   virtual ~GameEngine();
 
@@ -86,7 +86,7 @@ public:
   BOOL                Initialize(int iCmdShow);
   LRESULT             HandleEvent(HWND hWindow, UINT msg, WPARAM wParam,
                         LPARAM lParam);
-  void                ErrorQuit(LPTSTR szErrorMsg);
+  void                ErrorQuit(PCTSTR szErrorMsg);
   BOOL                InitJoystick();
   void                CaptureJoystick();
   void                ReleaseJoystick();
@@ -96,7 +96,7 @@ public:
   void                UpdateSprites();
   void                CleanupSprites();
   Sprite*             IsPointInSprite(int x, int y);
-  void                PlayMIDISong(LPTSTR szMIDIFileName = TEXT(""),
+  void                PlayMIDISong(PCTSTR szMIDIFileName = TEXT(""),
                         BOOL bRestart = TRUE);
   void                PauseMIDISong();
   void                CloseMIDIPlayer();
@@ -105,7 +105,7 @@ public:
   HINSTANCE GetInstance() { return m_hInstance; };
   HWND      GetWindow() { return m_hWindow; };
   void      SetWindow(HWND hWindow) { m_hWindow = hWindow; };
-  LPTSTR    GetTitle() { return m_szTitle; };
+  PCTSTR    GetTitle() { return m_szTitle; };
   WORD      GetIcon() { return m_wIcon; };
   WORD      GetSmallIcon() { return m_wSmallIcon; };
   int       GetWidth() { return m_iWidth; };
