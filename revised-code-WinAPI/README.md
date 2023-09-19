@@ -33,9 +33,10 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 ![under construction](construction.gif)  \*\* ***under construction*** \*\*  ![under construction](construction.gif)
 
+22. Space Out 4: Keeping Track of High Scores
+
 ![queue](queue.jpg)  \*\* ***in the queue*** \*\*  ![queue](queue.jpg)
 
-22. Space Out 4: Keeping Track of High Scores
 23. Wanderer: Changing Perspective with Scrolling Backgrounds
 24. Example Game: Stunt Jumper
 ----
