@@ -29,10 +29,9 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 18. Roids 2: Teaching Games to Think
 19. Example Game: Space Out
 20. Space Out 2: Adding Pizzazz to Your Game with a Splash Screen
+21. Space Out 3: Showing Off Your Game with Demo Mode
 
 ![under construction](construction.gif)  \*\* ***under construction*** \*\*  ![under construction](construction.gif)
-
-21. Space Out 3: Showing Off Your Game with Demo Mode
 
 ![queue](queue.jpg)  \*\* ***in the queue*** \*\*  ![queue](queue.jpg)
 
