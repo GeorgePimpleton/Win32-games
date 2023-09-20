@@ -449,8 +449,8 @@ void UpdateHiScores( )
 BOOL ReadHiScores( )
 {
    // open the hi score file (HiScores.dat)
-   HANDLE hFile = CreateFile(TEXT("HiScores.dat"), GENERIC_READ, 0, NULL,
-                             OPEN_EXISTING, FILE_ATTRIBUTE_READONLY, NULL);
+   HANDLE hFile = CreateFileA("HiScores.dat", GENERIC_READ, 0, NULL,
+                              OPEN_EXISTING, FILE_ATTRIBUTE_READONLY, NULL);
 
    if ( hFile == INVALID_HANDLE_VALUE )
    {
@@ -475,6 +475,7 @@ BOOL ReadHiScores( )
          CloseHandle(hFile);
          return FALSE;
       }
+      cData[5] = '\0';
 
       // extract each integer score from the score data
       g_hiScores[ i ] = atoi(cData);
@@ -487,8 +488,8 @@ BOOL ReadHiScores( )
 BOOL WriteHiScores( )
 {
    // create the hi score file (HiScores.dat) for writing
-   HANDLE hFile = CreateFile(TEXT("HiScores.dat"), GENERIC_WRITE, 0, NULL,
-                             CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+   HANDLE hFile = CreateFileA("HiScores.dat", GENERIC_WRITE, 0, NULL,
+                              CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
    if ( hFile == INVALID_HANDLE_VALUE )
    {

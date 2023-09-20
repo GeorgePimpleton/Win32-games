@@ -4,6 +4,8 @@
 #include "resource.h"
 #include "random_toolkit.hpp"
 #include <memory>
+#include <vector>
+#include <string>
 #include "GameEngine.hpp"
 #include "Bitmap.hpp"
 #include "Sprite.hpp"
@@ -30,7 +32,7 @@ int                               g_score;
 BOOL                              g_gameOver;
 int                               g_gameOverDelay;
 BOOL                              g_demo;
-int                               g_hiScores[ 5 ];
+std::vector<int>                  g_hiScores(5);
 
 void AddAlien( );
 void UpdateHiScores( );
