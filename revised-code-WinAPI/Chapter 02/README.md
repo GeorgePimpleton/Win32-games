@@ -18,6 +18,7 @@ Blizzard, creates and uses the Game Engine class.  From the 2004 CD.
 5. Refined the code for Unicode only and modern Windows OSes.
 6. Added a main menu with accelerators.
 7. Use C++ smart pointers instead of raw pointers.
+8. Use C++ strings instead of Windows string pointers.
 
 ### Notes
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.
