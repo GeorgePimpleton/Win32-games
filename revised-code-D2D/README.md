@@ -20,12 +20,14 @@ I currently use Visual Studio 2022 (Community) to update and test the game code,
 
 [Visual Studio 2022 Community download](https://visualstudio.microsoft.com/vs/community/)
 
-## What Is Direct2D?
+## What Is Direct2D/DirectX?
 Direct2D is part of the DirectX library, designed to "easily" do 2D graphics.  The Direct2D API: https://learn.microsoft.com/en-us/windows/win32/direct2d/the-direct2d-api
 
 There are samples available, 'classic' (Not UWP) samples: https://github.com/microsoft/Windows-classic-samples
 
-Since DirectX has ways to do graphics -- 3D graphics -- sound & music as well as input hopefully all the games will be upgraded to use DX eventually.
+Since DirectX has ways to do graphics, 3D graphics, device input, sound & music hopefully all the games MIGHT get upgraded to use DX eventually.
+
+Don't hold your breath waiting, though.
 
 ### Notes
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.
