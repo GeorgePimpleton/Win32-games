@@ -14,5 +14,7 @@ Trippy shows how to do basic drawing using Win32 GDI.  From the 2003 CD.  There 
 1. minimum revisions needed to work with modern Windows© compilers.
 2. updated with menus/About... dialog, fully modern WinAPI compliance and using smart pointers
 
+I've also included a minimal revision for Crop Circles, available on the 2004 CD.
+
 ### Notes
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.
