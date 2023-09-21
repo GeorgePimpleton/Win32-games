@@ -5,7 +5,6 @@
 #include "random_toolkit.hpp"
 #include <memory>
 #include <vector>
-#include <string>
 #include "GameEngine.hpp"
 #include "Bitmap.hpp"
 #include "Sprite.hpp"

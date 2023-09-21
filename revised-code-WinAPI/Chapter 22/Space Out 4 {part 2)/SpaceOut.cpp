@@ -369,6 +369,8 @@ void GameNew( )
 
    if ( g_demo )
    {
+      EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
+
       for ( int i = 0; i < 6; i++ )
       {
          AddAlien( );
