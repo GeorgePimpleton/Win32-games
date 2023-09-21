@@ -1,0 +1,53 @@
+#include "windows.h"
+#include "resource.h"
+
+IDI_ICON    ICON        "Res/BattleOffice.ico"
+IDC_CURSOR  CURSOR      "Res/BattleOffice.cur"
+
+IDB_OFFICE     BITMAP   "Res/Office.bmp"
+IDB_POW        BITMAP   "Res/Pow.bmp"
+IDB_GUY1       BITMAP   "Res/Guy1.bmp"
+IDB_GUY2       BITMAP   "Res/Guy2.bmp"
+IDB_GUY3       BITMAP   "Res/Guy3.bmp"
+IDB_GUY4       BITMAP   "Res/Guy4.bmp"
+IDB_GUY5       BITMAP   "Res/Guy5.bmp"
+IDB_SMALLGUY   BITMAP   "Res/SmallGuy.bmp"
+IDB_GAMEOVER   BITMAP   "Res/GameOver.bmp"
+
+IDW_WHACK      WAVE     "Res/Whack.wav"
+IDW_TAUNT      WAVE     "Res/Taunt.wav"
+IDW_BOO        WAVE     "Res/Boo.wav"
+
+IDD_ABOUT   DIALOG   DISCARDABLE    32, 32, 180, 102
+CAPTION "About..."
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+{
+   ICON           IDI_ICON, IDC_STATIC, 7, 7, 20, 20, SS_SUNKEN
+   CTEXT          "Battle Office 2", IDC_STATIC, 40, 12, 100, 8
+
+   CTEXT          "Animating the Appearance of Sprites", IDC_STATIC, 7, 35, 166, 8
+   CTEXT          "© This Year, Your Name", IDC_STATIC, 7, 47, 166, 8
+
+   DEFPUSHBUTTON  "OK", IDOK, 66, 81, 50, 14
+}
+
+IDR_MENU    MENU
+{
+   POPUP "&Game"
+   {
+      MENUITEM "&New\tCTRL+N",   IDM_GAME_NEW GRAYED
+      MENUITEM SEPARATOR
+      MENUITEM "E&xit",          IDM_GAME_EXIT
+   }
+
+   POPUP "&Help"
+   {
+      MENUITEM "&About...\tF1",  IDM_HELP_ABOUT
+   }
+}
+
+IDR_ACCELERATORS ACCELERATORS
+{
+   "^N",    IDM_GAME_NEW
+   VK_F1,   IDM_HELP_ABOUT,   VIRTKEY
+}
