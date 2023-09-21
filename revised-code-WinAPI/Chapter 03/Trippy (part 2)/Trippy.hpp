@@ -1,7 +1,9 @@
 #pragma once
 
-#include "random_toolkit.hpp"
+#include <windows.h>
+#include "resource.h"
 #include "GameEngine.hpp"
+#include "random_toolkit.hpp"
 
-std::unique_ptr<GameEngine> g_game;
-RECT                        g_rect;
+GameEngine* g_game;
+RECT        g_rect;

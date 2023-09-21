@@ -1,21 +1,22 @@
 #include "GameEngine.hpp"
 
-std::unique_ptr<GameEngine> GameEngine::m_gameEngine = nullptr;
+GameEngine* GameEngine::m_gameEngine = NULL;
 
-int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int cmdShow)
+int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
+                    _In_ PWSTR cmdLine, _In_ int cmdShow)
 {
-   if ( S_OK == GameInitialize(inst) )
+   if ( GameInitialize(inst) )
    {
-      if ( GameEngine::GetEngine( )->Initialize(cmdShow) != S_OK )
+      if ( !GameEngine::GetEngine( )->Initialize(cmdShow) )
       {
-         return E_FAIL;
+         return FALSE;
       }
 
       HACCEL accel = LoadAcceleratorsW(inst, MAKEINTRESOURCEW(IDR_ACCELERATORS));
 
-      if ( nullptr == accel )
+      if ( NULL == accel )
       {
-         MessageBoxW(nullptr, L"Unable to Load the Accelerators!", GameEngine::GetEngine( )->GetTitle( ), MB_OK | MB_ICONERROR);
+         MessageBoxW(NULL, L"Unable to Load the Accelerators!", GameEngine::GetEngine( )->GetTitle( ), MB_OK | MB_ICONERROR);
          return E_FAIL;
       }
 
@@ -23,9 +24,9 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR
 
       while ( TRUE )
       {
-         if ( PeekMessageW(&msg, nullptr, 0, 0, PM_REMOVE) != 0 )
+         if ( PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE) )
          {
-            if ( WM_QUIT == msg.message )
+            if ( msg.message == WM_QUIT )
             {
                break;
             }
@@ -38,7 +39,7 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR
          }
          else
          {
-            if ( FALSE == GameEngine::GetEngine( )->GetSleep( ) )
+            if ( !GameEngine::GetEngine( )->GetSleep( ) )
             {
                static ULONGLONG tickTrigger = 0;
                ULONGLONG        tickCount   = GetTickCount64( );
@@ -51,12 +52,12 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR
             }
          }
       }
-
       return (int) msg.wParam;
    }
 
    GameEnd( );
-   return S_OK;
+
+   return TRUE;
 }
 
 LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -81,30 +82,29 @@ BOOL CALLBACK DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam)
 }
 
 GameEngine::GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
-                       WORD icon, WORD smallIcon, UINT width, UINT height)
+                       WORD icon, WORD smallIcon, int width, int height)
 {
-   m_gameEngine.reset(this);
-
-   m_inst       = inst;
-   m_wnd        = nullptr;
-   m_icon       = icon;
-   m_smallIcon  = smallIcon;
-   m_width      = width;
-   m_height     = height;
-   m_frameDelay = 50; // 20 FPS default
-   m_asleep     = TRUE;
-   m_wndClass   = wndClass;
-   m_title      = title;
+   m_gameEngine   = this;
+   m_inst         = inst;
+   m_wnd          = NULL;
+   m_wndClass     = wndClass;
+   m_title        = title;
+   m_icon         = icon;
+   m_smallIcon    = smallIcon;
+   m_width        = width;
+   m_height       = height;
+   m_frameDelay   = 50;   // 20 FPS default
+   m_asleep       = TRUE;
 }
 
 GameEngine::~GameEngine( )
 { }
 
-HRESULT GameEngine::Initialize(int cmdShow)
+BOOL GameEngine::Initialize(int cmdShow)
 {
-   WNDCLASSEXW wc { };
+   WNDCLASSEXW wc;
 
-   wc.cbSize        = sizeof(WNDCLASSEXW);
+   wc.cbSize        = sizeof(wc);
    wc.style         = CS_HREDRAW | CS_VREDRAW;
    wc.lpfnWndProc   = WndProc;
    wc.cbClsExtra    = 0;
@@ -117,42 +117,39 @@ HRESULT GameEngine::Initialize(int cmdShow)
    wc.lpszMenuName  = MAKEINTRESOURCEW(IDR_MENU);
    wc.lpszClassName = m_wndClass;
 
-   if ( FAILED(RegisterClassExW(&wc)) )
+   if ( !RegisterClassExW(&wc) )
    {
-      MessageBoxW(nullptr, L"Unable to initialize Main Window!", L"ERROR", MB_ICONERROR | MB_OK);
-      return E_FAIL;
+      return FALSE;
    }
 
-   UINT windowWidth  = m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2;
-   UINT windowHeight = m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 + GetSystemMetrics(SM_CYCAPTION);
+   int iWindowWidth  = m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2;
+   int iWindowHeight = m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 +
+                       GetSystemMetrics(SM_CYCAPTION);
 
-   windowWidth  += 10;
-   windowHeight += 10;
+   iWindowWidth  += 10;
+   iWindowHeight += 10;
 
-   if ( wc.lpszMenuName != nullptr )
+   if ( wc.lpszMenuName != NULL )
    {
-      windowHeight += GetSystemMetrics(SM_CYMENU);
+      iWindowHeight += GetSystemMetrics(SM_CYMENU);
    }
 
-   UINT windowPosX = (GetSystemMetrics(SM_CXSCREEN) - windowWidth) / 2;
-   UINT windowPosY = (GetSystemMetrics(SM_CYSCREEN) - windowHeight) / 2;
+   int iXWindowPos = (GetSystemMetrics(SM_CXSCREEN) - iWindowWidth) / 2;
+   int iYWindowPos = (GetSystemMetrics(SM_CYSCREEN) - iWindowHeight) / 2;
 
-   m_wnd = CreateWindowW(m_wndClass, m_title,
-                         WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
-                         windowPosX, windowPosY,
-                         windowWidth, windowHeight,
-                         nullptr, nullptr, m_inst, nullptr);
+   m_wnd = CreateWindowW(m_wndClass, m_title, WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
+                         iXWindowPos, iYWindowPos, iWindowWidth, iWindowHeight,
+                         NULL, NULL, m_inst, NULL);
 
-   if ( nullptr == m_wnd )
+   if ( !m_wnd )
    {
-      MessageBoxW(nullptr, L"Unable to create Main Window!", L"ERROR", MB_ICONERROR | MB_OK);
-      return E_FAIL;
+      return FALSE;
    }
 
    ShowWindow(m_wnd, cmdShow);
    UpdateWindow(m_wnd);
 
-   return S_OK;
+   return TRUE;
 }
 
 LRESULT GameEngine::HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -162,7 +159,7 @@ LRESULT GameEngine::HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam
    case WM_CREATE:
       SetWindow(wnd);
       GameStart(wnd);
-      return S_OK;
+      return 0;
 
    case WM_ACTIVATE:
       if ( wParam != WA_INACTIVE )
@@ -175,28 +172,27 @@ LRESULT GameEngine::HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam
          GameDeactivate(wnd);
          SetSleep(TRUE);
       }
-      return S_OK;
+      return 0;
 
    case WM_COMMAND:
       GameMenu(wParam);
-      return S_OK;
+      return 0;
 
    case WM_PAINT:
-   {
+      HDC         dc;
       PAINTSTRUCT ps;
-      HDC         dc = BeginPaint(wnd, &ps);
+
+      dc = BeginPaint(wnd, &ps);
 
       GamePaint(dc);
 
       EndPaint(wnd, &ps);
-      return S_OK;
-   }
+      return 0;
 
    case WM_DESTROY:
       GameEnd( );
       PostQuitMessage(0);
-      return S_OK;
+      return 0;
    }
-
    return DefWindowProcW(wnd, msg, wParam, lParam);
 }

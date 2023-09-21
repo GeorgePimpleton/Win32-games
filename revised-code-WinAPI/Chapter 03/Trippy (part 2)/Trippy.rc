@@ -1,8 +1,8 @@
-#include <windows.h>
 #include "resource.h"
+#include <windows.h>
 
-IDI_ICON    ICON DISCARDABLE "Res/Trippy.ico"
-IDI_ICON_SM ICON DISCARDABLE "Res/Trippy_sm.ico"
+IDI_ICON         ICON         "Res/Trippy.ico"
+IDI_ICON_SM      ICON         "Res/Trippy_sm.ico"
 
 IDD_ABOUT   DIALOG   DISCARDABLE    32, 32, 180, 102
 CAPTION "About..."
@@ -21,7 +21,9 @@ IDR_MENU MENU
 {
    POPUP "&Game"
    {
-      MENUITEM "E&xit\tALT + F4", IDM_GAME_EXIT
+      // MENUITEM "&New\tCtrl+N",    IDM_GAME_NEW GRAYED
+      // MENUITEM SEPARATOR
+      MENUITEM "E&xit\tAlt + F4", IDM_GAME_EXIT
    }
 
 POPUP "&Help"
@@ -32,5 +34,6 @@ POPUP "&Help"
 
 IDR_ACCELERATORS ACCELERATORS
 {
+   "^N",  IDM_GAME_NEW
    VK_F1, IDM_HELP_ABOUT,   VIRTKEY
 }
