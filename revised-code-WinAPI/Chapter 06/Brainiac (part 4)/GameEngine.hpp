@@ -24,6 +24,19 @@ void    GameNew( );
 
 class GameEngine
 {
+protected:
+   static std::unique_ptr<GameEngine> m_gameEngine;
+   HINSTANCE                          m_inst;
+   HWND                               m_wnd;
+   PCWSTR                             m_wndClass;
+   PCWSTR                             m_title;
+   WORD                               m_icon;
+   WORD                               m_smallIcon;
+   UINT                               m_width;
+   UINT                               m_height;
+   UINT                               m_frameDelay;
+   BOOL                               m_asleep;
+
 public:
             GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
                        WORD icon, WORD smallIcon, UINT width = 640, UINT height = 480);
@@ -47,19 +60,6 @@ public:
    void      SetFrameRate(int frameRate);
    BOOL      GetSleep( ) const;
    void      SetSleep(BOOL asleep);
-
-protected:
-   static std::unique_ptr<GameEngine> m_gameEngine;
-   HINSTANCE                          m_inst;
-   HWND                               m_wnd;
-   PCWSTR                             m_wndClass;
-   PCWSTR                             m_title;
-   WORD                               m_icon;
-   WORD                               m_smallIcon;
-   UINT                               m_width;
-   UINT                               m_height;
-   UINT                               m_frameDelay;
-   BOOL                               m_asleep;
 };
 
 inline GameEngine* GameEngine::GetEngine()          { return m_gameEngine.get(); }

@@ -5,7 +5,7 @@ HRESULT GameInitialize(HINSTANCE inst)
    g_game = std::make_unique<GameEngine>(inst, L"Brainiac", L"Example Game: Brainiac",
                                          IDI_ICON, IDI_ICON_SM, 528, 508);
 
-   if ( nullptr == g_game )
+   if ( NULL == g_game )
    {
       return E_FAIL;
    }
@@ -80,7 +80,7 @@ void GameNew( )
       EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
 
       // force a repaint to update the tiles
-      InvalidateRect(g_game->GetWindow( ), nullptr, FALSE);
+      InvalidateRect(g_game->GetWindow( ), NULL, FALSE);
    }
 }
 
@@ -189,15 +189,15 @@ void MouseButtonDown(LONG x, LONG y, BOOL left)
          }
       }
 
-      // force a repaint to update the tile
-      InvalidateRect(g_game->GetWindow(), nullptr, FALSE);
+      InvalidateRect(g_game->GetWindow(), NULL, FALSE);
 
       // check for winner
       if ( g_matches == 8 )
       {
-         WCHAR szText[ 64 ];
-         wsprintfW(szText, L"You won in %d tries.", g_tries);
-         MessageBoxW(g_game->GetWindow(), szText, L"Brainiac", MB_OK);
+         std::wstring s = std::format(L"You won in {} tries.", g_tries);
+
+         MessageBoxW(g_game->GetWindow( ), s.c_str( ), g_game->GetTitle( ), MB_OK);
+
          g_gameOver = TRUE;
 
          // enable the new game menu item so it can be selected

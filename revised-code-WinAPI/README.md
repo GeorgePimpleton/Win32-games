@@ -14,10 +14,9 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 3. Trippy: Learning to Draw Basic Graphics
 4. Slideshow: Drawing Graphical Images
 5. UFO: Controlling Games with the Keyboard and Mouse
+6. Example Game: Brainiac
 
 ![under construction](construction.gif)  \*\* ***under construction*** \*\*  ![under construction](construction.gif)
-
-6. Example Game: Brainiac
 
 ![queue](queue.jpg)  \*\* ***in the queue*** \*\*  ![queue](queue.jpg)
 
