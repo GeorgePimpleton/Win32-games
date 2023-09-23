@@ -1,0 +1,10 @@
+#include "resource.h"
+
+IDI_FORE           ICON         "Res/Fore.ico"
+IDI_FORE_SM        ICON         "Res/Fore_sm.ico"
+
+//-----------------------------------------------------------------
+// Bitmaps
+//-----------------------------------------------------------------
+IDB_FOREST         BITMAP       "Res/Forest.bmp"
+IDB_GOLFBALL       BITMAP       "Res/GolfBall.bmp"
