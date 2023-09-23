@@ -166,7 +166,12 @@ void HandleKeys( )
 }
 
 void MouseButtonDown(LONG x, LONG y, BOOL left)
-{ }
+{
+   if ( !left && g_gameOver )
+   {
+      NewGame( );
+   }
+}
 
 void MouseButtonUp(LONG x, LONG y, BOOL left)
 { }
@@ -206,19 +211,19 @@ void HandleJoystick(JOYSTATE joyState)
 void NewGame( )
 {
    // set the initial blue light cycle position and speed
-   g_cyclePos[ 0 ].x   = 250 - (g_cycle[ 0 ][ 0 ]-> GetWidth( ) / 2);
-   g_cyclePos[ 0 ].y   = 400 - g_cycle[ 0 ][ 0 ]-> GetHeight( );
+   g_cyclePos[ 0 ].x   = 250 - (g_cycle[ 0 ][ 0 ]->GetWidth( ) / 2);
+   g_cyclePos[ 0 ].y   = 400 - g_cycle[ 0 ][ 0 ]->GetHeight( );
    g_cycleSpeed[ 0 ].x = 0;
    g_cycleSpeed[ 0 ].y = -g_SPEED;
 
    // set the initial orange light cycle position and speed
-   g_cyclePos[ 1 ].x   = 250 - (g_cycle[ 1 ][ 0 ]-> GetWidth( ) / 2);
+   g_cyclePos[ 1 ].x   = 250 - (g_cycle[ 1 ][ 0 ]->GetWidth( ) / 2);
    g_cyclePos[ 1 ].y   = 0;
    g_cycleSpeed[ 1 ].x = 0;
    g_cycleSpeed[ 1 ].y = g_SPEED;
 
    // set the light cycle trail lengths and initial points
-   g_trailLength[ 0 ]       = g_trailLength[ 1 ] = 2;
+   g_trailLength[ 0 ]       = g_trailLength[ 1 ]       = 2;
    g_cycleTrail[ 0 ][ 0 ].x = g_cycleTrail[ 0 ][ 1 ].x = 250;
    g_cycleTrail[ 0 ][ 0 ].y = g_cycleTrail[ 0 ][ 1 ].y = 400;
    g_cycleTrail[ 1 ][ 0 ].x = g_cycleTrail[ 1 ][ 1 ].x = 250;
@@ -226,6 +231,8 @@ void NewGame( )
 
    // start the game
    g_gameOver = FALSE;
+
+   EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
 }
 
 void UpdateCycles( )
@@ -348,6 +355,8 @@ void EndGame(LONG cycle)
 {
    // set the game over flag
    g_gameOver = TRUE;
+
+   EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_ENABLED);
 
    // display a message about the winner
    if ( 0 == cycle )
