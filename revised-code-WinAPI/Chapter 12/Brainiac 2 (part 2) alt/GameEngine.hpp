@@ -16,7 +16,8 @@ const JOYSTATE JOY_NONE  = 0x0000L,
                JOY_FIRE1 = 0x0010L,
                JOY_FIRE2 = 0x0020L;
 
-int WINAPI       wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE previnst, _In_ PWSTR cmdLine, _In_ int cmdShow);
+int WINAPI       wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE previnst,
+                          _In_ PWSTR cmdLine, _In_ int cmdShow);
 LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK    DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -38,6 +39,22 @@ BOOL    SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee);
 
 class GameEngine
 {
+protected:
+   static GameEngine* m_gameEngine;
+   HINSTANCE            m_inst;
+   HWND                 m_wnd;
+   PCWSTR               m_wndClass;
+   PCWSTR               m_title;
+   WORD                 m_icon;
+   WORD                 m_smallIcon;
+   UINT                 m_width;
+   UINT                 m_height;
+   UINT                 m_frameDelay;
+   BOOL                 m_asleep;
+   UINT                 m_joyID;
+   RECT                 m_joyTrip;
+   std::vector<Sprite*> m_sprites;
+
 public:
             GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
                        WORD icon, WORD smallIcon, UINT width = 640, UINT height = 480);
@@ -73,46 +90,18 @@ public:
 
 protected:
    BOOL CheckSpriteCollision(Sprite* testSprite);
-
-protected:
-   static GameEngine*   m_gameEngine;
-   HINSTANCE            m_inst;
-   HWND                 m_wnd;
-   PCWSTR               m_wndClass;
-   PCWSTR               m_title;
-   WORD                 m_icon;
-   WORD                 m_smallIcon;
-   UINT                 m_width;
-   UINT                 m_height;
-   UINT                 m_frameDelay;
-   BOOL                 m_asleep;
-   UINT                 m_joyID;
-   RECT                 m_joyTrip;
-   std::vector<Sprite*> m_sprites;
 };
 
 inline GameEngine* GameEngine::GetEngine( )          { return m_gameEngine; }
-
 inline HINSTANCE GameEngine::GetInstance( ) const    { return m_inst; }
-
 inline HWND GameEngine::GetWindow( ) const           { return m_wnd; }
-
 inline void GameEngine::SetWindow(HWND wnd)          { m_wnd = wnd; }
-
 inline PCWSTR GameEngine::GetTitle( )                { return m_title; }
-
 inline WORD GameEngine::GetIcon( ) const             { return m_icon; }
-
 inline WORD GameEngine::GetSmallIcon( ) const        { return m_smallIcon; }
-
 inline UINT GameEngine::GetWidth( ) const            { return m_width; }
-
 inline UINT GameEngine::GetHeight( ) const           { return m_height; }
-
 inline UINT GameEngine::GetFrameDelay( ) const       { return m_frameDelay; }
-
 inline void GameEngine::SetFrameRate(UINT frameRate) { m_frameDelay = 1000 / frameRate; }
-
 inline BOOL GameEngine::GetSleep( ) const            { return m_asleep; }
-
 inline void GameEngine::SetSleep(BOOL asleep)        { m_asleep = asleep; }

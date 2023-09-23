@@ -17,6 +17,16 @@ const SPRITEACTION SA_KILL   = 0x0001L;
 
 class Sprite
 {
+protected:
+   Bitmap* m_bitmap;
+   RECT         m_position;
+   RECT         m_collision;
+   POINT        m_velocity;
+   int          m_zOrder;
+   RECT         m_bounds;
+   BOUNDSACTION m_boundsAction;
+   BOOL         m_hidden;
+
 public:
             Sprite(Bitmap* bitmap);
             Sprite(Bitmap* bitmap, RECT& bBounds, BOUNDSACTION boundsAction = BA_STOP);
@@ -51,21 +61,11 @@ public:
    LONG  GetWidth( );
    LONG  GetHeight( );
    RECT& GetCollision( );
-
-protected:
-   Bitmap*      m_bitmap;
-   RECT         m_position;
-   RECT         m_collision;
-   POINT        m_velocity;
-   int          m_zOrder;
-   RECT         m_bounds;
-   BOUNDSACTION m_boundsAction;
-   BOOL         m_hidden;
 };
 
 inline BOOL Sprite::IsPointInside(LONG x, LONG y)
 {
-   POINT point;
+   POINT point = { };
 
    point.x = x;
    point.y = y;

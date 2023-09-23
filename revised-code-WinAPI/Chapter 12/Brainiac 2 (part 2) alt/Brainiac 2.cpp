@@ -5,7 +5,7 @@ HRESULT GameInitialize(HINSTANCE inst)
    g_game = std::make_unique<GameEngine>(inst, L"Brainiac2", L"Brainiac 2: Playing Wave Sounds",
                                          IDI_ICON, IDI_ICON_SM, 528, 508);
 
-   if ( nullptr == g_game )
+   if ( NULL == g_game )
    {
       return E_FAIL;
    }
@@ -19,7 +19,7 @@ void GameStart(HWND wnd)
 {
    rtk::srand( );
 
-   HINSTANCE inst = GetModuleHandleW(nullptr);
+   HINSTANCE inst = g_game->GetInstance( );
 
    g_tile[ 0 ] = std::make_unique<Bitmap>(IDB_TILEBLANK, inst);
    g_tile[ 1 ] = std::make_unique<Bitmap>(IDB_TILE1, inst);
@@ -67,7 +67,7 @@ void GameNew( )
 
    EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
 
-   InvalidateRect(g_game->GetWindow( ), nullptr, FALSE);
+   InvalidateRect(g_game->GetWindow( ), NULL, FALSE);
 }
 
 void GameEnd( )
@@ -135,7 +135,7 @@ void MouseButtonDown(LONG x, LONG y, BOOL left)
    {
       if ( g_tile1.x == -1 )
       {
-         PlaySoundW((PCWSTR) IDW_SELECT, g_inst, SND_ASYNC | SND_RESOURCE);
+         PlaySoundW((PCWSTR) IDW_SELECT, g_game->GetInstance( ), SND_ASYNC | SND_RESOURCE);
 
          g_tile1.x = tileX;
          g_tile1.y = tileY;
@@ -144,7 +144,7 @@ void MouseButtonDown(LONG x, LONG y, BOOL left)
       {
          if ( g_tile2.x == -1 )
          {
-            PlaySoundW((PCWSTR) IDW_SELECT, g_inst, SND_ASYNC | SND_RESOURCE);
+            PlaySoundW((PCWSTR) IDW_SELECT, g_game->GetInstance( ), SND_ASYNC | SND_RESOURCE);
 
             g_tries++;
 
@@ -153,7 +153,7 @@ void MouseButtonDown(LONG x, LONG y, BOOL left)
 
             if ( g_tiles[ g_tile1.x ][ g_tile1.y ] == g_tiles[ g_tile2.x ][ g_tile2.y ] )
             {
-               PlaySoundW((PCWSTR) IDW_MATCH, g_inst, SND_ASYNC | SND_RESOURCE);
+               PlaySoundW((PCWSTR) IDW_MATCH, g_game->GetInstance( ), SND_ASYNC | SND_RESOURCE);
 
                g_tileStates[ g_tile1.x ][ g_tile1.y ] = TRUE;
                g_tileStates[ g_tile2.x ][ g_tile2.y ] = TRUE;
@@ -164,7 +164,7 @@ void MouseButtonDown(LONG x, LONG y, BOOL left)
             }
             else
             {
-               PlaySoundW((PCWSTR) IDW_MISMATCH, g_inst, SND_ASYNC | SND_RESOURCE);
+               PlaySoundW((PCWSTR) IDW_MISMATCH, g_game->GetInstance( ), SND_ASYNC | SND_RESOURCE);
             }
          }
          else
@@ -173,11 +173,11 @@ void MouseButtonDown(LONG x, LONG y, BOOL left)
          }
       }
 
-      InvalidateRect(g_game->GetWindow( ), nullptr, FALSE);
+      InvalidateRect(g_game->GetWindow( ), NULL, FALSE);
 
       if ( g_matches == 8 )
       {
-         PlaySoundW((PCWSTR) IDW_WIN, g_inst, SND_ASYNC | SND_RESOURCE);
+         PlaySoundW((PCWSTR) IDW_WIN, g_game->GetInstance( ), SND_ASYNC | SND_RESOURCE);
 
          TCHAR szText[ 64 ];
 
