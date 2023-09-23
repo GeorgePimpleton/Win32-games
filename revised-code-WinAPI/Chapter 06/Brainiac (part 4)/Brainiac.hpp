@@ -11,8 +11,8 @@
 
 std::unique_ptr<GameEngine>          g_game;
 std::vector<std::unique_ptr<Bitmap>> g_tiles(9);
-std::vector<std::vector<BOOL>>       g_tileState(4, std::vector<int>(4));
-std::vector<std::vector<INT>>        g_tile(4, std::vector<int>(4)); ;
+std::vector<std::vector<BOOL>>       g_tileState(4, std::vector<BOOL>(4));
+std::vector<std::vector<INT>>        g_tile(4, std::vector<INT>(4)); ;
 UINT                                 g_matches;
 UINT                                 g_tries;
 POINT                                g_tile1;
