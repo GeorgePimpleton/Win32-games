@@ -22,13 +22,13 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 11. Example Game: Henway
 12. Brainiac 2: Playing Digital Sound Effects/Wave Files
 13. Henway 2: Playing MIDI Music
+14. Example Game: Battle Office
 
 ![under construction](construction.gif)  \*\* ***under construction*** \*\*  ![under construction](construction.gif)
 
 
 ![queue](queue.jpg)  \*\* ***in the queue*** \*\*  ![queue](queue.jpg)
 
-14. Example Game: Battle Office
 15. Battle Office 2: Animating the Appearance of Sprites
 16. Roids: Creating Backgrounds for Your Sprites
 17. Example Game: Meteor Defense
