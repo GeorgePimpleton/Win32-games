@@ -23,10 +23,10 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 ![under construction](construction.gif)  \*\* ***under construction*** \*\*  ![under construction](construction.gif)
 
+12. Brainiac 2: Playing Digital Sound Effects/Wave Files
 
 ![queue](queue.jpg)  \*\* ***in the queue*** \*\*  ![queue](queue.jpg)
 
-12. Brainiac 2: Playing Digital Sound Effects/Wave Files
 13. Henway 2: Playing MIDI Music
 14. Example Game: Battle Office
 15. Battle Office 2: Animating the Appearance of Sprites
