@@ -2,7 +2,7 @@
 
 #include "GameEngine.hpp"
 
-std::unique_ptr<GameEngine> GameEngine::m_gameEngine = nullptr;
+std::unique_ptr<GameEngine> GameEngine::m_gameEngine = NULL;
 
 int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int cmdShow)
 {
@@ -15,9 +15,9 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR
 
       HACCEL accel = LoadAcceleratorsW(inst, MAKEINTRESOURCEW(IDR_ACCELERATORS));
 
-      if ( nullptr == accel )
+      if ( NULL == accel )
       {
-         MessageBoxW(nullptr, L"Unable to Load the Accelerators!", GameEngine::GetEngine( )->GetTitle( ), MB_OK | MB_ICONERROR);
+         MessageBoxW(NULL, L"Unable to Load the Accelerators!", GameEngine::GetEngine( )->GetTitle( ), MB_OK | MB_ICONERROR);
          return E_FAIL;
       }
 
@@ -25,7 +25,7 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR
 
       while ( TRUE )
       {
-         if ( PeekMessageW(&msg, nullptr, 0, 0, PM_REMOVE) != 0 )
+         if ( PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE) != 0 )
          {
             if ( WM_QUIT == msg.message )
             {
@@ -91,7 +91,7 @@ GameEngine::GameEngine(HINSTANCE hInst, PCWSTR wndClass, PCWSTR title,
    m_gameEngine.reset(this);
 
       m_inst       = hInst;
-      m_wnd        = nullptr;
+      m_wnd        = NULL;
       m_icon       = icon;
       m_smallIcon  = smallIcon;
       m_width      = width;
@@ -119,14 +119,14 @@ HRESULT GameEngine::Initialize(int cmdShow)
    wc.hInstance     = m_inst;
    wc.hIcon         = (HICON)   LoadImageW(m_inst, MAKEINTRESOURCEW(IDI_ICON), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
    wc.hIconSm       = (HICON)   LoadImageW(m_inst, MAKEINTRESOURCEW(IDI_ICON_SM), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR); ;
-   wc.hCursor       = (HCURSOR) LoadImageW(nullptr, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
+   wc.hCursor       = (HCURSOR) LoadImageW(NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
    wc.hbrBackground = (HBRUSH)  (COLOR_WINDOW + 1);
    wc.lpszMenuName  = MAKEINTRESOURCEW(IDR_MENU);
    wc.lpszClassName = m_wndClass;
 
    if ( FAILED(RegisterClassExW(&wc)) )
    {
-      MessageBoxW(nullptr, L"Unable to initialize Main Window!", L"ERROR", MB_ICONERROR | MB_OK);
+      MessageBoxW(NULL, L"Unable to initialize Main Window!", L"ERROR", MB_ICONERROR | MB_OK);
       return E_FAIL;
    }
 
@@ -136,7 +136,7 @@ HRESULT GameEngine::Initialize(int cmdShow)
    windowWidth  += 10;
    windowHeight += 10;
 
-   if ( wc.lpszMenuName != nullptr )
+   if ( wc.lpszMenuName != NULL )
    {
       windowHeight += GetSystemMetrics(SM_CYMENU);
    }
@@ -148,11 +148,11 @@ HRESULT GameEngine::Initialize(int cmdShow)
                           WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
                           windowPosX, windowPosY,
                           windowWidth, windowHeight,
-                          nullptr, nullptr, m_inst, nullptr);
+                          NULL, NULL, m_inst, NULL);
 
-   if ( nullptr == m_wnd )
+   if ( NULL == m_wnd )
    {
-      MessageBoxW(nullptr, L"Unable to create Main Window!", L"ERROR", MB_ICONERROR | MB_OK);
+      MessageBoxW(NULL, L"Unable to create Main Window!", L"ERROR", MB_ICONERROR | MB_OK);
       return E_FAIL;
    }
 

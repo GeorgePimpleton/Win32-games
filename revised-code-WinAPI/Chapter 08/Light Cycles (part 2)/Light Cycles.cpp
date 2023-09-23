@@ -5,7 +5,7 @@ HRESULT GameInitialize(HINSTANCE inst)
    g_game = std::make_unique<GameEngine>(inst, L"Light Cycles", L"Light Cycles",
                                          IDI_ICON, IDI_ICON_SM, 500, 400);
 
-   if ( nullptr == g_game )
+   if ( NULL == g_game )
    {
       return E_FAIL;
    }
@@ -20,7 +20,7 @@ HRESULT GameInitialize(HINSTANCE inst)
 void GameStart(HWND wnd)
 {
    // create and load the background and light cycle bitmaps
-   HINSTANCE inst = GetModuleHandleW(nullptr);
+   HINSTANCE inst = GetModuleHandleW(NULL);
 
    g_background      = std::make_unique<Bitmap>(IDB_BACKGROUND, inst);
    g_cycle[ 0 ][ 0 ] = std::make_unique<Bitmap>(IDB_CYCLEBLUE_0, inst);
@@ -39,12 +39,12 @@ void GameStart(HWND wnd)
 void GameEnd( )
 { }
 
-void GameActivate(HWND hwnd)
+void GameActivate(HWND wnd)
 {
    g_game->CaptureJoystick( );
 }
 
-void GameDeactivate(HWND hwnd)
+void GameDeactivate(HWND wnd)
 {
    g_game->ReleaseJoystick( );
 }
@@ -61,7 +61,7 @@ void GamePaint(HDC dc)
       SelectObject(dc, hPen);
 
       // start at the first point in the trail
-      MoveToEx(dc, g_cycleTrail[ i ][ 0 ].x, g_cycleTrail[ i ][ 0 ].y, nullptr);
+      MoveToEx(dc, g_cycleTrail[ i ][ 0 ].x, g_cycleTrail[ i ][ 0 ].y, NULL);
 
       // draw a line to each of the remaining points
       for ( int j { 1 }; j < g_trailLength[ i ]; j++ )
@@ -108,7 +108,7 @@ void GameCycle( )
       // move the light cycles
       UpdateCycles( );
 
-      InvalidateRect(g_game->GetWindow( ), nullptr, FALSE);
+      InvalidateRect(g_game->GetWindow( ), NULL, FALSE);
    }
 }
 
@@ -288,7 +288,7 @@ void UpdateCycles( )
    }
 }
 
-void SteerCycle(int cycle, int direction)
+void SteerCycle(LONG cycle, LONG direction)
 {
    // remember the old light cycle speed
    POINT oldSpeed;
@@ -344,7 +344,7 @@ void SteerCycle(int cycle, int direction)
    }
 }
 
-void EndGame(int cycle)
+void EndGame(LONG cycle)
 {
    // set the game over flag
    g_gameOver = TRUE;
@@ -356,6 +356,6 @@ void EndGame(int cycle)
    }
    else
    {
-      MessageBox(g_game->GetWindow( ), L"Orange wins!", L"Light Cycles", MB_OK);
+      MessageBoxW(g_game->GetWindow( ), L"Orange wins!", L"Light Cycles", MB_OK);
    }
 }

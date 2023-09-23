@@ -15,8 +15,9 @@ const JOYSTATE JOY_DOWN  = 0x0008L;
 const JOYSTATE JOY_FIRE1 = 0x0010L;
 const JOYSTATE JOY_FIRE2 = 0x0020L;
 
-int WINAPI       wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE hPrevInst, _In_ PWSTR cmdLine, _In_ int cmdShow);
-LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+int WINAPI       wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
+                          _In_ PWSTR cmdLine, _In_ int cmdShow);
+LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK    DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam);
 
 HRESULT GameInitialize(HINSTANCE inst);
@@ -35,35 +36,6 @@ void    HandleJoystick(JOYSTATE joyState);
 
 class GameEngine
 {
-public:
-            GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
-                       WORD icon, WORD smallIcon, UINT width = 640, UINT height = 480);
-   virtual ~GameEngine( );
-
-public:
-   static GameEngine* GetEngine( );
-   HRESULT            Initialize(int cmdShow);
-   LRESULT            HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
-   void               ErrorQuit(PCWSTR errorMsg);
-   HRESULT            InitJoystick( );
-   void               CaptureJoystick( );
-   void               ReleaseJoystick( );
-   void               CheckJoystick( );
-
-public:
-   HINSTANCE GetInstance( ) const;
-   HWND      GetWindow( ) const;
-   void      SetWindow(HWND wnd);
-   PCWSTR    GetTitle( );
-   WORD      GetIcon( ) const;
-   WORD      GetSmallIcon( ) const;
-   UINT      GetWidth( ) const;
-   UINT      GetHeight( ) const;
-   UINT      GetFrameDelay( ) const;
-   void      SetFrameRate(UINT frameRate);
-   BOOL      GetSleep( ) const;
-   void      SetSleep(BOOL asleep);
-
 protected:
    static std::unique_ptr<GameEngine> m_gameEngine;
    HINSTANCE                          m_inst;
@@ -78,28 +50,32 @@ protected:
    BOOL                               m_asleep;
    UINT                               m_joyID;
    RECT                               m_joyTrip;
+
+public:
+            GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
+                       WORD icon, WORD smallIcon, UINT width = 640, UINT height = 480);
+   virtual ~GameEngine( );
+
+public:
+   static GameEngine* GetEngine( ) { return m_gameEngine.get( ); }
+   HRESULT            Initialize(int cmdShow);
+   LRESULT            HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
+   HRESULT            InitJoystick( );
+   void               CaptureJoystick( );
+   void               ReleaseJoystick( );
+   void               CheckJoystick( );
+
+public:
+   HINSTANCE GetInstance( ) const         { return m_inst; }
+   HWND      GetWindow( ) const           { return m_wnd; }
+   void      SetWindow(HWND wnd)          { m_wnd = wnd; }
+   PCWSTR    GetTitle( )                  { return m_title; }
+   WORD      GetIcon( ) const             { return m_icon; }
+   WORD      GetSmallIcon( ) const        { return m_smallIcon; }
+   UINT      GetWidth( ) const            { return m_width; }
+   UINT      GetHeight( ) const           { return m_height; }
+   UINT      GetFrameDelay( ) const       { return m_frameDelay; }
+   void      SetFrameRate(UINT frameRate) { m_frameDelay = 1000 / frameRate; }
+   BOOL      GetSleep( ) const            { return m_asleep; }
+   void      SetSleep(BOOL asleep)        { m_asleep = asleep; }
 };
-
-inline GameEngine* GameEngine::GetEngine( )
-{
-   return m_gameEngine.get( );
-}
-
-inline void GameEngine::ErrorQuit(PCWSTR errorMsg)
-{
-   MessageBoxW(GetWindow( ), errorMsg, L"Critical Error", MB_OK | MB_ICONERROR);
-   PostQuitMessage(0);
-}
-
-inline HINSTANCE GameEngine::GetInstance( ) const         { return m_inst; }
-inline HWND      GameEngine::GetWindow( ) const           { return m_wnd; }
-inline void      GameEngine::SetWindow(HWND wnd)          { m_wnd = wnd; }
-inline PCWSTR    GameEngine::GetTitle( )                  { return m_title; }
-inline WORD      GameEngine::GetIcon( ) const             { return m_icon; }
-inline WORD      GameEngine::GetSmallIcon( ) const        { return m_smallIcon; }
-inline UINT      GameEngine::GetWidth( ) const            { return m_width; }
-inline UINT      GameEngine::GetHeight( ) const           { return m_height; }
-inline UINT      GameEngine::GetFrameDelay( ) const       { return m_frameDelay; }
-inline void      GameEngine::SetFrameRate(UINT frameRate) { m_frameDelay = 1000 / frameRate; }
-inline BOOL      GameEngine::GetSleep( ) const            { return m_asleep; }
-inline void      GameEngine::SetSleep(BOOL asleep)        { m_asleep = asleep; }

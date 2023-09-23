@@ -5,7 +5,7 @@ HRESULT GameInitialize(HINSTANCE inst)
    g_game = std::make_unique<GameEngine>(inst, L"Light Cycles", L"Light Cycles",
                                          IDI_ICON, IDI_ICON_SM, 500, 400);
 
-   if ( nullptr == g_game )
+   if ( NULL == g_game )
    {
       return E_FAIL;
    }
@@ -19,7 +19,7 @@ HRESULT GameInitialize(HINSTANCE inst)
 
 void GameStart(HWND wnd)
 {
-   HINSTANCE inst = GetModuleHandleW(nullptr);
+   HINSTANCE inst = GetModuleHandleW(NULL);
 
    g_background      = std::make_unique<Bitmap>(IDB_BACKGROUND, inst);
    g_cycle[ 0 ][ 0 ] = std::make_unique<Bitmap>(IDB_CYCLEBLUE_0, inst);
@@ -56,7 +56,7 @@ void GameNew( )
 
    EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
 
-   InvalidateRect(g_game->GetWindow( ), nullptr, FALSE);
+   InvalidateRect(g_game->GetWindow( ), NULL, FALSE);
 }
 
 void GameEnd( )
@@ -81,7 +81,7 @@ void GamePaint(HDC dc)
       HPEN hPen { CreatePen(PS_SOLID, 5, (i == 0) ? RGB(0, 0, 255) : RGB(255, 146, 73)) };
       SelectObject(dc, hPen);
 
-      MoveToEx(dc, g_cycleTrail[ i ][ 0 ].x, g_cycleTrail[ i ][ 0 ].y, nullptr);
+      MoveToEx(dc, g_cycleTrail[ i ][ 0 ].x, g_cycleTrail[ i ][ 0 ].y, NULL);
 
       for ( int j { 1 }; j < g_trailLength[ i ]; j++ )
       {
@@ -123,7 +123,7 @@ void GameCycle( )
    {
       UpdateCycles( );
 
-      InvalidateRect(g_game->GetWindow( ), nullptr, FALSE);
+      InvalidateRect(g_game->GetWindow( ), NULL, FALSE);
    }
 }
 
@@ -260,7 +260,7 @@ void UpdateCycles( )
    }
 }
 
-void SteerCycle(int cycle, int direction)
+void SteerCycle(LONG cycle, LONG direction)
 {
    POINT oldSpeed;
 
@@ -311,7 +311,7 @@ void SteerCycle(int cycle, int direction)
    }
 }
 
-void EndGame(int cycle)
+void EndGame(LONG cycle)
 {
    g_gameOver = TRUE;
    EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_ENABLED);
