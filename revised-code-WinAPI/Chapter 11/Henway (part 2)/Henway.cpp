@@ -83,7 +83,7 @@ void GameNew( )
 
    EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
 
-   InvalidateRect(g_game->GetWindow( ), nullptr, FALSE);
+   InvalidateRect(g_game->GetWindow( ), NULL, FALSE);
 }
 
 void GameEnd( )
