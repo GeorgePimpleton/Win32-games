@@ -15,12 +15,12 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 4. Slideshow: Drawing Graphical Images
 5. UFO: Controlling Games with the Keyboard and Mouse
 6. Example Game: Brainiac
+7. UFO 2: Improving Input with Joysticks
 
 ![under construction](construction.gif)  \*\* ***under construction*** \*\*  ![under construction](construction.gif)
 
 ![queue](queue.jpg)  \*\* ***in the queue*** \*\*  ![queue](queue.jpg)
 
-7. UFO 2: Improving Input with Joysticks
 8. Example Game: Light Cycles
 9. Fore: Making Things Move with Sprites
 10. Fore 2: Managing a World of Sprites

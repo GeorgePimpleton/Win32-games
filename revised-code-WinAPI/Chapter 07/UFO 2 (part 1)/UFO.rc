@@ -1,0 +1,8 @@
+#include "resource.h"
+
+IDI_UFO            ICON         "Res/UFO.ico"
+IDI_UFO_SM         ICON         "Res/UFO_sm.ico"
+
+IDB_BACKGROUND     BITMAP       "Res/Background.bmp"
+IDB_SAUCER         BITMAP       "Res/Saucer.bmp"
+IDB_SAUCERFLAME    BITMAP       "Res/SaucerFlame.bmp"
