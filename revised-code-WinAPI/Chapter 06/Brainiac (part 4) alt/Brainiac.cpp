@@ -17,9 +17,9 @@ HRESULT GameInitialize(HINSTANCE inst)
 
 void GameStart(HWND wnd)
 {
-   rtk::srand();
+   rtk::srand( );
 
-   HINSTANCE inst = g_game->GetInstance();
+   HINSTANCE inst = g_game->GetInstance( );
 
    g_tiles[ 0 ] = std::make_unique<Bitmap>(IDB_TILEBLANK, inst);
    g_tiles[ 1 ] = std::make_unique<Bitmap>(IDB_TILE1, inst);
@@ -72,7 +72,7 @@ void GameNew( )
       // initialize the tile selections and match/try count
       g_tile1.x = g_tile1.y = -1;
       g_tile2.x = g_tile2.y = -1;
-      g_matches = g_tries   = 0;
+      g_matches = g_tries = 0;
 
       g_gameOver = FALSE;
 
@@ -96,8 +96,8 @@ void GameDeactivate(HWND wnd)
 void GamePaint(HDC dc)
 {
    // draw the tiles
-   UINT tileWidth  { (UINT) g_tiles[ 0 ]->GetWidth() };
-   UINT tileHeight { (UINT) g_tiles[ 0 ]->GetHeight() };
+   UINT tileWidth { (UINT) g_tiles[ 0 ]->GetWidth( ) };
+   UINT tileHeight { (UINT) g_tiles[ 0 ]->GetHeight( ) };
 
    for ( UINT i = 0; i < 4; i++ )
    {
@@ -128,12 +128,12 @@ void GameMenu(WPARAM wParam)
       return;
 
    case IDM_GAME_EXIT:
-      GameEnd();
+      GameEnd( );
       PostQuitMessage(0);
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW(g_game->GetInstance(), MAKEINTRESOURCEW(IDD_ABOUT), g_game->GetWindow(), (DLGPROC) DlgProc);
+      DialogBoxW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT), g_game->GetWindow( ), (DLGPROC) DlgProc);
       return;
    }
 }
@@ -144,8 +144,8 @@ void HandleKeys( )
 void MouseButtonDown(LONG x, LONG y, BOOL left)
 {
    // determine which tile was clicked
-   int tileX = x / g_tiles[ 0 ]->GetWidth();
-   int tileY = y / g_tiles[ 0 ]->GetHeight();
+   int tileX = x / g_tiles[ 0 ]->GetWidth( );
+   int tileY = y / g_tiles[ 0 ]->GetHeight( );
 
    // make sure the tile hasn't already been matched
    if ( !g_tileState[ tileX ][ tileY ] )
@@ -189,7 +189,7 @@ void MouseButtonDown(LONG x, LONG y, BOOL left)
          }
       }
 
-      InvalidateRect(g_game->GetWindow(), NULL, FALSE);
+      InvalidateRect(g_game->GetWindow( ), NULL, FALSE);
 
       // check for winner
       if ( g_matches == 8 )
