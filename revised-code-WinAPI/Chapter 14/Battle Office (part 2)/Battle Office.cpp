@@ -5,7 +5,7 @@ HRESULT GameInitialize(HINSTANCE inst)
    g_game = std::make_unique<GameEngine>(inst, L"Battle Office", L"Example Game: Battle Office",
                                          IDI_ICON, IDI_ICON_SM, 500, 400);
 
-   if ( nullptr == g_game )
+   if ( NULL == g_game )
    {
       return E_FAIL;
    }
@@ -20,14 +20,14 @@ void GameStart(HWND wnd)
    rtk::srand( );
 
    SetClassLongPtrW(wnd, GCLP_HCURSOR,
-                    (LONG64) LoadImageW(GetModuleHandleW(nullptr), MAKEINTRESOURCEW(IDC_CURSOR), IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR));
+                    (LONG64) LoadImageW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDC_CURSOR), IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR));
 
    g_offscreenDC     = CreateCompatibleDC(GetDC(wnd));
    g_offscreenBitmap = CreateCompatibleBitmap(GetDC(wnd), g_game-> GetWidth( ), g_game-> GetHeight( ));
 
    SelectObject(g_offscreenDC, g_offscreenBitmap);
 
-   HINSTANCE inst = GetModuleHandleW(nullptr);
+   HINSTANCE inst = g_game->GetInstance( );
 
    g_officeBitmap    = std::make_unique<Bitmap>(IDB_OFFICE, inst);
    g_powBitmap       = std::make_unique<Bitmap>(IDB_POW, inst);
@@ -171,13 +171,13 @@ void GameCycle( )
          {
             if ( --g_guyDelay[ i ] == 0 )
             {
-               PlaySoundW((PCWSTR) IDW_TAUNT, GetModuleHandle(nullptr), SND_ASYNC | SND_RESOURCE);
+               PlaySoundW((PCWSTR) IDW_TAUNT, g_game->GetInstance( ), SND_ASYNC | SND_RESOURCE);
 
                g_guySprites[ i ]->SetHidden(TRUE);
 
                if ( ++g_misses == 5 )
                {
-                  PlaySoundW((PCWSTR) IDW_BOO, GetModuleHandle(nullptr), SND_ASYNC | SND_RESOURCE);
+                  PlaySoundW((PCWSTR) IDW_BOO, g_game->GetInstance( ), SND_ASYNC | SND_RESOURCE);
 
                   for ( int i = 0; i < 5; i++ )
                   {
@@ -238,16 +238,16 @@ void MouseButtonDown(LONG x, LONG y, BOOL left)
    {
       g_powSprite->SetHidden(TRUE);
 
-      Sprite* pSprite;
+      Sprite* sprite;
 
-      if ( (pSprite = g_game->IsPointInSprite(x, y)) != nullptr )
+      if ( (sprite = g_game->IsPointInSprite(x, y)) != NULL )
       {
-         PlaySoundW((PCWSTR) IDW_WHACK, GetModuleHandle(nullptr), SND_ASYNC | SND_RESOURCE);
+         PlaySoundW((PCWSTR) IDW_WHACK, g_game->GetInstance( ), SND_ASYNC | SND_RESOURCE);
 
          g_powSprite->SetPosition(x - (g_powSprite->GetWidth( ) / 2), y - (g_powSprite->GetHeight( ) / 2));
          g_powSprite->SetHidden(FALSE);
 
-         pSprite->SetHidden(TRUE);
+         sprite->SetHidden(TRUE);
 
          if ( (++g_hits % 5) == 0 )
          {

@@ -4,6 +4,11 @@
 
 class Bitmap
 {
+protected:
+   HBITMAP m_bitmap;
+   LONG    m_width;
+   LONG    m_height;
+
 public:
             Bitmap( );
             Bitmap(PCWSTR fileName);
@@ -20,18 +25,9 @@ public:
    void Draw(HDC dc, int x, int y, BOOL trans = FALSE, COLORREF transColor = RGB(255, 0, 255));
 
 public:
-   LONG GetWidth( ) const;
-   LONG GetHeight( ) const;
+   LONG GetWidth( ) const  { return m_width; }
+   LONG GetHeight( ) const { return m_height; }
 
 protected:
    void Free( );
-
-protected:
-   HBITMAP m_bitmap;
-   LONG    m_width;
-   LONG    m_height;
 };
-
-inline LONG Bitmap::GetWidth( ) const  { return m_width; };
-
-inline LONG Bitmap::GetHeight( ) const { return m_height; };
