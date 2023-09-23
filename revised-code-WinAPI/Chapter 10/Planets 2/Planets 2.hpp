@@ -8,9 +8,9 @@
 #include "Sprite.hpp"
 #include "GameEngine.hpp"
 
-std::unique_ptr<GameEngine> g_game;
-std::unique_ptr<Bitmap>     g_forestBitmap;
-std::unique_ptr<Bitmap>     g_golfBallBitmap;
-HDC                         g_offscreenDC;
-HBITMAP                     g_offscreenBitmap;
-Sprite*                     g_dragSprite;
+std::unique_ptr<GameEngine>          g_game;
+std::unique_ptr<Bitmap>              g_galaxyBitmap;
+std::vector<std::unique_ptr<Bitmap>> g_planetBitmap(3);
+HDC                                  g_offscreenDC;
+HBITMAP                              g_offscreenBitmap;
+Sprite*                              g_dragSprite;

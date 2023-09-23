@@ -1,8 +1,8 @@
-#include "Fore 2.hpp"
+#include "Planets 2.hpp"
 
 HRESULT GameInitialize(HINSTANCE inst)
 {
-   g_game = std::make_unique<GameEngine>(inst, L"Fore 2", L"Fore 2: Managing a World Sprites",
+   g_game = std::make_unique<GameEngine>(inst, L"Planets 2", L"Planets 2: Managing a World Sprites",
                                          IDI_ICON, IDI_ICON_SM, 600, 400);
 
    if ( NULL == g_game )
@@ -24,27 +24,32 @@ void GameStart(HWND wnd)
 
    SelectObject(g_offscreenDC, g_offscreenBitmap);
 
-   g_forestBitmap   = std::make_unique<Bitmap>(IDB_FOREST, GetModuleHandle(NULL));
-   g_golfBallBitmap = std::make_unique<Bitmap>(IDB_GOLFBALL, GetModuleHandle(NULL));
+   HINSTANCE inst = g_game->GetInstance( );
+
+   g_galaxyBitmap = std::make_unique<Bitmap>(IDB_GALAXY, inst);
+
+   g_planetBitmap[ 0 ] = std::make_unique<Bitmap>(IDB_PLANET1, inst);
+   g_planetBitmap[ 1 ] = std::make_unique<Bitmap>(IDB_PLANET2, inst);
+   g_planetBitmap[ 2 ] = std::make_unique<Bitmap>(IDB_PLANET3, inst);
 
    RECT    bounds = { 0, 0, 600, 400 };
    Sprite* sprite;
 
-   sprite = new Sprite(g_golfBallBitmap.get(), bounds, BA_WRAP);
+   sprite = new Sprite(g_planetBitmap[ 0 ].get(), bounds, BA_WRAP);
    sprite->SetVelocity(5, 3);
    g_game->AddSprite(sprite);
 
-   sprite = new Sprite(g_golfBallBitmap.get(), bounds, BA_WRAP);
+   sprite = new Sprite(g_planetBitmap[ 1 ].get(), bounds, BA_WRAP);
    sprite->SetVelocity(3, 2);
    g_game->AddSprite(sprite);
 
    bounds.left = 265; bounds.right = 500; bounds.bottom = 335;
-   sprite = new Sprite(g_golfBallBitmap.get(), bounds, BA_BOUNCE);
+   sprite = new Sprite(g_planetBitmap[ 2 ].get(), bounds, BA_BOUNCE);
    sprite->SetVelocity(-6, 5);
    g_game->AddSprite(sprite);
 
    bounds.right = 470;
-   sprite = new Sprite(g_golfBallBitmap.get(), bounds, BA_BOUNCE);
+   sprite = new Sprite(g_planetBitmap[ 2 ].get(), bounds, BA_BOUNCE);
    sprite->SetVelocity(7, -3);
    g_game->AddSprite(sprite);
 
@@ -68,7 +73,7 @@ void GameDeactivate(HWND wnd)
 
 void GamePaint(HDC dc)
 {
-   g_forestBitmap->Draw(dc, 0, 0);
+   g_galaxyBitmap->Draw(dc, 0, 0);
 
    g_game->DrawSprites(dc);
 }

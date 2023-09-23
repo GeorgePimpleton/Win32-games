@@ -9,8 +9,8 @@
 #include "GameEngine.hpp"
 
 std::unique_ptr<GameEngine> g_game;
-std::unique_ptr<Bitmap>     g_forestBitmap;
-std::unique_ptr<Bitmap>     g_golfBallBitmap;
+std::unique_ptr<Bitmap>     g_galaxyBitmap;
+std::unique_ptr<Bitmap>     g_planetBitmap;
 HDC                         g_offscreenDC;
 HBITMAP                     g_offscreenBitmap;
 Sprite*                     g_dragSprite;

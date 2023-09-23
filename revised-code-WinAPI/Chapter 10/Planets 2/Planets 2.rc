@@ -1,18 +1,20 @@
 #include "windows.h"
 #include "resource.h"
 
-IDI_ICON       ICON     "Res/Fore.ico"
-IDI_ICOM_SM    ICON     "Res/Fore_sm.ico"
+IDI_ICON       ICON     "Res/Planets.ico"
+IDI_ICOM_SM    ICON     "Res/Planets_sm.ico"
 
-IDB_FOREST     BITMAP   "Res/Forest.bmp"
-IDB_GOLFBALL   BITMAP   "Res/Golfball.bmp"
+IDB_GALAXY     BITMAP   "Res/Galaxy.bmp"
+IDB_PLANET1    BITMAP   "Res/Planet1.bmp"
+IDB_PLANET2    BITMAP   "Res/Planet2.bmp"
+IDB_PLANET3    BITMAP   "Res/Planet3.bmp"
 
 IDD_ABOUT   DIALOG   32, 32, 180, 102
 CAPTION "About..."
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 {
    ICON           IDI_ICON, IDC_STATIC, 7, 7, 20, 20, SS_SUNKEN
-   CTEXT          "Fore 2", IDC_STATIC, 40, 12, 100, 8
+   CTEXT          "Planets2", IDC_STATIC, 40, 12, 100, 8
 
    CTEXT          "Managing a World of Sprites", IDC_STATIC, 7, 35, 166, 8
    CTEXT          "© This Year, Your Name", IDC_STATIC, 7, 47, 166, 8
