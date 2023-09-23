@@ -5,7 +5,7 @@ HRESULT GameInitialize(HINSTANCE inst)
    g_game = std::make_unique<GameEngine>(inst, L"Fore", L"Fore: Making Things Move with Sprites",
                                          IDI_ICON, IDI_ICON_SM, 600, 400);
 
-   if ( nullptr == g_game )
+   if ( NULL == g_game )
    {
       return E_FAIL;
    }
@@ -19,8 +19,10 @@ void GameStart(HWND wnd)
 {
    rtk::srand( );
 
-   g_forestBitmap   = std::make_unique<Bitmap>(IDB_FOREST, GetModuleHandle(nullptr));
-   g_golfBallBitmap = std::make_unique<Bitmap>(IDB_GOLFBALL, GetModuleHandle(nullptr));
+   HINSTANCE inst = g_game->GetInstance( );
+
+   g_forestBitmap   = std::make_unique<Bitmap>(IDB_FOREST, inst);
+   g_golfBallBitmap = std::make_unique<Bitmap>(IDB_GOLFBALL, inst);
 
    RECT rcBounds { 0, 0, 600, 400 };
 
@@ -66,7 +68,7 @@ void GameCycle( )
       g_golfBallSprite[ i ]->Update( );
    }
 
-   InvalidateRect(g_game->GetWindow( ), nullptr, FALSE);
+   InvalidateRect(g_game->GetWindow( ), NULL, FALSE);
 }
 
 void GameMenu(WPARAM wParam)
@@ -126,7 +128,7 @@ void MouseMove(LONG x, LONG y)
       g_golfBallSprite[ g_dragBall ]->SetPosition(x - (g_golfBallBitmap->GetWidth( ) / 2),
                                                   y - (g_golfBallBitmap->GetHeight( ) / 2));
 
-      InvalidateRect(g_game->GetWindow( ), nullptr, FALSE);
+      InvalidateRect(g_game->GetWindow( ), NULL, FALSE);
    }
 }
 

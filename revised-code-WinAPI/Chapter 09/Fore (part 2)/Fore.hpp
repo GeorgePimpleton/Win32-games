@@ -13,5 +13,5 @@ std::unique_ptr<GameEngine>          g_game;
 std::unique_ptr<Bitmap>              g_forestBitmap;
 std::unique_ptr<Bitmap>              g_golfBallBitmap;
 BOOL                                 g_dragging;
-int                                  g_dragBall;
+LONG                                 g_dragBall;
 std::vector<std::unique_ptr<Sprite>> g_golfBallSprite(3);
