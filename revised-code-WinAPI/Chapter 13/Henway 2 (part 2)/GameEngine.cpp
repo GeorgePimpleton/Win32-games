@@ -2,9 +2,10 @@
 
 #include "GameEngine.hpp"
 
-GameEngine* GameEngine::m_gameEngine = nullptr;
+GameEngine* GameEngine::m_gameEngine = NULL;
 
-int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int cmdShow)
+int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
+                    _In_ PWSTR cmdLine, _In_ int cmdShow)
 {
    if ( GameInitialize(inst) == S_OK )
    {
@@ -15,9 +16,9 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR
 
       HACCEL accel = LoadAcceleratorsW(inst, MAKEINTRESOURCEW(IDR_ACCELERATORS));
 
-      if ( nullptr == accel )
+      if ( NULL == accel )
       {
-         MessageBoxW(nullptr, L"Unable to Load the Accelerators!", GameEngine::GetEngine( )->GetTitle( ), MB_OK | MB_ICONERROR);
+         MessageBoxW(NULL, L"Unable to Load the Accelerators!", GameEngine::GetEngine( )->GetTitle( ), MB_OK | MB_ICONERROR);
          return E_FAIL;
       }
 
@@ -25,7 +26,7 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR
 
       while ( TRUE )
       {
-         if ( PeekMessageW(&msg, nullptr, 0, 0, PM_REMOVE) != 0 )
+         if ( PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE) != 0 )
          {
             if ( WM_QUIT == msg.message )
             {
@@ -89,7 +90,7 @@ GameEngine::GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
 {
    m_gameEngine   = this;
    m_inst         = inst;
-   m_wnd          = nullptr;
+   m_wnd          = NULL;
    m_icon         = icon;
    m_smallIcon    = smallIcoon;
    m_width        = width;
@@ -110,7 +111,7 @@ GameEngine::~GameEngine( )
 
 HRESULT GameEngine::Initialize(int cmdShow)
 {
-   WNDCLASSEXW wc;
+   WNDCLASSEXW wc = { };
 
    wc.cbSize        = sizeof(WNDCLASSEXW);
    wc.style         = CS_HREDRAW | CS_VREDRAW;
@@ -120,14 +121,14 @@ HRESULT GameEngine::Initialize(int cmdShow)
    wc.hInstance     = m_inst;
    wc.hIcon         = (HICON)   LoadImageW(m_inst, MAKEINTRESOURCEW(IDI_ICON), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
    wc.hIconSm       = (HICON)   LoadImageW(m_inst, MAKEINTRESOURCEW(IDI_ICON_SM), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR); ;
-   wc.hCursor       = (HCURSOR) LoadImageW(nullptr, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
+   wc.hCursor       = (HCURSOR) LoadImageW(NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
    wc.hbrBackground = (HBRUSH)  (COLOR_WINDOW + 1);
    wc.lpszMenuName  = MAKEINTRESOURCEW(IDR_MENU);
    wc.lpszClassName = m_wndClass;
 
    if ( FAILED(RegisterClassExW(&wc)) )
    {
-      MessageBoxW(nullptr, L"Unable to initialize Main Window!", L"ERROR", MB_ICONERROR | MB_OK);
+      MessageBoxW(NULL, L"Unable to initialize Main Window!", L"ERROR", MB_ICONERROR | MB_OK);
       return E_FAIL;
    }
 
@@ -137,7 +138,7 @@ HRESULT GameEngine::Initialize(int cmdShow)
    windowWidth  += 10;
    windowHeight += 10;
 
-   if ( wc.lpszMenuName != nullptr )
+   if ( wc.lpszMenuName != NULL )
    {
       windowHeight += GetSystemMetrics(SM_CYMENU);
    }
@@ -149,11 +150,11 @@ HRESULT GameEngine::Initialize(int cmdShow)
                          WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
                          windowPosX, windowPosY,
                          windowWidth, windowHeight,
-                         nullptr, nullptr, m_inst, nullptr);
+                         NULL, NULL, m_inst, NULL);
 
-   if ( nullptr == m_wnd )
+   if ( NULL == m_wnd )
    {
-      MessageBoxW(nullptr, L"Unable to create Main Window!", L"ERROR", MB_ICONERROR | MB_OK);
+      MessageBoxW(NULL, L"Unable to create Main Window!", L"ERROR", MB_ICONERROR | MB_OK);
       return E_FAIL;
    }
 
@@ -318,23 +319,23 @@ void GameEngine::CheckJoystick( )
    }
 }
 
-void GameEngine::AddSprite(Sprite* pSprite)
+void GameEngine::AddSprite(Sprite* sprite)
 {
-   if ( pSprite != nullptr )
+   if ( sprite != NULL )
    {
       if ( m_sprites.size( ) > 0 )
       {
          for ( auto iterSprite = m_sprites.begin( ); iterSprite != m_sprites.end( ); iterSprite++ )
          {
-            if ( pSprite->GetZOrder( ) < (*iterSprite)->GetZOrder( ) )
+            if ( sprite->GetZOrder( ) < (*iterSprite)->GetZOrder( ) )
             {
-               m_sprites.insert(iterSprite, pSprite);
+               m_sprites.insert(iterSprite, sprite);
                return;
             }
          }
       }
 
-      m_sprites.push_back(pSprite);
+      m_sprites.push_back(sprite);
    }
 }
 
@@ -393,7 +394,7 @@ Sprite* GameEngine::IsPointInSprite(int x, int y)
       }
    }
 
-   return nullptr;
+   return NULL;
 }
 
 BOOL GameEngine::CheckSpriteCollision(Sprite* testSprite)
@@ -419,7 +420,7 @@ void GameEngine::PlayMIDISong(PCWSTR MIDIFileName, BOOL restart)
 {
    if ( m_MIDIPlayerID == 0 )
    {
-      MCI_OPEN_PARMS mciOpenParms;
+      MCI_OPEN_PARMS mciOpenParms = { };
 
       mciOpenParms.lpstrDeviceType = L"sequencer";
       mciOpenParms.lpstrElementName = MIDIFileName;
@@ -436,7 +437,7 @@ void GameEngine::PlayMIDISong(PCWSTR MIDIFileName, BOOL restart)
 
    if ( restart )
    {
-      MCI_SEEK_PARMS mciSeekParms;
+      MCI_SEEK_PARMS mciSeekParms = { };
 
       if ( mciSendCommandW(m_MIDIPlayerID, MCI_SEEK, MCI_SEEK_TO_START, (DWORD_PTR) &mciSeekParms) != 0 )
       {
@@ -444,7 +445,7 @@ void GameEngine::PlayMIDISong(PCWSTR MIDIFileName, BOOL restart)
       }
    }
 
-   MCI_PLAY_PARMS mciPlayParms;
+   MCI_PLAY_PARMS mciPlayParms = { };
 
    if ( mciSendCommandW(m_MIDIPlayerID, MCI_PLAY, 0, (DWORD_PTR) &mciPlayParms) != 0 )
    {

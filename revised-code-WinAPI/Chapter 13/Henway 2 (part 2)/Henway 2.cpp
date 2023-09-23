@@ -5,7 +5,7 @@ HRESULT GameInitialize(HINSTANCE inst)
    g_game = std::make_unique<GameEngine>(inst, L"Henway 2", L"Henway 2: Playing MIDI Music",
                                          IDI_ICON, IDI_ICON_SM, 465, 400);
 
-   if ( nullptr == g_game )
+   if ( NULL == g_game )
    {
       return E_FAIL;
    }
@@ -26,7 +26,7 @@ void GameStart(HWND wnd)
 
    SelectObject(g_offscreenDC, g_offscreenBitmap);
 
-   HINSTANCE inst = GetModuleHandleW(nullptr);
+   HINSTANCE inst = g_game->GetInstance( );
 
    g_highwayBitmap     = std::make_unique<Bitmap>(IDB_HIGHWAY, inst);
    g_chickenBitmap     = std::make_unique<Bitmap>(IDB_CHICKEN, inst);
@@ -124,7 +124,7 @@ void GameCycle( )
 {
    if ( !g_gameOver )
    {
-      HINSTANCE inst = GetModuleHandleW(nullptr);
+      HINSTANCE inst = g_game->GetInstance( );
 
       if ( rtk::rand(0, 99) == 0 )
       {
@@ -261,7 +261,7 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
    {
       g_chickenSprite->SetPosition(4, 175);
 
-      HINSTANCE inst = GetModuleHandleW(nullptr);
+      HINSTANCE inst = g_game->GetInstance( );
 
       if ( --g_numLives > 0 )
       {
@@ -294,7 +294,7 @@ void MoveChicken(int xDistance, int yDistance)
 
    if ( g_chickenSprite->GetPosition( ).left > 400 )
    {
-      HINSTANCE inst = GetModuleHandleW(nullptr);
+      HINSTANCE inst = g_game->GetInstance( );
 
       PlaySoundW((PCWSTR) IDW_CELEBRATE, inst, SND_ASYNC | SND_RESOURCE);
 

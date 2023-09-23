@@ -1,10 +1,10 @@
 #include "Sprite.hpp"
 
-Sprite::Sprite(Bitmap* pBitmap)
+Sprite::Sprite(Bitmap* bitmap)
 {
-   m_bitmap = pBitmap;
+   m_bitmap = bitmap;
 
-   SetRect(&m_position, 0, 0, pBitmap->GetWidth( ), pBitmap->GetHeight( ));
+   SetRect(&m_position, 0, 0, bitmap->GetWidth( ), bitmap->GetHeight( ));
    CalcCollisionRect( );
 
    m_velocity.x = m_velocity.y = 0;
@@ -66,11 +66,10 @@ void Sprite::CalcCollisionRect( )
 
 SPRITEACTION Sprite::Update( )
 {
-   // update the position
-   BOOL  bounce = FALSE;
-   POINT newPosition;
-   POINT spriteSize;
-   POINT boundsSize;
+   BOOL  bounce      = FALSE;
+   POINT newPosition = { };
+   POINT spriteSize  = { };
+   POINT boundsSize  = { };
 
    newPosition.x = m_position.left + m_velocity.x;
    newPosition.y = m_position.top + m_velocity.y;
@@ -166,7 +165,7 @@ SPRITEACTION Sprite::Update( )
 
 void Sprite::Draw(HDC dc)
 {
-   if ( m_bitmap != nullptr && !m_hidden )
+   if ( m_bitmap != NULL && !m_hidden )
    {
       m_bitmap->Draw(dc, m_position.left, m_position.top, TRUE);
    }
