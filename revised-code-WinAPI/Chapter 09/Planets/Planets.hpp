@@ -14,4 +14,4 @@ std::unique_ptr<Bitmap>              g_galaxyBitmap;
 std::vector<std::unique_ptr<Bitmap>> g_planetBitmap(3);
 std::vector<std::unique_ptr<Sprite>> g_panetSprite(3);
 BOOL                                 g_dragging;
-int                                  g_dragPlanet;
+LONG                                 g_dragPlanet;

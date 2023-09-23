@@ -5,7 +5,7 @@ HRESULT GameInitialize(HINSTANCE inst)
    g_game = std::make_unique<GameEngine>(inst, L"Planets", L"Planets: Making Things Move with Sprites",
                                          IDI_ICON, IDI_ICON_SM, 600, 400);
 
-   if ( nullptr == g_game )
+   if ( NULL == g_game )
    {
       return E_FAIL;
    }
@@ -19,10 +19,12 @@ void GameStart(HWND hWindow)
 {
    rtk::srand();
 
-   g_galaxyBitmap      = std::make_unique<Bitmap>(IDB_GALAXY, GetModuleHandle(nullptr));
-   g_planetBitmap[ 0 ] = std::make_unique<Bitmap>(IDB_PLANET1, GetModuleHandle(nullptr));
-   g_planetBitmap[ 1 ] = std::make_unique<Bitmap>(IDB_PLANET2, GetModuleHandle(nullptr));
-   g_planetBitmap[ 2 ] = std::make_unique<Bitmap>(IDB_PLANET3, GetModuleHandle(nullptr));
+   HINSTANCE inst = GetModuleHandleW(NULL);
+
+   g_galaxyBitmap      = std::make_unique<Bitmap>(IDB_GALAXY, inst);
+   g_planetBitmap[ 0 ] = std::make_unique<Bitmap>(IDB_PLANET1, inst);
+   g_planetBitmap[ 1 ] = std::make_unique<Bitmap>(IDB_PLANET2, inst);
+   g_planetBitmap[ 2 ] = std::make_unique<Bitmap>(IDB_PLANET3, inst);
 
    RECT rcBounds = { 0, 0, 600, 400 };
 
@@ -68,7 +70,7 @@ void GameCycle()
       g_panetSprite[i]->Update();
    }
 
-   InvalidateRect(g_game->GetWindow(), nullptr, FALSE);
+   InvalidateRect(g_game->GetWindow(), NULL, FALSE);
 }
 
 void GameMenu(WPARAM wParam)
@@ -128,7 +130,7 @@ void MouseMove(LONG x, LONG y)
       g_panetSprite[ g_dragPlanet ]->SetPosition(x - (g_planetBitmap[ g_dragPlanet ]->GetWidth( ) / 2),
                                                  y - (g_planetBitmap[ g_dragPlanet ]->GetHeight( ) / 2));
 
-      InvalidateRect(g_game->GetWindow(), nullptr, FALSE);
+      InvalidateRect(g_game->GetWindow(), NULL, FALSE);
    }
 }
 

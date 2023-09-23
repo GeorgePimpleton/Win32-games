@@ -22,6 +22,15 @@ using enum BOUNDSACTION;
 
 class Sprite
 {
+protected:
+   std::unique_ptr<Bitmap> m_bitmap;
+   RECT                    m_position;
+   POINT                   m_velocity;
+   int                     m_zOrder;
+   RECT                    m_bounds;
+   BOUNDSACTION            m_boundsAction;
+   BOOL                    m_hidden;
+
 public:
             Sprite(Bitmap* bitmap);
             Sprite(Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction = BA_STOP);
@@ -51,15 +60,6 @@ public:
    void  SetHidden(BOOL hidden);
    LONG  GetWidth( );
    LONG  GetHeight( );
-
-protected:
-   std::unique_ptr<Bitmap> m_bitmap;
-   RECT                    m_position;
-   POINT                   m_velocity;
-   int                     m_zOrder;
-   RECT                    m_bounds;
-   BOUNDSACTION            m_boundsAction;
-   BOOL                    m_hidden;
 };
 
 inline BOOL Sprite::IsPointInside(LONG x, LONG y)

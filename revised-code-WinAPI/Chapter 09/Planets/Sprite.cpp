@@ -150,7 +150,7 @@ void Sprite::Update( )
 void Sprite::Draw(HDC dc)
 {
    // draw the sprite if it isn't hidden
-   if ( m_bitmap != nullptr && !m_hidden )
+   if ( m_bitmap != NULL && !m_hidden )
    {
       m_bitmap->Draw(dc, m_position.left, m_position.top, TRUE);
    }
