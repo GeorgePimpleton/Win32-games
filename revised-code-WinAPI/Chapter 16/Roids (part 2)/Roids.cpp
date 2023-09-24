@@ -69,11 +69,9 @@ void GameNew( )
 
 void GameEnd( )
 {
-   // cleanup the offscreen device context and bitmap
    DeleteObject(g_offscreenBitmap);
    DeleteDC(g_offscreenDC);
 
-   // cleanup the sprites
    g_game->CleanupSprites( );
 }
 

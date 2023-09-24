@@ -40,8 +40,8 @@ void Background::Update( )
    // do nothing since the basic background is not animated
 }
 
-StarryBackground::StarryBackground(LONG width, LONG height, LONG numStars, LONG twinkleDelay) :
-   Background(width, height, 0)
+StarryBackground::StarryBackground(LONG width, LONG height, LONG numStars, LONG twinkleDelay)
+   : Background(width, height, 0)
 {
    m_numStars     = min(numStars, 100);
    m_twinkleDelay = twinkleDelay;

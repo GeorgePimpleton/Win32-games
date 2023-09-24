@@ -3,14 +3,22 @@
 #include <windows.h>
 #include "random_toolkit.hpp"
 #include "Bitmap.hpp"
+#include <array>
 
-using STARSIZE           = WORD;
-const STARSIZE SS_SMALL  = 0;
-const STARSIZE SS_MEDIUM = 1;
-const STARSIZE SS_LARGE  = 2;
+enum class STARSIZE : WORD { SS_SMALL  = 0,
+                             SS_MEDIUM = 1,
+                             SS_LARGE  = 2 };
+
+using enum STARSIZE;
 
 class Background
 {
+protected:
+   Bitmap* m_bitmap;
+   COLORREF m_color;
+   LONG     m_width;
+   LONG     m_height;
+
 public:
             Background(LONG width, LONG height, COLORREF color);
             Background(Bitmap* bitmap);
@@ -23,12 +31,6 @@ public:
 public:
    LONG GetWidth( ) const;
    LONG GetHeight( ) const;
-
-protected:
-   Bitmap*  m_bitmap;
-   COLORREF m_color;
-   LONG     m_width;
-   LONG     m_height;
 };
 
 class StarryBackground : public Background
@@ -44,13 +46,12 @@ public:
    virtual void Update( );
 
 protected:
-   LONG     m_numStars;
-   LONG     m_twinkleDelay;
-   POINT    m_stars[ 100 ];
-   COLORREF m_starColors[ 100 ];
-   STARSIZE m_sizeStars[ 100 ];
+   LONG                      m_numStars;
+   LONG                      m_twinkleDelay;
+   std::array<POINT, 100>    m_stars;
+   std::array<COLORREF, 100> m_starColors;
+   std::array<STARSIZE, 100> m_sizeStars;
 };
 
 inline LONG Background::GetWidth( ) const  { return m_width; }
-
 inline LONG Background::GetHeight( ) const { return m_height; }
