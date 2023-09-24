@@ -4,11 +4,12 @@
 
 GameEngine* GameEngine::m_gameEngine = NULL;
 
-int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInstance, _In_ PWSTR cmdLine, _In_ int cmdShow)
+int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
+                    _In_ PWSTR cmdLine, _In_ int cmdShow)
 {
-   if ( S_OK == GameInitialize(inst) )
+   if ( GameInitialize(inst) )
    {
-      if ( S_OK != GameEngine::GetEngine( )->Initialize(cmdShow) )
+      if ( !GameEngine::GetEngine( )->Initialize(cmdShow) )
       {
          return E_FAIL;
       }
@@ -84,8 +85,26 @@ BOOL CALLBACK DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam)
    return FALSE;
 }
 
+BOOL GameEngine::CheckSpriteCollision(Sprite* testSprite)
+{
+   for ( auto iterSprite = m_sprites.begin( ); iterSprite != m_sprites.end( ); iterSprite++ )
+   {
+      if ( testSprite == (*iterSprite) )
+      {
+         continue;
+      }
+
+      if ( testSprite->TestCollision(*iterSprite) )
+      {
+         return SpriteCollision((*iterSprite), testSprite);
+      }
+   }
+
+   return FALSE;
+}
+
 GameEngine::GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
-                       WORD icon, WORD smallIcon, UINT width, UINT height)
+                       WORD icon, WORD smallIcon, int width, int height)
 {
    m_gameEngine   = this;
    m_inst         = inst;
@@ -96,7 +115,7 @@ GameEngine::GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
    m_smallIcon    = smallIcon;
    m_width        = width;
    m_height       = height;
-   m_frameDelay   = 50;
+   m_frameDelay   = 50;   // 20 FPS default
    m_asleep       = TRUE;
    m_joyID        = 0;
    m_joyTrip      = { };
@@ -108,11 +127,11 @@ GameEngine::GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
 GameEngine::~GameEngine( )
 { }
 
-HRESULT GameEngine::Initialize(int cmdShow)
+BOOL GameEngine::Initialize(int cmdShow)
 {
    WNDCLASSEXW wc;
 
-   wc.cbSize        = sizeof(WNDCLASSEXW);
+   wc.cbSize        = sizeof(wc);
    wc.style         = CS_HREDRAW | CS_VREDRAW;
    wc.lpfnWndProc   = WndProc;
    wc.cbClsExtra    = 0;
@@ -120,15 +139,15 @@ HRESULT GameEngine::Initialize(int cmdShow)
    wc.hInstance     = m_inst;
    wc.hIcon         = (HICON)   LoadImageW(m_inst, MAKEINTRESOURCEW(IDI_ICON), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
    wc.hIconSm       = (HICON)   LoadImageW(m_inst, MAKEINTRESOURCEW(IDI_ICON_SM), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR); ;
-   wc.hCursor       = (HCURSOR) LoadImageW(NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
-   wc.hbrBackground = (HBRUSH)  (COLOR_WINDOW + 1);
+   wc.hCursor       = (HCURSOR) LoadImageW(m_inst, MAKEINTRESOURCEW(IDC_CURSOR), IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR);
+   wc.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1);
    wc.lpszMenuName  = MAKEINTRESOURCEW(IDR_MENU);
    wc.lpszClassName = m_wndClass;
 
    if ( FAILED(RegisterClassExW(&wc)) )
    {
       MessageBoxW(NULL, L"Unable to initialize Main Window!", L"ERROR", MB_ICONERROR | MB_OK);
-      return E_FAIL;
+      return FALSE;
    }
 
    UINT windowWidth  = m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2;
@@ -154,13 +173,13 @@ HRESULT GameEngine::Initialize(int cmdShow)
    if ( NULL == m_wnd )
    {
       MessageBoxW(NULL, L"Unable to create Main Window!", L"ERROR", MB_ICONERROR | MB_OK);
-      return E_FAIL;
+      return FALSE;
    }
 
    ShowWindow(m_wnd, cmdShow);
    UpdateWindow(m_wnd);
 
-   return S_OK;
+   return TRUE;
 }
 
 LRESULT GameEngine::HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -190,9 +209,11 @@ LRESULT GameEngine::HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam
       return 0;
 
    case WM_PAINT:
-      HDC         dc;
+      HDC dc;
       PAINTSTRUCT ps;
       dc = BeginPaint(wnd, &ps);
+
+      GamePaint(dc);
 
       EndPaint(wnd, &ps);
       return 0;
@@ -222,7 +243,7 @@ LRESULT GameEngine::HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam
       PostQuitMessage(0);
       return 0;
    }
-   return DefWindowProcW(wnd, msg, wParam, lParam);
+   return DefWindowProc(wnd, msg, wParam, lParam);
 }
 
 BOOL GameEngine::InitJoystick( )
@@ -280,32 +301,29 @@ void GameEngine::CheckJoystick( )
 {
    if ( m_joyID == JOYSTICKID1 )
    {
-      JOYINFO  joyInfo;
+      JOYINFO  joyInfo  = { };
       JOYSTATE joyState = 0;
 
       if ( joyGetPos(m_joyID, &joyInfo) == JOYERR_NOERROR )
       {
-         // check horizontal movement
          if ( joyInfo.wXpos < (WORD) m_joyTrip.left )
          {
             joyState |= JOY_LEFT;
          }
-         else if ( joyInfo.wXpos > (WORD) m_joyTrip.right )
+         else if ( joyInfo.wXpos > (WORD)m_joyTrip.right )
          {
             joyState |= JOY_RIGHT;
          }
 
-         // check vertical movement
          if ( joyInfo.wYpos < (WORD) m_joyTrip.top )
          {
             joyState |= JOY_UP;
          }
-         else if ( joyInfo.wYpos > (WORD) m_joyTrip.bottom )
+         else if ( joyInfo.wYpos > (WORD)m_joyTrip.bottom )
          {
             joyState |= JOY_DOWN;
          }
 
-         // check buttons
          if ( joyInfo.wButtons & JOY_BUTTON1 )
          {
             joyState |= JOY_FIRE1;
@@ -317,32 +335,26 @@ void GameEngine::CheckJoystick( )
          }
       }
 
-      // allow the game to handle the joystick
       HandleJoystick(joyState);
    }
 }
 
 void GameEngine::AddSprite(Sprite* sprite)
 {
-   // add a sprite to the sprite vector
    if ( sprite != NULL )
    {
-      // see if there are sprites already in the sprite vector
       if ( m_sprites.size( ) > 0 )
       {
-         // find a spot in the sprite vector to insert the sprite by its z-order
          for ( auto iterSprite = m_sprites.begin( ); iterSprite != m_sprites.end( ); iterSprite++ )
          {
             if ( sprite->GetZOrder( ) < (*iterSprite)->GetZOrder( ) )
             {
-               // insert the sprite into the sprite vector
                m_sprites.insert(iterSprite, sprite);
                return;
             }
          }
       }
 
-      // the sprite's z-order is highest, so add it to the end of the vector
       m_sprites.push_back(sprite);
    }
 }
@@ -401,85 +413,57 @@ Sprite* GameEngine::IsPointInSprite(int x, int y)
       }
    }
 
-   // The point is not in a sprite
    return NULL;
-}
-
-BOOL GameEngine::CheckSpriteCollision(Sprite* testSprite)
-{
-   for ( auto iterSprite = m_sprites.begin( ); iterSprite != m_sprites.end( ); iterSprite++ )
-   {
-      if ( testSprite == (*iterSprite) )
-      {
-         continue;
-      }
-
-      if ( testSprite->TestCollision(*iterSprite) )
-      {
-         return SpriteCollision((*iterSprite), testSprite);
-      }
-   }
-
-   return FALSE;
 }
 
 void GameEngine::PlayMIDISong(PCWSTR MIDIFileName, BOOL restart)
 {
-   // see if the MIDI player needs to be opened
-   if ( 0 == m_MIDIPlayerID )
+   if ( m_MIDIPlayerID == 0 )
    {
-      // open the MIDI player by specifying the device and filename
-      MCI_OPEN_PARMS mciOpenParms;
+      MCI_OPEN_PARMSW mciOpenParms;
 
       mciOpenParms.lpstrDeviceType  = L"sequencer";
       mciOpenParms.lpstrElementName = MIDIFileName;
 
-      if ( mciSendCommandW(NULL, MCI_OPEN, MCI_OPEN_TYPE | MCI_OPEN_ELEMENT, (DWORD_PTR) &mciOpenParms) == 0 )
+      if ( mciSendCommandW(NULL, MCI_OPEN, MCI_OPEN_TYPE | MCI_OPEN_ELEMENT,
+                           (DWORD_PTR) &mciOpenParms) == 0 )
       {
-         // get the ID for the MIDI player
          m_MIDIPlayerID = mciOpenParms.wDeviceID;
       }
       else
       {
-         // there was a problem, so just return
          return;
       }
    }
 
-   // restart the MIDI song, if necessary
    if ( restart )
    {
       MCI_SEEK_PARMS mciSeekParms;
 
-      if ( mciSendCommandW(m_MIDIPlayerID, MCI_SEEK, MCI_SEEK_TO_START, (DWORD_PTR) &mciSeekParms) != 0 )
+      if ( mciSendCommandW(m_MIDIPlayerID, MCI_SEEK, MCI_SEEK_TO_START,
+                           (DWORD_PTR) &mciSeekParms) != 0 )
       {
-         // there was a problem, so close the MIDI player
          CloseMIDIPlayer( );
       }
    }
 
-   // play the MIDI song
    MCI_PLAY_PARMS mciPlayParms;
 
-   if ( mciSendCommandW(m_MIDIPlayerID, MCI_PLAY, 0, (DWORD_PTR) &mciPlayParms) != 0 )
+   if ( mciSendCommandW(m_MIDIPlayerID, MCI_PLAY, 0,
+                        (DWORD_PTR) &mciPlayParms) != 0 )
    {
-      // there was a problem, so close the MIDI player
       CloseMIDIPlayer( );
    }
 }
 
 void GameEngine::PauseMIDISong( )
 {
-   // pause the currently playing song, if possible
    if ( m_MIDIPlayerID != 0 )
-   {
-      mciSendCommandW(m_MIDIPlayerID, MCI_PAUSE, 0, NULL);
-   }
+      mciSendCommand(m_MIDIPlayerID, MCI_PAUSE, 0, NULL);
 }
 
 void GameEngine::CloseMIDIPlayer( )
 {
-   // close the MIDI player, if possible
    if ( m_MIDIPlayerID != 0 )
    {
       mciSendCommandW(m_MIDIPlayerID, MCI_CLOSE, 0, NULL);

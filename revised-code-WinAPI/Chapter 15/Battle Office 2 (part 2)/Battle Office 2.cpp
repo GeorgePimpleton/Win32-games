@@ -1,87 +1,84 @@
-#include "Battle Office 2.hpp"
+#include "Battle  Office 2.hpp"
 
-HRESULT GameInitialize(HINSTANCE inst)
+BOOL GameInitialize(HINSTANCE inst)
 {
-   g_game = std::make_unique<GameEngine>(inst, L"Battle Office 2", L"Battle Office 2: Animating the Appearance of Sprites",
+   g_game = std::make_unique<GameEngine>(inst, L"Battle Office 2", L"Battle Office 2",
                                          IDI_ICON, IDI_ICON_SM, 500, 400);
-
-   if ( NULL == g_game )
-   {
-      return E_FAIL;
-   }
+   if ( g_game == NULL )
+      return FALSE;
 
    g_game->SetFrameRate(30);
 
-   return S_OK;
+   g_inst = inst;
+
+   return TRUE;
 }
 
-void GameStart(HWND hWindow)
+void GameStart(HWND wnd)
 {
    rtk::srand( );
 
-   SetClassLongPtrW(hWindow, GCLP_HCURSOR, (LONG64) LoadImageW(GetModuleHandleW(NULL), MAKEINTRESOURCEW(IDC_CURSOR), IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR));
-
-   g_offscreenDC     = CreateCompatibleDC(GetDC(hWindow));
-   g_offscreenBitmap = CreateCompatibleBitmap(GetDC(hWindow), g_game-> GetWidth( ), g_game-> GetHeight( ));
-
+   g_offscreenDC     = CreateCompatibleDC(GetDC(wnd));
+   g_offscreenBitmap = CreateCompatibleBitmap(GetDC(wnd),
+                                              g_game->GetWidth( ), g_game->GetHeight( ));
    SelectObject(g_offscreenDC, g_offscreenBitmap);
 
-   HINSTANCE inst = GetModuleHandle(NULL);
+   g_officeBitmap    = std::make_unique<Bitmap>(IDB_OFFICE, g_inst);
+   g_powBitmap       = std::make_unique<Bitmap>(IDB_POW, g_inst);
+   g_guyBitmaps[ 0 ] = std::make_unique<Bitmap>(IDB_GUY1, g_inst);
+   g_guyBitmaps[ 1 ] = std::make_unique<Bitmap>(IDB_GUY2, g_inst);
+   g_guyBitmaps[ 2 ] = std::make_unique<Bitmap>(IDB_GUY3, g_inst);
+   g_guyBitmaps[ 3 ] = std::make_unique<Bitmap>(IDB_GUY4, g_inst);
+   g_guyBitmaps[ 4 ] = std::make_unique<Bitmap>(IDB_GUY5, g_inst);
+   g_smallGuyBitmap  = std::make_unique<Bitmap>(IDB_SMALLGUY, g_inst);
+   g_gameOverBitmap  = std::make_unique<Bitmap>(IDB_GAMEOVER, g_inst);
 
-   g_officeBitmap    = std::make_unique<Bitmap>(IDB_OFFICE, inst);
-   g_powBitmap       = std::make_unique<Bitmap>(IDB_POW, inst);
-   g_guyBitmaps[ 0 ] = std::make_unique<Bitmap>(IDB_GUY1, inst);
-   g_guyBitmaps[ 1 ] = std::make_unique<Bitmap>(IDB_GUY2, inst);
-   g_guyBitmaps[ 2 ] = std::make_unique<Bitmap>(IDB_GUY3, inst);
-   g_guyBitmaps[ 3 ] = std::make_unique<Bitmap>(IDB_GUY4, inst);
-   g_guyBitmaps[ 4 ] = std::make_unique<Bitmap>(IDB_GUY5, inst);
-   g_smallGuyBitmap  = std::make_unique<Bitmap>(IDB_SMALLGUY, inst);
-   g_gameOverBitmap  = std::make_unique<Bitmap>(IDB_GAMEOVER, inst);
+   RECT    bounds = { 0, 0, 500, 400 };
 
-   RECT rcBounds = { 0, 0, 500, 400 };
-   g_powSprite = std::make_unique<Sprite>(g_powBitmap.get( ), rcBounds, BA_STOP);
+   g_powSprite = std::make_unique<Sprite>(g_powBitmap.get( ), bounds, BA_STOP);
    g_powSprite->SetZOrder(3);
    g_powSprite->SetHidden(TRUE);
    g_game->AddSprite(g_powSprite.get( ));
 
-   g_guySprites[ 0 ] = std::make_unique<Sprite>(g_guyBitmaps[ 0 ].get( ), rcBounds);
+   g_guySprites[ 0 ] = std::make_unique<Sprite>(g_guyBitmaps[ 0 ].get( ), bounds);
    g_guySprites[ 0 ]->SetPosition(92, 175);
    g_guySprites[ 0 ]->SetZOrder(2);
    g_guySprites[ 0 ]->SetHidden(TRUE);
    g_game->AddSprite(g_guySprites[ 0 ].get( ));
 
-   g_guySprites[ 1 ] = std::make_unique<Sprite>(g_guyBitmaps[ 1 ].get( ), rcBounds);
+   g_guySprites[ 1 ] = std::make_unique<Sprite>(g_guyBitmaps[ 1 ].get( ), bounds);
    g_guySprites[ 1 ]->SetPosition(301, 184);
    g_guySprites[ 1 ]->SetZOrder(2);
    g_guySprites[ 1 ]->SetHidden(TRUE);
    g_game->AddSprite(g_guySprites[ 1 ].get( ));
 
-   g_guySprites[ 2 ] = std::make_unique<Sprite>(g_guyBitmaps[ 2 ].get( ), rcBounds);
+   g_guySprites[ 2 ] = std::make_unique<Sprite>(g_guyBitmaps[ 2 ].get( ), bounds);
    g_guySprites[ 2 ]->SetPosition(394, 61);
    g_guySprites[ 2 ]->SetZOrder(2);
    g_guySprites[ 2 ]->SetHidden(TRUE);
    g_game->AddSprite(g_guySprites[ 2 ].get( ));
 
-   rcBounds.left = 340;
-   g_guySprites[ 3 ] = std::make_unique<Sprite>(g_guyBitmaps[ 3 ].get( ), rcBounds, BA_WRAP);
+   bounds.left = 340;
+   g_guySprites[ 3 ] = std::make_unique<Sprite>(g_guyBitmaps[ 3 ].get( ), bounds, BA_WRAP);
+   g_guySprites[ 3 ]->SetNumFrames(4);
    g_guySprites[ 3 ]->SetPosition(500, 10);
    g_guySprites[ 3 ]->SetVelocity(-3, 0);
    g_guySprites[ 3 ]->SetZOrder(1);
    g_guySprites[ 3 ]->SetHidden(TRUE);
-   g_guySprites[ 3 ]->SetNumFrames(4);
    g_game->AddSprite(g_guySprites[ 3 ].get( ));
 
-   rcBounds.left = 385;
-   g_guySprites[ 4 ] = std::make_unique<Sprite>(g_guyBitmaps[ 4 ].get( ), rcBounds, BA_WRAP);
+   bounds.left = 385;
+
+   g_guySprites[ 4 ] = std::make_unique<Sprite>(g_guyBitmaps[ 4 ].get( ), bounds, BA_WRAP);
+   g_guySprites[ 4 ]->SetNumFrames(4);
+   g_guySprites[ 4 ]->SetFrameDelay(5);
    g_guySprites[ 4 ]->SetPosition(260, 60);
    g_guySprites[ 4 ]->SetVelocity(5, 0);
    g_guySprites[ 4 ]->SetZOrder(1);
    g_guySprites[ 4 ]->SetHidden(TRUE);
-   g_guySprites[ 4 ]->SetNumFrames(4);
-   g_guySprites[ 4 ]->SetFrameDelay(5);
    g_game->AddSprite(g_guySprites[ 4 ].get( ));
 
-   g_game->PlayMIDISong(L"Music.mid");
+   g_game->PlayMIDISong(TEXT("Music.mid"));
 
    GameNew( );
 }
@@ -89,9 +86,9 @@ void GameStart(HWND hWindow)
 void GameNew( )
 {
    g_guyMasterDelay = 50;
-   g_hits           = 0;
-   g_misses         = 0;
-   g_gameOver       = FALSE;
+   g_hits = 0;
+   g_misses = 0;
+   g_gameOver = FALSE;
 
    EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
 
@@ -108,12 +105,12 @@ void GameEnd( )
    g_game->CleanupSprites( );
 }
 
-void GameActivate(HWND hWindow)
+void GameActivate(HWND wnd)
 {
    g_game->PlayMIDISong(TEXT(""), FALSE);
 }
 
-void GameDeactivate(HWND hWindow)
+void GameDeactivate(HWND wnd)
 {
    g_game->PauseMIDISong( );
 }
@@ -124,106 +121,83 @@ void GamePaint(HDC dc)
 
    g_game->DrawSprites(dc);
 
-   WCHAR szText[ 64 ];
+   WCHAR text[ 64 ];
    RECT  rect = { 237, 360, 301, 390 };
-   wsprintfW(szText, L"%d", g_hits);
-   DrawTextW(dc, szText, -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+
+   wsprintfW(text, L"%d", g_hits);
+   DrawTextW(dc, text, -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
    for ( int i = 0; i < g_misses; i++ )
-   {
       g_smallGuyBitmap->Draw(dc, 389 + (g_smallGuyBitmap->GetWidth( ) * i), 359, TRUE);
-   }
 
    if ( g_gameOver )
-   {
       g_gameOverBitmap->Draw(dc, 120, 110, TRUE);
-   }
 }
 
 void GameCycle( )
 {
    if ( !g_gameOver )
    {
-      // randomly show and hide the guys
       for ( int i = 0; i < 5; i++ )
-      {
          if ( g_guySprites[ i ]->IsHidden( ) )
          {
-            if ( rtk::rand(0, 60) == 0 )
+            if ( rand( ) % 60 == 0 )
             {
-               // show the guy
                g_guySprites[ i ]->SetHidden(FALSE);
 
-               // start the countdown delay
                if ( i == 3 )
                {
-                  // start the guy running left
                   g_guyDelay[ i ] = 80;
                   g_guySprites[ i ]->SetPosition(500, 10);
                }
                else if ( i == 4 )
                {
-                  // start the guy running right
                   g_guyDelay[ i ] = 45;
                   g_guySprites[ i ]->SetPosition(260, 60);
                }
                else
-               {
-                  g_guyDelay[ i ] = 20 + (rtk::rand(0, g_guyMasterDelay));
-               }
+                  g_guyDelay[ i ] = 20 + (rand( ) % g_guyMasterDelay);
             }
          }
          else
          {
             if ( --g_guyDelay[ i ] == 0 )
             {
-               // play a sound for the guy getting away
-               PlaySoundW((PCWSTR) IDW_TAUNT, GetModuleHandleW(NULL), SND_ASYNC | SND_RESOURCE);
+               PlaySound((PCWSTR) IDW_TAUNT, g_inst, SND_ASYNC | SND_RESOURCE);
 
-               // hide the guy
                g_guySprites[ i ]->SetHidden(TRUE);
 
-               // increment the misses
                if ( ++g_misses == 5 )
                {
-                  // play a sound for the game ending
-                  PlaySoundW((PCWSTR) IDW_BOO, GetModuleHandleW(NULL), SND_ASYNC | SND_RESOURCE);
+                  PlaySound((PCWSTR) IDW_BOO, g_inst, SND_ASYNC | SND_RESOURCE);
 
-                  // end the game
                   for ( int i = 0; i < 5; i++ )
                   {
                      g_guySprites[ i ]->SetHidden(TRUE);
                   }
 
+                  g_powSprite->SetHidden(TRUE);
                   g_gameOver = TRUE;
 
-                  g_powSprite->SetHidden(TRUE);
-
-                  // pause the background music
-                  g_game->PauseMIDISong( );
-
                   EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_ENABLED);
+
+                  g_game->PauseMIDISong( );
                }
             }
          }
-      }
+
+      g_game->UpdateSprites( );
+
+      HWND  wnd = g_game->GetWindow( );
+      HDC   dc = GetDC(wnd);
+
+      GamePaint(g_offscreenDC);
+
+      BitBlt(dc, 0, 0, g_game->GetWidth( ), g_game->GetHeight( ),
+             g_offscreenDC, 0, 0, SRCCOPY);
+
+      ReleaseDC(wnd, dc);
    }
-
-   // update the sprites
-   g_game->UpdateSprites( );
-
-   // obtain a device context for repainting the game
-   HWND wnd = g_game-> GetWindow( );
-   HDC  dc  = GetDC(wnd);
-
-   // paint the game to the offscreen device context
-   GamePaint(g_offscreenDC);
-
-   // blit the offscreen bitmap to the game screen
-   BitBlt(dc, 0, 0, g_game->GetWidth( ), g_game->GetHeight( ), g_offscreenDC, 0, 0, SRCCOPY);
-
-   // cleanup
-   ReleaseDC(wnd, dc);
 }
 
 void GameMenu(WPARAM wParam)
@@ -253,44 +227,32 @@ void HandleKeys( )
 
 void MouseButtonDown(LONG x, LONG y, BOOL left)
 {
-   // only check the left mouse button
-   if ( g_gameOver == FALSE && left )
+   if ( !g_gameOver && left )
    {
-      // temporarily hide the POW sprite
       g_powSprite->SetHidden(TRUE);
 
-      // see if a guy sprite was clicked
-      Sprite* sprite;
-
-      if ( (sprite = g_game->IsPointInSprite(x, y)) != NULL )
+      Sprite* pSprite;
+      if ( (pSprite = g_game->IsPointInSprite(x, y)) != NULL )
       {
-         // play a sound for hitting the guy
-         PlaySoundW((PCWSTR) IDW_WHACK, GetModuleHandleW(NULL), SND_ASYNC | SND_RESOURCE);
+         PlaySound((PCWSTR) IDW_WHACK, g_inst, SND_ASYNC | SND_RESOURCE);
 
-         // position and show the pow sprite
-         g_powSprite->SetPosition(x - (g_powSprite->GetWidth( ) / 2), y - (g_powSprite->GetHeight( ) / 2));
+         g_powSprite->SetPosition(x - (g_powSprite->GetWidth( ) / 2),
+                                  y - (g_powSprite->GetHeight( ) / 2));
          g_powSprite->SetHidden(FALSE);
 
-         // hide the guy that was clicked
-         sprite->SetHidden(TRUE);
+         pSprite->SetHidden(TRUE);
 
-         // increment the hits and make the game harder, if necessary
-         if ( 0 == (++g_hits % 5) )
-         {
-            if ( 0 == --g_guyMasterDelay )
-            {
+         if ( (++g_hits % 5) == 0 )
+            if ( --g_guyMasterDelay == 0 )
                g_guyMasterDelay = 1;
-            }
-         }
       }
+
    }
    else if ( g_gameOver && !left )
    {
-      // start a new game
-      GameNew( );
-
-      // restart the background music
       g_game->PlayMIDISong( );
+
+      GameNew( );
    }
 }
 

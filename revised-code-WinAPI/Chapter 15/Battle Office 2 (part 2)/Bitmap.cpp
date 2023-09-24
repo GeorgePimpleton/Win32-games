@@ -3,25 +3,25 @@
 #include "Bitmap.hpp"
 
 Bitmap::Bitmap( )
-   : m_bitmap(nullptr), m_width(0), m_height(0)
+   : m_bitmap(NULL), m_width(0), m_height(0)
 { }
 
 Bitmap::Bitmap(PCWSTR fileName)
-   : m_bitmap(nullptr), m_width(0), m_height(0)
+   : m_bitmap(NULL), m_width(0), m_height(0)
 {
    Create(fileName);
 }
 
 Bitmap::Bitmap(UINT resID, HINSTANCE inst)
-   : m_bitmap(nullptr), m_width(0), m_height(0)
+   : m_bitmap(NULL), m_width(0), m_height(0)
 {
    Create(resID, inst);
 }
 
-Bitmap::Bitmap(HWND wnd, LONG width, LONG height, COLORREF color)
-   : m_bitmap(nullptr), m_width(0), m_height(0)
+Bitmap::Bitmap(HDC dc, LONG width, LONG height, COLORREF color)
+   : m_bitmap(NULL), m_width(0), m_height(0)
 {
-   Create(wnd, width, height, color);
+   Create(dc, width, height, color);
 }
 
 Bitmap::~Bitmap( )
@@ -31,11 +31,10 @@ Bitmap::~Bitmap( )
 
 void Bitmap::Free( )
 {
-   if ( nullptr != m_bitmap )
+   if ( m_bitmap != NULL )
    {
       DeleteObject(m_bitmap);
-
-      m_bitmap = nullptr;
+      m_bitmap = NULL;
    }
 }
 
@@ -43,16 +42,16 @@ BOOL Bitmap::Create(PCWSTR fileName)
 {
    Free( );
 
-   m_bitmap = (HBITMAP) LoadImageW(nullptr, fileName, IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION | LR_LOADFROMFILE);
+   m_bitmap = (HBITMAP) LoadImageW(NULL, fileName, IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION | LR_LOADFROMFILE);
 
-   if ( nullptr == m_bitmap )
+   if ( NULL == m_bitmap )
    {
       Free( );
 
       return FALSE;
    }
 
-   BITMAP bitmap;
+   BITMAP bitmap = { };
 
    GetObjectW(m_bitmap, sizeof(BITMAP), &bitmap);
 
@@ -66,16 +65,16 @@ BOOL Bitmap::Create(UINT resID, HINSTANCE inst)
 {
    Free( );
 
-   m_bitmap = (HBITMAP) LoadImageW(GetModuleHandleW(nullptr), MAKEINTRESOURCEW(resID), IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION);
+   m_bitmap = (HBITMAP) LoadImageW(GetModuleHandleW(NULL), MAKEINTRESOURCEW(resID), IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION);
 
-   if ( nullptr == m_bitmap )
+   if ( NULL == m_bitmap )
    {
       Free( );
 
       return FALSE;
    }
 
-   BITMAP bitmap;
+   BITMAP bitmap = { };
 
    GetObjectW(m_bitmap, sizeof(BITMAP), &bitmap);
 
@@ -85,13 +84,11 @@ BOOL Bitmap::Create(UINT resID, HINSTANCE inst)
    return TRUE;
 }
 
-BOOL Bitmap::Create(HWND wnd, LONG width, LONG height, COLORREF color)
+BOOL Bitmap::Create(HDC dc, LONG width, LONG height, COLORREF color)
 {
-   HDC dc = GetDC(wnd);
-
    m_bitmap = CreateCompatibleBitmap(dc, width, height);
 
-   if ( nullptr == m_bitmap )
+   if ( NULL == m_bitmap )
    {
       return FALSE;
    }
@@ -100,11 +97,8 @@ BOOL Bitmap::Create(HWND wnd, LONG width, LONG height, COLORREF color)
    m_height = height;
 
    HDC     memDC     = CreateCompatibleDC(dc);
-
    HBRUSH  brush     = CreateSolidBrush(color);
-
    HBITMAP oldBitmap = (HBITMAP) SelectObject(memDC, m_bitmap);
-
    RECT    bitmap    = { 0, 0, m_width, m_height };
 
    FillRect(memDC, &bitmap, brush);
@@ -116,23 +110,23 @@ BOOL Bitmap::Create(HWND wnd, LONG width, LONG height, COLORREF color)
    return TRUE;
 }
 
-void Bitmap::Draw(HDC dc, int x, int y, BOOL trans, COLORREF transColor) const
+void Bitmap::Draw(HDC dc, int x, int y, BOOL trans, COLORREF transColor)
 {
    DrawPart(dc, x, y, 0, 0, GetWidth( ), GetHeight( ), trans, transColor);
 }
 
-void Bitmap::DrawPart(HDC dc, int x, int y, int xPart, int yPart, int wPart, int hPart,
-                      BOOL trans, COLORREF transColor) const
+void Bitmap::DrawPart(HDC dc, int x, int y, int xPart, int yPart,
+                      int wPart, int hPart, BOOL trans, COLORREF transColor)
 {
-   if ( nullptr != m_bitmap )
+   if ( m_bitmap != NULL )
    {
-      HDC memDC = CreateCompatibleDC(dc);
-
+      HDC     memDC     = CreateCompatibleDC(dc);
       HBITMAP oldBitmap = (HBITMAP) SelectObject(memDC, m_bitmap);
 
       if ( trans )
       {
-         TransparentBlt(dc, x, y, wPart, hPart, memDC, xPart, yPart, wPart, hPart, transColor);
+         TransparentBlt(dc, x, y, wPart, hPart, memDC, xPart, yPart,
+                        wPart, hPart, transColor);
       }
       else
       {
