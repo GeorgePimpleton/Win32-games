@@ -3,11 +3,13 @@
 #include <windows.h>
 #include "random_toolkit.hpp"
 #include "Bitmap.hpp"
+#include <array>
 
-using STARSIZE           = WORD;
-const STARSIZE SS_SMALL  = 0;
-const STARSIZE SS_MEDIUM = 1;
-const STARSIZE SS_LARGE  = 2;
+enum class STARSIZE : WORD { SS_SMALL  = 0,
+                             SS_MEDIUM = 1,
+                             SS_LARGE  = 3 };
+
+using enum STARSIZE;
 
 class Background
 {
@@ -32,11 +34,11 @@ public:
 class StarryBackground : Background
 {
 protected:
-   int      m_numStars;
-   int      m_twinkleDelay;
-   POINT    m_stars[ 100 ];
-   COLORREF m_starColors[ 100 ];
-   STARSIZE m_sizeStars[ 100 ];
+   int                       m_numStars;
+   int                       m_twinkleDelay;
+   std::array<POINT, 100>    m_stars;
+   std::array<COLORREF, 100> m_starColors;
+   std::array<STARSIZE, 100> m_sizeStars;
 
 public:
             StarryBackground(int width, int height,

@@ -75,9 +75,9 @@ SPRITEACTION Sprite::Update( )
 
    UpdateFrame( );
 
-   POINT newPosition;
-   POINT spriteSize;
-   POINT boundsSize;
+   POINT newPosition = { };
+   POINT spriteSize  = { };
+   POINT boundsSize  = { };
 
    newPosition.x = m_position.left + m_velocity.x;
    newPosition.y = m_position.top + m_velocity.y;

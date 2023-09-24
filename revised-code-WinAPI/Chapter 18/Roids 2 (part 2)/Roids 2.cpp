@@ -1,4 +1,4 @@
-#include "Roids.hpp"
+#include "Roids 2.hpp"
 
 BOOL GameInitialize(HINSTANCE inst)
 {
@@ -187,9 +187,7 @@ void UpdateSaucer( )
       }
    }
 
-   POINT velocity;
-
-   velocity = g_saucer->GetVelocity( );
+   POINT velocity = g_saucer->GetVelocity( );
 
    if ( abs(xCollision) < 60 )
    {

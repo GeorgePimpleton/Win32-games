@@ -25,8 +25,8 @@ IDR_MENU    MENU
 {
    POPUP "&Game"
    {
-      // MENUITEM "&New\tCtrl+N",   IDM_GAME_NEW, GRAYED
-      // MENUITEM SEPARATOR
+      //MENUITEM "&New\tCtrl+N",   IDM_GAME_NEW, GRAYED
+      //MENUITEM SEPARATOR
       MENUITEM "E&xit\tAlt+F4",          IDM_GAME_EXIT
    }
 

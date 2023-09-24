@@ -8,11 +8,12 @@ typedef WORD        SPRITEACTION;
 const SPRITEACTION  SA_NONE   = 0x0000L,
                     SA_KILL   = 0x0001L;
 
-typedef WORD        BOUNDSACTION;
-const BOUNDSACTION  BA_STOP   = 0,
-                    BA_WRAP   = 1,
-                    BA_BOUNCE = 2,
-                    BA_DIE    = 3;
+enum class BOUNDSACTION : WORD { BA_STOP   = 0,
+                                 BA_WRAP   = 1,
+                                 BA_BOUNCE = 2,
+                                 BA_DIE    = 3 };
+
+using enum BOUNDSACTION;
 
 class Sprite
 {
@@ -111,7 +112,7 @@ inline BOOL Sprite::TestCollision(Sprite* testSprite)
 
 inline BOOL Sprite::IsPointInside(int x, int y)
 {
-   POINT point;
+   POINT point = { };
 
    point.x = x;
    point.y = y;

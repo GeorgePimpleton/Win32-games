@@ -129,7 +129,7 @@ GameEngine::~GameEngine( )
 
 BOOL GameEngine::Initialize(int cmdShow)
 {
-   WNDCLASSEXW wc;
+   WNDCLASSEXW wc = { };
 
    wc.cbSize        = sizeof(wc);
    wc.style         = CS_HREDRAW | CS_VREDRAW;
@@ -422,7 +422,7 @@ void GameEngine::PlayMIDISong(PCWSTR MIDIFileName, BOOL restart)
 {
    if ( 0 == m_MIDIPlayerID )
    {
-      MCI_OPEN_PARMSW mciOpenParms;
+      MCI_OPEN_PARMSW mciOpenParms = { };
 
       mciOpenParms.lpstrDeviceType = L"sequencer";
       mciOpenParms.lpstrElementName = MIDIFileName;
@@ -440,7 +440,7 @@ void GameEngine::PlayMIDISong(PCWSTR MIDIFileName, BOOL restart)
 
    if ( restart )
    {
-      MCI_SEEK_PARMS mciSeekParms;
+      MCI_SEEK_PARMS mciSeekParms = { };
 
       if ( 0 != mciSendCommandW(m_MIDIPlayerID, MCI_SEEK, MCI_SEEK_TO_START,
                                 (DWORD_PTR) &mciSeekParms) )
@@ -449,7 +449,7 @@ void GameEngine::PlayMIDISong(PCWSTR MIDIFileName, BOOL restart)
       }
    }
 
-   MCI_PLAY_PARMS mciPlayParms;
+   MCI_PLAY_PARMS mciPlayParms = { };
 
    if ( 0 != mciSendCommandW(m_MIDIPlayerID, MCI_PLAY, 0,
                              (DWORD_PTR) &mciPlayParms) )
