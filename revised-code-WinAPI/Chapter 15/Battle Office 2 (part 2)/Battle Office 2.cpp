@@ -118,25 +118,25 @@ void GameDeactivate(HWND hWindow)
    g_game->PauseMIDISong( );
 }
 
-void GamePaint(HDC hDC)
+void GamePaint(HDC dc)
 {
-   g_officeBitmap->Draw(hDC, 0, 0);
+   g_officeBitmap->Draw(dc, 0, 0);
 
-   g_game->DrawSprites(hDC);
+   g_game->DrawSprites(dc);
 
    WCHAR szText[ 64 ];
    RECT  rect = { 237, 360, 301, 390 };
    wsprintfW(szText, L"%d", g_hits);
-   DrawTextW(hDC, szText, -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+   DrawTextW(dc, szText, -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
    for ( int i = 0; i < g_misses; i++ )
    {
-      g_smallGuyBitmap->Draw(hDC, 389 + (g_smallGuyBitmap->GetWidth( ) * i), 359, TRUE);
+      g_smallGuyBitmap->Draw(dc, 389 + (g_smallGuyBitmap->GetWidth( ) * i), 359, TRUE);
    }
 
    if ( g_gameOver )
    {
-      g_gameOverBitmap->Draw(hDC, 120, 110, TRUE);
+      g_gameOverBitmap->Draw(dc, 120, 110, TRUE);
    }
 }
 

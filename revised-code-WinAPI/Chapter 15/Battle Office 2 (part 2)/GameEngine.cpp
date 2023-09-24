@@ -190,9 +190,9 @@ LRESULT GameEngine::HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam
       return 0;
 
    case WM_PAINT:
-      HDC         hDC;
+      HDC         dc;
       PAINTSTRUCT ps;
-      hDC = BeginPaint(wnd, &ps);
+      dc = BeginPaint(wnd, &ps);
 
       EndPaint(wnd, &ps);
       return 0;
@@ -347,11 +347,11 @@ void GameEngine::AddSprite(Sprite* sprite)
    }
 }
 
-void GameEngine::DrawSprites(HDC hDC)
+void GameEngine::DrawSprites(HDC dc)
 {
    for ( auto iterSprite = m_sprites.begin( ); iterSprite != m_sprites.end( ); iterSprite++ )
    {
-      (*iterSprite)->Draw(hDC);
+      (*iterSprite)->Draw(dc);
    }
 }
 

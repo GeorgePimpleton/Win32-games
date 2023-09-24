@@ -28,7 +28,7 @@ public:
    virtual void CalcCollisionRect( );
 
    virtual SPRITEACTION Update( );
-   void                 Draw(HDC hDC);
+   void                 Draw(HDC dc);
    BOOL                 IsPointInside(LONG x, LONG y);
    BOOL                 TestCollision(Sprite* pTestSprite);
 

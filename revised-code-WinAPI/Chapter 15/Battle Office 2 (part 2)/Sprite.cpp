@@ -165,17 +165,17 @@ SPRITEACTION Sprite::Update( )
    return SA_NONE;
 }
 
-void Sprite::Draw(HDC hDC)
+void Sprite::Draw(HDC dc)
 {
    if ( m_bitmap != NULL && !m_hidden )
    {
       if ( 1 == m_numFrames )
       {
-         m_bitmap->Draw(hDC, m_position.left, m_position.top, TRUE);
+         m_bitmap->Draw(dc, m_position.left, m_position.top, TRUE);
       }
       else
       {
-         m_bitmap->DrawPart(hDC, m_position.left, m_position.top, 0, m_curFrame * GetHeight( ), GetWidth( ), GetHeight( ), TRUE);
+         m_bitmap->DrawPart(dc, m_position.left, m_position.top, 0, m_curFrame * GetHeight( ), GetWidth( ), GetHeight( ), TRUE);
       }
    }
 }
