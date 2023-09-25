@@ -19,7 +19,7 @@ class Sprite
 protected:
    Bitmap*      m_pBitmap;
    int          m_iNumFrames, m_iCurFrame;
-   int          m_iFrameDelay, m_iFrameTrigger;
+   int          m_frameDelay, m_iFrameTrigger;
    RECT         m_rcPosition, m_rcCollision;
    POINT        m_ptVelocity;
    int          m_iZOrder;
@@ -42,14 +42,14 @@ public:
 
    virtual SPRITEACTION Update( );
    virtual Sprite*      AddSprite( );
-   void                 Draw(HDC hDC);
+   void                 Draw(HDC dc);
    BOOL                 IsPointInside(int x, int y);
    BOOL                 TestCollision(Sprite* pTestSprite);
    void                 Kill( ) { m_bDying = TRUE; };
 
    Bitmap* GetBitmap( )                                { return m_pBitmap; };
    void    SetNumFrames(int iNumFrames, BOOL bOneCycle = FALSE);
-   void    SetFrameDelay(int iFrameDelay)              { m_iFrameDelay = iFrameDelay; };
+   void    SetFrameDelay(int frameDelay)              { m_frameDelay = frameDelay; };
    RECT&   GetPosition( )                              { return m_rcPosition; };
    void    SetPosition(int x, int y);
    void    SetPosition(POINT ptPosition);
@@ -71,9 +71,9 @@ public:
 
 inline void Sprite::UpdateFrame( )
 {
-   if ( (m_iFrameDelay >= 0) && (--m_iFrameTrigger <= 0) )
+   if ( (m_frameDelay >= 0) && (--m_iFrameTrigger <= 0) )
    {
-      m_iFrameTrigger = m_iFrameDelay;
+      m_iFrameTrigger = m_frameDelay;
 
       if ( ++m_iCurFrame >= m_iNumFrames )
       {

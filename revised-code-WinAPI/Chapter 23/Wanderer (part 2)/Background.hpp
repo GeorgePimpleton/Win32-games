@@ -6,20 +6,20 @@
 class Background
 {
 protected:
-   int      m_iWidth, m_iHeight;
+   int      m_width, m_height;
    COLORREF m_crColor;
    Bitmap*  m_pBitmap;
 
 public:
-            Background(int iWidth, int iHeight, COLORREF crColor);
+            Background(int width, int height, COLORREF crColor);
             Background(Bitmap* pBitmap);
    virtual ~Background( );
 
    virtual void Update( );
-   virtual void Draw(HDC hDC);
+   virtual void Draw(HDC dc);
 
-   int GetWidth( ) { return m_iWidth; };
-   int GetHeight( ) { return m_iHeight; };
+   int GetWidth( ) { return m_width; };
+   int GetHeight( ) { return m_height; };
 };
 
 class StarryBackground : Background
@@ -31,10 +31,10 @@ protected:
    COLORREF m_crStarColors[ 100 ];
 
 public:
-            StarryBackground(int iWidth, int iHeight, int iNumStars = 100,
+            StarryBackground(int width, int height, int iNumStars = 100,
                              int iTwinkleDelay = 50);
    virtual ~StarryBackground( );
 
    virtual void Update( );
-   virtual void Draw(HDC hDC);
+   virtual void Draw(HDC dc);
 };

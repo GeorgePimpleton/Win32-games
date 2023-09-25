@@ -1,9 +1,9 @@
 #include "Wanderer.hpp"
 
-BOOL GameInitialize(HINSTANCE hInstance)
+BOOL GameInitialize(HINSTANCE inst)
 {
-   g_pGame = new GameEngine(hInstance, TEXT("Wanderer"), TEXT("Wanderer"),
-                            IDI_WANDERER, IDI_WANDERER_SM, 256, 256);
+   g_pGame = new GameEngine(inst, L"Wanderer", L"Wanderer",
+                            IDI_ICON, IDI_ICON_SM, 256, 256);
 
    if ( g_pGame == NULL )
    {
@@ -14,23 +14,23 @@ BOOL GameInitialize(HINSTANCE hInstance)
 
    g_pGame->InitJoystick( );
 
-   g_hInstance = hInstance;
+   g_inst = inst;
 
    return TRUE;
 }
 
-void GameStart(HWND hWindow)
+void GameStart(HWND wnd)
 {
-   g_hOffscreenDC = CreateCompatibleDC(GetDC(hWindow));
-   g_hOffscreenBitmap = CreateCompatibleBitmap(GetDC(hWindow),
+   g_hOffscreenDC = CreateCompatibleDC(GetDC(wnd));
+   g_hOffscreenBitmap = CreateCompatibleBitmap(GetDC(wnd),
                                                g_pGame->GetWidth( ), g_pGame->GetHeight( ));
 
    SelectObject(g_hOffscreenDC, g_hOffscreenBitmap);
 
    // Create the scrolling background and landscape layer
-   HDC hDC = GetDC(hWindow);
+   HDC dc = GetDC(wnd);
    g_pBackground = new ScrollingBackground(256, 256);
-   g_pBGLandscapeLayer = new BackgroundLayer(hDC, IDB_BG_LANDSCAPE, g_hInstance);
+   g_pBGLandscapeLayer = new BackgroundLayer(dc, IDB_BG_LANDSCAPE, g_inst);
 
    RECT rcViewport = { 352, 352, 608, 608 };
    g_pBGLandscapeLayer->SetViewport(rcViewport);
@@ -38,14 +38,14 @@ void GameStart(HWND hWindow)
 
    // Create the scrolling foreground and clouds layer
    g_pForeground = new ScrollingBackground(256, 256);
-   g_pFGCloudsLayer = new BackgroundLayer(hDC, IDB_BG_CLOUDS, g_hInstance);
+   g_pFGCloudsLayer = new BackgroundLayer(dc, IDB_BG_CLOUDS, g_inst);
    rcViewport.left = rcViewport.top = 64;
    rcViewport.right = rcViewport.bottom = 320;
    g_pFGCloudsLayer->SetViewport(rcViewport);
    g_pForeground->AddLayer(g_pFGCloudsLayer);
 
    // Create and load the person bitmap
-   g_pPersonBitmap = new Bitmap(hDC, IDB_PERSON, g_hInstance);
+   g_pPersonBitmap = new Bitmap(dc, IDB_PERSON, g_inst);
 
    // Create the person sprite
    RECT rcBounds = { 115, 112, 26, 32 };
@@ -57,6 +57,9 @@ void GameStart(HWND hWindow)
    // Play the background music
    g_pGame->PlayMIDISong(TEXT("Music.mid"));
 }
+
+void GameNew( )
+{ }
 
 void GameEnd( )
 {
@@ -85,16 +88,16 @@ void GameEnd( )
    delete g_pGame;
 }
 
-void GameActivate(HWND hWindow)
+void GameActivate(HWND wnd)
 {
    // Capture the joystick
    g_pGame->CaptureJoystick( );
 
    // Resume the background music
-   g_pGame->PlayMIDISong(TEXT(""), FALSE);
+   g_pGame->PlayMIDISong(L"", FALSE);
 }
 
-void GameDeactivate(HWND hWindow)
+void GameDeactivate(HWND wnd)
 {
    // Release the joystick
    g_pGame->ReleaseJoystick( );
@@ -103,16 +106,16 @@ void GameDeactivate(HWND hWindow)
    g_pGame->PauseMIDISong( );
 }
 
-void GamePaint(HDC hDC)
+void GamePaint(HDC dc)
 {
    // Draw the scrolling background
-   g_pBackground->Draw(hDC);
+   g_pBackground->Draw(dc);
 
    // Draw the sprites
-   g_pGame->DrawSprites(hDC);
+   g_pGame->DrawSprites(dc);
 
    // Draw the scrolling foreground
-   g_pForeground->Draw(hDC, TRUE); // draw with transparency
+   g_pForeground->Draw(dc, TRUE); // draw with transparency
 }
 
 void GameCycle( )
@@ -127,18 +130,37 @@ void GameCycle( )
    g_pGame->UpdateSprites( );
 
    // Obtain a device context for repainting the game
-   HWND  hWindow = g_pGame->GetWindow( );
-   HDC   hDC = GetDC(hWindow);
+   HWND  wnd = g_pGame->GetWindow( );
+   HDC   dc = GetDC(wnd);
 
    // Paint the game to the offscreen device context
    GamePaint(g_hOffscreenDC);
 
    // Blit the offscreen bitmap to the game screen
-   BitBlt(hDC, 0, 0, g_pGame->GetWidth( ), g_pGame->GetHeight( ),
+   BitBlt(dc, 0, 0, g_pGame->GetWidth( ), g_pGame->GetHeight( ),
           g_hOffscreenDC, 0, 0, SRCCOPY);
 
    // Cleanup
-   ReleaseDC(hWindow, hDC);
+   ReleaseDC(wnd, dc);
+}
+
+void GameMenu(WPARAM wParam)
+{
+   switch ( LOWORD(wParam) )
+   {
+   case IDM_GAME_NEW:
+      GameNew( );
+      return;
+
+   case IDM_GAME_EXIT:
+      GameEnd( );
+      PostQuitMessage(0);
+      return;
+
+   case IDM_HELP_ABOUT:
+      DialogBoxW(g_pGame->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT), g_pGame->GetWindow( ), (DLGPROC) DlgProc);
+      return;
+   }
 }
 
 void HandleKeys( )
@@ -220,21 +242,21 @@ void HandleKeys( )
    }
 }
 
-void MouseButtonDown(int x, int y, BOOL bLeft)
+void MouseButtonDown(int x, int y, BOOL left)
 { }
 
-void MouseButtonUp(int x, int y, BOOL bLeft)
+void MouseButtonUp(int x, int y, BOOL left)
 { }
 
 void MouseMove(int x, int y)
 { }
 
-void HandleJoystick(JOYSTATE jsJoystickState)
+void HandleJoystick(JOYSTATE joyState)
 {
    if ( ++g_iInputDelay > 2 )
    {
       // Check horizontal movement
-      if ( jsJoystickState & JOY_LEFT )
+      if ( joyState & JOY_LEFT )
       {
          // Make the person walk
          g_pPersonSprite->Walk( );
@@ -251,7 +273,7 @@ void HandleJoystick(JOYSTATE jsJoystickState)
          g_pFGCloudsLayer->Update( );
          g_pFGCloudsLayer->SetSpeed(0);
       }
-      else if ( jsJoystickState & JOY_RIGHT )
+      else if ( joyState & JOY_RIGHT )
       {
          // Make the person walk
          g_pPersonSprite->Walk( );
@@ -268,7 +290,7 @@ void HandleJoystick(JOYSTATE jsJoystickState)
          g_pFGCloudsLayer->Update( );
          g_pFGCloudsLayer->SetSpeed(0);
       }
-      else if ( jsJoystickState & JOY_UP )
+      else if ( joyState & JOY_UP )
       {
          // Make the person walk
          g_pPersonSprite->Walk( );
@@ -285,7 +307,7 @@ void HandleJoystick(JOYSTATE jsJoystickState)
          g_pFGCloudsLayer->Update( );
          g_pFGCloudsLayer->SetSpeed(0);
       }
-      else if ( jsJoystickState & JOY_DOWN )
+      else if ( joyState & JOY_DOWN )
       {
          // Make the person walk
          g_pPersonSprite->Walk( );
@@ -308,10 +330,10 @@ void HandleJoystick(JOYSTATE jsJoystickState)
    }
 }
 
-BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
+BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
 {
    return FALSE;
 }
 
-void SpriteDying(Sprite* pSpriteDying)
+void SpriteDying(Sprite* spriteDying)
 { }

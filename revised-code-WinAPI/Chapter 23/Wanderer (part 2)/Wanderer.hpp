@@ -8,7 +8,7 @@
 #include "ScrollingBackground.hpp"
 #include "PersonSprite.hpp"
 
-HINSTANCE            g_hInstance;
+HINSTANCE            g_inst;
 GameEngine*          g_pGame;
 HDC                  g_hOffscreenDC;
 HBITMAP              g_hOffscreenBitmap;
