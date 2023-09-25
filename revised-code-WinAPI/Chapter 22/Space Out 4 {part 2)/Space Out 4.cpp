@@ -1,4 +1,4 @@
-#include "SpaceOut.hpp"
+#include "Space Out 4.hpp"
 
 BOOL GameInitialize(HINSTANCE inst)
 {
@@ -48,6 +48,9 @@ void GameStart(HWND wnd)
    g_background = std::make_unique<StarryBackground>(600, 450);
 
    g_demo = TRUE;
+
+   EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
+
    GameNew( );
 }
 
@@ -92,6 +95,8 @@ void GamePaint(HDC dc)
    {
       g_splashBitmap->Draw(dc, 142, 20, TRUE);
 
+      EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
+
       // draw the hi scores
       WCHAR szText[ 64 ];
       RECT  rect = { 275, 250, 325, 270 };
@@ -122,7 +127,7 @@ void GamePaint(HDC dc)
 
       DrawTextW(dc, szText, -1, &rect, DT_SINGLELINE | DT_RIGHT | DT_VCENTER);
 
-      for ( int i = 0; i < g_numLives; i++ )
+      for ( UINT i = 0; i < g_numLives; i++ )
       {
          g_smallCarBitmap->Draw(dc, 520 + (g_smallCarBitmap->GetWidth( ) * i),
                                 10, TRUE);
@@ -164,6 +169,7 @@ void GameCycle( )
    {
       g_game->PauseMIDISong( );
       g_demo = TRUE;
+      EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
       GameNew( );
    }
 }
@@ -379,9 +385,10 @@ void GameNew( )
    else
    {
       RECT bounds = { 0, 0, 600, 450 };
-      g_carSprite = new Sprite(g_carBitmap.get( ), bounds, BA_WRAP);
+      g_carSprite.release( );
+      g_carSprite = std::make_unique<Sprite>(g_carBitmap.get( ), bounds, BA_WRAP);
       g_carSprite->SetPosition(300, 405);
-      g_game->AddSprite(g_carSprite);
+      g_game->AddSprite(g_carSprite.get( ));
 
       EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
 
