@@ -1,8 +1,8 @@
 #include "ScrollingBackground.hpp"
 
-BackgroundLayer::BackgroundLayer(HDC dc, PCWSTR fileName,
+BackgroundLayer::BackgroundLayer(PCWSTR fileName,
                                  int speed, SCROLLDIR scrollDirection)
-   : Bitmap(dc, fileName), m_speed(speed), m_scrollDirection(scrollDirection)
+   : Bitmap(fileName), m_speed(speed), m_scrollDirection(scrollDirection)
 {
    // Set the viewport to the entire layer image by default
    m_viewport.left   = m_viewport.top = 0;
@@ -11,9 +11,9 @@ BackgroundLayer::BackgroundLayer(HDC dc, PCWSTR fileName,
 }
 
 // Create a background layer from a bitmap resource
-BackgroundLayer::BackgroundLayer(HDC dc, UINT resID, HINSTANCE inst,
+BackgroundLayer::BackgroundLayer(UINT resID, HINSTANCE inst,
                                  int speed, SCROLLDIR scrollDirection)
-   : Bitmap(dc, resID, inst), m_speed(speed), m_scrollDirection(scrollDirection)
+   : Bitmap(resID, inst), m_speed(speed), m_scrollDirection(scrollDirection)
 {
    // Set the viewport to the entire layer image by default
    m_viewport.left   = m_viewport.top = 0;

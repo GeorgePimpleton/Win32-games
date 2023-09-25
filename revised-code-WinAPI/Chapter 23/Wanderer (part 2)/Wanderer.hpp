@@ -1,6 +1,7 @@
 #pragma once
 
 #include <windows.h>
+#include <memory>
 #include "resource.h"
 #include "GameEngine.hpp"
 #include "Bitmap.hpp"
@@ -9,13 +10,13 @@
 #include "PersonSprite.hpp"
 
 HINSTANCE            g_inst;
-GameEngine*          g_pGame;
-HDC                  g_hOffscreenDC;
-HBITMAP              g_hOffscreenBitmap;
-BackgroundLayer*     g_pBGLandscapeLayer;
-BackgroundLayer*     g_pFGCloudsLayer;
-ScrollingBackground* g_pBackground;
-ScrollingBackground* g_pForeground;
-Bitmap*              g_pPersonBitmap;
-PersonSprite*        g_pPersonSprite;
-int                  g_iInputDelay;
+std::unique_ptr<GameEngine>          g_game;
+HDC                  g_offscreenDC;
+HBITMAP              g_offscreenBitmap;
+std::unique_ptr<BackgroundLayer>     g_BGLandscapeLayer;
+std::unique_ptr<BackgroundLayer>     g_FGCloudsLayer;
+std::unique_ptr<ScrollingBackground> g_background;
+std::unique_ptr<ScrollingBackground> g_foreground;
+std::unique_ptr<Bitmap>              g_personBitmap;
+std::unique_ptr<PersonSprite>        g_personSprite;
+int                  g_inputDelay;
