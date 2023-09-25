@@ -1,3 +1,5 @@
+#pragma comment(lib, "msimg32.lib")
+
 //-----------------------------------------------------------------
 // Bitmap Object
 // C++ Source - Bitmap.cpp
@@ -17,7 +19,7 @@ Bitmap::Bitmap()
 }
 
 // Create a bitmap from a file
-Bitmap::Bitmap(HDC hDC, LPTSTR szFileName)
+Bitmap::Bitmap(HDC hDC, PCTSTR szFileName)
   : m_hBitmap(NULL), m_iWidth(0), m_iHeight(0)
 {
   Create(hDC, szFileName);
@@ -58,7 +60,7 @@ void Bitmap::Free()
 //-----------------------------------------------------------------
 // Bitmap General Methods
 //-----------------------------------------------------------------
-BOOL Bitmap::Create(HDC hDC, LPTSTR szFileName)
+BOOL Bitmap::Create(HDC hDC, PCTSTR szFileName)
 {
   // Free any previous bitmap info
   Free();

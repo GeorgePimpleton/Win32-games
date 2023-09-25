@@ -12,7 +12,7 @@
 // BackgroundLayer Constructor(s)/Destructor
 //-----------------------------------------------------------------
 // Create a background layer from a bitmap file
-BackgroundLayer::BackgroundLayer(HDC hDC, LPTSTR szFileName,
+BackgroundLayer::BackgroundLayer(HDC hDC, PCTSTR szFileName,
   int iSpeed, SCROLLDIR sdDirection)
   : Bitmap(hDC, szFileName), m_iSpeed(iSpeed), m_sdDirection(sdDirection)
 {

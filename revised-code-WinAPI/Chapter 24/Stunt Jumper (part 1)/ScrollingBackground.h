@@ -33,7 +33,7 @@ protected:
 
 public:
   // Constructor(s)/Destructor
-  BackgroundLayer(HDC hDC, LPTSTR szFileName, int iSpeed,
+  BackgroundLayer(HDC hDC, PCTSTR szFileName, int iSpeed,
     SCROLLDIR sdDirection);
   BackgroundLayer(HDC hDC, UINT uiResID, HINSTANCE hInstance, int iSpeed = 0,
     SCROLLDIR sdDirection = SD_LEFT);

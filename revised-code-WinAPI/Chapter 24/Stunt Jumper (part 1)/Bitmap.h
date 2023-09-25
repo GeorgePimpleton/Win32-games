@@ -26,13 +26,13 @@ protected:
 public:
   // Constructor(s)/Destructor
   Bitmap();
-  Bitmap(HDC hDC, LPTSTR szFileName);
+  Bitmap(HDC hDC, PCTSTR szFileName);
   Bitmap(HDC hDC, UINT uiResID, HINSTANCE hInstance);
   Bitmap(HDC hDC, int iWidth, int iHeight, COLORREF crColor = RGB(0, 0, 0));
   virtual ~Bitmap();
 
   // General Methods
-  BOOL Create(HDC hDC, LPTSTR szFileName);
+  BOOL Create(HDC hDC, PCTSTR szFileName);
   BOOL Create(HDC hDC, UINT uiResID, HINSTANCE hInstance);
   BOOL Create(HDC hDC, int iWidth, int iHeight, COLORREF crColor);
   virtual void Draw(HDC hDC, int x, int y, BOOL bTrans = FALSE,

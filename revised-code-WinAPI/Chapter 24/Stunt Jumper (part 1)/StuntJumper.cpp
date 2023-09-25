@@ -14,8 +14,8 @@
 BOOL GameInitialize(HINSTANCE hInstance)
 {
   // Create the game engine
-  g_pGame = new GameEngine(hInstance, TEXT("Stunt Jumper"),
-    TEXT("Stunt Jumper"), IDI_STUNTJUMPER, IDI_STUNTJUMPER_SM, 750, 250);
+  g_pGame = new GameEngine(hInstance, TEXT("Stunt Jumper"), TEXT("Example Game: Stunt Jumper"),
+                           IDI_STUNTJUMPER, IDI_STUNTJUMPER_SM, 750, 250);
   if (g_pGame == NULL)
     return FALSE;
 
@@ -75,7 +75,7 @@ void GameEnd()
 
   // Cleanup the offscreen device context and bitmap
   DeleteObject(g_hOffscreenBitmap);
-  DeleteDC(g_hOffscreenDC);  
+  DeleteDC(g_hOffscreenDC);
 
   // Cleanup the bitmaps
   delete g_pSplashBitmap;
@@ -167,7 +167,7 @@ void GameCycle()
     // See if the motorcycle has crossed the screen
     RECT& rc = g_pJumperSprite->GetPosition();
     if (rc.right > g_pGame->GetWidth())
-      // Create another jump (maximum of 7 buses) 
+      // Create another jump (maximum of 7 buses)
       NewJump(rand() % 7 + 1);
   }
 }
@@ -183,7 +183,7 @@ void HandleKeys()
       if (GetAsyncKeyState(VK_LEFT) < 0)
       {
         // Play the brake sound
-        PlaySound((LPCSTR)IDW_BRAKES, g_hInstance, SND_ASYNC |
+        PlaySound((PCTSTR)IDW_BRAKES, g_hInstance, SND_ASYNC |
           SND_RESOURCE);
 
         // Decrease speed
@@ -195,7 +195,7 @@ void HandleKeys()
       else if (GetAsyncKeyState(VK_RIGHT) < 0)
       {
         // Play the engine sound
-        PlaySound((LPCSTR)IDW_ENGINE, g_hInstance, SND_ASYNC |
+        PlaySound((PCTSTR)IDW_ENGINE, g_hInstance, SND_ASYNC |
           SND_RESOURCE);
 
         // Increase speed
@@ -245,7 +245,7 @@ void HandleJoystick(JOYSTATE jsJoystickState)
       if (jsJoystickState & JOY_LEFT)
       {
         // Play the brake sound
-        PlaySound((LPCSTR)IDW_BRAKES, g_hInstance, SND_ASYNC |
+        PlaySound((PCTSTR)IDW_BRAKES, g_hInstance, SND_ASYNC |
           SND_RESOURCE);
 
         // Decrease speed
@@ -257,7 +257,7 @@ void HandleJoystick(JOYSTATE jsJoystickState)
       else if (jsJoystickState & JOY_RIGHT)
       {
         // Play the engine sound
-        PlaySound((LPCSTR)IDW_ENGINE, g_hInstance, SND_ASYNC |
+        PlaySound((PCTSTR)IDW_ENGINE, g_hInstance, SND_ASYNC |
           SND_RESOURCE);
 
         // Increase speed
@@ -303,7 +303,7 @@ BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
       if (!g_pJumperSprite->HasLandedSafely())
       {
         // Play the celebration sound
-        PlaySound((LPCSTR)IDW_CELEBRATION, g_hInstance, SND_ASYNC |
+        PlaySound((PCTSTR)IDW_CELEBRATION, g_hInstance, SND_ASYNC |
           SND_RESOURCE);
 
         // Indicate that the motorcycle landed safely
@@ -314,7 +314,7 @@ BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
     else if ((pHitter == g_pJumperBitmap) && (pHittee == g_pBusBitmap))
     {
       // Play the crash sound
-      PlaySound((LPCSTR)IDW_CRASH, g_hInstance, SND_ASYNC |
+      PlaySound((PCTSTR)IDW_CRASH, g_hInstance, SND_ASYNC |
         SND_RESOURCE);
 
       // End the game
