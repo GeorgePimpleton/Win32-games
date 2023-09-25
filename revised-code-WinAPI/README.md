@@ -35,10 +35,10 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 ![under construction](construction.gif)  \*\* ***under construction*** \*\*  ![under construction](construction.gif)
 
+24. Example Game: Stunt Jumper
 
 ![queue](queue.jpg)  \*\* ***in the queue*** \*\*  ![queue](queue.jpg)
 
-24. Example Game: Stunt Jumper
 ----
 ### Caveat on the original 2003 & 2004 source code
 Since the original source code for the Win Games was written in 2003/2004 the game examples aren't likely to compile with a modern compiler such as Visual Studio 2022. The WinAPI has changed a lot to work for x64 processors as well as other changes for the 21st Century.  The first pass in each chapter will be the bare minimum needed to work now for both x86 (32-bit) and x64, with some minor reformatting and excessive comment cleanup.
