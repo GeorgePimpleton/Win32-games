@@ -51,7 +51,7 @@ There may be links to websites or internet sources in these pages and source cod
 
 This is a "work in progress", there is no guarantee the entirety of the entire collection of games will ever be modernized any time soon or to what degree of modern usage.
 
-There is also no guarantee the source files will work for you.
+There is also no guarantee the source files, orginal or modernized, will work for you.  All I can guarantee is the source(s) work for me.
 
 If you find better ways to rework the code please drop me a note and let me know.
 
