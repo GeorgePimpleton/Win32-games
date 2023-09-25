@@ -1,4 +1,4 @@
-#include "SpaceOut.hpp"
+#include "Space Out.hpp"
 
 BOOL GameInitialize(HINSTANCE inst)
 {
@@ -19,7 +19,7 @@ BOOL GameInitialize(HINSTANCE inst)
 
 void GameStart(HWND wnd)
 {
-  srand((UINT)GetTickCount64());
+  rtk::srand( );
 
   g_offscreenDC     = CreateCompatibleDC(GetDC(wnd));
   g_offscreenBitmap = CreateCompatibleBitmap(GetDC(wnd), g_game-> GetWidth(), g_game-> GetHeight());
@@ -75,17 +75,17 @@ void GamePaint(HDC dc)
 
   g_game->DrawSprites(dc);
 
-  TCHAR szText[64];
+  WCHAR szText[64];
   RECT  rect = { 460, 0, 510, 30 };
 
-  wsprintf(szText, L"%d", g_score);
+  wsprintfW(szText, L"%d", g_score);
 
   SetBkMode(dc, TRANSPARENT);
   SetTextColor(dc, RGB(255, 255, 255));
 
   DrawText(dc, szText, -1, &rect, DT_SINGLELINE | DT_RIGHT | DT_VCENTER);
 
-  for ( int i = 0; i < g_numLives; i++ )
+  for ( UINT i = 0; i < g_numLives; i++ )
   {
      g_smallCarBitmap->Draw(dc, 520 + (g_smallCarBitmap->GetWidth( ) * i),
                           10, TRUE);
@@ -296,9 +296,11 @@ void GameNew()
   g_game->CleanupSprites();
 
   RECT bounds = { 0, 0, 600, 450 };
-  g_carSprite = new Sprite(g_carBitmap.get( ), bounds, BA_WRAP);
+
+  g_carSprite.release( );
+  g_carSprite = std::make_unique<Sprite>(g_carBitmap.get( ), bounds, BA_WRAP);
   g_carSprite->SetPosition(300, 405);
-  g_game->AddSprite(g_carSprite);
+  g_game->AddSprite(g_carSprite.get( ));
 
   g_fireInputDelay = 0;
   g_score          = 0;

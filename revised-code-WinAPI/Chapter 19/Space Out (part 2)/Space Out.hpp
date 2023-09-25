@@ -28,11 +28,11 @@ std::unique_ptr<Bitmap>           g_smallExplosionBitmap;
 std::unique_ptr<Bitmap>           g_largeExplosionBitmap;
 std::unique_ptr<Bitmap>           g_gameOverBitmap;
 std::unique_ptr<StarryBackground> g_background;
-Sprite*                           g_carSprite;
-int                               g_fireInputDelay;
-int                               g_numLives;
-int                               g_score;
-int                               g_difficulty;
+std::unique_ptr<Sprite>           g_carSprite;
+UINT                              g_fireInputDelay;
+UINT                              g_numLives;
+UINT                              g_score;
+UINT                              g_difficulty;
 BOOL                              g_gameOver;
 
 void AddAlien( );
