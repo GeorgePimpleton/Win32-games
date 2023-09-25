@@ -1,8 +1,0 @@
-#include "resource.h"
-
-IDI_WANDERER          ICON         "Res/Wanderer.ico"
-IDI_WANDERER_SM       ICON         "Res/Wanderer_sm.ico"
-
-IDB_BG_LANDSCAPE      BITMAP       "Res/Background_Landscape.bmp"
-IDB_BG_CLOUDS         BITMAP       "Res/Background_Clouds.bmp"
-IDB_PERSON            BITMAP       "Res/Person.bmp"
