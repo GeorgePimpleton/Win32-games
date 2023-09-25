@@ -34,10 +34,10 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 ![under construction](construction.gif)  \*\* ***under construction*** \*\*  ![under construction](construction.gif)
 
+23. Wanderer: Changing Perspective with Scrolling Backgrounds
 
 ![queue](queue.jpg)  \*\* ***in the queue*** \*\*  ![queue](queue.jpg)
 
-23. Wanderer: Changing Perspective with Scrolling Backgrounds
 24. Example Game: Stunt Jumper
 ----
 ### Caveat on the original 2003 & 2004 source code
