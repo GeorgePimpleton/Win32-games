@@ -1,7 +1,7 @@
 #include "PersonSprite.hpp"
 
-PersonSprite::PersonSprite(Bitmap* pBitmap, RECT& rcBounds, BOUNDSACTION baBoundsAction)
-   : Sprite(pBitmap, rcBounds, baBoundsAction)
+PersonSprite::PersonSprite(Bitmap* bitmap, RECT& rcBounds, BOUNDSACTION baBoundsAction)
+   : Sprite(bitmap, rcBounds, baBoundsAction)
 { }
 
 PersonSprite::~PersonSprite( )

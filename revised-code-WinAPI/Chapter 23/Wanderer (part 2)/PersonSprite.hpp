@@ -6,7 +6,7 @@
 class PersonSprite : public Sprite
 {
 public:
-            PersonSprite(Bitmap* pBitmap, RECT& rcBounds,
+            PersonSprite(Bitmap* bitmap, RECT& rcBounds,
                          BOUNDSACTION baBoundsAction = BA_STOP);
    virtual ~PersonSprite( );
 

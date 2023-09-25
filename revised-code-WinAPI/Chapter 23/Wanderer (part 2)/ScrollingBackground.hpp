@@ -17,14 +17,14 @@ protected:
    SCROLLDIR m_sdDirection;
 
 public:
-   BackgroundLayer(HDC dc, PCWSTR szFileName, int iSpeed,
+   BackgroundLayer(HDC dc, PCWSTR fileName, int iSpeed,
                    SCROLLDIR sdDirection);
-   BackgroundLayer(HDC dc, UINT uiResID, HINSTANCE inst, int iSpeed = 0,
+   BackgroundLayer(HDC dc, UINT resID, HINSTANCE inst, int iSpeed = 0,
                    SCROLLDIR sdDirection = SD_LEFT);
 
    virtual void Update( );
-   virtual void Draw(HDC dc, int x, int y, BOOL bTrans = FALSE,
-                     COLORREF crTransColor = RGB(255, 0, 255));
+   virtual void Draw(HDC dc, int x, int y, BOOL trans = FALSE,
+                     COLORREF transColor = RGB(255, 0, 255));
 
    void SetSpeed(int iSpeed)                { m_iSpeed = iSpeed; };
    void SetDirection(SCROLLDIR sdDirection) { m_sdDirection = sdDirection; };
@@ -42,8 +42,8 @@ public:
    virtual ~ScrollingBackground( );
 
    virtual void Update( );
-   virtual void Draw(HDC dc, BOOL bTrans = FALSE,
-                      COLORREF crTransColor = RGB(255, 0, 255));
+   virtual void Draw(HDC dc, BOOL trans = FALSE,
+                      COLORREF transColor = RGB(255, 0, 255));
 
    void AddLayer(BackgroundLayer* pLayer);
 };

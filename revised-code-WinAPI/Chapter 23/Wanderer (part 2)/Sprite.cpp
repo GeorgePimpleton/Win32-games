@@ -1,12 +1,12 @@
 #include "Sprite.hpp"
 
-Sprite::Sprite(Bitmap* pBitmap)
+Sprite::Sprite(Bitmap* bitmap)
 {
-   m_pBitmap = pBitmap;
+   m_bitmap = bitmap;
    m_iNumFrames = 1;
    m_iCurFrame = m_frameDelay = m_iFrameTrigger = 0;
 
-   SetRect(&m_rcPosition, 0, 0, pBitmap->GetWidth( ), pBitmap->GetHeight( ));
+   SetRect(&m_rcPosition, 0, 0, bitmap->GetWidth( ), bitmap->GetHeight( ));
    CalcCollisionRect( );
 
    m_ptVelocity.x = m_ptVelocity.y = 0;
@@ -20,17 +20,17 @@ Sprite::Sprite(Bitmap* pBitmap)
    m_bOneCycle = FALSE;
 }
 
-Sprite::Sprite(Bitmap* pBitmap, RECT& rcBounds, BOUNDSACTION baBoundsAction)
+Sprite::Sprite(Bitmap* bitmap, RECT& rcBounds, BOUNDSACTION baBoundsAction)
 {
    int iXPos = rand( ) % (rcBounds.right - rcBounds.left);
    int iYPos = rand( ) % (rcBounds.bottom - rcBounds.top);
 
-   m_pBitmap = pBitmap;
+   m_bitmap = bitmap;
    m_iNumFrames = 1;
    m_iCurFrame = m_frameDelay = m_iFrameTrigger = 0;
 
-   SetRect(&m_rcPosition, iXPos, iYPos, iXPos + pBitmap->GetWidth( ),
-           iYPos + pBitmap->GetHeight( ));
+   SetRect(&m_rcPosition, iXPos, iYPos, iXPos + bitmap->GetWidth( ),
+           iYPos + bitmap->GetHeight( ));
    CalcCollisionRect( );
 
    m_ptVelocity.x = m_ptVelocity.y = 0;
@@ -44,15 +44,15 @@ Sprite::Sprite(Bitmap* pBitmap, RECT& rcBounds, BOUNDSACTION baBoundsAction)
    m_bOneCycle = FALSE;
 }
 
-Sprite::Sprite(Bitmap* pBitmap, POINT ptPosition, POINT ptVelocity, int iZOrder,
+Sprite::Sprite(Bitmap* bitmap, POINT ptPosition, POINT ptVelocity, int iZOrder,
                RECT& rcBounds, BOUNDSACTION baBoundsAction)
 {
-   m_pBitmap = pBitmap;
+   m_bitmap = bitmap;
    m_iNumFrames = 1;
    m_iCurFrame = m_frameDelay = m_iFrameTrigger = 0;
 
    SetRect(&m_rcPosition, ptPosition.x, ptPosition.y,
-           ptPosition.x + pBitmap->GetWidth( ), ptPosition.y + pBitmap->GetHeight( ));
+           ptPosition.x + bitmap->GetWidth( ), ptPosition.y + bitmap->GetHeight( ));
    CalcCollisionRect( );
 
    m_ptVelocity = ptVelocity;
@@ -188,15 +188,15 @@ Sprite* Sprite::AddSprite( )
 
 void Sprite::Draw(HDC dc)
 {
-   if ( m_pBitmap != NULL && !m_bHidden )
+   if ( m_bitmap != NULL && !m_bHidden )
    {
       if ( m_iNumFrames == 1 )
       {
-         m_pBitmap->Draw(dc, m_rcPosition.left, m_rcPosition.top, TRUE);
+         m_bitmap->Draw(dc, m_rcPosition.left, m_rcPosition.top, TRUE);
       }
       else
       {
-         m_pBitmap->DrawPart(dc, m_rcPosition.left, m_rcPosition.top,
+         m_bitmap->DrawPart(dc, m_rcPosition.left, m_rcPosition.top,
                              0, m_iCurFrame * GetHeight( ), GetWidth( ), GetHeight( ), TRUE);
       }
    }

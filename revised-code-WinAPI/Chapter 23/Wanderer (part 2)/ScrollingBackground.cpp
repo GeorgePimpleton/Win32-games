@@ -1,9 +1,9 @@
 #include "ScrollingBackground.hpp"
 
 // Create a background layer from a bitmap file
-BackgroundLayer::BackgroundLayer(HDC dc, PCWSTR szFileName,
+BackgroundLayer::BackgroundLayer(HDC dc, PCWSTR fileName,
                                  int iSpeed, SCROLLDIR sdDirection)
-   : Bitmap(dc, szFileName), m_iSpeed(iSpeed), m_sdDirection(sdDirection)
+   : Bitmap(dc, fileName), m_iSpeed(iSpeed), m_sdDirection(sdDirection)
 {
    // Set the viewport to the entire layer image by default
    m_rcViewport.left = m_rcViewport.top = 0;
@@ -12,9 +12,9 @@ BackgroundLayer::BackgroundLayer(HDC dc, PCWSTR szFileName,
 }
 
 // Create a background layer from a bitmap resource
-BackgroundLayer::BackgroundLayer(HDC dc, UINT uiResID, HINSTANCE inst,
+BackgroundLayer::BackgroundLayer(HDC dc, UINT resID, HINSTANCE inst,
                                  int iSpeed, SCROLLDIR sdDirection)
-   : Bitmap(dc, uiResID, inst), m_iSpeed(iSpeed), m_sdDirection(sdDirection)
+   : Bitmap(dc, resID, inst), m_iSpeed(iSpeed), m_sdDirection(sdDirection)
 {
    // Set the viewport to the entire layer image by default
    m_rcViewport.left = m_rcViewport.top = 0;
@@ -22,8 +22,8 @@ BackgroundLayer::BackgroundLayer(HDC dc, UINT uiResID, HINSTANCE inst,
    m_rcViewport.bottom = m_height;
 }
 
-void BackgroundLayer::Draw(HDC dc, int x, int y, BOOL bTrans,
-                           COLORREF crTransColor)
+void BackgroundLayer::Draw(HDC dc, int x, int y, BOOL trans,
+                           COLORREF transColor)
 {
    // Draw only the part of the layer seen through the viewport
    if ( m_rcViewport.top < 0 && m_rcViewport.left < 0 )
@@ -32,19 +32,19 @@ void BackgroundLayer::Draw(HDC dc, int x, int y, BOOL bTrans,
       DrawPart(dc, x, y,
                m_width + m_rcViewport.left, m_height + m_rcViewport.top,
                -m_rcViewport.left, -m_rcViewport.top,
-               bTrans, crTransColor);
+               trans, transColor);
       DrawPart(dc, x - m_rcViewport.left, y,
                0, m_height + m_rcViewport.top,
                m_rcViewport.right, -m_rcViewport.top,
-               bTrans, crTransColor);
+               trans, transColor);
       DrawPart(dc, x, y - m_rcViewport.top,
                m_width + m_rcViewport.left, 0,
                -m_rcViewport.left, m_rcViewport.bottom,
-               bTrans, crTransColor);
+               trans, transColor);
       DrawPart(dc, x - m_rcViewport.left, y - m_rcViewport.top,
                0, 0,
                m_rcViewport.right, m_rcViewport.bottom,
-               bTrans, crTransColor);
+               trans, transColor);
    }
    else if ( m_rcViewport.top < 0 && m_rcViewport.right > m_width )
    {
@@ -52,19 +52,19 @@ void BackgroundLayer::Draw(HDC dc, int x, int y, BOOL bTrans,
       DrawPart(dc, x, y,
                m_rcViewport.left, m_height + m_rcViewport.top,
                m_width - m_rcViewport.left, -m_rcViewport.top,
-               bTrans, crTransColor);
+               trans, transColor);
       DrawPart(dc, x + (m_width - m_rcViewport.left), y,
                0, m_height + m_rcViewport.top,
                m_rcViewport.right - m_width, -m_rcViewport.top,
-               bTrans, crTransColor);
+               trans, transColor);
       DrawPart(dc, x, y - m_rcViewport.top,
                m_rcViewport.left, 0,
                m_width - m_rcViewport.left, m_rcViewport.bottom,
-               bTrans, crTransColor);
+               trans, transColor);
       DrawPart(dc, x + (m_width - m_rcViewport.left), y - m_rcViewport.top,
                0, 0,
                m_rcViewport.right - m_width, m_rcViewport.bottom,
-               bTrans, crTransColor);
+               trans, transColor);
    }
    else if ( m_rcViewport.bottom > m_height && m_rcViewport.left < 0 )
    {
@@ -72,19 +72,19 @@ void BackgroundLayer::Draw(HDC dc, int x, int y, BOOL bTrans,
       DrawPart(dc, x, y,
                m_width + m_rcViewport.left, m_rcViewport.top,
                -m_rcViewport.left, m_height - m_rcViewport.top,
-               bTrans, crTransColor);
+               trans, transColor);
       DrawPart(dc, x - m_rcViewport.left, y,
                0, m_rcViewport.top,
                m_rcViewport.right, m_height - m_rcViewport.top,
-               bTrans, crTransColor);
+               trans, transColor);
       DrawPart(dc, x, y + (m_height - m_rcViewport.top),
                m_width + m_rcViewport.left, 0,
                -m_rcViewport.left, m_rcViewport.bottom - m_height,
-               bTrans, crTransColor);
+               trans, transColor);
       DrawPart(dc, x - m_rcViewport.left, y + (m_height - m_rcViewport.top),
                0, 0,
                m_rcViewport.right, m_rcViewport.bottom - m_height,
-               bTrans, crTransColor);
+               trans, transColor);
    }
    else if ( m_rcViewport.bottom > m_height && m_rcViewport.right > m_width )
    {
@@ -92,19 +92,19 @@ void BackgroundLayer::Draw(HDC dc, int x, int y, BOOL bTrans,
       DrawPart(dc, x, y,
                m_rcViewport.left, m_rcViewport.top,
                m_width - m_rcViewport.left, m_height - m_rcViewport.top,
-               bTrans, crTransColor);
+               trans, transColor);
       DrawPart(dc, x + (m_width - m_rcViewport.left), y,
                0, m_rcViewport.top,
                m_rcViewport.right - m_width, m_height - m_rcViewport.top,
-               bTrans, crTransColor);
+               trans, transColor);
       DrawPart(dc, x, y + (m_height - m_rcViewport.top),
                m_rcViewport.left, 0,
                m_width - m_rcViewport.left, m_rcViewport.bottom - m_height,
-               bTrans, crTransColor);
+               trans, transColor);
       DrawPart(dc, x + (m_width - m_rcViewport.left), y + (m_height - m_rcViewport.top),
                0, 0,
                m_rcViewport.right - m_width, m_rcViewport.bottom - m_height,
-               bTrans, crTransColor);
+               trans, transColor);
    }
    else if ( m_rcViewport.top < 0 )
    {
@@ -112,11 +112,11 @@ void BackgroundLayer::Draw(HDC dc, int x, int y, BOOL bTrans,
       DrawPart(dc, x, y,
                m_rcViewport.left, m_height + m_rcViewport.top,
                m_rcViewport.right - m_rcViewport.left, -m_rcViewport.top,
-               bTrans, crTransColor);
+               trans, transColor);
       DrawPart(dc, x, y - m_rcViewport.top,
                m_rcViewport.left, 0,
                m_rcViewport.right - m_rcViewport.left, m_rcViewport.bottom,
-               bTrans, crTransColor);
+               trans, transColor);
    }
    else if ( m_rcViewport.right > m_width )
    {
@@ -124,11 +124,11 @@ void BackgroundLayer::Draw(HDC dc, int x, int y, BOOL bTrans,
       DrawPart(dc, x, y,
                m_rcViewport.left, m_rcViewport.top,
                m_width - m_rcViewport.left, m_rcViewport.bottom - m_rcViewport.top,
-               bTrans, crTransColor);
+               trans, transColor);
       DrawPart(dc, x + (m_width - m_rcViewport.left), y,
                0, m_rcViewport.top,
                m_rcViewport.right - m_width, m_rcViewport.bottom - m_rcViewport.top,
-               bTrans, crTransColor);
+               trans, transColor);
    }
    else if ( m_rcViewport.bottom > m_height )
    {
@@ -136,11 +136,11 @@ void BackgroundLayer::Draw(HDC dc, int x, int y, BOOL bTrans,
       DrawPart(dc, x, y,
                m_rcViewport.left, m_rcViewport.top,
                m_rcViewport.right - m_rcViewport.left, m_height - m_rcViewport.top,
-               bTrans, crTransColor);
+               trans, transColor);
       DrawPart(dc, x, y + (m_height - m_rcViewport.top),
                m_rcViewport.left, 0,
                m_rcViewport.right - m_rcViewport.left, m_rcViewport.bottom - m_height,
-               bTrans, crTransColor);
+               trans, transColor);
    }
    else if ( m_rcViewport.left < 0 )
    {
@@ -148,18 +148,18 @@ void BackgroundLayer::Draw(HDC dc, int x, int y, BOOL bTrans,
       DrawPart(dc, x, y,
                m_width + m_rcViewport.left, m_rcViewport.top,
                -m_rcViewport.left, m_rcViewport.bottom - m_rcViewport.top,
-               bTrans, crTransColor);
+               trans, transColor);
       DrawPart(dc, x - m_rcViewport.left, y,
                0, m_rcViewport.top,
                m_rcViewport.right, m_rcViewport.bottom - m_rcViewport.top,
-               bTrans, crTransColor);
+               trans, transColor);
    }
    else
       // Draw the entire viewport at once
       DrawPart(dc, x, y,
                m_rcViewport.left, m_rcViewport.top,
                m_rcViewport.right - m_rcViewport.left, m_rcViewport.bottom - m_rcViewport.top,
-               bTrans, crTransColor);
+               trans, transColor);
 }
 
 void BackgroundLayer::Update( )
@@ -234,12 +234,12 @@ void ScrollingBackground::Update( )
       m_pLayers[ i ]->Update( );
 }
 
-void ScrollingBackground::Draw(HDC dc, BOOL bTrans,
-                               COLORREF crTransColor)
+void ScrollingBackground::Draw(HDC dc, BOOL trans,
+                               COLORREF transColor)
 {
    // Draw the layers
    for ( int i = 0; i < m_iNumLayers; i++ )
-      m_pLayers[ i ]->Draw(dc, 0, 0, bTrans, crTransColor);
+      m_pLayers[ i ]->Draw(dc, 0, 0, trans, transColor);
 }
 
 void ScrollingBackground::AddLayer(BackgroundLayer* pLayer)

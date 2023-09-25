@@ -17,7 +17,7 @@ const BOUNDSACTION  BA_STOP   = 0,
 class Sprite
 {
 protected:
-   Bitmap*      m_pBitmap;
+   Bitmap*      m_bitmap;
    int          m_iNumFrames, m_iCurFrame;
    int          m_frameDelay, m_iFrameTrigger;
    RECT         m_rcPosition, m_rcCollision;
@@ -33,10 +33,10 @@ protected:
    virtual void  CalcCollisionRect( );
 
 public:
-            Sprite(Bitmap* pBitmap);
-            Sprite(Bitmap* pBitmap, RECT& rcBounds,
+            Sprite(Bitmap* bitmap);
+            Sprite(Bitmap* bitmap, RECT& rcBounds,
                    BOUNDSACTION baBoundsAction = BA_STOP);
-            Sprite(Bitmap* pBitmap, POINT ptPosition, POINT ptVelocity, int iZOrder,
+            Sprite(Bitmap* bitmap, POINT ptPosition, POINT ptVelocity, int iZOrder,
                    RECT& rcBounds, BOUNDSACTION baBoundsAction = BA_STOP);
    virtual ~Sprite( );
 
@@ -47,7 +47,7 @@ public:
    BOOL                 TestCollision(Sprite* pTestSprite);
    void                 Kill( ) { m_bDying = TRUE; };
 
-   Bitmap* GetBitmap( )                                { return m_pBitmap; };
+   Bitmap* GetBitmap( )                                { return m_bitmap; };
    void    SetNumFrames(int iNumFrames, BOOL bOneCycle = FALSE);
    void    SetFrameDelay(int frameDelay)              { m_frameDelay = frameDelay; };
    RECT&   GetPosition( )                              { return m_rcPosition; };
@@ -65,8 +65,8 @@ public:
    void    SetBoundsAction(BOUNDSACTION ba)            { m_baBoundsAction = ba; };
    BOOL    IsHidden( )                                 { return m_bHidden; };
    void    SetHidden(BOOL bHidden)                     { m_bHidden = bHidden; };
-   int     GetWidth( )                                 { return m_pBitmap-> GetWidth( ); };
-   int     GetHeight( )                                { return (m_pBitmap-> GetHeight( ) / m_iNumFrames); };
+   int     GetWidth( )                                 { return m_bitmap-> GetWidth( ); };
+   int     GetHeight( )                                { return (m_bitmap-> GetHeight( ) / m_iNumFrames); };
 };
 
 inline void Sprite::UpdateFrame( )
