@@ -29,7 +29,7 @@ You should think about using VS2022 as well.  It's free for the Community editio
 ### About the revised sources
 I've been working with the games source code from both books for years, plinking around and trying out newer C++ features as I've run across them.  Most of the example code is the same between the books, so I've combined the examples into one representative example for each chapter.
 
-The main difference between the books is the orientation of the animated sprite bitmaps.  When dealing with animated sprites all the source code is from the 2004 book, except for the first game example.  That one uses the code from 2003.
+The main difference between the books is the orientation of the animated sprite bitmaps.  When dealing with animated sprites all the source code is from the 2004 book, except for the first game example.  That one uses the code from 2003.  The last two examples are only found in the 2004 book and CD.
 
 ### Notes
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.
@@ -39,4 +39,9 @@ This is a "work in progress", there is no guarantee the entirety of the entire c
 If you find better ways to rework the code don't hesitate to let me know.
 
 ### Musings on Windows© Games
-To be honest the game engine created so many years ago is hard to convert to modern C++ practices.  It isn't bad code, it just resists being modernized.  \**UGH*\*
+To be honest the game engine was created so many years ago makes it hard to convert to modern C++ practices.  It isn't bad code, it just fights back being modernized.  Maybe the game engine needs to be rewritten from top to bottom from scratch.  \**UGH*\*
+
+Revising the original code to work with a modern Windows compiler isn't hard, just a couple of changes and additions.
+
+1. Add `#pragma comment(lib, "somelibrary.lib")` in one of the source files that uses a WinAPI system like the Windows multi-media system and you are "good to go."  No need to modify your project's settings to use the .lib file(s).
+2. Update the WinAPI strings to be consts and usable for Unicode.  Change LPTSTR to PCTSTR.  Yeah, those are Windows data types.
