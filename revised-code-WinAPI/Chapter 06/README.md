@@ -13,6 +13,8 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 3. Added "New Game" menu feature
 4. Updated the logic so a new game can only be started when a previous game was won
    + An alternate set of graphics.  Same game code.
+   
+I like the game tile artwork from 2003 more than the artwork from 2004.
 
 ### Notes
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.
