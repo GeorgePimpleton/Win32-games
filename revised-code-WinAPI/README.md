@@ -1,4 +1,4 @@
-# Programming Windows© Games
+# Programming Windows Games
 [![Language](https://img.shields.io/badge/Language%20-C++-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 
@@ -55,7 +55,9 @@ There is also no guarantee the source files will work for you.
 
 If you find better ways to rework the code please drop me a note and let me know.
 
-### Musings on Windows© Games
-To be honest the game engine created so many years ago is hard to convert to modern C++ practices.  It isn't bad code, it just resists being modernized.  More and more it is looking like the game engine needs to be rewritten from top to bottom from scratch.  \**UGH*\*
+### Musings on Windows Games
+To be honest the game engine was created so many years ago makes it hard to convert to modern C++ practices.  It isn't bad code, it just fights back being modernized.  Maybe the game engine needs to be rewritten from top to bottom from scratch.  \**UGH*\*
 
 Or I may need a bigger hammer and crowbar.  \**sigh*\*
+
+Hammer and crowbar working!  Only one example left!  \**W00-H00!*\*
