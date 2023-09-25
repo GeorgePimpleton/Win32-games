@@ -1,13 +1,5 @@
 #include "AlienSprite.hpp"
 
-extern std::unique_ptr<Bitmap> g_BlobboBitmap;
-extern std::unique_ptr<Bitmap> g_BMissileBitmap;
-extern std::unique_ptr<Bitmap> g_JellyBitmap;
-extern std::unique_ptr<Bitmap> g_JMissileBitmap;
-extern std::unique_ptr<Bitmap> g_TimmyBitmap;
-extern std::unique_ptr<Bitmap> g_TMissileBitmap;
-extern int     g_difficulty;
-
 AlienSprite::AlienSprite(Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction)
    : Sprite(bitmap, bounds, boundsAction)
 { }

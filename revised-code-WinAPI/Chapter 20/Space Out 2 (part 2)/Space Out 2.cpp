@@ -1,4 +1,4 @@
-#include "SpaceOut.hpp"
+#include "Space Out 2.hpp"
 
 BOOL GameInitialize(HINSTANCE inst)
 {
@@ -100,7 +100,7 @@ void GamePaint(HDC dc)
 
       DrawTextW(dc, szText, -1, &rect, DT_SINGLELINE | DT_RIGHT | DT_VCENTER);
 
-      for ( int i = 0; i < g_numLives; i++ )
+      for ( UINT i = 0; i < g_numLives; i++ )
       {
          g_smallCarBitmap->Draw(dc, 520 + (g_smallCarBitmap->GetWidth( ) * i),
                               10, TRUE);
@@ -331,9 +331,10 @@ void GameNew( )
    g_gameOver       = FALSE;
 
    RECT bounds  = { 0, 0, 600, 450 };
-   g_carSprite = new Sprite(g_carBitmap.get( ), bounds, BA_WRAP);
+   g_carSprite.release( );
+   g_carSprite = std::make_unique<Sprite>(g_carBitmap.get( ), bounds, BA_WRAP);
    g_carSprite->SetPosition(300, 405);
-   g_game->AddSprite(g_carSprite);
+   g_game->AddSprite(g_carSprite.get( ));
 
    EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
 
