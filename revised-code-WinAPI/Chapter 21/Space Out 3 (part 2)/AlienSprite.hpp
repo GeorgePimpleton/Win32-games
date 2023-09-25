@@ -3,6 +3,7 @@
 #include <windows.h>
 #include "random_toolkit.hpp"
 #include "Sprite.hpp"
+#include "externs.h"
 
 class AlienSprite : public Sprite
 {

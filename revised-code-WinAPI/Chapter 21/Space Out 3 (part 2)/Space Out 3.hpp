@@ -23,7 +23,7 @@ std::unique_ptr<Bitmap>           g_smallExplosionBitmap;
 std::unique_ptr<Bitmap>           g_largeExplosionBitmap;
 std::unique_ptr<Bitmap>           g_gameOverBitmap;
 std::unique_ptr<StarryBackground> g_background;
-Sprite*                           g_carSprite;
+std::unique_ptr<Sprite>           g_carSprite;
 int                               g_fireInputDelay;
 int                               g_numLives;
 int                               g_score;
@@ -31,12 +31,12 @@ BOOL                              g_gameOver;
 int                               g_gameOverDelay;
 BOOL                              g_demo;
 
-extern std::unique_ptr<Bitmap> g_BlobboBitmap;
-extern std::unique_ptr<Bitmap> g_BMissileBitmap;
-extern std::unique_ptr<Bitmap> g_JellyBitmap;
-extern std::unique_ptr<Bitmap> g_JMissileBitmap;
-extern std::unique_ptr<Bitmap> g_TimmyBitmap;
-extern std::unique_ptr<Bitmap> g_TMissileBitmap;
-extern int                     g_difficulty;
+std::unique_ptr<Bitmap> g_BlobboBitmap;
+std::unique_ptr<Bitmap> g_BMissileBitmap;
+std::unique_ptr<Bitmap> g_JellyBitmap;
+std::unique_ptr<Bitmap> g_JMissileBitmap;
+std::unique_ptr<Bitmap> g_TimmyBitmap;
+std::unique_ptr<Bitmap> g_TMissileBitmap;
+UINT                    g_difficulty;
 
 void AddAlien();

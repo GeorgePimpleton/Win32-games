@@ -1,4 +1,4 @@
-#include "SpaceOut.hpp"
+#include "Space Out 3.hpp"
 
 BOOL GameInitialize(HINSTANCE inst)
 {
@@ -45,6 +45,9 @@ void GameStart(HWND wnd)
    g_background = std::make_unique<StarryBackground>(600, 450);
 
    g_demo = TRUE;
+
+   EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
+
    GameNew( );
 }
 
@@ -85,6 +88,8 @@ void GamePaint(HDC dc)
    if ( g_demo )
    {
       g_splashBitmap->Draw(dc, 142, 100, TRUE);
+
+      EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
    }
    else
    {
@@ -140,6 +145,7 @@ void GameCycle( )
    {
       g_game->PauseMIDISong( );
       g_demo = TRUE;
+      EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
       GameNew( );
    }
 }
@@ -350,9 +356,10 @@ void GameNew( )
    else
    {
       RECT bounds = { 0, 0, 600, 450 };
-      g_carSprite = new Sprite(g_carBitmap.get( ), bounds, BA_WRAP);
+      g_carSprite.release( );
+      g_carSprite = std::make_unique<Sprite>(g_carBitmap.get( ), bounds, BA_WRAP);
       g_carSprite->SetPosition(300, 405);
-      g_game->AddSprite(g_carSprite);
+      g_game->AddSprite(g_carSprite.get( ));
 
       EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
 
