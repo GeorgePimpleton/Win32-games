@@ -18,72 +18,75 @@ class Sprite
 {
 protected:
    Bitmap*      m_bitmap;
-   int          m_iNumFrames, m_iCurFrame;
-   int          m_frameDelay, m_iFrameTrigger;
-   RECT         m_rcPosition, m_rcCollision;
-   POINT        m_ptVelocity;
-   int          m_iZOrder;
-   RECT         m_rcBounds;
-   BOUNDSACTION m_baBoundsAction;
-   BOOL         m_bHidden;
-   BOOL         m_bDying;
-   BOOL         m_bOneCycle;
+   int          m_numFrames;
+   int          m_curFrame;
+   int          m_frameDelay;
+   int          m_frameTrigger;
+   RECT         m_position;
+   RECT         m_collision;
+   POINT        m_velocity;
+   int          m_zOrder;
+   RECT         m_bounds;
+   BOUNDSACTION m_boundsAction;
+   BOOL         m_hidden;
+   BOOL         m_dying;
+   BOOL         m_oneCycle;
 
-   virtual void  UpdateFrame( );
-   virtual void  CalcCollisionRect( );
+   virtual void UpdateFrame( );
+   virtual void CalcCollisionRect( );
 
 public:
             Sprite(Bitmap* bitmap);
-            Sprite(Bitmap* bitmap, RECT& rcBounds,
-                   BOUNDSACTION baBoundsAction = BA_STOP);
-            Sprite(Bitmap* bitmap, POINT ptPosition, POINT ptVelocity, int iZOrder,
-                   RECT& rcBounds, BOUNDSACTION baBoundsAction = BA_STOP);
+            Sprite(Bitmap* bitmap, RECT& bounds,
+                   BOUNDSACTION boundsAction = BA_STOP);
+            Sprite(Bitmap* bitmap, POINT position, POINT velocity, int zOrder,
+                   RECT& bounds, BOUNDSACTION boundsAction = BA_STOP);
    virtual ~Sprite( );
 
    virtual SPRITEACTION Update( );
    virtual Sprite*      AddSprite( );
    void                 Draw(HDC dc);
    BOOL                 IsPointInside(int x, int y);
-   BOOL                 TestCollision(Sprite* pTestSprite);
-   void                 Kill( ) { m_bDying = TRUE; };
+   BOOL                 TestCollision(Sprite* testSprite);
+   void                 Kill( ) { m_dying = TRUE; };
 
-   Bitmap* GetBitmap( )                                { return m_bitmap; };
-   void    SetNumFrames(int iNumFrames, BOOL bOneCycle = FALSE);
-   void    SetFrameDelay(int frameDelay)              { m_frameDelay = frameDelay; };
-   RECT&   GetPosition( )                              { return m_rcPosition; };
+   Bitmap* GetBitmap( )                              { return m_bitmap; };
+   void    SetNumFrames(int numFrames, BOOL oneCycle = FALSE);
+   void    SetFrameDelay(int frameDelay)             { m_frameDelay = frameDelay; };
+   RECT&   GetPosition( )                            { return m_position; };
    void    SetPosition(int x, int y);
-   void    SetPosition(POINT ptPosition);
-   void    SetPosition(RECT& rcPosition);
+   void    SetPosition(POINT position);
+   void    SetPosition(RECT& position);
    void    OffsetPosition(int x, int y);
-   RECT&   GetCollision( )                             { return m_rcCollision; };
-   POINT   GetVelocity( )                              { return m_ptVelocity; };
+   RECT&   GetCollision( )                           { return m_collision; };
+   POINT   GetVelocity( )                            { return m_velocity; };
    void    SetVelocity(int x, int y);
-   void    SetVelocity(POINT ptVelocity);
-   BOOL    GetZOrder( )                                { return m_iZOrder; };
-   void    SetZOrder(int iZOrder)                      { m_iZOrder = iZOrder; };
-   void    SetBounds(RECT& rcBounds)                   { CopyRect(&m_rcBounds, &rcBounds); };
-   void    SetBoundsAction(BOUNDSACTION ba)            { m_baBoundsAction = ba; };
-   BOOL    IsHidden( )                                 { return m_bHidden; };
-   void    SetHidden(BOOL bHidden)                     { m_bHidden = bHidden; };
-   int     GetWidth( )                                 { return m_bitmap-> GetWidth( ); };
-   int     GetHeight( )                                { return (m_bitmap-> GetHeight( ) / m_iNumFrames); };
+   void    SetVelocity(POINT velocity);
+   BOOL    GetZOrder( )                              { return m_zOrder; };
+   void    SetZOrder(int zOrder)                     { m_zOrder = zOrder; };
+   void    SetBounds(RECT& bounds)                   { CopyRect(&m_bounds, &bounds); };
+   void    SetBoundsAction(BOUNDSACTION ba)          { m_boundsAction = ba; };
+   BOOL    IsHidden( )                               { return m_hidden; };
+   void    SetHidden(BOOL hidden)                    { m_hidden = hidden; };
+   int     GetWidth( )                               { return m_bitmap-> GetWidth( ); };
+   int     GetHeight( )                              { return (m_bitmap-> GetHeight( ) / m_numFrames); };
 };
 
 inline void Sprite::UpdateFrame( )
 {
-   if ( (m_frameDelay >= 0) && (--m_iFrameTrigger <= 0) )
+   if ( (m_frameDelay >= 0) && (--m_frameTrigger <= 0) )
    {
-      m_iFrameTrigger = m_frameDelay;
+      m_frameTrigger = m_frameDelay;
 
-      if ( ++m_iCurFrame >= m_iNumFrames )
+      if ( ++m_curFrame >= m_numFrames )
       {
-         if ( m_bOneCycle )
+         if ( m_oneCycle )
          {
-            m_bDying = TRUE;
+            m_dying = TRUE;
          }
          else
          {
-            m_iCurFrame = 0;
+            m_curFrame = 0;
          }
       }
    }
@@ -91,77 +94,77 @@ inline void Sprite::UpdateFrame( )
 
 inline void Sprite::CalcCollisionRect( )
 {
-   int iXShrink = (m_rcPosition.left - m_rcPosition.right) / 12;
-   int iYShrink = (m_rcPosition.top - m_rcPosition.bottom) / 12;
+   int xShrink = (m_position.left - m_position.right) / 12;
+   int yShrink = (m_position.top - m_position.bottom) / 12;
 
-   CopyRect(&m_rcCollision, &m_rcPosition);
-   InflateRect(&m_rcCollision, iXShrink, iYShrink);
+   CopyRect(&m_collision, &m_position);
+   InflateRect(&m_collision, xShrink, yShrink);
 }
 
-inline BOOL Sprite::TestCollision(Sprite* pTestSprite)
+inline BOOL Sprite::TestCollision(Sprite* testSprite)
 {
-   RECT& rcTest = pTestSprite->GetCollision( );
+   RECT& rcTest = testSprite->GetCollision( );
 
-   return m_rcCollision.left <= rcTest.right &&
-      rcTest.left <= m_rcCollision.right &&
-      m_rcCollision.top <= rcTest.bottom &&
-      rcTest.top <= m_rcCollision.bottom;
+   return m_collision.left <= rcTest.right &&
+          rcTest.left <= m_collision.right &&
+          m_collision.top <= rcTest.bottom &&
+          rcTest.top <= m_collision.bottom;
 }
 
 inline BOOL Sprite::IsPointInside(int x, int y)
 {
-   POINT ptPoint;
+   POINT ptPoint = { };
 
    ptPoint.x = x;
    ptPoint.y = y;
 
-   return PtInRect(&m_rcPosition, ptPoint);
+   return PtInRect(&m_position, ptPoint);
 }
 
-inline void Sprite::SetNumFrames(int iNumFrames, BOOL bOneCycle)
+inline void Sprite::SetNumFrames(int numFrames, BOOL oneCycle)
 {
-   m_iNumFrames = iNumFrames;
-   m_bOneCycle = bOneCycle;
+   m_numFrames = numFrames;
+   m_oneCycle = oneCycle;
 
-   RECT rect = GetPosition( );
-   rect.bottom = rect.top + ((rect.bottom - rect.top) / iNumFrames);
+   RECT rect   = GetPosition( );
+   rect.bottom = rect.top + ((rect.bottom - rect.top) / numFrames);
 
    SetPosition(rect);
 }
 
 inline void Sprite::SetPosition(int x, int y)
 {
-   OffsetRect(&m_rcPosition, x - m_rcPosition.left, y - m_rcPosition.top);
+   OffsetRect(&m_position, x - m_position.left, y - m_position.top);
    CalcCollisionRect( );
 }
 
-inline void Sprite::SetPosition(POINT ptPosition)
+inline void Sprite::SetPosition(POINT position)
 {
-   OffsetRect(&m_rcPosition, ptPosition.x - m_rcPosition.left,
-              ptPosition.y - m_rcPosition.top);
+   OffsetRect(&m_position, position.x - m_position.left,
+              position.y - m_position.top);
    CalcCollisionRect( );
 }
 
-inline void Sprite::SetPosition(RECT& rcPosition)
+inline void Sprite::SetPosition(RECT& position)
 {
-   CopyRect(&m_rcPosition, &rcPosition);
+   CopyRect(&m_position, &position);
    CalcCollisionRect( );
 }
 
 inline void Sprite::OffsetPosition(int x, int y)
 {
-   OffsetRect(&m_rcPosition, x, y);
+   OffsetRect(&m_position, x, y);
    CalcCollisionRect( );
 }
 
 inline void Sprite::SetVelocity(int x, int y)
 {
-   m_ptVelocity.x = x;
-   m_ptVelocity.y = y;
+   m_velocity.x = x;
+   m_velocity.y = y;
 }
 
-inline void Sprite::SetVelocity(POINT ptVelocity)
+inline void Sprite::SetVelocity(POINT velocity)
 {
-   m_ptVelocity.x = ptVelocity.x;
-   m_ptVelocity.y = ptVelocity.y;
+   m_velocity.x = velocity.x;
+   m_velocity.y = velocity.y;
 }

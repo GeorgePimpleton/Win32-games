@@ -56,7 +56,7 @@ protected:
    std::vector<Sprite*> m_sprites;
    UINT                 m_MIDIPlayerID;
 
-   BOOL CheckSpriteCollision(Sprite* pTestSprite);
+   BOOL CheckSpriteCollision(Sprite* testSprite);
 
 public:
             GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,

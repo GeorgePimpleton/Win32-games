@@ -48,8 +48,8 @@ void GameStart(HWND wnd)
    g_pPersonBitmap = new Bitmap(dc, IDB_PERSON, g_inst);
 
    // Create the person sprite
-   RECT rcBounds = { 115, 112, 26, 32 };
-   g_pPersonSprite = new PersonSprite(g_pPersonBitmap, rcBounds, BA_STOP);
+   RECT bounds = { 115, 112, 26, 32 };
+   g_pPersonSprite = new PersonSprite(g_pPersonBitmap, bounds, BA_STOP);
    g_pPersonSprite->SetNumFrames(2);
    g_pPersonSprite->SetPosition(115, 112);
    g_pGame->AddSprite(g_pPersonSprite);

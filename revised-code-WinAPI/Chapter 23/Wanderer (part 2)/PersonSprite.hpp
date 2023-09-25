@@ -6,8 +6,8 @@
 class PersonSprite : public Sprite
 {
 public:
-            PersonSprite(Bitmap* bitmap, RECT& rcBounds,
-                         BOUNDSACTION baBoundsAction = BA_STOP);
+            PersonSprite(Bitmap* bitmap, RECT& bounds,
+                         BOUNDSACTION boundsAction = BA_STOP);
    virtual ~PersonSprite( );
 
    virtual void UpdateFrame( );

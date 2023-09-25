@@ -86,18 +86,18 @@ BOOL CALLBACK DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam)
    return FALSE;
 }
 
-BOOL GameEngine::CheckSpriteCollision(Sprite* pTestSprite)
+BOOL GameEngine::CheckSpriteCollision(Sprite* testSprite)
 {
    for ( auto iterSprite = m_sprites.begin( ); iterSprite != m_sprites.end( ); iterSprite++ )
    {
-      if ( pTestSprite == (*iterSprite) )
+      if ( testSprite == (*iterSprite) )
       {
          continue;
       }
 
-      if ( pTestSprite->TestCollision(*iterSprite) )
+      if ( testSprite->TestCollision(*iterSprite) )
       {
-         return SpriteCollision((*iterSprite), pTestSprite);
+         return SpriteCollision((*iterSprite), testSprite);
       }
    }
 
