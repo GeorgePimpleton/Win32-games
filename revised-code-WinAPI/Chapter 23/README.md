@@ -9,7 +9,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 ### Wanderer: Changing Perspective with Scrolling Backgrounds
 0. Chapter 23 on 2004 CD.
 1. minimial revisions...
-2. modernized code...?
+2. modernized code...
 
 ### Notes
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.
