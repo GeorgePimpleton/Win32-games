@@ -4,6 +4,7 @@
 ### Example Game: Brainiac
 
 4. Updated the logic so a new game can only be started when a previous game was won
+   + An alternate set of graphics.  Same game code.
 
 ### Notes
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.
