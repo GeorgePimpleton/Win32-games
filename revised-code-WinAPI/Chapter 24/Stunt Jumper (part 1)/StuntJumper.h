@@ -1,13 +1,5 @@
-//-----------------------------------------------------------------
-// Stunt Jumper Application
-// C++ Header - StuntJumper.h
-//-----------------------------------------------------------------
-
 #pragma once
 
-//-----------------------------------------------------------------
-// Include Files
-//-----------------------------------------------------------------
 #include <windows.h>
 #include "Resource.h"
 #include "GameEngine.h"
@@ -16,9 +8,6 @@
 #include "ScrollingBackground.h"
 #include "MotorcycleSprite.h"
 
-//-----------------------------------------------------------------
-// Global Variables
-//-----------------------------------------------------------------
 HINSTANCE             g_hInstance;
 GameEngine*           g_pGame;
 HDC                   g_hOffscreenDC;
@@ -41,8 +30,5 @@ int                   g_iInputDelay;
 BOOL                  g_bGameOver;
 BOOL                  g_bSplash;
 
-//-----------------------------------------------------------------
-// Function Declarations
-//-----------------------------------------------------------------
 void NewGame();
 void NewJump(int iNumBuses);
