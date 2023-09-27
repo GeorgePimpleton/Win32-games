@@ -62,8 +62,7 @@ void MotorcycleSprite::UpdateFrame( )
          if ( !m_bLandedSafely )
          {
             // Play the crash sound
-            PlaySound((PCTSTR) IDW_CRASH, g_hInstance, SND_ASYNC |
-                      SND_RESOURCE);
+            PlaySoundW((PCWSTR) IDW_CRASH, g_hInstance, SND_ASYNC | SND_RESOURCE);
 
             // End the game
             m_ptVelocity.x = 0;

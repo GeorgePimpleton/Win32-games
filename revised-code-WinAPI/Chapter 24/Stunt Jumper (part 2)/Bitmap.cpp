@@ -6,7 +6,7 @@ Bitmap::Bitmap( )
    : m_hBitmap(NULL), m_iWidth(0), m_iHeight(0)
 { }
 
-Bitmap::Bitmap(HDC hDC, PCTSTR szFileName)
+Bitmap::Bitmap(HDC hDC, PCWSTR szFileName)
    : m_hBitmap(NULL), m_iWidth(0), m_iHeight(0)
 {
    Create(hDC, szFileName);
@@ -38,7 +38,7 @@ void Bitmap::Free( )
    }
 }
 
-BOOL Bitmap::Create(HDC hDC, PCTSTR szFileName)
+BOOL Bitmap::Create(HDC hDC, PCWSTR szFileName)
 {
    // Free any previous bitmap info
    Free( );

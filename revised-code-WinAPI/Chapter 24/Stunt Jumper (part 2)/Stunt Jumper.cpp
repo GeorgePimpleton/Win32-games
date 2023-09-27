@@ -3,7 +3,7 @@
 BOOL GameInitialize(HINSTANCE hInstance)
 {
    g_pGame = new GameEngine(hInstance, TEXT("Stunt Jumper"), TEXT("Example Game: Stunt Jumper"),
-                            IDI_STUNTJUMPER, IDI_STUNTJUMPER_SM, 750, 250);
+                            IDI_ICON, IDI_ICON_SM, 750, 250);
 
    if ( g_pGame == NULL )
    {
@@ -156,7 +156,7 @@ void HandleKeys( )
          if ( GetAsyncKeyState(VK_LEFT) < 0 )
          {
             // Play the brake sound
-            PlaySound((PCTSTR) IDW_BRAKES, g_hInstance, SND_ASYNC |
+            PlaySound((PCWSTR) IDW_BRAKES, g_hInstance, SND_ASYNC |
                       SND_RESOURCE);
 
             // Decrease speed
@@ -168,7 +168,7 @@ void HandleKeys( )
          else if ( GetAsyncKeyState(VK_RIGHT) < 0 )
          {
             // Play the engine sound
-            PlaySound((PCTSTR) IDW_ENGINE, g_hInstance, SND_ASYNC |
+            PlaySound((PCWSTR) IDW_ENGINE, g_hInstance, SND_ASYNC |
                       SND_RESOURCE);
 
             // Increase speed
@@ -218,7 +218,7 @@ void HandleJoystick(JOYSTATE jsJoystickState)
          if ( jsJoystickState & JOY_LEFT )
          {
             // Play the brake sound
-            PlaySound((PCTSTR) IDW_BRAKES, g_hInstance, SND_ASYNC |
+            PlaySound((PCWSTR) IDW_BRAKES, g_hInstance, SND_ASYNC |
                       SND_RESOURCE);
 
             // Decrease speed
@@ -230,7 +230,7 @@ void HandleJoystick(JOYSTATE jsJoystickState)
          else if ( jsJoystickState & JOY_RIGHT )
          {
             // Play the engine sound
-            PlaySound((PCTSTR) IDW_ENGINE, g_hInstance, SND_ASYNC |
+            PlaySound((PCWSTR) IDW_ENGINE, g_hInstance, SND_ASYNC |
                       SND_RESOURCE);
 
             // Increase speed
@@ -277,7 +277,7 @@ BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
          if ( !g_pJumperSprite->HasLandedSafely( ) )
          {
             // Play the celebration sound
-            PlaySound((PCTSTR) IDW_CELEBRATION, g_hInstance, SND_ASYNC |
+            PlaySound((PCWSTR) IDW_CELEBRATION, g_hInstance, SND_ASYNC |
                       SND_RESOURCE);
 
             // Indicate that the motorcycle landed safely
@@ -288,7 +288,7 @@ BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
       else if ( (pHitter == g_pJumperBitmap) && (pHittee == g_pBusBitmap) )
       {
          // Play the crash sound
-         PlaySound((PCTSTR) IDW_CRASH, g_hInstance, SND_ASYNC |
+         PlaySound((PCWSTR) IDW_CRASH, g_hInstance, SND_ASYNC |
                    SND_RESOURCE);
 
          // End the game

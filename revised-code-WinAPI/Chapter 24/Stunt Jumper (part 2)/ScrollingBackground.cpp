@@ -1,7 +1,7 @@
 #include "ScrollingBackground.hpp"
 
 // Create a background layer from a bitmap file
-BackgroundLayer::BackgroundLayer(HDC hDC, PCTSTR szFileName,
+BackgroundLayer::BackgroundLayer(HDC hDC, PCWSTR szFileName,
                                  int iSpeed, SCROLLDIR sdDirection)
    : Bitmap(hDC, szFileName), m_iSpeed(iSpeed), m_sdDirection(sdDirection)
 {

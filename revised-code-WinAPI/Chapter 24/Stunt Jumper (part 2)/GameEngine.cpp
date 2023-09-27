@@ -2,10 +2,10 @@
 
 #include "GameEngine.hpp"
 
-GameEngine* GameEngine::m_pGameEngine = NULL;
+GameEngine* GameEngine::m_gameEngine = NULL;
 
-int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
-                   _In_ PSTR szCmdLine, _In_ int iCmdShow)
+int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
+                    _In_ PWSTR szCmdLine, _In_ int iCmdShow)
 {
    MSG         msg;
    static int  iTickTrigger = 0;
@@ -79,16 +79,14 @@ BOOL GameEngine::CheckSpriteCollision(Sprite* pTestSprite)
    return FALSE;
 }
 
-GameEngine::GameEngine(HINSTANCE hInstance, PCTSTR szWindowClass, PCTSTR szTitle,
+GameEngine::GameEngine(HINSTANCE hInstance, PCWSTR szWindowClass, PCWSTR szTitle,
                        WORD wIcon, WORD wSmallIcon, int iWidth, int iHeight)
 {
-   m_pGameEngine = this;
+   m_gameEngine = this;
    m_hInstance = hInstance;
    m_hWindow = NULL;
-   if ( lstrlen(szWindowClass) > 0 )
-      lstrcpy(m_szWindowClass, szWindowClass);
-   if ( lstrlen(szTitle) > 0 )
-      lstrcpy(m_szTitle, szTitle);
+   m_szWindowClass = szWindowClass;
+   m_szTitle = szTitle;
    m_wIcon = wIcon;
    m_wSmallIcon = wSmallIcon;
    m_iWidth = iWidth;
@@ -96,6 +94,7 @@ GameEngine::GameEngine(HINSTANCE hInstance, PCTSTR szWindowClass, PCTSTR szTitle
    m_iFrameDelay = 50;   // 20 FPS default
    m_bSleep = TRUE;
    m_uiJoystickID = 0;
+   m_rcJoystickTrip = { };
    m_uiMIDIPlayerID = 0;
 
    m_vSprites.reserve(100);
@@ -400,7 +399,7 @@ Sprite* GameEngine::IsPointInSprite(int x, int y)
    return NULL;
 }
 
-void GameEngine::PlayMIDISong(PCTSTR szMIDIFileName, BOOL bRestart)
+void GameEngine::PlayMIDISong(PCWSTR szMIDIFileName, BOOL bRestart)
 {
    if ( m_uiMIDIPlayerID == 0 )
    {

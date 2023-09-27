@@ -15,8 +15,8 @@ const JOYSTATE  JOY_NONE  = 0x0000L,
                 JOY_FIRE1 = 0x0010L,
                 JOY_FIRE2 = 0x0020L;
 
-int WINAPI       WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
-                         _In_ PSTR szCmdLine, _In_ int iCmdShow);
+int WINAPI       wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
+                          _In_ PWSTR szCmdLine, _In_ int iCmdShow);
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 BOOL GameInitialize(HINSTANCE hInstance);
@@ -37,13 +37,15 @@ void SpriteDying(Sprite* pSpriteDying);
 class GameEngine
 {
 protected:
-   static GameEngine* m_pGameEngine;
+   static GameEngine* m_gameEngine;
    HINSTANCE          m_hInstance;
    HWND               m_hWindow;
-   TCHAR              m_szWindowClass[ 64 ];
-   TCHAR              m_szTitle[ 64 ];
-   WORD               m_wIcon, m_wSmallIcon;
-   int                m_iWidth, m_iHeight;
+   PCWSTR             m_szWindowClass;
+   PCWSTR             m_szTitle;
+   WORD               m_wIcon;
+   WORD               m_wSmallIcon;
+   int                m_iWidth;
+   int                m_iHeight;
    int                m_iFrameDelay;
    BOOL               m_bSleep;
    UINT               m_uiJoystickID;
@@ -54,11 +56,11 @@ protected:
    BOOL CheckSpriteCollision(Sprite* pTestSprite);
 
 public:
-            GameEngine(HINSTANCE hInstance, PCTSTR szWindowClass, PCTSTR szTitle,
+            GameEngine(HINSTANCE hInstance, PCWSTR szWindowClass, PCWSTR szTitle,
                        WORD wIcon, WORD wSmallIcon, int iWidth = 640, int iHeight = 480);
    virtual ~GameEngine( );
 
-   static GameEngine* GetEngine( )                       { return m_pGameEngine; };
+   static GameEngine* GetEngine( )                       { return m_gameEngine; };
    BOOL               Initialize(int iCmdShow);
    LRESULT            HandleEvent(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam);
    BOOL               InitJoystick( );
@@ -70,14 +72,14 @@ public:
    void               UpdateSprites( );
    void               CleanupSprites( );
    Sprite*            IsPointInSprite(int x, int y);
-   void               PlayMIDISong(PCTSTR szMIDIFileName = TEXT(""), BOOL bRestart = TRUE);
+   void               PlayMIDISong(PCWSTR szMIDIFileName = TEXT(""), BOOL bRestart = TRUE);
    void               PauseMIDISong( );
    void               CloseMIDIPlayer( );
 
    HINSTANCE GetInstance( )               { return m_hInstance; };
    HWND      GetWindow( )                 { return m_hWindow; };
    void      SetWindow(HWND hWindow)      { m_hWindow = hWindow; };
-   PCTSTR    GetTitle( )                  { return m_szTitle; };
+   PCWSTR    GetTitle( )                  { return m_szTitle; };
    WORD      GetIcon( )                   { return m_wIcon; };
    WORD      GetSmallIcon( )              { return m_wSmallIcon; };
    int       GetWidth( )                  { return m_iWidth; };

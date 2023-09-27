@@ -17,7 +17,7 @@ protected:
    SCROLLDIR m_sdDirection;
 
 public:
-   BackgroundLayer(HDC hDC, PCTSTR szFileName, int iSpeed,
+   BackgroundLayer(HDC hDC, PCWSTR szFileName, int iSpeed,
                    SCROLLDIR sdDirection);
    BackgroundLayer(HDC hDC, UINT uiResID, HINSTANCE hInstance, int iSpeed = 0,
                    SCROLLDIR sdDirection = SD_LEFT);
