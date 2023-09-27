@@ -2,8 +2,8 @@
 
 BOOL GameInitialize(HINSTANCE inst)
 {
-   g_game = new GameEngine(inst, L"Stunt Jumper", L"Example Game: Stunt Jumper",
-                            IDI_ICON, IDI_ICON_SM, 750, 250);
+   g_game = std::make_unique<GameEngine>(inst, L"Stunt Jumper", L"Example Game: Stunt Jumper",
+                                         IDI_ICON, IDI_ICON_SM, 750, 250);
 
    if ( g_game == NULL )
    {
@@ -21,34 +21,32 @@ BOOL GameInitialize(HINSTANCE inst)
 
 void GameStart(HWND wnd)
 {
-   srand(GetTickCount( ));
+   rtk::srand( );
 
-   g_hOffscreenDC = CreateCompatibleDC(GetDC(wnd));
-   g_hOffscreenBitmap = CreateCompatibleBitmap(GetDC(wnd),
-                                               g_game->GetWidth( ), g_game->GetHeight( ));
+   g_offscreenDC = CreateCompatibleDC(GetDC(wnd));
+   g_offscreenBitmap = CreateCompatibleBitmap(GetDC(wnd),
+                                              g_game->GetWidth( ), g_game->GetHeight( ));
 
-   SelectObject(g_hOffscreenDC, g_hOffscreenBitmap);
+   SelectObject(g_offscreenDC, g_offscreenBitmap);
 
-   HDC dc = GetDC(wnd);
+   g_splashBitmap    = std::make_unique <Bitmap>(IDB_SPLASH, g_inst);
+   g_pJumperBitmap   = std::make_unique<Bitmap>(IDB_JUMPER, g_inst);
+   g_busBitmap       = std::make_unique<Bitmap>(IDB_BUS, g_inst);
+   g_rampBitmap[ 0 ] = std::make_unique<Bitmap>(IDB_RAMPLEFT, g_inst);
+   g_rampBitmap[ 1 ] = std::make_unique<Bitmap>(IDB_RAMPRIGHT, g_inst);
+   g_gameOverBitmap  = std::make_unique<Bitmap>(IDB_GAMEOVER, g_inst);
 
-   g_pSplashBitmap = new Bitmap(dc, IDB_SPLASH, g_inst);
-   g_pJumperBitmap = new Bitmap(dc, IDB_JUMPER, g_inst);
-   g_pBusBitmap = new Bitmap(dc, IDB_BUS, g_inst);
-   g_pRampBitmap[ 0 ] = new Bitmap(dc, IDB_RAMPLEFT, g_inst);
-   g_pRampBitmap[ 1 ] = new Bitmap(dc, IDB_RAMPRIGHT, g_inst);
-   g_pGameOverBitmap = new Bitmap(dc, IDB_GAMEOVER, g_inst);
+   g_background = std::make_unique<ScrollingBackground>(750, 250);
+   g_BGSkyLayer = std::make_unique<BackgroundLayer>(IDB_BG_SKY, g_inst, 1, SD_LEFT);
+   g_background->AddLayer(g_BGSkyLayer.get( ));
+   g_BGMountainsLayer = std::make_unique<BackgroundLayer>(IDB_BG_MOUNTAINS, g_inst, 2, SD_LEFT);
+   g_background->AddLayer(g_BGMountainsLayer.get( ));
+   g_BGTreesLayer = std::make_unique<BackgroundLayer>(IDB_BG_TREES, g_inst, 3, SD_LEFT);
+   g_background->AddLayer(g_BGTreesLayer.get( ));
+   g_BGRoadLayer = std::make_unique<BackgroundLayer>(IDB_BG_ROAD, g_inst);
+   g_background->AddLayer(g_BGRoadLayer.get( ));
 
-   g_pBackground = new ScrollingBackground(750, 250);
-   g_pBGSkyLayer = new BackgroundLayer(dc, IDB_BG_SKY, g_inst, 1, SD_LEFT);
-   g_pBackground->AddLayer(g_pBGSkyLayer);
-   g_pBGMountainsLayer = new BackgroundLayer(dc, IDB_BG_MOUNTAINS, g_inst, 2, SD_LEFT);
-   g_pBackground->AddLayer(g_pBGMountainsLayer);
-   g_pBGTreesLayer = new BackgroundLayer(dc, IDB_BG_TREES, g_inst, 3, SD_LEFT);
-   g_pBackground->AddLayer(g_pBGTreesLayer);
-   g_pBGRoadLayer = new BackgroundLayer(dc, IDB_BG_ROAD, g_inst);
-   g_pBackground->AddLayer(g_pBGRoadLayer);
-
-   g_bSplash = TRUE;
+   g_splash   = TRUE;
    g_gameOver = TRUE;
 }
 
@@ -56,32 +54,17 @@ void GameEnd( )
 {
    g_game->CloseMIDIPlayer( );
 
-   DeleteObject(g_hOffscreenBitmap);
-   DeleteDC(g_hOffscreenDC);
-
-   delete g_pSplashBitmap;
-   delete g_pJumperBitmap;
-   delete g_pBusBitmap;
-   delete g_pRampBitmap[ 0 ];
-   delete g_pRampBitmap[ 1 ];
-   delete g_pGameOverBitmap;
-
-   delete g_pBackground;
-   delete g_pBGSkyLayer;
-   delete g_pBGMountainsLayer;
-   delete g_pBGTreesLayer;
-   delete g_pBGRoadLayer;
+   DeleteObject(g_offscreenBitmap);
+   DeleteDC(g_offscreenDC);
 
    g_game->CleanupSprites( );
-
-   delete g_game;
 }
 
 void GameActivate(HWND wnd)
 {
    g_game->CaptureJoystick( );
 
-   if ( !g_bSplash )
+   if ( !g_splash )
    {
       g_game->PlayMIDISong(TEXT(""), FALSE);
    }
@@ -91,7 +74,7 @@ void GameDeactivate(HWND wnd)
 {
    g_game->ReleaseJoystick( );
 
-   if ( !g_bSplash )
+   if ( !g_splash )
    {
       g_game->PauseMIDISong( );
    }
@@ -99,11 +82,11 @@ void GameDeactivate(HWND wnd)
 
 void GamePaint(HDC dc)
 {
-   g_pBackground->Draw(dc, TRUE);
+   g_background->Draw(dc, TRUE);
 
-   if ( g_bSplash )
+   if ( g_splash )
    {
-      g_pSplashBitmap->Draw(dc, 175, 15, TRUE);
+      g_splashBitmap->Draw(dc, 175, 15, TRUE);
    }
    else
    {
@@ -111,7 +94,7 @@ void GamePaint(HDC dc)
 
       if ( g_gameOver )
       {
-         g_pGameOverBitmap->Draw(dc, 175, 15, FALSE);
+         g_gameOverBitmap->Draw(dc, 175, 15, FALSE);
       }
    }
 }
@@ -120,26 +103,26 @@ void GameCycle( )
 {
    if ( !g_gameOver )
    {
-      g_pBackground->Update( );
+      g_background->Update( );
 
       g_game->UpdateSprites( );
 
       HWND  wnd = g_game->GetWindow( );
       HDC   dc = GetDC(wnd);
 
-      GamePaint(g_hOffscreenDC);
+      GamePaint(g_offscreenDC);
 
       BitBlt(dc, 0, 0, g_game->GetWidth( ), g_game->GetHeight( ),
-             g_hOffscreenDC, 0, 0, SRCCOPY);
+             g_offscreenDC, 0, 0, SRCCOPY);
 
       ReleaseDC(wnd, dc);
 
       // See if the motorcycle has crossed the screen
-      RECT& rc = g_pJumperSprite->GetPosition( );
+      RECT& rc = g_jumperSprite->GetPosition( );
 
       if ( rc.right > g_game->GetWidth( ) )
       {
-         NewJump(rand( ) % 7 + 1);
+         NewJump(rtk::rand(1, 7));
       }
    }
 }
@@ -168,33 +151,33 @@ void HandleKeys( )
    if ( !g_gameOver )
    {
       // Move the jumper based upon left/right key presses
-      POINT velocity = g_pJumperSprite->GetVelocity( );
+      POINT velocity = g_jumperSprite->GetVelocity( );
 
-      if ( g_iInputDelay++ > 1 )
+      if ( g_inputDelay++ > 1 )
       {
          if ( GetAsyncKeyState(VK_LEFT) < 0 )
          {
             // Play the brake sound
-            PlaySound((PCWSTR) IDW_BRAKES, g_inst, SND_ASYNC |
+            PlaySoundW((PCWSTR) IDW_BRAKES, g_inst, SND_ASYNC |
                       SND_RESOURCE);
 
             // Decrease speed
-            g_pJumperSprite->DecreaseSpeed( );
+            g_jumperSprite->DecreaseSpeed( );
 
             // Reset the input delay
-            g_iInputDelay = 0;
+            g_inputDelay = 0;
          }
          else if ( GetAsyncKeyState(VK_RIGHT) < 0 )
          {
             // Play the engine sound
-            PlaySound((PCWSTR) IDW_ENGINE, g_inst, SND_ASYNC |
+            PlaySoundW((PCWSTR) IDW_ENGINE, g_inst, SND_ASYNC |
                       SND_RESOURCE);
 
             // Increase speed
-            g_pJumperSprite->IncreaseSpeed( );
+            g_jumperSprite->IncreaseSpeed( );
 
             // Reset the input delay
-            g_iInputDelay = 0;
+            g_inputDelay = 0;
          }
       }
    }
@@ -202,10 +185,10 @@ void HandleKeys( )
    // Start a new game based upon an Enter (Return) key press
    if ( GetAsyncKeyState(VK_RETURN) < 0 )
    {
-      if ( g_bSplash )
+      if ( g_splash )
       {
          // Start a new game without the splash screen
-         g_bSplash = FALSE;
+         g_splash = FALSE;
          GameNew( );
       }
       else if ( g_gameOver )
@@ -230,43 +213,41 @@ void HandleJoystick(JOYSTATE joyState)
    if ( !g_gameOver )
    {
       // Move the jumper based upon left/right joystick movement
-      POINT velocity = g_pJumperSprite->GetVelocity( );
+      POINT velocity = g_jumperSprite->GetVelocity( );
 
-      if ( g_iInputDelay++ > 1 )
+      if ( g_inputDelay++ > 1 )
       {
          if ( joyState & JOY_LEFT )
          {
             // Play the brake sound
-            PlaySound((PCWSTR) IDW_BRAKES, g_inst, SND_ASYNC |
-                      SND_RESOURCE);
+            PlaySoundW((PCWSTR) IDW_BRAKES, g_inst, SND_ASYNC | SND_RESOURCE);
 
             // Decrease speed
-            g_pJumperSprite->DecreaseSpeed( );
+            g_jumperSprite->DecreaseSpeed( );
 
             // Reset the input delay
-            g_iInputDelay = 0;
+            g_inputDelay = 0;
          }
          else if ( joyState & JOY_RIGHT )
          {
             // Play the engine sound
-            PlaySound((PCWSTR) IDW_ENGINE, g_inst, SND_ASYNC |
-                      SND_RESOURCE);
+            PlaySoundW((PCWSTR) IDW_ENGINE, g_inst, SND_ASYNC | SND_RESOURCE);
 
             // Increase speed
-            g_pJumperSprite->IncreaseSpeed( );
+            g_jumperSprite->IncreaseSpeed( );
 
             // Reset the input delay
-            g_iInputDelay = 0;
+            g_inputDelay = 0;
          }
       }
    }
 
    // Start a new game based upon the first joystick button
    if ( joyState & JOY_FIRE1 )
-      if ( g_bSplash )
+      if ( g_splash )
       {
          // Start a new game without the splash screen
-         g_bSplash = FALSE;
+         g_splash = FALSE;
          GameNew( );
       }
       else if ( g_gameOver )
@@ -285,28 +266,28 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
    if ( !spriteHitter->IsHidden( ) && !spriteHittee->IsHidden( ) )
    {
       // See if the motorcycle has hit the launch ramp
-      if ( (hitter == g_pJumperBitmap) && (hittee == g_pRampBitmap[ 0 ]) )
+      if ( (hitter == g_pJumperBitmap.get( )) && (hittee == g_rampBitmap[ 0 ].get( )) )
       {
          // Start jumping
-         g_pJumperSprite->StartJumping( );
+         g_jumperSprite->StartJumping( );
       }
       // See if the motorcycle has hit the landing ramp
-      else if ( (hitter == g_pJumperBitmap) && (hittee == g_pRampBitmap[ 1 ]) )
+      else if ( (hitter == g_pJumperBitmap.get( )) && (hittee == g_rampBitmap[ 1 ].get( )) )
       {
-         if ( !g_pJumperSprite->HasLandedSafely( ) )
+         if ( !g_jumperSprite->HasLandedSafely( ) )
          {
             // Play the celebration sound
-            PlaySound((PCWSTR) IDW_CELEBRATION, g_inst, SND_ASYNC | SND_RESOURCE);
+            PlaySoundW((PCWSTR) IDW_CELEBRATION, g_inst, SND_ASYNC | SND_RESOURCE);
 
             // Indicate that the motorcycle landed safely
-            g_pJumperSprite->LandedSafely( );
+            g_jumperSprite->LandedSafely( );
          }
       }
       // See if the motorcycle has hit a bus
-      else if ( (hitter == g_pJumperBitmap) && (hittee == g_pBusBitmap) )
+      else if ( (hitter == g_pJumperBitmap.get( )) && (hittee == g_busBitmap.get( )) )
       {
          // Play the crash sound
-         PlaySound((PCWSTR) IDW_CRASH, g_inst, SND_ASYNC | SND_RESOURCE);
+         PlaySoundW((PCWSTR) IDW_CRASH, g_inst, SND_ASYNC | SND_RESOURCE);
 
          // End the game
          g_gameOver = TRUE;
@@ -325,63 +306,68 @@ void GameNew( )
    g_game->CleanupSprites( );
 
    // Initialize the game variables
-   g_iInputDelay = 0;
+   g_inputDelay = 0;
    g_gameOver = FALSE;
 
    // Create the ramp and bus sprites
    RECT bounds = { 0, 0, 750, 250 };
 
-   g_pLaunchRampSprite = new Sprite(g_pRampBitmap[ 0 ], bounds);
-   g_game->AddSprite(g_pLaunchRampSprite);
-   g_pLandingRampSprite = new Sprite(g_pRampBitmap[ 1 ], bounds);
-   g_game->AddSprite(g_pLandingRampSprite);
+   g_launchRampSprite.release( );
+   g_launchRampSprite = std::make_unique<Sprite>(g_rampBitmap[ 0 ].get( ), bounds);
+   g_game->AddSprite(g_launchRampSprite.get( ));
+
+   g_landingRampSprite.release( );
+   g_landingRampSprite = std::make_unique<Sprite>(g_rampBitmap[ 1 ].get( ), bounds);
+   g_game->AddSprite(g_landingRampSprite.get( ));
 
    for ( int i = 0; i < 7; i++ )
    {
-      g_pBusSprite[ i ] = new Sprite(g_pBusBitmap, bounds);
-      g_game->AddSprite(g_pBusSprite[ i ]);
+      g_busSprite[ i ].release( );
+      g_busSprite[ i ] = std::make_unique<Sprite>(g_busBitmap.get( ), bounds);
+      g_game->AddSprite(g_busSprite[ i ].get( ));
    }
 
    // Create the motorcycle jumper sprite
-   g_pJumperSprite = new MotorcycleSprite(g_pJumperBitmap, bounds, BA_WRAP);
-   g_pJumperSprite->SetNumFrames(13);
-   g_pJumperSprite->SetVelocity(4, 0);
-   g_pJumperSprite->SetPosition(0, 200);
-   g_game->AddSprite(g_pJumperSprite);
+   g_jumperSprite.release( );
+   g_jumperSprite = std::make_unique<MotorcycleSprite>(g_pJumperBitmap.get( ), bounds, BA_WRAP);
+   g_jumperSprite->SetNumFrames(13);
+   g_jumperSprite->SetVelocity(4, 0);
+   g_jumperSprite->SetPosition(0, 200);
+   g_game->AddSprite(g_jumperSprite.get( ));
 
    // Setup the first jump (maximum of 3 buses)
-   NewJump(rand( ) % 3 + 1);
+   NewJump(rtk::rand(1, 3));
 
    // Play the background music
    g_game->PlayMIDISong(L"Music.mid");
 }
 
-void NewJump(int iNumBuses)
+void NewJump(int numBuses)
 {
    // Set the position of the launch ramp
-   int iXStart = (g_game->GetWidth( ) / 2) - (iNumBuses * 40);
+   int xStart = (g_game->GetWidth( ) / 2) - (numBuses * 40);
 
-   g_pLaunchRampSprite->SetPosition(iXStart, 215);
+   g_launchRampSprite->SetPosition(xStart, 215);
 
    // Set the positions and visibility of the buses
    for ( int i = 0; i < 7; i++ )
    {
-      if ( i < iNumBuses )
+      if ( i < numBuses )
       {
          // Arrange and show these buses
-         g_pBusSprite[ i ]->SetPosition(iXStart + g_pRampBitmap[ 0 ]->GetWidth( ) +
-                                        5 + i * g_pBusBitmap->GetWidth( ), 200);
-         g_pBusSprite[ i ]->SetHidden(FALSE);
+         g_busSprite[ i ]->SetPosition(xStart + g_rampBitmap[ 0 ]->GetWidth( ) +
+                                       5 + i * g_busBitmap->GetWidth( ), 200);
+         g_busSprite[ i ]->SetHidden(FALSE);
       }
       else
       {
          // Hide these buses
-         g_pBusSprite[ i ]->SetPosition(0, 0);
-         g_pBusSprite[ i ]->SetHidden(TRUE);
+         g_busSprite[ i ]->SetPosition(0, 0);
+         g_busSprite[ i ]->SetHidden(TRUE);
       }
    }
 
    // Set the position of the landing ramp
-   g_pLandingRampSprite->SetPosition(iXStart + g_pRampBitmap[ 0 ]->GetWidth( ) +
-                                     5 + iNumBuses * g_pBusBitmap->GetWidth( ) + 5, 215);
+   g_landingRampSprite->SetPosition(xStart + g_rampBitmap[ 0 ]->GetWidth( ) +
+                                    5 + numBuses * g_busBitmap->GetWidth( ) + 5, 215);
 }

@@ -17,9 +17,9 @@ protected:
    SCROLLDIR m_direction;
 
 public:
-   BackgroundLayer(HDC dc, PCWSTR fileName, int speed,
+   BackgroundLayer(PCWSTR fileName, int speed,
                    SCROLLDIR direction);
-   BackgroundLayer(HDC dc, UINT resID, HINSTANCE inst, int iSpeed = 0,
+   BackgroundLayer(UINT resID, HINSTANCE inst, int iSpeed = 0,
                    SCROLLDIR direction = SD_LEFT);
 
    virtual void Update( );

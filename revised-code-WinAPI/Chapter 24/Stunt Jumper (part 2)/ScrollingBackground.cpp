@@ -1,9 +1,9 @@
 #include "ScrollingBackground.hpp"
 
 // Create a background layer from a bitmap file
-BackgroundLayer::BackgroundLayer(HDC dc, PCWSTR fileName,
+BackgroundLayer::BackgroundLayer(PCWSTR fileName,
                                  int speed, SCROLLDIR direction)
-   : Bitmap(dc, fileName), m_speed(speed), m_direction(direction)
+   : Bitmap(fileName), m_speed(speed), m_direction(direction)
 {
    // Set the viewport to the entire layer image by default
    m_viewport.left   = m_viewport.top = 0;
@@ -12,9 +12,9 @@ BackgroundLayer::BackgroundLayer(HDC dc, PCWSTR fileName,
 }
 
 // Create a background layer from a bitmap resource
-BackgroundLayer::BackgroundLayer(HDC dc, UINT resID, HINSTANCE inst,
+BackgroundLayer::BackgroundLayer(UINT resID, HINSTANCE inst,
                                  int speed, SCROLLDIR direction)
-   : Bitmap(dc, resID, inst), m_speed(speed),
+   : Bitmap(resID, inst), m_speed(speed),
    m_direction(direction)
 {
    // Set the viewport to the entire layer image by default
@@ -243,11 +243,11 @@ void ScrollingBackground::Draw(HDC dc, BOOL trans,
    }
 }
 
-void ScrollingBackground::AddLayer(BackgroundLayer* pLayer)
+void ScrollingBackground::AddLayer(BackgroundLayer* layer)
 {
    // Add the new layer (maximum of 10)
    if ( m_numLayers < 10 )
    {
-      m_layers[ m_numLayers++ ] = pLayer;
+      m_layers[ m_numLayers++ ] = layer;
    }
 }

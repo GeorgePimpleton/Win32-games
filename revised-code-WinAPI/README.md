@@ -32,10 +32,10 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 21. Space Out 3: Showing Off Your Game with Demo Mode
 22. Space Out 4: Keeping Track of High Scores
 23. Wanderer: Changing Perspective with Scrolling Backgrounds
+24. Example Game: Stunt Jumper
 
 ![under construction](construction.gif)  \*\* ***under construction*** \*\*  ![under construction](construction.gif)
 
-24. Example Game: Stunt Jumper
 
 ![queue](queue.jpg)  \*\* ***in the queue*** \*\*  ![queue](queue.jpg)
 
@@ -58,4 +58,4 @@ If you find better ways to rework the code please drop me a note and let me know
 ### Musings on Windows Games
 To be honest the game engine was created so many years ago makes it hard to convert to modern C++ practices.  It isn't bad code, it just fights back being modernized.  Maybe the game engine needs to be rewritten from top to bottom from scratch.  \**UGH*\*
 
-Hammer and crowbar working!  Only one example left!  \**W00-H00!*\*
+Hammer and crowbar working!  Everything is (semi) done!  \**W00-H00!*\*
