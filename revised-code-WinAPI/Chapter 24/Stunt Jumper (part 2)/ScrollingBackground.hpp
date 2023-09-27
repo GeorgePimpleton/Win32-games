@@ -12,29 +12,29 @@ const SCROLLDIR     SD_UP     = 0,
 class BackgroundLayer : Bitmap
 {
 protected:
-   RECT      m_rcViewport;
-   int       m_iSpeed;
-   SCROLLDIR m_sdDirection;
+   RECT      m_viewport;
+   int       m_speed;
+   SCROLLDIR m_direction;
 
 public:
-   BackgroundLayer(HDC dc, PCWSTR fileName, int iSpeed,
-                   SCROLLDIR sdDirection);
+   BackgroundLayer(HDC dc, PCWSTR fileName, int speed,
+                   SCROLLDIR direction);
    BackgroundLayer(HDC dc, UINT resID, HINSTANCE inst, int iSpeed = 0,
-                   SCROLLDIR sdDirection = SD_LEFT);
+                   SCROLLDIR direction = SD_LEFT);
 
    virtual void Update( );
    virtual void Draw(HDC dc, int x, int y, BOOL trans = FALSE,
                      COLORREF transColor = RGB(255, 0, 255));
-   void         SetSpeed(int iSpeed)                    { m_iSpeed = iSpeed; };
-   void         SetDirection(SCROLLDIR sdDirection)     { m_sdDirection = sdDirection; };
-   void         SetViewport(RECT& rcViewport)           { CopyRect(&m_rcViewport, &rcViewport); };
+   void         SetSpeed(int speed)                    { m_speed = speed; };
+   void         SetDirection(SCROLLDIR direction)     { m_direction = direction; };
+   void         SetViewport(RECT& viewport)           { CopyRect(&m_viewport, &viewport); };
 };
 
 class ScrollingBackground : Background
 {
 protected:
-   int               m_iNumLayers;
-   BackgroundLayer* m_pLayers[ 10 ];
+   int               m_numLayers;
+   BackgroundLayer* m_layers[ 10 ];
 
 public:
             ScrollingBackground(int width, int height);
@@ -43,5 +43,5 @@ public:
    virtual void Update( );
    virtual void Draw(HDC dc, BOOL trans = FALSE,
                      COLORREF transColor = RGB(255, 0, 255));
-   void         AddLayer(BackgroundLayer* pLayer);
+   void         AddLayer(BackgroundLayer* layer);
 };
