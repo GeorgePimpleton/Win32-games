@@ -168,7 +168,7 @@ void HandleKeys( )
    if ( !g_bGameOver )
    {
       // Move the jumper based upon left/right key presses
-      POINT ptVelocity = g_pJumperSprite->GetVelocity( );
+      POINT velocity = g_pJumperSprite->GetVelocity( );
 
       if ( g_iInputDelay++ > 1 )
       {
@@ -230,7 +230,7 @@ void HandleJoystick(JOYSTATE joyState)
    if ( !g_bGameOver )
    {
       // Move the jumper based upon left/right joystick movement
-      POINT ptVelocity = g_pJumperSprite->GetVelocity( );
+      POINT velocity = g_pJumperSprite->GetVelocity( );
 
       if ( g_iInputDelay++ > 1 )
       {
@@ -329,21 +329,21 @@ void GameNew( )
    g_bGameOver = FALSE;
 
    // Create the ramp and bus sprites
-   RECT rcBounds = { 0, 0, 750, 250 };
+   RECT bounds = { 0, 0, 750, 250 };
 
-   g_pLaunchRampSprite = new Sprite(g_pRampBitmap[ 0 ], rcBounds);
+   g_pLaunchRampSprite = new Sprite(g_pRampBitmap[ 0 ], bounds);
    g_game->AddSprite(g_pLaunchRampSprite);
-   g_pLandingRampSprite = new Sprite(g_pRampBitmap[ 1 ], rcBounds);
+   g_pLandingRampSprite = new Sprite(g_pRampBitmap[ 1 ], bounds);
    g_game->AddSprite(g_pLandingRampSprite);
 
    for ( int i = 0; i < 7; i++ )
    {
-      g_pBusSprite[ i ] = new Sprite(g_pBusBitmap, rcBounds);
+      g_pBusSprite[ i ] = new Sprite(g_pBusBitmap, bounds);
       g_game->AddSprite(g_pBusSprite[ i ]);
    }
 
    // Create the motorcycle jumper sprite
-   g_pJumperSprite = new MotorcycleSprite(g_pJumperBitmap, rcBounds, BA_WRAP);
+   g_pJumperSprite = new MotorcycleSprite(g_pJumperBitmap, bounds, BA_WRAP);
    g_pJumperSprite->SetNumFrames(13);
    g_pJumperSprite->SetVelocity(4, 0);
    g_pJumperSprite->SetPosition(0, 200);
