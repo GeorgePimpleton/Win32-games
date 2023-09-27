@@ -1,6 +1,6 @@
 #include "MotorcycleSprite.hpp"
 
-extern HINSTANCE g_hInstance;
+extern HINSTANCE g_inst;
 extern int       g_bGameOver;
 
 MotorcycleSprite::MotorcycleSprite(Bitmap* pBitmap, RECT& rcBounds,
@@ -62,7 +62,7 @@ void MotorcycleSprite::UpdateFrame( )
          if ( !m_bLandedSafely )
          {
             // Play the crash sound
-            PlaySoundW((PCWSTR) IDW_CRASH, g_hInstance, SND_ASYNC | SND_RESOURCE);
+            PlaySoundW((PCWSTR) IDW_CRASH, g_inst, SND_ASYNC | SND_RESOURCE);
 
             // End the game
             m_ptVelocity.x = 0;
