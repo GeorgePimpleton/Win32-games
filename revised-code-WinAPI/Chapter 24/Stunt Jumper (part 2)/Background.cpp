@@ -1,16 +1,16 @@
 #include "Background.hpp"
 
-Background::Background(int width, int height, COLORREF crColor)
+Background::Background(int width, int height, COLORREF color)
 {
    m_width = width;
    m_height = height;
-   m_crColor = crColor;
+   m_color = color;
    m_pBitmap = NULL;
 }
 
 Background::Background(Bitmap* pBitmap)
 {
-   m_crColor = 0;
+   m_color = 0;
    m_pBitmap = pBitmap;
    m_width = pBitmap->GetWidth( );
    m_height = pBitmap->GetHeight( );
@@ -33,7 +33,7 @@ void Background::Draw(HDC dc)
    else
    {
       RECT   rect   = { 0, 0, m_width, m_height };
-      HBRUSH hBrush = CreateSolidBrush(m_crColor);
+      HBRUSH hBrush = CreateSolidBrush(m_color);
 
       FillRect(dc, &rect, hBrush);
       DeleteObject(hBrush);

@@ -16,19 +16,19 @@ public:
             Bitmap( );
             Bitmap(HDC dc, PCWSTR fileName);
             Bitmap(HDC dc, UINT resID, HINSTANCE inst);
-            Bitmap(HDC dc, int width, int height, COLORREF crColor = RGB(0, 0, 0));
+            Bitmap(HDC dc, int width, int height, COLORREF color = RGB(0, 0, 0));
    virtual ~Bitmap( );
 
    BOOL Create(HDC dc, PCWSTR fileName);
    BOOL Create(HDC dc, UINT resID, HINSTANCE inst);
-   BOOL Create(HDC dc, int width, int height, COLORREF crColor);
+   BOOL Create(HDC dc, int width, int height, COLORREF color);
 
-   virtual void Draw(HDC dc, int x, int y, BOOL bTrans = FALSE,
-                     COLORREF crTransColor = RGB(255, 0, 255));
+   virtual void Draw(HDC dc, int x, int y, BOOL trans = FALSE,
+                     COLORREF transColor = RGB(255, 0, 255));
    void DrawPart(HDC dc, int x, int y, int xPart, int yPart,
-                 int wPart, int hPart, BOOL bTrans = FALSE,
-                 COLORREF crTransColor = RGB(255, 0, 255));
+                 int wPart, int hPart, BOOL trans = FALSE,
+                 COLORREF transColor = RGB(255, 0, 255));
 
-   int GetWidth( )  { return m_width; };
-   int GetHeight( ) { return m_height; };
+   int GetWidth( ) const  { return m_width; };
+   int GetHeight( ) const { return m_height; };
 };

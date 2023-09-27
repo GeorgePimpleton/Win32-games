@@ -23,8 +23,8 @@ public:
                    SCROLLDIR sdDirection = SD_LEFT);
 
    virtual void Update( );
-   virtual void Draw(HDC dc, int x, int y, BOOL bTrans = FALSE,
-                     COLORREF crTransColor = RGB(255, 0, 255));
+   virtual void Draw(HDC dc, int x, int y, BOOL trans = FALSE,
+                     COLORREF transColor = RGB(255, 0, 255));
    void         SetSpeed(int iSpeed)                    { m_iSpeed = iSpeed; };
    void         SetDirection(SCROLLDIR sdDirection)     { m_sdDirection = sdDirection; };
    void         SetViewport(RECT& rcViewport)           { CopyRect(&m_rcViewport, &rcViewport); };
@@ -41,7 +41,7 @@ public:
    virtual ~ScrollingBackground( );
 
    virtual void Update( );
-   virtual void Draw(HDC dc, BOOL bTrans = FALSE,
-                     COLORREF crTransColor = RGB(255, 0, 255));
+   virtual void Draw(HDC dc, BOOL trans = FALSE,
+                     COLORREF transColor = RGB(255, 0, 255));
    void         AddLayer(BackgroundLayer* pLayer);
 };

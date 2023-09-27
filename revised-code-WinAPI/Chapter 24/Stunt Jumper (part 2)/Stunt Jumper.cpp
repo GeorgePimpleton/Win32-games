@@ -2,17 +2,17 @@
 
 BOOL GameInitialize(HINSTANCE inst)
 {
-   g_pGame = new GameEngine(inst, L"Stunt Jumper", L"Example Game: Stunt Jumper",
+   g_game = new GameEngine(inst, L"Stunt Jumper", L"Example Game: Stunt Jumper",
                             IDI_ICON, IDI_ICON_SM, 750, 250);
 
-   if ( g_pGame == NULL )
+   if ( g_game == NULL )
    {
       return FALSE;
    }
 
-   g_pGame->SetFrameRate(30);
+   g_game->SetFrameRate(30);
 
-   g_pGame->InitJoystick( );
+   g_game->InitJoystick( );
 
    g_inst = inst;
 
@@ -25,7 +25,7 @@ void GameStart(HWND wnd)
 
    g_hOffscreenDC = CreateCompatibleDC(GetDC(wnd));
    g_hOffscreenBitmap = CreateCompatibleBitmap(GetDC(wnd),
-                                               g_pGame->GetWidth( ), g_pGame->GetHeight( ));
+                                               g_game->GetWidth( ), g_game->GetHeight( ));
 
    SelectObject(g_hOffscreenDC, g_hOffscreenBitmap);
 
@@ -54,7 +54,7 @@ void GameStart(HWND wnd)
 
 void GameEnd( )
 {
-   g_pGame->CloseMIDIPlayer( );
+   g_game->CloseMIDIPlayer( );
 
    DeleteObject(g_hOffscreenBitmap);
    DeleteDC(g_hOffscreenDC);
@@ -72,28 +72,28 @@ void GameEnd( )
    delete g_pBGTreesLayer;
    delete g_pBGRoadLayer;
 
-   g_pGame->CleanupSprites( );
+   g_game->CleanupSprites( );
 
-   delete g_pGame;
+   delete g_game;
 }
 
 void GameActivate(HWND wnd)
 {
-   g_pGame->CaptureJoystick( );
+   g_game->CaptureJoystick( );
 
    if ( !g_bSplash )
    {
-      g_pGame->PlayMIDISong(TEXT(""), FALSE);
+      g_game->PlayMIDISong(TEXT(""), FALSE);
    }
 }
 
 void GameDeactivate(HWND wnd)
 {
-   g_pGame->ReleaseJoystick( );
+   g_game->ReleaseJoystick( );
 
    if ( !g_bSplash )
    {
-      g_pGame->PauseMIDISong( );
+      g_game->PauseMIDISong( );
    }
 }
 
@@ -107,7 +107,7 @@ void GamePaint(HDC dc)
    }
    else
    {
-      g_pGame->DrawSprites(dc);
+      g_game->DrawSprites(dc);
 
       if ( g_bGameOver )
       {
@@ -122,14 +122,14 @@ void GameCycle( )
    {
       g_pBackground->Update( );
 
-      g_pGame->UpdateSprites( );
+      g_game->UpdateSprites( );
 
-      HWND  wnd = g_pGame->GetWindow( );
+      HWND  wnd = g_game->GetWindow( );
       HDC   dc = GetDC(wnd);
 
       GamePaint(g_hOffscreenDC);
 
-      BitBlt(dc, 0, 0, g_pGame->GetWidth( ), g_pGame->GetHeight( ),
+      BitBlt(dc, 0, 0, g_game->GetWidth( ), g_game->GetHeight( ),
              g_hOffscreenDC, 0, 0, SRCCOPY);
 
       ReleaseDC(wnd, dc);
@@ -137,10 +137,29 @@ void GameCycle( )
       // See if the motorcycle has crossed the screen
       RECT& rc = g_pJumperSprite->GetPosition( );
 
-      if ( rc.right > g_pGame->GetWidth( ) )
+      if ( rc.right > g_game->GetWidth( ) )
       {
          NewJump(rand( ) % 7 + 1);
       }
+   }
+}
+
+void GameMenu(WPARAM wParam)
+{
+   switch ( LOWORD(wParam) )
+   {
+   case IDM_GAME_NEW:
+      GameNew( );
+      return;
+
+   case IDM_GAME_EXIT:
+      GameEnd( );
+      PostQuitMessage(0);
+      return;
+
+   case IDM_HELP_ABOUT:
+      DialogBoxW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT), g_game->GetWindow( ), (DLGPROC) DlgProc);
+      return;
    }
 }
 
@@ -187,12 +206,12 @@ void HandleKeys( )
       {
          // Start a new game without the splash screen
          g_bSplash = FALSE;
-         NewGame( );
+         GameNew( );
       }
       else if ( g_bGameOver )
       {
          // Start a new game
-         NewGame( );
+         GameNew( );
       }
    }
 }
@@ -248,12 +267,12 @@ void HandleJoystick(JOYSTATE joyState)
       {
          // Start a new game without the splash screen
          g_bSplash = FALSE;
-         NewGame( );
+         GameNew( );
       }
       else if ( g_bGameOver )
       {
          // Start a new game
-         NewGame( );
+         GameNew( );
       }
 }
 
@@ -300,10 +319,10 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
 void SpriteDying(Sprite* spriteDying)
 { }
 
-void NewGame( )
+void GameNew( )
 {
    // Clear the sprites
-   g_pGame->CleanupSprites( );
+   g_game->CleanupSprites( );
 
    // Initialize the game variables
    g_iInputDelay = 0;
@@ -313,14 +332,14 @@ void NewGame( )
    RECT rcBounds = { 0, 0, 750, 250 };
 
    g_pLaunchRampSprite = new Sprite(g_pRampBitmap[ 0 ], rcBounds);
-   g_pGame->AddSprite(g_pLaunchRampSprite);
+   g_game->AddSprite(g_pLaunchRampSprite);
    g_pLandingRampSprite = new Sprite(g_pRampBitmap[ 1 ], rcBounds);
-   g_pGame->AddSprite(g_pLandingRampSprite);
+   g_game->AddSprite(g_pLandingRampSprite);
 
    for ( int i = 0; i < 7; i++ )
    {
       g_pBusSprite[ i ] = new Sprite(g_pBusBitmap, rcBounds);
-      g_pGame->AddSprite(g_pBusSprite[ i ]);
+      g_game->AddSprite(g_pBusSprite[ i ]);
    }
 
    // Create the motorcycle jumper sprite
@@ -328,19 +347,19 @@ void NewGame( )
    g_pJumperSprite->SetNumFrames(13);
    g_pJumperSprite->SetVelocity(4, 0);
    g_pJumperSprite->SetPosition(0, 200);
-   g_pGame->AddSprite(g_pJumperSprite);
+   g_game->AddSprite(g_pJumperSprite);
 
    // Setup the first jump (maximum of 3 buses)
    NewJump(rand( ) % 3 + 1);
 
    // Play the background music
-   g_pGame->PlayMIDISong(L"Music.mid");
+   g_game->PlayMIDISong(L"Music.mid");
 }
 
 void NewJump(int iNumBuses)
 {
    // Set the position of the launch ramp
-   int iXStart = (g_pGame->GetWidth( ) / 2) - (iNumBuses * 40);
+   int iXStart = (g_game->GetWidth( ) / 2) - (iNumBuses * 40);
 
    g_pLaunchRampSprite->SetPosition(iXStart, 215);
 

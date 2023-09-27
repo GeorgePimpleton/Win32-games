@@ -9,7 +9,7 @@
 #include "MotorcycleSprite.hpp"
 
 HINSTANCE             g_inst;
-GameEngine*           g_pGame;
+GameEngine*           g_game;
 HDC                   g_hOffscreenDC;
 HBITMAP               g_hOffscreenBitmap;
 Bitmap*               g_pSplashBitmap;
@@ -30,5 +30,5 @@ int                   g_iInputDelay;
 BOOL                  g_bGameOver;
 BOOL                  g_bSplash;
 
-void NewGame();
+void GameNew();
 void NewJump(int iNumBuses);

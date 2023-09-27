@@ -3,6 +3,7 @@
 #include <windows.h>
 #include <mmsystem.h>
 #include <vector>
+#include "resource.h"
 #include "Sprite.hpp"
 
 typedef WORD    JOYSTATE;
@@ -17,6 +18,7 @@ const JOYSTATE  JOY_NONE  = 0x0000L,
 int WINAPI       wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
                           _In_ PWSTR cmdLine, _In_ int cmdShow);
 LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
+BOOL    CALLBACK DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam);
 
 BOOL GameInitialize(HINSTANCE inst);
 void GameStart(HWND wnd);
@@ -25,6 +27,7 @@ void GameActivate(HWND wnd);
 void GameDeactivate(HWND wnd);
 void GamePaint(HDC dc);
 void GameCycle( );
+void GameMenu(WPARAM wParam);
 void HandleKeys( );
 void MouseButtonDown(int x, int y, BOOL left);
 void MouseButtonUp(int x, int y, BOOL left);

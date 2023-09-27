@@ -8,11 +8,11 @@ class Background
 protected:
    int      m_width;
    int      m_height;
-   COLORREF m_crColor;
+   COLORREF m_color;
    Bitmap*  m_pBitmap;
 
 public:
-            Background(int width, int height, COLORREF crColor);
+            Background(int width, int height, COLORREF color);
             Background(Bitmap* pBitmap);
    virtual ~Background( );
 

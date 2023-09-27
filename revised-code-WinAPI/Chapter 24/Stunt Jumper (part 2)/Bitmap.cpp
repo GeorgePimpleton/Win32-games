@@ -18,10 +18,10 @@ Bitmap::Bitmap(HDC dc, UINT resID, HINSTANCE inst)
    Create(dc, resID, inst);
 }
 
-Bitmap::Bitmap(HDC dc, int width, int height, COLORREF crColor)
+Bitmap::Bitmap(HDC dc, int width, int height, COLORREF color)
    : m_bitmap(NULL), m_width(0), m_height(0)
 {
-   Create(dc, width, height, crColor);
+   Create(dc, width, height, color);
 }
 
 Bitmap::~Bitmap( )
@@ -55,7 +55,7 @@ BOOL Bitmap::Create(HDC dc, PCWSTR fileName)
 
    GetObjectW(m_bitmap, sizeof(BITMAP), &bitmap);
 
-   m_width = bitmap.bmWidth;
+   m_width  = bitmap.bmWidth;
    m_height = bitmap.bmHeight;
 
    return TRUE;
@@ -78,13 +78,13 @@ BOOL Bitmap::Create(HDC dc, UINT resID, HINSTANCE inst)
 
    GetObjectW(m_bitmap, sizeof(BITMAP), &bitmap);
 
-   m_width = bitmap.bmWidth;
+   m_width  = bitmap.bmWidth;
    m_height = bitmap.bmHeight;
 
    return TRUE;
 }
 
-BOOL Bitmap::Create(HDC dc, int width, int height, COLORREF crColor)
+BOOL Bitmap::Create(HDC dc, int width, int height, COLORREF color)
 {
    m_bitmap = CreateCompatibleBitmap(dc, width, height);
 
@@ -93,47 +93,47 @@ BOOL Bitmap::Create(HDC dc, int width, int height, COLORREF crColor)
       return FALSE;
    }
 
-   m_width = width;
+   m_width  = width;
    m_height = height;
 
-   HDC hMemDC = CreateCompatibleDC(dc);
-   HBRUSH hBrush = CreateSolidBrush(crColor);
-   HBITMAP hOldBitmap = (HBITMAP) SelectObject(hMemDC, m_bitmap);
-   RECT rcBitmap = { 0, 0, m_width, m_height };
+   HDC     memDC     = CreateCompatibleDC(dc);
+   HBRUSH  brush     = CreateSolidBrush(color);
+   HBITMAP oldBitmap = (HBITMAP) SelectObject(memDC, m_bitmap);
+   RECT    bitmap    = { 0, 0, m_width, m_height };
 
-   FillRect(hMemDC, &rcBitmap, hBrush);
+   FillRect(memDC, &bitmap, brush);
 
-   SelectObject(hMemDC, hOldBitmap);
-   DeleteDC(hMemDC);
-   DeleteObject(hBrush);
+   SelectObject(memDC, oldBitmap);
+   DeleteDC(memDC);
+   DeleteObject(brush);
 
    return TRUE;
 }
 
-void Bitmap::Draw(HDC dc, int x, int y, BOOL bTrans, COLORREF crTransColor)
+void Bitmap::Draw(HDC dc, int x, int y, BOOL trans, COLORREF transColor)
 {
-   DrawPart(dc, x, y, 0, 0, GetWidth( ), GetHeight( ), bTrans, crTransColor);
+   DrawPart(dc, x, y, 0, 0, GetWidth( ), GetHeight( ), trans, transColor);
 }
 
 void Bitmap::DrawPart(HDC dc, int x, int y, int xPart, int yPart,
-                      int wPart, int hPart, BOOL bTrans, COLORREF crTransColor)
+                      int wPart, int hPart, BOOL trans, COLORREF transColor)
 {
    if ( m_bitmap != NULL )
    {
-      HDC hMemDC = CreateCompatibleDC(dc);
-      HBITMAP hOldBitmap = (HBITMAP) SelectObject(hMemDC, m_bitmap);
+      HDC     memDC     = CreateCompatibleDC(dc);
+      HBITMAP oldBitmap = (HBITMAP) SelectObject(memDC, m_bitmap);
 
-      if ( bTrans )
+      if ( trans )
       {
-         TransparentBlt(dc, x, y, wPart, hPart, hMemDC, xPart, yPart,
-                        wPart, hPart, crTransColor);
+         TransparentBlt(dc, x, y, wPart, hPart, memDC, xPart, yPart,
+                        wPart, hPart, transColor);
       }
       else
       {
-         BitBlt(dc, x, y, wPart, hPart, hMemDC, xPart, yPart, SRCCOPY);
+         BitBlt(dc, x, y, wPart, hPart, memDC, xPart, yPart, SRCCOPY);
       }
 
-      SelectObject(hMemDC, hOldBitmap);
-      DeleteDC(hMemDC);
+      SelectObject(memDC, oldBitmap);
+      DeleteDC(memDC);
    }
 }
