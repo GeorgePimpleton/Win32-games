@@ -3,9 +3,9 @@
 extern HINSTANCE g_inst;
 extern int       g_bGameOver;
 
-MotorcycleSprite::MotorcycleSprite(Bitmap* pBitmap, RECT& rcBounds,
+MotorcycleSprite::MotorcycleSprite(Bitmap* bitmap, RECT& rcBounds,
                                    BOUNDSACTION baBoundsAction)
-   : Sprite(pBitmap, rcBounds, baBoundsAction),
+   : Sprite(bitmap, rcBounds, baBoundsAction),
    m_iMINSPEED(1), m_iMAXSPEED(10), m_iHANGTIME(6)
 {
    // Initialize the motorcycle sprite variables

@@ -37,10 +37,10 @@ protected:
    virtual void CalcCollisionRect( );
 
 public:
-            Sprite(Bitmap* pBitmap);
-            Sprite(Bitmap* pBitmap, RECT& rcBounds,
+            Sprite(Bitmap* bitmap);
+            Sprite(Bitmap* bitmap, RECT& rcBounds,
                    BOUNDSACTION baBoundsAction = BA_STOP);
-            Sprite(Bitmap* pBitmap, POINT ptPosition, POINT ptVelocity, int iZOrder,
+            Sprite(Bitmap* bitmap, POINT ptPosition, POINT ptVelocity, int iZOrder,
                    RECT& rcBounds, BOUNDSACTION baBoundsAction = BA_STOP);
    virtual ~Sprite( );
 
