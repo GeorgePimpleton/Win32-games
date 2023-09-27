@@ -27,7 +27,7 @@ Sprite*               g_pLaunchRampSprite;
 Sprite*               g_pLandingRampSprite;
 Sprite*               g_pBusSprite[7];
 int                   g_iInputDelay;
-BOOL                  g_bGameOver;
+BOOL                  g_gameOver;
 BOOL                  g_bSplash;
 
 void GameNew();

@@ -7,12 +7,12 @@
 class MotorcycleSprite : public Sprite
 {
 protected:
-   const int m_iMINSPEED;
-   const int m_iMAXSPEED;
-   const int m_iHANGTIME;
-   BOOL      m_bJumping;
-   int       m_iJumpCounter;
-   BOOL      m_bLandedSafely;
+   const int m_MINSPEED;
+   const int m_MAXSPEED;
+   const int m_HANGTIME;
+   BOOL      m_jumping;
+   int       m_jumpCounter;
+   BOOL      m_landedSafely;
 
 public:
             MotorcycleSprite(Bitmap* bitmap, RECT& bounds,
@@ -25,5 +25,5 @@ public:
    void DecreaseSpeed( );
    void StartJumping( );
    void LandedSafely( );
-   BOOL HasLandedSafely( ) { return m_bLandedSafely; };
+   BOOL HasLandedSafely( ) { return m_landedSafely; };
 };

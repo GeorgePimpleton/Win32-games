@@ -49,7 +49,7 @@ void GameStart(HWND wnd)
    g_pBackground->AddLayer(g_pBGRoadLayer);
 
    g_bSplash = TRUE;
-   g_bGameOver = TRUE;
+   g_gameOver = TRUE;
 }
 
 void GameEnd( )
@@ -109,7 +109,7 @@ void GamePaint(HDC dc)
    {
       g_game->DrawSprites(dc);
 
-      if ( g_bGameOver )
+      if ( g_gameOver )
       {
          g_pGameOverBitmap->Draw(dc, 175, 15, FALSE);
       }
@@ -118,7 +118,7 @@ void GamePaint(HDC dc)
 
 void GameCycle( )
 {
-   if ( !g_bGameOver )
+   if ( !g_gameOver )
    {
       g_pBackground->Update( );
 
@@ -165,7 +165,7 @@ void GameMenu(WPARAM wParam)
 
 void HandleKeys( )
 {
-   if ( !g_bGameOver )
+   if ( !g_gameOver )
    {
       // Move the jumper based upon left/right key presses
       POINT velocity = g_pJumperSprite->GetVelocity( );
@@ -208,7 +208,7 @@ void HandleKeys( )
          g_bSplash = FALSE;
          GameNew( );
       }
-      else if ( g_bGameOver )
+      else if ( g_gameOver )
       {
          // Start a new game
          GameNew( );
@@ -227,7 +227,7 @@ void MouseMove(int x, int y)
 
 void HandleJoystick(JOYSTATE joyState)
 {
-   if ( !g_bGameOver )
+   if ( !g_gameOver )
    {
       // Move the jumper based upon left/right joystick movement
       POINT velocity = g_pJumperSprite->GetVelocity( );
@@ -269,7 +269,7 @@ void HandleJoystick(JOYSTATE joyState)
          g_bSplash = FALSE;
          GameNew( );
       }
-      else if ( g_bGameOver )
+      else if ( g_gameOver )
       {
          // Start a new game
          GameNew( );
@@ -309,7 +309,7 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
          PlaySound((PCWSTR) IDW_CRASH, g_inst, SND_ASYNC | SND_RESOURCE);
 
          // End the game
-         g_bGameOver = TRUE;
+         g_gameOver = TRUE;
       }
    }
 
@@ -326,7 +326,7 @@ void GameNew( )
 
    // Initialize the game variables
    g_iInputDelay = 0;
-   g_bGameOver = FALSE;
+   g_gameOver = FALSE;
 
    // Create the ramp and bus sprites
    RECT bounds = { 0, 0, 750, 250 };
