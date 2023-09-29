@@ -1,6 +1,6 @@
-#include <windows.h>
-
 #pragma once
+
+#include <windows.h>
 
 void OnLButtonDown(HWND, BOOL, int, int, UINT);
 

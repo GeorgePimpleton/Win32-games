@@ -1,40 +1,12 @@
 # Programming Windows© Games, Chapter 1
-
 [![Language](https://img.shields.io/badge/Language%20-C++-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 
-### Background
-
-Win9X/Me is officially dead!  Windows API ANSI encoding is dead!  Windows XP and later now use Unicode!
-
-Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
+The basics of programming using the Windows API, in a quick nutshell.  
 
 ### Possible types of apps that can be created on Windows
 
-1. console mode using C++
-    + console mode using C++20's modules
-2. using a custom C++ header file to use C++11 (and later) random engine features instead of the C library functions
-    + using a custom C\+\+20 module to use C++11 (and later) random engine features instead of the C library functions
-3. a Windows API MessageBox
-    + a WinAPI MessageBox using modern coding
-4. a minimal WinAPI app
-     + a minimal WinAPI app using modern coding
-5. **a minimal skeletal Win API app**  *<------- this example*
-6. a realistic skeletal WinAPI app with custom assets
-7. a skeletal WinAPI app using C++ wide strings using modernized C++ practices 
-8. a minimum MFC app
-9. modularizing WinAPI
-10. modularizing WinAPI
-11. modularizing WinAPI
-12. modularizing WinAPI
-13. modularizing WinAPI
+5. a minimal skeletal Win API app
+   + a revision for resizing the window and using a different WinAPI char string
 
 This example uses a custom icon and cursor, most people think of the cursor as a pointer, using a resource script to utilize the assets.
-
-### Notes
-
-There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.
-
-This is a "work in progress", there is no guarantee the entirety of the entire collection of games will ever be modernized any time soon.  There is also no guarantee the source files will work for you.
-
-If you find better ways to rework the code don't hesitate to let me know.

@@ -1,3 +1,5 @@
+#pragma once
+
 #include <windows.h>
 #include <windowsx.h>
 
@@ -5,6 +7,6 @@
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
-HRESULT          InitApplication(HINSTANCE);
-HRESULT          InitInstance(HINSTANCE, int);
-int              MessageLoop( );
+HRESULT InitApplication(HINSTANCE);
+HRESULT InitInstance(HINSTANCE, int);
+int     MessageLoop( );

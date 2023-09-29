@@ -1,8 +1,8 @@
 #include "winmsg.hpp"
 #include "winfuncs.hpp"
 
-static const WCHAR winName[ ]  = L"ModWin3";
-static const WCHAR appTitle[ ] = L"Modular WinAPI Application, Version 3";
+static PCWSTR winName  = L"ModWin3";
+static PCWSTR appTitle = L"Modular WinAPI Application, Version 3";
 
 LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -26,7 +26,7 @@ LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 HRESULT InitApplication(HINSTANCE inst)
 {
-   WNDCLASS wc { };
+   WNDCLASSW wc = { };
 
    wc.style         = CS_HREDRAW | CS_VREDRAW;
    wc.lpfnWndProc   = WndProc;

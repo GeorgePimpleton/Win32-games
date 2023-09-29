@@ -7,8 +7,8 @@ HRESULT          InitApplication(HINSTANCE);
 HRESULT          InitInstance(HINSTANCE, int);
 int              MessageLoop( );
 
-static const WCHAR winName[ ]  = L"ModWin1";
-static const WCHAR appTitle[ ] = L"Modular WinAPI Application, Version 1";
+static PCWSTR winName  = L"ModWin1";
+static PCWSTR appTitle = L"Modular WinAPI Application, Version 1";
 
 int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int winMode) {
    if ( FAILED(InitApplication(inst)) )
@@ -26,18 +26,16 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR
 
 LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-   static const WCHAR aboutLeft[ ]  = L"This is a modular WinAPI program.\nYou pressed the left mouse button!";
-   static const WCHAR aboutRight[ ] = L"This is a modular WinAPI program.\nYou pressed the right mouse button!";
+   static PCWSTR aboutLeft  = L"This is a modular WinAPI program.\nYou pressed the left mouse button!";
+   static PCWSTR aboutRight = L"This is a modular WinAPI program.\nYou pressed the right mouse button!";
 
    switch ( msg )
    {
    case WM_LBUTTONDOWN:
-      MessageBeep(MB_ICONEXCLAMATION);
-      MessageBoxW(wnd, aboutLeft, L"About", MB_OK | MB_ICONINFORMATION);
+      MessageBoxW(wnd, aboutLeft, L"About", MB_OK | MB_ICONEXCLAMATION);
       return S_OK;
 
    case WM_RBUTTONDOWN:
-      MessageBeep(MB_ICONASTERISK);
       MessageBoxW(wnd, aboutRight, L"About", MB_OK | MB_ICONINFORMATION);
       return S_OK;
 
@@ -51,7 +49,7 @@ LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 HRESULT InitApplication(HINSTANCE inst)
 {
-   WNDCLASS wc { };
+   WNDCLASSW wc = { };
 
    wc.style         = CS_HREDRAW | CS_VREDRAW;
    wc.lpfnWndProc   = WndProc;

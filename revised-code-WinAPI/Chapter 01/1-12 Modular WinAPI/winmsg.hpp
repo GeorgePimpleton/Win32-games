@@ -4,10 +4,10 @@
 #pragma once
 
 // handles left mouse button presses
-void OnLButtonDown(HWND hwnd, BOOL dlbClick, int x, int y, UINT flags);
+void OnLButtonDown(HWND wnd, BOOL dlbClick, int x, int y, UINT flags);
 
 // handles right mouse button presses
-void OnRButtonDown(HWND hwnd, BOOL dblClick, int x, int y, UINT flags);
+void OnRButtonDown(HWND wnd, BOOL dblClick, int x, int y, UINT flags);
 
 // handles WM_DESTROY messages
-void OnDestroy(HWND hwnd);
+void OnDestroy(HWND wnd);

@@ -1,9 +1,8 @@
-# Programming Windows© Games, Chapter 1
+# Programming Windows Games, Chapter 1
 [![Language](https://img.shields.io/badge/Language%20-C++-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 
 ### Possible types of apps that can be created on Windows
-
 1. console mode using C++
     + console mode using C++20's modules
 2. using a custom C++ header file to use C++11 (and later) random engine features instead of the C library functions
@@ -13,7 +12,9 @@
 4. a minimal WinAPI app
      + a minimal WinAPI app using modern coding
 5. a minimal skeletal WinAPI app
+   + a revision for resizing the window and using a different WinAPI char string
 6. a realistic skeletal WinAPI app with custom assets
+   + a revision for using a different WinAPI char string
 7. a skeletal WinAPI app using C++ wide strings using modernized C++ practices 
 8. a minimum MFC app
 9. modularizing WinAPI

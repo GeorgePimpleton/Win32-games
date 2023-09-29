@@ -3,23 +3,21 @@
 
 #include "winmsg.hpp"
 
-void OnLButtonDown(HWND hwnd, BOOL dblClick, int x, int y, UINT flags)
+void OnLButtonDown(HWND wnd, BOOL dblClick, int x, int y, UINT flags)
 {
-   static const WCHAR aboutLeft[ ] = L"This is a modular WinAPI program.\nYou pressed the left mouse button!";
+   static PCWSTR aboutLeft = L"This is a modular WinAPI program.\nYou pressed the left mouse button!";
 
-   MessageBeep(MB_ICONEXCLAMATION);
-   MessageBoxW(hwnd, aboutLeft, L"About", MB_OK | MB_ICONINFORMATION);
+   MessageBoxW(wnd, aboutLeft, L"About", MB_OK | MB_ICONEXCLAMATION);
 }
 
-void OnRButtonDown(HWND hwnd, BOOL dblClick, int x, int y, UINT flags)
+void OnRButtonDown(HWND wnd, BOOL dblClick, int x, int y, UINT flags)
 {
-   static const WCHAR aboutRight[ ] = L"This is a modular WinAPI program.\nYou pressed the right mouse button!";
+   static PCWSTR aboutRight = L"This is a modular WinAPI program.\nYou pressed the right mouse button!";
 
-   MessageBeep(MB_ICONASTERISK);
-   MessageBoxW(hwnd, aboutRight, L"About", MB_OK | MB_ICONINFORMATION);
+   MessageBoxW(wnd, aboutRight, L"About", MB_OK | MB_ICONINFORMATION);
 }
 
-void OnDestroy(HWND hwnd)
+void OnDestroy(HWND wnd)
 {
    PostQuitMessage(0);
 }

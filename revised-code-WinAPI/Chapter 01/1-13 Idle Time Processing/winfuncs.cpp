@@ -1,8 +1,8 @@
 #include "winmsg.hpp"
 #include "winfuncs.hpp"
 
-static const WCHAR winName[ ]  = L"IdleTime";
-static const WCHAR appTitle[ ] = L"Idle Time Processing";
+static PCWSTR winName  = L"IdleTime";
+static PCWSTR appTitle = L"Idle Time Processing";
 
 LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -18,7 +18,7 @@ LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 HRESULT InitApplication(HINSTANCE inst)
 {
-   WNDCLASS wc { };
+   WNDCLASSW wc = { };
 
    wc.style         = CS_HREDRAW | CS_VREDRAW;
    wc.lpfnWndProc   = WndProc;
@@ -41,20 +41,20 @@ HRESULT InitApplication(HINSTANCE inst)
 
 HRESULT InitInstance(HINSTANCE inst, int winMode)
 {
-   HWND hwnd = CreateWindowW(winName, appTitle,
+   HWND wnd = CreateWindowW(winName, appTitle,
                              WS_OVERLAPPEDWINDOW,
                              CW_USEDEFAULT, CW_USEDEFAULT,
                              CW_USEDEFAULT, CW_USEDEFAULT,
                              NULL, NULL, inst, NULL);
 
-   if ( NULL == hwnd )
+   if ( NULL == wnd )
    {
       MessageBoxW(NULL, L"Can't Create the Main Window!", winName, MB_OK | MB_ICONERROR);
       return E_FAIL;
    }
 
-   ShowWindow(hwnd, winMode);
-   UpdateWindow(hwnd);
+   ShowWindow(wnd, winMode);
+   UpdateWindow(wnd);
 
    return S_OK;
 }
