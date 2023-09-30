@@ -50,11 +50,11 @@ void GamePaint(HDC dc)
 
 void GameCycle( )
 {
-   static int iDelay = 0;
+   static int delay = 0;
 
-   if ( ++iDelay > 3 )
+   if ( ++delay > 3 )
    {
-      iDelay = 0;
+      delay = 0;
 
       if ( ++g_currentSlide == g_NUMSLIDES )
       {

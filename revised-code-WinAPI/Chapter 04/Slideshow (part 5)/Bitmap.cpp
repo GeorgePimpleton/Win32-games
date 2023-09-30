@@ -49,7 +49,7 @@ BOOL Bitmap::Create(PCWSTR fileName)
       return FALSE;
    }
 
-   BITMAP bitmap;
+   BITMAP bitmap = { };
 
    GetObjectW(m_hBitmap, sizeof(BITMAP), &bitmap);
 
@@ -72,7 +72,7 @@ BOOL Bitmap::Create(UINT resID, HINSTANCE inst)
       return FALSE;
    }
 
-   BITMAP bitmap;
+   BITMAP bitmap = { };
 
    GetObjectW(m_hBitmap, sizeof(BITMAP), &bitmap);
 

@@ -24,6 +24,6 @@ public:
 
    void Draw(HDC dc, int x, int y);
 
-   int GetWidth( ) const  { return m_width; };
-   int GetHeight( ) const { return m_height; };
+   constexpr int GetWidth( ) const  { return m_width; };
+   constexpr int GetHeight( ) const { return m_height; };
 };

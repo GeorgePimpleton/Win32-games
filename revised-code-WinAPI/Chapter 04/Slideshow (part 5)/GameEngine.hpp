@@ -2,6 +2,7 @@
 
 #include <windows.h>
 #include "resource.h"
+#include <memory>
 
 int WINAPI       wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
                           _In_ PWSTR cmdLine, _In_ int cmdShow);
@@ -20,8 +21,7 @@ void GameMenu(WPARAM wParam);
 class GameEngine
 {
 protected:
-   // Member Variables
-   static GameEngine* m_gameEngine;
+   static std::unique_ptr<GameEngine> m_gameEngine;
    HINSTANCE          m_inst;
    HWND               m_wnd;
    PCWSTR             m_wndClass;
@@ -38,7 +38,7 @@ public:
                        WORD icon, WORD smallIcon, int width = 640, int height = 480);
    virtual ~GameEngine( );
 
-   static GameEngine* GetEngine( ) { return m_gameEngine; };
+   static GameEngine* GetEngine( ) { return m_gameEngine.get( ); };
    BOOL               Initialize(int cmdShow);
    LRESULT            HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
