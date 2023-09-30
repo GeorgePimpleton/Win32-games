@@ -63,27 +63,15 @@ public:
 };
 
 inline GameEngine* GameEngine::GetEngine()          { return m_gameEngine.get(); }
-
 inline HINSTANCE GameEngine::GetInstance() const    { return m_inst; }
-
 inline HWND GameEngine::GetWindow() const           { return m_wnd; }
-
 inline void GameEngine::SetWindow(HWND wnd)         { m_wnd = wnd; }
-
 inline PCWSTR GameEngine::GetTitle()                { return m_title; }
-
 inline WORD GameEngine::GetIcon() const             { return m_icon; }
-
 inline WORD GameEngine::GetSmallIcon() const        { return m_smallIcon; }
-
 inline UINT GameEngine::GetWidth() const            { return m_width; }
-
 inline UINT GameEngine::GetHeight() const           { return m_height; }
-
 inline UINT GameEngine::GetFrameDelay() const       { return m_frameDelay; }
-
 inline void GameEngine::SetFrameRate(int frameRate) { m_frameDelay = 1000 / frameRate; }
-
 inline BOOL GameEngine::GetSleep() const            { return m_asleep; }
-
 inline void GameEngine::SetSleep(BOOL asleep)       { m_asleep = asleep; }
