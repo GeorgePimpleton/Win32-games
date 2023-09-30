@@ -1,6 +1,7 @@
 #pragma once
 
 #include <windows.h>
+#include <memory>
 #include "resource.h"
 
 int WINAPI       wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
@@ -20,24 +21,24 @@ void GameMenu(WPARAM wParam);
 class GameEngine
 {
 protected:
-   static GameEngine* m_gameEngine;
-   HINSTANCE          m_inst;
-   HWND               m_wnd;
-   PCWSTR             m_wndClass;
-   PCWSTR             m_title;
-   WORD               m_icon;
-   WORD               m_smallIcon;
-   int                m_width;
-   int                m_height;
-   int                m_frameDelay;
-   BOOL               m_asleep;
+   static std::unique_ptr<GameEngine> m_gameEngine;
+   HINSTANCE                          m_inst;
+   HWND                               m_wnd;
+   PCWSTR                             m_wndClass;
+   PCWSTR                             m_title;
+   WORD                               m_icon;
+   WORD                               m_smallIcon;
+   int                                m_width;
+   int                                m_height;
+   int                                m_frameDelay;
+   BOOL                               m_asleep;
 
 public:
             GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
                        WORD icon, WORD smallIcon, int width = 640, int height = 480);
    virtual ~GameEngine( );
 
-   static GameEngine* GetEngine( ) { return m_gameEngine; };
+   static GameEngine* GetEngine( ) { return m_gameEngine.get( ); };
    BOOL               Initialize(int cmdShow);
    LRESULT            HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
 

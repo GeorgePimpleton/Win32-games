@@ -1,7 +1,7 @@
 #pragma once
 
-#define IDI_ICON          1001
-#define IDI_ICON_SM       1002
+#define IDI_ICON         1001
+#define IDI_ICON_SM      1002
 
 #define IDR_MENU         2001
 #define IDM_GAME_NEW     2002 // <--- this will be used by later examples
