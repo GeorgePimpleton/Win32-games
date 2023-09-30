@@ -22,16 +22,16 @@ class GameEngine
 {
 protected:
    static std::unique_ptr<GameEngine> m_gameEngine;
-   HINSTANCE          m_inst;
-   HWND               m_wnd;
-   PCWSTR             m_wndClass;
-   PCWSTR             m_title;
-   WORD               m_icon;
-   WORD               m_smallIcon;
-   int                m_width;
-   int                m_height;
-   int                m_frameDelay;
-   BOOL               m_asleep;
+   HINSTANCE                          m_inst;
+   HWND                               m_wnd;
+   PCWSTR                             m_wndClass;
+   PCWSTR                             m_title;
+   WORD                               m_icon;
+   WORD                               m_smallIcon;
+   int                                m_width;
+   int                                m_height;
+   int                                m_frameDelay;
+   BOOL                               m_asleep;
 
 public:
             GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,

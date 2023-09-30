@@ -124,8 +124,8 @@ BOOL GameEngine::Initialize(int cmdShow)
    }
 
    int windowWidth  = m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2;
-   int windowHeight = m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 +
-                       GetSystemMetrics(SM_CYCAPTION);
+   int windowHeight = m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2
+                               + GetSystemMetrics(SM_CYCAPTION);
 
    windowWidth  += 10;
    windowHeight += 10;
@@ -138,8 +138,10 @@ BOOL GameEngine::Initialize(int cmdShow)
    int xWindowPos = (GetSystemMetrics(SM_CXSCREEN) - windowWidth) / 2;
    int yWindowPos = (GetSystemMetrics(SM_CYSCREEN) - windowHeight) / 2;
 
-   m_wnd = CreateWindowW(m_wndClass, m_title, WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
-                         xWindowPos, yWindowPos, windowWidth, windowHeight,
+   m_wnd = CreateWindowW(m_wndClass, m_title,
+                         WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
+                         xWindowPos, yWindowPos,
+                         windowWidth, windowHeight,
                          NULL, NULL, m_inst, NULL);
 
    if ( !m_wnd )
