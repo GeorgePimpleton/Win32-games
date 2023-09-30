@@ -3,9 +3,11 @@
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 ### Blizzard Versions
 
-7. Use C++ smart pointers instead of raw pointers.
+7. Use C++ strings instead of Windows string pointers.
 
-By using smart pointers instead of raw pointers there is no need for manual memory management and cleanup.
+This was done as a test, using C++ strings will not be used in the rest of the examples.
+
+C++ strings seems to be a bit of overkill.  Native WinAPI C string pointers do the job.
 
 ### Notes
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.

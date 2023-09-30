@@ -2,8 +2,8 @@
 
 BOOL GameInitialize(HINSTANCE inst)
 {
-  g_game = std::make_unique<GameEngine>(inst, L"Blizzard", L"Blizzard",
-                                        IDI_ICON, IDI_ICON_SM);
+   g_game = new GameEngine(inst, L"Blizzard", L"Blizzard",
+                           IDI_ICON, IDI_ICON_SM);
 
   if ( g_game == NULL )
   {
@@ -26,7 +26,9 @@ void GameNew( )
 }
 
 void GameEnd( )
-{ }
+{
+   delete g_game;
+}
 
 void GameActivate(HWND wnd)
 {

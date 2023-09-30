@@ -63,7 +63,7 @@ void GameCycle()
    HDC  dc  = GetDC(wnd);
 
    DrawIcon(dc, rtk::rand(0, g_game->GetWidth( )), rtk::rand(0, g_game->GetHeight( )),
-            (HICON) GetClassLongPtr(wnd, GCLP_HICON));
+            (HICON) GetClassLongPtrW(wnd, GCLP_HICON));
 
     ReleaseDC(wnd, dc);
 }

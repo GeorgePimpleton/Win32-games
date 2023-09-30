@@ -1,6 +1,6 @@
 #include "GameEngine.hpp"
 
-GameEngine* GameEngine::m_gameEngine = NULL;
+std::unique_ptr<GameEngine> GameEngine::m_gameEngine = NULL;
 
 int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
                     _In_ PWSTR cmdLine, _In_ int cmdShow)
@@ -16,7 +16,7 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
 
       if ( NULL == accel )
       {
-         MessageBoxW(NULL, L"Unable to Load the Accelerators!", GameEngine::GetEngine( )->GetTitle( ).c_str( ), MB_OK | MB_ICONERROR);
+         MessageBoxW(NULL, L"Unable to Load the Accelerators!", GameEngine::GetEngine( )->GetTitle( ), MB_OK | MB_ICONERROR);
          return E_FAIL;
       }
 
@@ -81,10 +81,11 @@ BOOL CALLBACK DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam)
    return FALSE;
 }
 
-GameEngine::GameEngine(HINSTANCE inst, std::wstring wndClass, std::wstring title,
+GameEngine::GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
                        WORD icon, WORD smallIcon, int width, int height)
 {
-   m_gameEngine = this;
+   m_gameEngine.reset(this);
+
    m_inst       = inst;
    m_wnd        = NULL;
    m_wndClass   = wndClass;
@@ -102,7 +103,7 @@ GameEngine::~GameEngine( )
 
 BOOL GameEngine::Initialize(int cmdShow)
 {
-   WNDCLASSEXW wc;
+   WNDCLASSEXW wc = { };
 
    wc.cbSize        = sizeof(wc);
    wc.style         = CS_HREDRAW | CS_VREDRAW;
@@ -115,7 +116,7 @@ BOOL GameEngine::Initialize(int cmdShow)
    wc.hCursor       = (HCURSOR) LoadImageW(NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
    wc.hbrBackground = (HBRUSH)  (COLOR_WINDOW + 1);
    wc.lpszMenuName  = MAKEINTRESOURCEW(IDR_MENU);
-   wc.lpszClassName = m_wndClass.c_str( );
+   wc.lpszClassName = m_wndClass;
 
    if ( !RegisterClassExW(&wc) )
    {
@@ -136,7 +137,7 @@ BOOL GameEngine::Initialize(int cmdShow)
    int xWindowPos = (GetSystemMetrics(SM_CXSCREEN) - windowWidth) / 2;
    int yWindowPos = (GetSystemMetrics(SM_CYSCREEN) - windowHeight) / 2;
 
-   m_wnd = CreateWindowW(m_wndClass.c_str( ), m_title.c_str( ), WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
+   m_wnd = CreateWindowW(m_wndClass, m_title, WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
                          xWindowPos, yWindowPos, windowWidth, windowHeight,
                          NULL, NULL, m_inst, NULL);
 
