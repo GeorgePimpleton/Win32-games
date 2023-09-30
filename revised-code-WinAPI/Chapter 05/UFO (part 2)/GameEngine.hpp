@@ -47,7 +47,7 @@ public:
 
    HINSTANCE GetInstance( )               { return m_inst; };
    HWND      GetWindow( )                 { return m_wnd; };
-   void      SetWindow(HWND wnd)      { m_wnd = wnd; };
+   void      SetWindow(HWND wnd)          { m_wnd = wnd; };
    PCWSTR    GetTitle( )                  { return m_title; };
    WORD      GetIcon( )                   { return m_icon; };
    WORD      GetSmallIcon( )              { return m_smallIcon; };
