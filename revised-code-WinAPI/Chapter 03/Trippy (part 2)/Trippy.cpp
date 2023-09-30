@@ -2,8 +2,8 @@
 
 BOOL GameInitialize(HINSTANCE inst)
 {
-   g_game = new GameEngine(inst, L"Trippy", L"Trippy: Learning to Draw Basic Graphics",
-                            IDI_ICON, IDI_ICON_SM);
+   g_game = std::make_unique<GameEngine>(inst, L"Trippy", L"Trippy: Learning to Draw Basic Graphics",
+                                         IDI_ICON, IDI_ICON_SM);
 
    if ( g_game == NULL )
    {
@@ -26,9 +26,7 @@ void GameStart(HWND wnd)
 }
 
 void GameEnd( )
-{
-   delete g_game;
-}
+{ }
 
 void GameActivate(HWND wnd)
 { }
@@ -38,15 +36,15 @@ void GameDeactivate(HWND wnd)
 
 void GamePaint(HDC dc)
 {
-   const UINT iGridLines = 50;
+   const UINT gridLines = 50;
 
-   for ( UINT i = 1; i <= iGridLines; i++ )
+   for ( UINT i = 1; i <= gridLines; i++ )
    {
-      MoveToEx(dc, g_game->GetWidth( ) * i / iGridLines, 0, NULL);
-      LineTo(dc, g_game->GetWidth( ) * i / iGridLines, g_game->GetHeight( ));
+      MoveToEx(dc, g_game->GetWidth( ) * i / gridLines, 0, NULL);
+      LineTo(dc, g_game->GetWidth( ) * i / gridLines, g_game->GetHeight( ));
 
-      MoveToEx(dc, 0, g_game->GetHeight( ) * i / iGridLines, NULL);
-      LineTo(dc, g_game->GetWidth( ), g_game->GetHeight( ) * i / iGridLines);
+      MoveToEx(dc, 0, g_game->GetHeight( ) * i / gridLines, NULL);
+      LineTo(dc, g_game->GetWidth( ), g_game->GetHeight( ) * i / gridLines);
    }
 }
 
@@ -56,9 +54,9 @@ void GameCycle( )
    HWND   wnd = g_game->GetWindow( );
    HBRUSH brush;
 
-   int iInflation = rtk::rand(-10, 10);
+   int inflation = rtk::rand(-10, 10);
 
-   InflateRect(&g_rect, iInflation, iInflation);
+   InflateRect(&g_rect, inflation, inflation);
    OffsetRect(&g_rect, rtk::rand(-9, 9), rtk::rand(-9, 9));
 
    brush = CreateSolidBrush(RGB(rtk::rand(0, 255), rtk::rand(0, 255), rtk::rand(0, 255)));
