@@ -9,8 +9,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 ### Example Game: Light Cycles
 0. Chapter 8 on 2004 CD.
 1. minimal update...
-2. modernized code...
-3. used a std::array 2 dimensional container to retain using smart pointers for one of the graphic resources
+2. modernized code...used a std::array 2 dimensional container to retain using smart pointers for one of the graphic resources
 
 Remember the light cycle duel from the movie "Tron?"
 

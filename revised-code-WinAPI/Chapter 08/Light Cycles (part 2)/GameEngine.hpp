@@ -4,8 +4,6 @@
 #include <memory>
 #include "resource.h"
 
-const static UCHAR str_length { 64 };
-
 using JOYSTATE           = WORD;
 const JOYSTATE JOY_NONE  = 0x0000L;
 const JOYSTATE JOY_LEFT  = 0x0001L;
