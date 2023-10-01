@@ -2,7 +2,7 @@
 #include "resource.h"
 
 IDI_ICON       ICON     "Res/Planets.ico"
-IDI_ICOM_SM    ICON     "Res/Planets_sm.ico"
+IDI_ICON_SM    ICON     "Res/Planets_sm.ico"
 
 IDB_GALAXY     BITMAP   "Res/Galaxy.bmp"
 IDB_PLANET1    BITMAP   "Res/Planet1.bmp"

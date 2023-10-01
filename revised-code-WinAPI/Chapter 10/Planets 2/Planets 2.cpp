@@ -35,21 +35,21 @@ void GameStart(HWND wnd)
    RECT    bounds = { 0, 0, 600, 400 };
    Sprite* sprite;
 
-   sprite = new Sprite(g_planetBitmap[ 0 ].get(), bounds, BA_WRAP);
+   sprite = new Sprite(g_planetBitmap[ 0 ].get( ), bounds, BA_WRAP);
    sprite->SetVelocity(5, 3);
    g_game->AddSprite(sprite);
 
-   sprite = new Sprite(g_planetBitmap[ 1 ].get(), bounds, BA_WRAP);
+   sprite = new Sprite(g_planetBitmap[ 1 ].get( ), bounds, BA_WRAP);
    sprite->SetVelocity(3, 2);
    g_game->AddSprite(sprite);
 
    bounds.left = 265; bounds.right = 500; bounds.bottom = 335;
-   sprite = new Sprite(g_planetBitmap[ 2 ].get(), bounds, BA_BOUNCE);
+   sprite = new Sprite(g_planetBitmap[ 2 ].get( ), bounds, BA_BOUNCE);
    sprite->SetVelocity(-6, 5);
    g_game->AddSprite(sprite);
 
    bounds.right = 470;
-   sprite = new Sprite(g_planetBitmap[ 2 ].get(), bounds, BA_BOUNCE);
+   sprite = new Sprite(g_planetBitmap[ 2 ].get( ), bounds, BA_BOUNCE);
    sprite->SetVelocity(7, -3);
    g_game->AddSprite(sprite);
 

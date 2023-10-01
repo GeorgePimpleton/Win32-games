@@ -252,8 +252,9 @@ HRESULT GameEngine::InitJoystick( )
 
    joyGetDevCaps(m_joyID, &joyCaps, sizeof(JOYCAPS));
 
-   WORD xCenter     = ((WORD) joyCaps.wXmin + joyCaps.wXmax) / 2;
-   WORD yCenter     = ((WORD) joyCaps.wYmin + joyCaps.wYmax) / 2;
+   WORD xCenter = ((WORD) joyCaps.wXmin + joyCaps.wXmax) / 2;
+   WORD yCenter = ((WORD) joyCaps.wYmin + joyCaps.wYmax) / 2;
+
    m_joyTrip.left   = (joyCaps.wXmin + (WORD) xCenter) / 2;
    m_joyTrip.right  = (joyCaps.wXmax + (WORD) xCenter) / 2;
    m_joyTrip.top    = (joyCaps.wYmin + (WORD) yCenter) / 2;
@@ -385,16 +386,16 @@ void GameEngine::UpdateSprites( )
    }
 }
 
-//void GameEngine::CleanupSprites( )
-//{
-//   // delete and remove the sprites in the sprite vector
-//   for ( auto iterSprite = m_sprites.begin( ); iterSprite != m_sprites.end( ); iterSprite++ )
-//   {
-//      delete (*iterSprite);
-//      m_sprites.erase(iterSprite);
-//      iterSprite--;
-//   }
-//}
+void GameEngine::CleanupSprites( )
+{
+   // delete and remove the sprites in the sprite vector
+   for ( auto iterSprite = m_sprites.begin( ); iterSprite != m_sprites.end( ); iterSprite++ )
+   {
+      delete (*iterSprite);
+      m_sprites.erase(iterSprite);
+      iterSprite--;
+   }
+}
 
 Sprite* GameEngine::IsPointInSprite(LONG x, LONG y)
 {
