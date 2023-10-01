@@ -53,14 +53,14 @@ public:
    POINT GetVelocity( );
    void  SetVelocity(LONG x, LONG y);
    void  SetVelocity(POINT velocity);
-   BOOL  GetZOrder( );
-   void  SetZOrder(int zOrder);
+   BOOL  GetZOrder( ) const;
+   void  SetZOrder(LONG zOrder);
    void  SetBounds(RECT& bounds);
    void  SetBoundsAction(BOUNDSACTION boundsAction);
-   BOOL  IsHidden( );
+   BOOL  IsHidden( ) const;
    void  SetHidden(BOOL hidden);
-   LONG  GetWidth( );
-   LONG  GetHeight( );
+   LONG  GetWidth( ) const;
+   LONG  GetHeight( ) const;
    RECT& GetCollision( );
 };
 
@@ -127,47 +127,13 @@ inline void Sprite::SetVelocity(POINT velocity)
    m_velocity.y = velocity.y;
 }
 
-inline BOOL Sprite::GetZOrder( )
-{
-   return m_zOrder;
-}
+inline BOOL Sprite::GetZOrder( ) const                         { return m_zOrder; }
+inline void Sprite::SetZOrder(LONG zOrder)                     { m_zOrder = zOrder; }
+inline void Sprite::SetBounds(RECT& bounds)                    { CopyRect(&m_bounds, &bounds); }
+inline void Sprite::SetBoundsAction(BOUNDSACTION boundsAction) { m_boundsAction = boundsAction; }
+inline BOOL Sprite::IsHidden( ) const                          { return m_hidden; }
+inline void Sprite::SetHidden(BOOL hidden)                     { m_hidden = hidden; }
+inline LONG Sprite::GetWidth( ) const                          { return m_bitmap-> GetWidth( ); }
 
-inline void Sprite::SetZOrder(int zOrder)
-{
-   m_zOrder = zOrder;
-}
-
-inline void Sprite::SetBounds(RECT& bounds)
-{
-   CopyRect(&m_bounds, &bounds);
-}
-
-inline void Sprite::SetBoundsAction(BOUNDSACTION boundsAction)
-{
-   m_boundsAction = boundsAction;
-}
-
-inline BOOL Sprite::IsHidden( )
-{
-   return m_hidden;
-}
-
-inline void Sprite::SetHidden(BOOL hidden)
-{
-   m_hidden = hidden;
-}
-
-inline LONG Sprite::GetWidth( )
-{
-   return m_bitmap->GetWidth( );
-}
-
-inline LONG Sprite::GetHeight( )
-{
-   return m_bitmap->GetHeight( );
-}
-
-inline RECT& Sprite::GetCollision( )
-{
-   return m_collision;
-}
+inline LONG Sprite::GetHeight( ) const                         { return m_bitmap-> GetHeight( ); }
+inline RECT& Sprite::GetCollision( )                           { return m_collision; }

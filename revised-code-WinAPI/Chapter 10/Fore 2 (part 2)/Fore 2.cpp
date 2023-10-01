@@ -26,27 +26,27 @@ void GameStart(HWND wnd)
 
    HINSTANCE inst = g_game->GetInstance( );
 
-   g_galaxyBitmap   = std::make_unique<Bitmap>(IDB_FOREST, inst);
-   g_planetBitmap = std::make_unique<Bitmap>(IDB_GOLFBALL, inst);
+   g_forestBitmap   = std::make_unique<Bitmap>(IDB_FOREST, inst);
+   g_golfBallBitmap = std::make_unique<Bitmap>(IDB_GOLFBALL, inst);
 
    RECT    bounds = { 0, 0, 600, 400 };
    Sprite* sprite;
 
-   sprite = new Sprite(g_planetBitmap.get(), bounds, BA_WRAP);
+   sprite = new Sprite(g_golfBallBitmap.get(), bounds, BA_WRAP);
    sprite->SetVelocity(5, 3);
    g_game->AddSprite(sprite);
 
-   sprite = new Sprite(g_planetBitmap.get(), bounds, BA_WRAP);
+   sprite = new Sprite(g_golfBallBitmap.get(), bounds, BA_WRAP);
    sprite->SetVelocity(3, 2);
    g_game->AddSprite(sprite);
 
    bounds.left = 265; bounds.right = 500; bounds.bottom = 335;
-   sprite = new Sprite(g_planetBitmap.get(), bounds, BA_BOUNCE);
+   sprite = new Sprite(g_golfBallBitmap.get(), bounds, BA_BOUNCE);
    sprite->SetVelocity(-6, 5);
    g_game->AddSprite(sprite);
 
    bounds.right = 470;
-   sprite = new Sprite(g_planetBitmap.get(), bounds, BA_BOUNCE);
+   sprite = new Sprite(g_golfBallBitmap.get(), bounds, BA_BOUNCE);
    sprite->SetVelocity(7, -3);
    g_game->AddSprite(sprite);
 
@@ -70,7 +70,7 @@ void GameDeactivate(HWND wnd)
 
 void GamePaint(HDC dc)
 {
-   g_galaxyBitmap->Draw(dc, 0, 0);
+   g_forestBitmap->Draw(dc, 0, 0);
 
    g_game->DrawSprites(dc);
 }
