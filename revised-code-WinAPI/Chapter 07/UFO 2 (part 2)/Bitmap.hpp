@@ -25,8 +25,8 @@ public:
    void Draw(HDC dc, int x, int y, BOOL trans = FALSE, COLORREF transColor = RGB(255, 0, 255));
 
 public:
-   LONG GetWidth( ) const  { return m_width; };
-   LONG GetHeight( ) const { return m_height; };
+   constexpr LONG GetWidth( ) const  { return m_width; };
+   constexpr LONG GetHeight( ) const { return m_height; };
 
 protected:
    void Free();
