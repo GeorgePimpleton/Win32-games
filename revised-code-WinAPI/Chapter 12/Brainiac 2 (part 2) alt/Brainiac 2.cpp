@@ -19,17 +19,15 @@ void GameStart(HWND wnd)
 {
    rtk::srand( );
 
-   HINSTANCE inst = g_game->GetInstance( );
-
-   g_tile[ 0 ] = std::make_unique<Bitmap>(IDB_TILEBLANK, inst);
-   g_tile[ 1 ] = std::make_unique<Bitmap>(IDB_TILE1, inst);
-   g_tile[ 2 ] = std::make_unique<Bitmap>(IDB_TILE2, inst);
-   g_tile[ 3 ] = std::make_unique<Bitmap>(IDB_TILE3, inst);
-   g_tile[ 4 ] = std::make_unique<Bitmap>(IDB_TILE4, inst);
-   g_tile[ 5 ] = std::make_unique<Bitmap>(IDB_TILE5, inst);
-   g_tile[ 6 ] = std::make_unique<Bitmap>(IDB_TILE6, inst);
-   g_tile[ 7 ] = std::make_unique<Bitmap>(IDB_TILE7, inst);
-   g_tile[ 8 ] = std::make_unique<Bitmap>(IDB_TILE8, inst);
+   g_tile[ 0 ] = std::make_unique<Bitmap>(IDB_TILEBLANK);
+   g_tile[ 1 ] = std::make_unique<Bitmap>(IDB_TILE1);
+   g_tile[ 2 ] = std::make_unique<Bitmap>(IDB_TILE2);
+   g_tile[ 3 ] = std::make_unique<Bitmap>(IDB_TILE3);
+   g_tile[ 4 ] = std::make_unique<Bitmap>(IDB_TILE4);
+   g_tile[ 5 ] = std::make_unique<Bitmap>(IDB_TILE5);
+   g_tile[ 6 ] = std::make_unique<Bitmap>(IDB_TILE6);
+   g_tile[ 7 ] = std::make_unique<Bitmap>(IDB_TILE7);
+   g_tile[ 8 ] = std::make_unique<Bitmap>(IDB_TILE8);
 
    GameNew( );
 }
