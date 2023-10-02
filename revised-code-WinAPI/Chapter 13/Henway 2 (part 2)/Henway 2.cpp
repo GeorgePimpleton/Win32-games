@@ -26,8 +26,6 @@ void GameStart(HWND wnd)
 
    SelectObject(g_offscreenDC, g_offscreenBitmap);
 
-   HINSTANCE inst = g_game->GetInstance( );
-
    g_highwayBitmap     = std::make_unique<Bitmap>(IDB_HIGHWAY);
    g_chickenBitmap     = std::make_unique<Bitmap>(IDB_CHICKEN);
    g_carBitmaps[ 0 ]   = std::make_unique<Bitmap>(IDB_CAR1);

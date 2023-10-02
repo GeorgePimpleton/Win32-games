@@ -30,7 +30,7 @@ protected:
 public:
             Sprite(Bitmap* bitmap);
             Sprite(Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction = BA_STOP);
-            Sprite(Bitmap* bitmap, POINT position, POINT velocity, int zOrder, RECT& bounds,
+            Sprite(Bitmap* bitmap, POINT position, POINT velocity, LONG zOrder, RECT& bounds,
                    BOUNDSACTION boundsAction = BA_STOP);
    virtual ~Sprite( );
 
