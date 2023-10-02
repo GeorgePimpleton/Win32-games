@@ -6,7 +6,7 @@
 #include "GameEngine.hpp"
 #include "Bitmap.hpp"
 
-const int g_MAXSPEED = 8;
+constexpr LONG g_MAXSPEED = 8;
 
 std::unique_ptr<GameEngine> g_game;
 std::unique_ptr<Bitmap>     g_background;

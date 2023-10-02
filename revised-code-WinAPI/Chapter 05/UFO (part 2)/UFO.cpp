@@ -17,10 +17,8 @@ BOOL GameInitialize(HINSTANCE inst)
 
 void GameStart(HWND wnd)
 {
-  HINSTANCE inst = g_game->GetInstance( );
-
-  g_background = std::make_unique<Bitmap>(IDB_BACKGROUND, inst);
-  g_saucer     = std::make_unique<Bitmap>(IDB_SAUCER, inst);
+  g_background = std::make_unique<Bitmap>(IDB_BACKGROUND);
+  g_saucer     = std::make_unique<Bitmap>(IDB_SAUCER);
 
   g_saucerX = 250 - (g_saucer-> GetWidth() / 2);
   g_saucerY = 200 - (g_saucer-> GetHeight() / 2);
