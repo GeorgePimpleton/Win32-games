@@ -21,14 +21,12 @@ void GameStart(HWND wnd)
 {
    rtk::srand( );
 
-   HINSTANCE inst = g_game->GetInstance( );
+   g_background  = std::make_unique<Bitmap>(IDB_BACKGROUND);
+   g_saucer[ 0 ] = std::make_unique<Bitmap>(IDB_SAUCER);
+   g_saucer[ 1 ] = std::make_unique<Bitmap>(IDB_SAUCERFLAME);
 
-   g_background  = std::make_unique<Bitmap>(IDB_BACKGROUND, inst);
-   g_saucer[ 0 ] = std::make_unique<Bitmap>(IDB_SAUCER, inst);
-   g_saucer[ 1 ] = std::make_unique<Bitmap>(IDB_SAUCERFLAME, inst);
-
-   g_saucerX = 250 - (g_saucer[ 0 ]-> GetWidth( ) / 2);
-   g_saucerY = 200 - (g_saucer[ 0 ]-> GetHeight( ) / 2);
+   g_saucerX = 250 - (g_saucer[ 0 ]->GetWidth( ) / 2);
+   g_saucerY = 200 - (g_saucer[ 0 ]->GetHeight( ) / 2);
    g_speedX  = 0;
    g_speedY  = 0;
 }
