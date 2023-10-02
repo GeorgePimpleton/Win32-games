@@ -27,17 +27,15 @@ void GameStart(HWND wnd)
 
    SelectObject(g_offscreenDC, g_offscreenBitmap);
 
-   HINSTANCE inst = g_game->GetInstance( );
-
-   g_officeBitmap    = std::make_unique<Bitmap>(IDB_OFFICE, inst);
-   g_powBitmap       = std::make_unique<Bitmap>(IDB_POW, inst);
-   g_guyBitmaps[ 0 ] = std::make_unique<Bitmap>(IDB_GUY1, inst);
-   g_guyBitmaps[ 1 ] = std::make_unique<Bitmap>(IDB_GUY2, inst);
-   g_guyBitmaps[ 2 ] = std::make_unique<Bitmap>(IDB_GUY3, inst);
-   g_guyBitmaps[ 3 ] = std::make_unique<Bitmap>(IDB_GUY4, inst);
-   g_guyBitmaps[ 4 ] = std::make_unique<Bitmap>(IDB_GUY5, inst);
-   g_smallGuyBitmap  = std::make_unique<Bitmap>(IDB_SMALLGUY, inst);
-   g_gameOverBitmap  = std::make_unique<Bitmap>(IDB_GAMEOVER, inst);
+   g_officeBitmap    = std::make_unique<Bitmap>(IDB_OFFICE);
+   g_powBitmap       = std::make_unique<Bitmap>(IDB_POW);
+   g_guyBitmaps[ 0 ] = std::make_unique<Bitmap>(IDB_GUY1);
+   g_guyBitmaps[ 1 ] = std::make_unique<Bitmap>(IDB_GUY2);
+   g_guyBitmaps[ 2 ] = std::make_unique<Bitmap>(IDB_GUY3);
+   g_guyBitmaps[ 3 ] = std::make_unique<Bitmap>(IDB_GUY4);
+   g_guyBitmaps[ 4 ] = std::make_unique<Bitmap>(IDB_GUY5);
+   g_smallGuyBitmap  = std::make_unique<Bitmap>(IDB_SMALLGUY);
+   g_gameOverBitmap  = std::make_unique<Bitmap>(IDB_GAMEOVER);
 
    RECT bounds = { 0, 0, 500, 400 };
 

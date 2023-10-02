@@ -12,21 +12,21 @@ protected:
 public:
             Bitmap( );
             Bitmap(PCWSTR fileName);
-            Bitmap(UINT resID, HINSTANCE inst);
+            Bitmap(UINT resID);
             Bitmap(HWND wnd, LONG width, LONG height, COLORREF color = RGB(0, 0, 0));
    virtual ~Bitmap( );
 
 public:
    BOOL Create(PCWSTR fileName);
-   BOOL Create(UINT resID, HINSTANCE inst);
+   BOOL Create(UINT resID);
    BOOL Create(HWND wnd, LONG width, LONG height, COLORREF color);
 
 public:
    void Draw(HDC dc, int x, int y, BOOL trans = FALSE, COLORREF transColor = RGB(255, 0, 255));
 
 public:
-   LONG GetWidth( ) const  { return m_width; }
-   LONG GetHeight( ) const { return m_height; }
+   constexpr LONG GetWidth( ) const  { return m_width; }
+   constexpr LONG GetHeight( ) const { return m_height; }
 
 protected:
    void Free( );
