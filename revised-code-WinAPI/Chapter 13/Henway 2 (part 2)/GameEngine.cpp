@@ -2,7 +2,7 @@
 
 #include "GameEngine.hpp"
 
-GameEngine* GameEngine::m_gameEngine = NULL;
+std::unique_ptr<GameEngine> GameEngine::m_gameEngine = NULL;
 
 int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
                     _In_ PWSTR cmdLine, _In_ int cmdShow)
@@ -88,7 +88,8 @@ BOOL CALLBACK DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam)
 GameEngine::GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
                        WORD icon, WORD smallIcoon, UINT width, UINT height)
 {
-   m_gameEngine   = this;
+   m_gameEngine.reset(this);
+
    m_inst         = inst;
    m_wnd          = NULL;
    m_icon         = icon;

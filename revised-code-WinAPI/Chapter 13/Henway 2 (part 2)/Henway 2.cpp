@@ -28,13 +28,13 @@ void GameStart(HWND wnd)
 
    HINSTANCE inst = g_game->GetInstance( );
 
-   g_highwayBitmap     = std::make_unique<Bitmap>(IDB_HIGHWAY, inst);
-   g_chickenBitmap     = std::make_unique<Bitmap>(IDB_CHICKEN, inst);
-   g_carBitmaps[ 0 ]   = std::make_unique<Bitmap>(IDB_CAR1, inst);
-   g_carBitmaps[ 1 ]   = std::make_unique<Bitmap>(IDB_CAR2, inst);
-   g_carBitmaps[ 2 ]   = std::make_unique<Bitmap>(IDB_CAR3, inst);
-   g_carBitmaps[ 3 ]   = std::make_unique<Bitmap>(IDB_CAR4, inst);
-   g_chickenHeadBitmap = std::make_unique<Bitmap>(IDB_CHICKENHEAD, inst);
+   g_highwayBitmap     = std::make_unique<Bitmap>(IDB_HIGHWAY);
+   g_chickenBitmap     = std::make_unique<Bitmap>(IDB_CHICKEN);
+   g_carBitmaps[ 0 ]   = std::make_unique<Bitmap>(IDB_CAR1);
+   g_carBitmaps[ 1 ]   = std::make_unique<Bitmap>(IDB_CAR2);
+   g_carBitmaps[ 2 ]   = std::make_unique<Bitmap>(IDB_CAR3);
+   g_carBitmaps[ 3 ]   = std::make_unique<Bitmap>(IDB_CAR4);
+   g_chickenHeadBitmap = std::make_unique<Bitmap>(IDB_CHICKENHEAD);
 
    Sprite* sprite;
    RECT    bounds = { 0, 0, 465, 400 };
