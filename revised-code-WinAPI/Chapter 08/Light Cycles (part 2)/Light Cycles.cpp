@@ -20,17 +20,15 @@ HRESULT GameInitialize(HINSTANCE inst)
 void GameStart(HWND wnd)
 {
    // create and load the background and light cycle bitmaps
-   HINSTANCE inst = GetModuleHandleW(NULL);
-
-   g_background      = std::make_unique<Bitmap>(IDB_BACKGROUND, inst);
-   g_cycle[ 0 ][ 0 ] = std::make_unique<Bitmap>(IDB_CYCLEBLUE_0, inst);
-   g_cycle[ 0 ][ 1 ] = std::make_unique<Bitmap>(IDB_CYCLEBLUE_90, inst);
-   g_cycle[ 0 ][ 2 ] = std::make_unique<Bitmap>(IDB_CYCLEBLUE_180, inst);
-   g_cycle[ 0 ][ 3 ] = std::make_unique<Bitmap>(IDB_CYCLEBLUE_270, inst);
-   g_cycle[ 1 ][ 0 ] = std::make_unique<Bitmap>(IDB_CYCLEORANGE_0, inst);
-   g_cycle[ 1 ][ 1 ] = std::make_unique<Bitmap>(IDB_CYCLEORANGE_90, inst);
-   g_cycle[ 1 ][ 2 ] = std::make_unique<Bitmap>(IDB_CYCLEORANGE_180, inst);
-   g_cycle[ 1 ][ 3 ] = std::make_unique<Bitmap>(IDB_CYCLEORANGE_270, inst);
+   g_background      = std::make_unique<Bitmap>(IDB_BACKGROUND);
+   g_cycle[ 0 ][ 0 ] = std::make_unique<Bitmap>(IDB_CYCLEBLUE_0);
+   g_cycle[ 0 ][ 1 ] = std::make_unique<Bitmap>(IDB_CYCLEBLUE_90);
+   g_cycle[ 0 ][ 2 ] = std::make_unique<Bitmap>(IDB_CYCLEBLUE_180);
+   g_cycle[ 0 ][ 3 ] = std::make_unique<Bitmap>(IDB_CYCLEBLUE_270);
+   g_cycle[ 1 ][ 0 ] = std::make_unique<Bitmap>(IDB_CYCLEORANGE_0);
+   g_cycle[ 1 ][ 1 ] = std::make_unique<Bitmap>(IDB_CYCLEORANGE_90);
+   g_cycle[ 1 ][ 2 ] = std::make_unique<Bitmap>(IDB_CYCLEORANGE_180);
+   g_cycle[ 1 ][ 3 ] = std::make_unique<Bitmap>(IDB_CYCLEORANGE_270);
 
    // start a new game
    NewGame( );
