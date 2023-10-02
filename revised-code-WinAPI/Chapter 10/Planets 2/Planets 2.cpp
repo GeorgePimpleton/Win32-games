@@ -24,13 +24,11 @@ void GameStart(HWND wnd)
 
    SelectObject(g_offscreenDC, g_offscreenBitmap);
 
-   HINSTANCE inst = g_game->GetInstance( );
+   g_galaxyBitmap = std::make_unique<Bitmap>(IDB_GALAXY);
 
-   g_galaxyBitmap = std::make_unique<Bitmap>(IDB_GALAXY, inst);
-
-   g_planetBitmap[ 0 ] = std::make_unique<Bitmap>(IDB_PLANET1, inst);
-   g_planetBitmap[ 1 ] = std::make_unique<Bitmap>(IDB_PLANET2, inst);
-   g_planetBitmap[ 2 ] = std::make_unique<Bitmap>(IDB_PLANET3, inst);
+   g_planetBitmap[ 0 ] = std::make_unique<Bitmap>(IDB_PLANET1);
+   g_planetBitmap[ 1 ] = std::make_unique<Bitmap>(IDB_PLANET2);
+   g_planetBitmap[ 2 ] = std::make_unique<Bitmap>(IDB_PLANET3);
 
    RECT    bounds = { 0, 0, 600, 400 };
    Sprite* sprite;

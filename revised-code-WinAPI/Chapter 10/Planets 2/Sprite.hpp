@@ -134,6 +134,5 @@ inline void Sprite::SetBoundsAction(BOUNDSACTION boundsAction) { m_boundsAction 
 inline BOOL Sprite::IsHidden( ) const                          { return m_hidden; }
 inline void Sprite::SetHidden(BOOL hidden)                     { m_hidden = hidden; }
 inline LONG Sprite::GetWidth( ) const                          { return m_bitmap-> GetWidth( ); }
-
 inline LONG Sprite::GetHeight( ) const                         { return m_bitmap-> GetHeight( ); }
 inline RECT& Sprite::GetCollision( )                           { return m_collision; }

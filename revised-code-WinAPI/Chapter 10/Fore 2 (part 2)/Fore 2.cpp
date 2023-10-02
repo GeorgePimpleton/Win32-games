@@ -24,10 +24,8 @@ void GameStart(HWND wnd)
 
    SelectObject(g_offscreenDC, g_offscreenBitmap);
 
-   HINSTANCE inst = g_game->GetInstance( );
-
-   g_forestBitmap   = std::make_unique<Bitmap>(IDB_FOREST, inst);
-   g_golfBallBitmap = std::make_unique<Bitmap>(IDB_GOLFBALL, inst);
+   g_forestBitmap   = std::make_unique<Bitmap>(IDB_FOREST);
+   g_golfBallBitmap = std::make_unique<Bitmap>(IDB_GOLFBALL);
 
    RECT    bounds = { 0, 0, 600, 400 };
    Sprite* sprite;
