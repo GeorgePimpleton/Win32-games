@@ -19,12 +19,10 @@ void GameStart(HWND wnd)
 {
    rtk::srand( );
 
-   HINSTANCE inst = g_game->GetInstance( );
+   g_forestBitmap   = std::make_unique<Bitmap>(IDB_FOREST);
+   g_golfBallBitmap = std::make_unique<Bitmap>(IDB_GOLFBALL);
 
-   g_forestBitmap   = std::make_unique<Bitmap>(IDB_FOREST, inst);
-   g_golfBallBitmap = std::make_unique<Bitmap>(IDB_GOLFBALL, inst);
-
-   RECT rcBounds { 0, 0, 600, 400 };
+   RECT rcBounds = { 0, 0, 600, 400 };
 
    g_golfBallSprite[ 0 ] = std::make_unique<Sprite>(g_golfBallBitmap.get( ), rcBounds);
    g_golfBallSprite[ 0 ]->SetVelocity(2, 1);

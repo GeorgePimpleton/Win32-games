@@ -19,12 +19,10 @@ void GameStart(HWND hWindow)
 {
    rtk::srand();
 
-   HINSTANCE inst = GetModuleHandleW(NULL);
-
-   g_galaxyBitmap      = std::make_unique<Bitmap>(IDB_GALAXY, inst);
-   g_planetBitmap[ 0 ] = std::make_unique<Bitmap>(IDB_PLANET1, inst);
-   g_planetBitmap[ 1 ] = std::make_unique<Bitmap>(IDB_PLANET2, inst);
-   g_planetBitmap[ 2 ] = std::make_unique<Bitmap>(IDB_PLANET3, inst);
+   g_galaxyBitmap      = std::make_unique<Bitmap>(IDB_GALAXY);
+   g_planetBitmap[ 0 ] = std::make_unique<Bitmap>(IDB_PLANET1);
+   g_planetBitmap[ 1 ] = std::make_unique<Bitmap>(IDB_PLANET2);
+   g_planetBitmap[ 2 ] = std::make_unique<Bitmap>(IDB_PLANET3);
 
    RECT rcBounds = { 0, 0, 600, 400 };
 

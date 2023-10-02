@@ -5,19 +5,11 @@
 #include "Bitmap.hpp"
 #include "random_toolkit.hpp"
 
-//using BOUNDSACTION            = WORD;
-//const BOUNDSACTION  BA_STOP   { 0 };
-//const BOUNDSACTION  BA_WRAP   { 1 };
-//const BOUNDSACTION  BA_BOUNCE { 2 };
-//const BOUNDSACTION  BA_DIE    { 3 };
-// (look into converting this to an enum) (done!)
-
 enum class BOUNDSACTION : WORD { BA_STOP   = 0,
                                  BA_WRAP   = 1,
                                  BA_BOUNCE = 2,
                                  BA_DIE    = 3 };
 
-// C++20, so you don't have to specify the class name again and again and again.
 using enum BOUNDSACTION;
 
 class Sprite
@@ -26,7 +18,7 @@ protected:
    std::unique_ptr<Bitmap> m_bitmap;
    RECT                    m_position;
    POINT                   m_velocity;
-   int                     m_zOrder;
+   LONG                    m_zOrder;
    RECT                    m_bounds;
    BOUNDSACTION            m_boundsAction;
    BOOL                    m_hidden;
@@ -34,7 +26,7 @@ protected:
 public:
             Sprite(Bitmap* bitmap);
             Sprite(Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction = BA_STOP);
-            Sprite(Bitmap* bitmap, POINT position, POINT velocity, int zOrder, RECT& bounds,
+            Sprite(Bitmap* bitmap, POINT position, POINT velocity, LONG zOrder, RECT& bounds,
                    BOUNDSACTION boundsAction = BA_STOP);
    virtual ~Sprite( );
 
@@ -52,19 +44,19 @@ public:
    POINT GetVelocity( );
    void  SetVelocity(LONG x, LONG y);
    void  SetVelocity(POINT velocity);
-   BOOL  GetZOrder( );
-   void  SetZOrder(int zOrder);
+   BOOL  GetZOrder( ) const;
+   void  SetZOrder(LONG zOrder);
    void  SetBounds(RECT& bounds);
    void  SetBoundsAction(BOUNDSACTION boundsAction);
-   BOOL  IsHidden( );
+   BOOL  IsHidden( ) const;
    void  SetHidden(BOOL hidden);
-   LONG  GetWidth( );
-   LONG  GetHeight( );
+   LONG  GetWidth( ) const;
+   LONG  GetHeight( ) const;
 };
 
 inline BOOL Sprite::IsPointInside(LONG x, LONG y)
 {
-   POINT point;
+   POINT point = { };
 
    point.x = x;
    point.y = y;
@@ -115,42 +107,11 @@ inline void Sprite::SetVelocity(POINT velocity)
    m_velocity.y = velocity.y;
 }
 
-inline BOOL Sprite::GetZOrder( )
-{
-   return m_zOrder;
-}
-
-inline void Sprite::SetZOrder(int zOrder)
-{
-   m_zOrder = zOrder;
-}
-
-inline void Sprite::SetBounds(RECT& bounds)
-{
-   CopyRect(&m_bounds, &bounds);
-}
-
-inline void Sprite::SetBoundsAction(BOUNDSACTION boundsAction)
-{
-   m_boundsAction = boundsAction;
-}
-
-inline BOOL Sprite::IsHidden( )
-{
-   return m_hidden;
-}
-
-inline void Sprite::SetHidden(BOOL hidden)
-{
-   m_hidden = hidden;
-}
-
-inline LONG Sprite::GetWidth( )
-{
-   return m_bitmap->GetWidth( );
-}
-
-inline LONG Sprite::GetHeight( )
-{
-   return m_bitmap->GetHeight( );
-}
+inline BOOL Sprite::GetZOrder( ) const                         { return m_zOrder; }
+inline void Sprite::SetZOrder(LONG zOrder)                     { m_zOrder = zOrder; }
+inline void Sprite::SetBounds(RECT& bounds)                    { CopyRect(&m_bounds, &bounds); }
+inline void Sprite::SetBoundsAction(BOUNDSACTION boundsAction) { m_boundsAction = boundsAction; }
+inline BOOL Sprite::IsHidden( ) const                          { return m_hidden; }
+inline void Sprite::SetHidden(BOOL hidden)                     { m_hidden = hidden; }
+inline LONG Sprite::GetWidth( ) const                          { return m_bitmap-> GetWidth( ); }
+inline LONG Sprite::GetHeight( ) const                         { return m_bitmap-> GetHeight( ); }
