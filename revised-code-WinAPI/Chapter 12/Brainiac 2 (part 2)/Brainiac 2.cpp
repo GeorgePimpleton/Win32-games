@@ -63,7 +63,7 @@ void GameNew( )
 
    g_tile1.x = g_tile1.y = -1;
    g_tile2.x = g_tile2.y = -1;
-   g_matches = g_tries = 0;
+   g_matches = g_tries   = 0;
 
    EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
 

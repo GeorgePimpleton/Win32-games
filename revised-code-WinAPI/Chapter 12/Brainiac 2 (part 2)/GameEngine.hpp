@@ -40,20 +40,20 @@ BOOL    SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee);
 class GameEngine
 {
 protected:
-   static GameEngine* m_gameEngine;
-   HINSTANCE            m_inst;
-   HWND                 m_wnd;
-   PCWSTR               m_wndClass;
-   PCWSTR               m_title;
-   WORD                 m_icon;
-   WORD                 m_smallIcon;
-   UINT                 m_width;
-   UINT                 m_height;
-   UINT                 m_frameDelay;
-   BOOL                 m_asleep;
-   UINT                 m_joyID;
-   RECT                 m_joyTrip;
-   std::vector<Sprite*> m_sprites;
+   static std::unique_ptr<GameEngine> m_gameEngine;
+   HINSTANCE                          m_inst;
+   HWND                               m_wnd;
+   PCWSTR                             m_wndClass;
+   PCWSTR                             m_title;
+   WORD                               m_icon;
+   WORD                               m_smallIcon;
+   UINT                               m_width;
+   UINT                               m_height;
+   UINT                               m_frameDelay;
+   BOOL                               m_asleep;
+   UINT                               m_joyID;
+   RECT                               m_joyTrip;
+   std::vector<Sprite*>               m_sprites;
 
 public:
             GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
@@ -92,7 +92,7 @@ protected:
    BOOL CheckSpriteCollision(Sprite* testSprite);
 };
 
-inline GameEngine* GameEngine::GetEngine( )          { return m_gameEngine; }
+inline GameEngine* GameEngine::GetEngine( )          { return m_gameEngine.get( ); }
 inline HINSTANCE GameEngine::GetInstance( ) const    { return m_inst; }
 inline HWND GameEngine::GetWindow( ) const           { return m_wnd; }
 inline void GameEngine::SetWindow(HWND wnd)          { m_wnd = wnd; }

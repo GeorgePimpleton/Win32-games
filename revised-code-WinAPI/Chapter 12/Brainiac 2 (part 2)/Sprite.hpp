@@ -22,7 +22,7 @@ protected:
    RECT         m_position;
    RECT         m_collision;
    POINT        m_velocity;
-   int          m_zOrder;
+   LONG         m_zOrder;
    RECT         m_bounds;
    BOUNDSACTION m_boundsAction;
    BOOL         m_hidden;
@@ -53,7 +53,7 @@ public:
    void  SetVelocity(LONG x, LONG y);
    void  SetVelocity(POINT velocity);
    BOOL  GetZOrder( );
-   void  SetZOrder(int zOrder);
+   void  SetZOrder(LONG zOrder);
    void  SetBounds(RECT& bounds);
    void  SetBoundsAction(BOUNDSACTION boundsAction);
    BOOL  IsHidden( );
@@ -81,10 +81,7 @@ inline BOOL Sprite::TestCollision(Sprite* testSprite)
           m_collision.top <= rcTest.bottom && rcTest.top <= m_collision.bottom;
 }
 
-inline RECT& Sprite::GetPosition( )
-{
-   return m_position;
-}
+inline RECT& Sprite::GetPosition( ) { return m_position; }
 
 inline void Sprite::SetPosition(LONG x, LONG y)
 {
@@ -98,10 +95,7 @@ inline void Sprite::SetPosition(POINT position)
    CalcCollisionRect( );
 }
 
-inline void Sprite::SetPosition(RECT& position)
-{
-   CopyRect(&m_position, &position);
-}
+inline void Sprite::SetPosition(RECT& position) { CopyRect(&m_position, &position); }
 
 inline void Sprite::OffsetPosition(LONG x, LONG y)
 {
@@ -109,10 +103,7 @@ inline void Sprite::OffsetPosition(LONG x, LONG y)
    CalcCollisionRect( );
 }
 
-inline POINT Sprite::GetVelocity( )
-{
-   return m_velocity;
-}
+inline POINT Sprite::GetVelocity( ) { return m_velocity; }
 
 inline void Sprite::SetVelocity(LONG x, LONG y)
 {
@@ -126,47 +117,12 @@ inline void Sprite::SetVelocity(POINT velocity)
    m_velocity.y = velocity.y;
 }
 
-inline BOOL Sprite::GetZOrder( )
-{
-   return m_zOrder;
-}
-
-inline void Sprite::SetZOrder(int zOrder)
-{
-   m_zOrder = zOrder;
-}
-
-inline void Sprite::SetBounds(RECT& bounds)
-{
-   CopyRect(&m_bounds, &bounds);
-}
-
-inline void Sprite::SetBoundsAction(BOUNDSACTION boundsAction)
-{
-   m_boundsAction = boundsAction;
-}
-
-inline BOOL Sprite::IsHidden( )
-{
-   return m_hidden;
-}
-
-inline void Sprite::SetHidden(BOOL hidden)
-{
-   m_hidden = hidden;
-}
-
-inline LONG Sprite::GetWidth( )
-{
-   return m_bitmap->GetWidth( );
-}
-
-inline LONG Sprite::GetHeight( )
-{
-   return m_bitmap->GetHeight( );
-}
-
-inline RECT& Sprite::GetCollision( )
-{
-   return m_collision;
-}
+inline BOOL Sprite::GetZOrder( )                               { return m_zOrder; }
+inline void Sprite::SetZOrder(LONG zOrder)                     { m_zOrder = zOrder; }
+inline void Sprite::SetBounds(RECT& bounds)                    { CopyRect(&m_bounds, &bounds); }
+inline void Sprite::SetBoundsAction(BOUNDSACTION boundsAction) { m_boundsAction = boundsAction; }
+inline BOOL Sprite::IsHidden( )                                { return m_hidden; }
+inline void Sprite::SetHidden(BOOL hidden)                     { m_hidden = hidden; }
+inline LONG Sprite::GetWidth( )                                { return m_bitmap-> GetWidth( ); }
+inline LONG Sprite::GetHeight( )                               { return m_bitmap-> GetHeight( ); }
+inline RECT& Sprite::GetCollision( )                           { return m_collision; }
