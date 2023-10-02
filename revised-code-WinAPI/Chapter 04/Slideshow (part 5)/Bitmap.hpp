@@ -14,12 +14,12 @@ protected:
 public:
             Bitmap( );
             Bitmap(PCWSTR fileName);
-            Bitmap(UINT resID, HINSTANCE inst);
+            Bitmap(UINT resID);
             Bitmap(HDC dc, int width, int height, COLORREF color = RGB(0, 0, 0));
    virtual ~Bitmap( );
 
    BOOL Create(PCWSTR fileName);
-   BOOL Create(UINT resID, HINSTANCE inst);
+   BOOL Create(UINT resID);
    BOOL Create(HDC dc, int width, int height, COLORREF color);
 
    void Draw(HDC dc, int x, int y);

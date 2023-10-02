@@ -10,10 +10,10 @@ Bitmap::Bitmap(PCWSTR fileName)
    Create(fileName);
 }
 
-Bitmap::Bitmap(UINT resID, HINSTANCE inst)
+Bitmap::Bitmap(UINT resID)
    : m_hBitmap(NULL), m_width(0), m_height(0)
 {
-   Create(resID, inst);
+   Create(resID);
 }
 
 Bitmap::Bitmap(HDC dc, int width, int height, COLORREF color)
@@ -59,7 +59,7 @@ BOOL Bitmap::Create(PCWSTR fileName)
    return TRUE;
 }
 
-BOOL Bitmap::Create(UINT resID, HINSTANCE inst)
+BOOL Bitmap::Create(UINT resID)
 {
    Free( );
 
