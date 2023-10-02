@@ -65,7 +65,7 @@ protected:
 
 inline BOOL Sprite::IsPointInside(LONG x, LONG y)
 {
-   POINT point;
+   POINT point = { };
 
    point.x = x;
    point.y = y;

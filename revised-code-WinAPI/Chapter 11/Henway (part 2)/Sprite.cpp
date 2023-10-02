@@ -66,17 +66,17 @@ void Sprite::CalcCollisionRect( )
 
 SPRITEACTION Sprite::Update( )
 {
-   BOOL  bounce = FALSE;
-   POINT newPosition;
-   POINT spriteSize;
-   POINT boundsSize;
+   BOOL  bounce      = FALSE;
+   POINT newPosition = { };
+   POINT spriteSize  = { };
+   POINT boundsSize  = { };
 
    newPosition.x = m_position.left + m_velocity.x;
    newPosition.y = m_position.top + m_velocity.y;
    spriteSize.x  = m_position.right - m_position.left;
    spriteSize.y  = m_position.bottom - m_position.top;
    boundsSize.x  = m_bounds.right - m_bounds.left;
-   boundsSize.y = m_bounds.bottom - m_bounds.top;
+   boundsSize.y  = m_bounds.bottom - m_bounds.top;
 
    if ( BA_WRAP == m_boundsAction )
    {

@@ -46,11 +46,12 @@ void GameNew( )
    Sprite* sprite;
    RECT    bounds = { 0, 0, 465, 400 };
 
-   g_chickenSprite = new Sprite(g_chickenBitmap.get( ), bounds, BA_STOP);
+   g_chickenSprite.release( );
+   g_chickenSprite = std::make_unique<Sprite>(g_chickenBitmap.get( ), bounds, BA_STOP);
    g_chickenSprite->SetPosition(4, 175);
    g_chickenSprite->SetVelocity(0, 0);
    g_chickenSprite->SetZOrder(1);
-   g_game->AddSprite(g_chickenSprite);
+   g_game->AddSprite(g_chickenSprite.get( ));
 
    sprite = new Sprite(g_carBitmaps[ 0 ].get( ), bounds, BA_WRAP);
    sprite->SetPosition(70, 0);
@@ -224,7 +225,7 @@ void HandleJoystick(JOYSTATE joyState)
 
 BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
 {
-   if ( spriteHittee == g_chickenSprite )
+   if ( spriteHittee == g_chickenSprite.get( ) )
    {
       g_chickenSprite->SetPosition(4, 175);
 
