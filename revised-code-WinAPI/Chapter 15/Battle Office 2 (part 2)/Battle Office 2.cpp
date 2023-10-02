@@ -1,11 +1,14 @@
-#include "Battle  Office 2.hpp"
+#include "Battle Office 2.hpp"
 
 BOOL GameInitialize(HINSTANCE inst)
 {
-   g_game = std::make_unique<GameEngine>(inst, L"Battle Office 2", L"Battle Office 2",
+   g_game = std::make_unique<GameEngine>(inst, L"Battle Office 2", L"Battle Office 2: Animating the Appearance of Sprites",
                                          IDI_ICON, IDI_ICON_SM, 500, 400);
+
    if ( g_game == NULL )
+   {
       return FALSE;
+   }
 
    g_game->SetFrameRate(30);
 
@@ -21,17 +24,18 @@ void GameStart(HWND wnd)
    g_offscreenDC     = CreateCompatibleDC(GetDC(wnd));
    g_offscreenBitmap = CreateCompatibleBitmap(GetDC(wnd),
                                               g_game->GetWidth( ), g_game->GetHeight( ));
+
    SelectObject(g_offscreenDC, g_offscreenBitmap);
 
-   g_officeBitmap    = std::make_unique<Bitmap>(IDB_OFFICE, g_inst);
-   g_powBitmap       = std::make_unique<Bitmap>(IDB_POW, g_inst);
-   g_guyBitmaps[ 0 ] = std::make_unique<Bitmap>(IDB_GUY1, g_inst);
-   g_guyBitmaps[ 1 ] = std::make_unique<Bitmap>(IDB_GUY2, g_inst);
-   g_guyBitmaps[ 2 ] = std::make_unique<Bitmap>(IDB_GUY3, g_inst);
-   g_guyBitmaps[ 3 ] = std::make_unique<Bitmap>(IDB_GUY4, g_inst);
-   g_guyBitmaps[ 4 ] = std::make_unique<Bitmap>(IDB_GUY5, g_inst);
-   g_smallGuyBitmap  = std::make_unique<Bitmap>(IDB_SMALLGUY, g_inst);
-   g_gameOverBitmap  = std::make_unique<Bitmap>(IDB_GAMEOVER, g_inst);
+   g_officeBitmap    = std::make_unique<Bitmap>(IDB_OFFICE);
+   g_powBitmap       = std::make_unique<Bitmap>(IDB_POW);
+   g_guyBitmaps[ 0 ] = std::make_unique<Bitmap>(IDB_GUY1);
+   g_guyBitmaps[ 1 ] = std::make_unique<Bitmap>(IDB_GUY2);
+   g_guyBitmaps[ 2 ] = std::make_unique<Bitmap>(IDB_GUY3);
+   g_guyBitmaps[ 3 ] = std::make_unique<Bitmap>(IDB_GUY4);
+   g_guyBitmaps[ 4 ] = std::make_unique<Bitmap>(IDB_GUY5);
+   g_smallGuyBitmap  = std::make_unique<Bitmap>(IDB_SMALLGUY);
+   g_gameOverBitmap  = std::make_unique<Bitmap>(IDB_GAMEOVER);
 
    RECT    bounds = { 0, 0, 500, 400 };
 

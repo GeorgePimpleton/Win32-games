@@ -40,7 +40,7 @@ Sprite::Sprite(Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction)
    m_hidden       = FALSE;
 }
 
-Sprite::Sprite(Bitmap* bitmap, POINT ptPosition, POINT velocity, int zOrder,
+Sprite::Sprite(Bitmap* bitmap, POINT ptPosition, POINT velocity, LONG zOrder,
                RECT& bounds, BOUNDSACTION boundsAction)
 {
    m_bitmap    = bitmap;

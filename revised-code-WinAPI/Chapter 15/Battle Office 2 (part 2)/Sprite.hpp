@@ -25,7 +25,7 @@ protected:
    RECT         m_position;
    RECT         m_collision;
    POINT        m_velocity;
-   int          m_zOrder;
+   LONG         m_zOrder;
    RECT         m_bounds;
    BOUNDSACTION m_boundsAction;
    BOOL         m_hidden;
@@ -37,7 +37,7 @@ public:
             Sprite(Bitmap* bitmap);
             Sprite(Bitmap* bitmap, RECT& bounds,
                    BOUNDSACTION boundsAction = BA_STOP);
-            Sprite(Bitmap* bitmap, POINT ptPosition, POINT velocity, int zOrder,
+            Sprite(Bitmap* bitmap, POINT ptPosition, POINT velocity, LONG zOrder,
                    RECT& bounds, BOUNDSACTION boundsAction = BA_STOP);
    virtual ~Sprite( );
 
@@ -48,24 +48,24 @@ public:
 
    Bitmap* GetBitmap( )                               { return m_bitmap; };
    void    SetNumFrames(UINT numFrames);
-   void    SetFrameDelay(UINT frameDelay)              { m_frameDelay = frameDelay; };
+   void    SetFrameDelay(UINT frameDelay)             { m_frameDelay = frameDelay; };
    RECT&   GetPosition( )                             { return m_position; };
    void    SetPosition(LONG x, LONG y);
    void    SetPosition(POINT ptPosition);
    void    SetPosition(RECT& position);
    void    OffsetPosition(LONG x, LONG y);
    RECT&   GetCollision( )                            { return m_collision; };
-   POINT   GetVelocity( )                             { return m_velocity; };
+   POINT   GetVelocity( ) const                       { return m_velocity; };
    void    SetVelocity(LONG x, LONG y);
    void    SetVelocity(POINT velocity);
-   BOOL    GetZOrder( )                               { return m_zOrder; };
-   void    SetZOrder(int zOrder)                      { m_zOrder = zOrder; };
+   BOOL    GetZOrder( ) const                         { return m_zOrder; };
+   void    SetZOrder(LONG zOrder)                     { m_zOrder = zOrder; };
    void    SetBounds(RECT& bounds)                    { CopyRect(&m_bounds, &bounds); };
    void    SetBoundsAction(BOUNDSACTION boundsAction) { m_boundsAction = boundsAction; };
-   BOOL    IsHidden( )                                { return m_hidden; };
+   BOOL    IsHidden( ) const                          { return m_hidden; };
    void    SetHidden(BOOL hidden)                     { m_hidden = hidden; };
-   int     GetWidth( )                                { return (m_bitmap-> GetWidth( ) / m_numFrames); };
-   int     GetHeight( )                               { return m_bitmap-> GetHeight( ); };
+   int     GetWidth( ) const                          { return (m_bitmap->GetWidth( ) / m_numFrames); };
+   int     GetHeight( ) const                         { return m_bitmap->GetHeight( ); };
 };
 
 inline void Sprite::UpdateFrame( )
