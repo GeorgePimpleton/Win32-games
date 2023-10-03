@@ -10,8 +10,8 @@ Background::Background(LONG width, LONG height, COLORREF color)
 
 Background::Background(Bitmap* bitmap)
 {
-   m_width  = bitmap-> GetWidth( );
-   m_height = bitmap-> GetHeight( );
+   m_width  = bitmap->GetWidth( );
+   m_height = bitmap->GetHeight( );
    m_color  = 0;
    m_bitmap = bitmap;
 }

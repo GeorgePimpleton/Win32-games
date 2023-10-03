@@ -20,13 +20,11 @@ void GameStart(HWND wnd)
    rtk::srand( );
 
    g_offscreenDC     = CreateCompatibleDC(GetDC(wnd));
-   g_offscreenBitmap = CreateCompatibleBitmap(GetDC(wnd), g_game-> GetWidth( ), g_game-> GetHeight( ));
+   g_offscreenBitmap = CreateCompatibleBitmap(GetDC(wnd), g_game->GetWidth( ), g_game->GetHeight( ));
 
    SelectObject(g_offscreenDC, g_offscreenBitmap);
 
-   HINSTANCE inst = GetModuleHandleW(NULL);
-
-   g_asteroidBitmap = std::make_unique<Bitmap>(IDB_ASTEROID, inst);
+   g_asteroidBitmap = std::make_unique<Bitmap>(IDB_ASTEROID);
 
    // create the starry background
    g_background = std::make_unique<StarryBackground>(500, 400);
@@ -94,7 +92,7 @@ void GameCycle( )
 
    g_game->UpdateSprites( );
 
-   HWND wnd = g_game-> GetWindow( );
+   HWND wnd = g_game->GetWindow( );
    HDC  dc  = GetDC(wnd);
 
    GamePaint(g_offscreenDC);

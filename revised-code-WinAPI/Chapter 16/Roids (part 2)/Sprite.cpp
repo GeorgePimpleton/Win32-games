@@ -39,7 +39,7 @@ Sprite::Sprite(Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction)
    m_hidden       = FALSE;
 }
 
-Sprite::Sprite(Bitmap* bitmap, POINT position, POINT velocity, int zOrder,
+Sprite::Sprite(Bitmap* bitmap, POINT position, POINT velocity, LONG zOrder,
                RECT& bounds, BOUNDSACTION boundsAction)
 {
    m_bitmap    = bitmap;
@@ -65,7 +65,9 @@ SPRITEACTION Sprite::Update( )
 {
    UpdateFrame( );
 
-   POINT newPosition, spriteSize, boundsSize;
+   POINT newPosition = { };
+   POINT spriteSize  = { };
+   POINT boundsSize  = { };
 
    newPosition.x = m_position.left + m_velocity.x;
    newPosition.y = m_position.top + m_velocity.y;

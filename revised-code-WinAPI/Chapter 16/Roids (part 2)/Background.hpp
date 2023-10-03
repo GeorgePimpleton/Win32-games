@@ -14,7 +14,7 @@ using enum STARSIZE;
 class Background
 {
 protected:
-   Bitmap* m_bitmap;
+   Bitmap*  m_bitmap;
    COLORREF m_color;
    LONG     m_width;
    LONG     m_height;
@@ -29,12 +29,19 @@ public:
    virtual void Update( );
 
 public:
-   LONG GetWidth( ) const;
-   LONG GetHeight( ) const;
+   constexpr LONG GetWidth( ) const  { return m_width; }
+   constexpr LONG GetHeight( ) const { return m_height; }
 };
 
 class StarryBackground : public Background
 {
+protected:
+   LONG                      m_numStars;
+   LONG                      m_twinkleDelay;
+   std::array<POINT, 100>    m_stars;
+   std::array<COLORREF, 100> m_starColors;
+   std::array<STARSIZE, 100> m_sizeStars;
+
 public:
             StarryBackground(LONG width, LONG height,
                              LONG numStars = 100,
@@ -44,14 +51,4 @@ public:
 public:
    virtual void Draw(HDC dc);
    virtual void Update( );
-
-protected:
-   LONG                      m_numStars;
-   LONG                      m_twinkleDelay;
-   std::array<POINT, 100>    m_stars;
-   std::array<COLORREF, 100> m_starColors;
-   std::array<STARSIZE, 100> m_sizeStars;
 };
-
-inline LONG Background::GetWidth( ) const  { return m_width; }
-inline LONG Background::GetHeight( ) const { return m_height; }

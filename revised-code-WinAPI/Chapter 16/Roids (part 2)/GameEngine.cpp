@@ -2,7 +2,7 @@
 
 #include "GameEngine.hpp"
 
-GameEngine* GameEngine::m_gameEngine = NULL;
+std::unique_ptr<GameEngine> GameEngine::m_gameEngine = NULL;
 
 int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int cmdShow)
 {
@@ -87,7 +87,8 @@ BOOL CALLBACK DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam)
 GameEngine::GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
                        WORD icon, WORD smallIcon, UINT width, UINT height)
 {
-   m_gameEngine   = this;
+   m_gameEngine.reset(this);
+
    m_inst         = inst;
    m_wnd          = NULL;
    m_wndClass     = wndClass;
@@ -110,7 +111,7 @@ GameEngine::~GameEngine( )
 
 HRESULT GameEngine::Initialize(int cmdShow)
 {
-   WNDCLASSEXW wc;
+   WNDCLASSEXW wc = { };
 
    wc.cbSize        = sizeof(WNDCLASSEXW);
    wc.style         = CS_HREDRAW | CS_VREDRAW;
@@ -422,7 +423,7 @@ void GameEngine::PlayMIDISong(PCWSTR MIDIFileName, BOOL restart)
 {
    if ( m_MIDIPlayerID == 0 )
    {
-      MCI_OPEN_PARMS mciOpenParms;
+      MCI_OPEN_PARMS mciOpenParms = { };
 
       mciOpenParms.lpstrDeviceType  = L"sequencer";
       mciOpenParms.lpstrElementName = MIDIFileName;
@@ -439,7 +440,7 @@ void GameEngine::PlayMIDISong(PCWSTR MIDIFileName, BOOL restart)
 
    if ( restart )
    {
-      MCI_SEEK_PARMS mciSeekParms;
+      MCI_SEEK_PARMS mciSeekParms = { };
 
       if ( mciSendCommandW(m_MIDIPlayerID, MCI_SEEK, MCI_SEEK_TO_START, (DWORD_PTR) &mciSeekParms) != 0 )
       {
@@ -447,7 +448,7 @@ void GameEngine::PlayMIDISong(PCWSTR MIDIFileName, BOOL restart)
       }
    }
 
-   MCI_PLAY_PARMS mciPlayParms;
+   MCI_PLAY_PARMS mciPlayParms = { };
 
    if ( mciSendCommandW(m_MIDIPlayerID, MCI_PLAY, 0, (DWORD_PTR) &mciPlayParms) != 0 )
    {

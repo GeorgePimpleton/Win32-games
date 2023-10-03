@@ -12,13 +12,13 @@ protected:
 public:
             Bitmap( );
             Bitmap(PCWSTR fileName);
-            Bitmap(UINT resID, HINSTANCE inst);
+            Bitmap(UINT resID);
             Bitmap(HWND wnd, LONG width, LONG height, COLORREF color = RGB(0, 0, 0));
    virtual ~Bitmap( );
 
 public:
    BOOL Create(PCWSTR fileName);
-   BOOL Create(UINT resID, HINSTANCE inst);
+   BOOL Create(UINT resID);
    BOOL Create(HWND wnd, LONG width, LONG height, COLORREF color);
 
 public:
@@ -27,12 +27,9 @@ public:
                   COLORREF transColor = RGB(255, 0, 255)) const;
 
 public:
-   LONG GetWidth( ) const;
-   LONG GetHeight( ) const;
+   constexpr LONG GetWidth( ) const { return m_width; }
+   constexpr LONG GetHeight( ) const { return m_height; }
 
 protected:
    void Free( );
 };
-
-inline LONG Bitmap::GetWidth( ) const  { return m_width; };
-inline LONG Bitmap::GetHeight( ) const { return m_height; };

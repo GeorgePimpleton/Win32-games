@@ -26,7 +26,7 @@ protected:
    RECT         m_position;
    RECT         m_collision;
    POINT        m_velocity;
-   int          m_zOrder;
+   LONG         m_zOrder;
    RECT         m_bounds;
    BOUNDSACTION m_boundsAction;
    BOOL         m_hidden;
@@ -34,7 +34,7 @@ protected:
 public:
             Sprite(Bitmap* bitmap);
             Sprite(Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction = BA_STOP);
-            Sprite(Bitmap* bitmap, POINT position, POINT velocity, int zOrder,
+            Sprite(Bitmap* bitmap, POINT position, POINT velocity, LONG zOrder,
                    RECT& bounds, BOUNDSACTION boundsAction = BA_STOP);
    virtual ~Sprite( );
 
@@ -59,7 +59,7 @@ public:
    void    SetVelocity(LONG x, LONG y);
    void    SetVelocity(POINT velocity);
    BOOL    GetZOrder( ) const;
-   void    SetZOrder(int zOrder);
+   void    SetZOrder(LONG zOrder);
    void    SetBounds(RECT& bounds);
    void    SetBoundsAction(BOUNDSACTION boundsAction);
    BOOL    IsHidden( ) const;
@@ -100,7 +100,7 @@ inline BOOL Sprite::TestCollision(Sprite* testSprite)
 
 inline BOOL Sprite::IsPointInside(LONG x, LONG y)
 {
-   POINT ptPoint;
+   POINT ptPoint = { };
 
    ptPoint.x = x;
    ptPoint.y = y;
@@ -155,7 +155,6 @@ inline void Sprite::SetVelocity(LONG x, LONG y)
 }
 
 inline RECT& Sprite::GetCollision( )      { return m_collision; }
-
 inline POINT Sprite::GetVelocity( ) const { return m_velocity; }
 
 inline void Sprite::SetVelocity(POINT velocity)
@@ -165,10 +164,10 @@ inline void Sprite::SetVelocity(POINT velocity)
 }
 
 inline BOOL Sprite::GetZOrder( ) const                         { return m_zOrder; }
-inline void Sprite::SetZOrder(int zOrder)                      { m_zOrder = zOrder; }
+inline void Sprite::SetZOrder(LONG zOrder)                     { m_zOrder = zOrder; }
 inline void Sprite::SetBounds(RECT& bounds)                    { CopyRect(&m_bounds, &bounds); }
 inline void Sprite::SetBoundsAction(BOUNDSACTION boundsAction) { m_boundsAction = boundsAction; }
 inline BOOL Sprite::IsHidden( ) const                          { return m_hidden; };
 inline void Sprite::SetHidden(BOOL hidden)                     { m_hidden = hidden; }
-inline LONG Sprite::GetWidth( ) const                          { return m_bitmap-> GetWidth( ); }
-inline LONG Sprite::GetHeight( ) const                         { return (m_bitmap-> GetHeight( ) / m_numFrames); }
+inline LONG Sprite::GetWidth( ) const                          { return m_bitmap->GetWidth( ); }
+inline LONG Sprite::GetHeight( ) const                         { return (m_bitmap->GetHeight( ) / m_numFrames); }
