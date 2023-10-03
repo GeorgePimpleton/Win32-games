@@ -24,11 +24,11 @@ std::unique_ptr<Bitmap>           g_largeExplosionBitmap;
 std::unique_ptr<Bitmap>           g_gameOverBitmap;
 std::unique_ptr<StarryBackground> g_background;
 std::unique_ptr<Sprite>           g_carSprite;
-int                               g_fireInputDelay;
-int                               g_numLives;
-int                               g_score;
+LONG                              g_fireInputDelay;
+LONG                              g_numLives;
+LONG                              g_score;
 BOOL                              g_gameOver;
-int                               g_gameOverDelay;
+LONG                              g_gameOverDelay;
 BOOL                              g_demo;
 
 std::unique_ptr<Bitmap> g_BlobboBitmap;

@@ -1,19 +1,19 @@
 #include "Background.hpp"
 
-Background::Background(int width, int height, COLORREF color)
+Background::Background(LONG width, LONG height, COLORREF color)
 {
+   m_bitmap = NULL;
+   m_color  = color;
    m_width  = width;
    m_height = height;
-   m_color  = color;
-   m_bitmap = NULL;
 }
 
 Background::Background(Bitmap* bitmap)
 {
-   m_color  = 0;
    m_bitmap = bitmap;
-   m_width  = bitmap-> GetWidth( );
-   m_height = bitmap-> GetHeight( );
+   m_color  = 0;
+   m_width  = bitmap->GetWidth( );
+   m_height = bitmap->GetHeight( );
 }
 
 Background::~Background( )
@@ -41,7 +41,7 @@ void Background::Draw(HDC dc)
    }
 }
 
-StarryBackground::StarryBackground(int width, int height, int numStars, int twinkleDelay)
+StarryBackground::StarryBackground(LONG width, LONG height, LONG numStars, LONG twinkleDelay)
    : Background(width, height, 0)
 {
    m_numStars     = min(numStars, 100);
