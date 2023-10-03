@@ -22,23 +22,23 @@ void GameStart(HWND wnd)
   rtk::srand( );
 
   g_offscreenDC     = CreateCompatibleDC(GetDC(wnd));
-  g_offscreenBitmap = CreateCompatibleBitmap(GetDC(wnd), g_game-> GetWidth(), g_game-> GetHeight());
+  g_offscreenBitmap = CreateCompatibleBitmap(GetDC(wnd), g_game->GetWidth(), g_game->GetHeight());
 
   SelectObject(g_offscreenDC, g_offscreenBitmap);
 
-  g_desertBitmap         = std::make_unique<Bitmap>(IDB_DESERT, g_inst);
-  g_carBitmap            = std::make_unique<Bitmap>(IDB_CAR, g_inst);
-  g_smallCarBitmap       = std::make_unique<Bitmap>(IDB_SMCAR, g_inst);
-  g_missileBitmap        = std::make_unique<Bitmap>(IDB_MISSILE, g_inst);
-  g_BlobboBitmap         = std::make_unique<Bitmap>(IDB_BLOBBO, g_inst);
-  g_BMissileBitmap       = std::make_unique<Bitmap>(IDB_BMISSILE, g_inst);
-  g_JellyBitmap          = std::make_unique<Bitmap>(IDB_JELLY, g_inst);
-  g_JMissileBitmap       = std::make_unique<Bitmap>(IDB_JMISSILE, g_inst);
-  g_TimmyBitmap          = std::make_unique<Bitmap>(IDB_TIMMY, g_inst);
-  g_TMissileBitmap       = std::make_unique<Bitmap>(IDB_TMISSILE, g_inst);
-  g_smallExplosionBitmap = std::make_unique<Bitmap>(IDB_SMEXPLOSION, g_inst);
-  g_largeExplosionBitmap = std::make_unique<Bitmap>(IDB_LGEXPLOSION, g_inst);
-  g_gameOverBitmap       = std::make_unique<Bitmap>(IDB_GAMEOVER, g_inst);
+  g_desertBitmap         = std::make_unique<Bitmap>(IDB_DESERT);
+  g_carBitmap            = std::make_unique<Bitmap>(IDB_CAR);
+  g_smallCarBitmap       = std::make_unique<Bitmap>(IDB_SMCAR);
+  g_missileBitmap        = std::make_unique<Bitmap>(IDB_MISSILE);
+  g_BlobboBitmap         = std::make_unique<Bitmap>(IDB_BLOBBO);
+  g_BMissileBitmap       = std::make_unique<Bitmap>(IDB_BMISSILE);
+  g_JellyBitmap          = std::make_unique<Bitmap>(IDB_JELLY);
+  g_JMissileBitmap       = std::make_unique<Bitmap>(IDB_JMISSILE);
+  g_TimmyBitmap          = std::make_unique<Bitmap>(IDB_TIMMY);
+  g_TMissileBitmap       = std::make_unique<Bitmap>(IDB_TMISSILE);
+  g_smallExplosionBitmap = std::make_unique<Bitmap>(IDB_SMEXPLOSION);
+  g_largeExplosionBitmap = std::make_unique<Bitmap>(IDB_LGEXPLOSION);
+  g_gameOverBitmap       = std::make_unique<Bitmap>(IDB_GAMEOVER);
 
   g_background = std::make_unique<StarryBackground>(600, 450);
 
@@ -75,15 +75,15 @@ void GamePaint(HDC dc)
 
   g_game->DrawSprites(dc);
 
-  WCHAR szText[64];
+  WCHAR text[64];
   RECT  rect = { 460, 0, 510, 30 };
 
-  wsprintfW(szText, L"%d", g_score);
+  wsprintfW(text, L"%d", g_score);
 
   SetBkMode(dc, TRANSPARENT);
   SetTextColor(dc, RGB(255, 255, 255));
 
-  DrawText(dc, szText, -1, &rect, DT_SINGLELINE | DT_RIGHT | DT_VCENTER);
+  DrawText(dc, text, -1, &rect, DT_SINGLELINE | DT_RIGHT | DT_VCENTER);
 
   for ( UINT i = 0; i < g_numLives; i++ )
   {
@@ -110,7 +110,7 @@ void GameCycle()
 
     g_game->UpdateSprites();
 
-    HWND wnd = g_game-> GetWindow();
+    HWND wnd = g_game->GetWindow();
     HDC  dc  = GetDC(wnd);
 
     GamePaint(g_offscreenDC);
@@ -160,7 +160,7 @@ void HandleKeys()
     if ((++g_fireInputDelay > 6) && GetAsyncKeyState(VK_SPACE) < 0)
     {
       RECT    bounds = { 0, 0, 600, 450 };
-      RECT    pos    = g_carSprite-> GetPosition();
+      RECT    pos    = g_carSprite->GetPosition();
       Sprite* sprite = new Sprite(g_missileBitmap.get( ), bounds, BA_DIE);
       sprite->SetPosition(pos.left + 15, 400);
       sprite->SetVelocity(0, -7);
@@ -283,7 +283,7 @@ void SpriteDying(Sprite* spriteDying)
     PlaySoundW((PCWSTR)IDW_SMEXPLODE, g_inst, SND_ASYNC | SND_RESOURCE | SND_NOSTOP);
 
     RECT    bounds = { 0, 0, 600, 450 };
-    RECT    pos    = spriteDying-> GetPosition();
+    RECT    pos    = spriteDying->GetPosition();
     Sprite* sprite = new Sprite(g_smallExplosionBitmap.get( ), bounds);
     sprite->SetNumFrames(8, TRUE);
     sprite->SetPosition(pos.left, pos.top);

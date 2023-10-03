@@ -1,19 +1,19 @@
 #include "Background.hpp"
 
-Background::Background(int width, int height, COLORREF color)
+Background::Background(LONG width, LONG height, COLORREF color)
 {
+   m_bitmap = NULL;
+   m_color  = color;
    m_width  = width;
    m_height = height;
-   m_color  = color;
-   m_bitmap = NULL;
 }
 
 Background::Background(Bitmap* bitmap)
 {
-   m_color  = 0;
    m_bitmap = bitmap;
-   m_width  = bitmap-> GetWidth( );
-   m_height = bitmap-> GetHeight( );
+   m_color  = 0;
+   m_width  = bitmap->GetWidth( );
+   m_height = bitmap->GetHeight( );
 }
 
 Background::~Background( )
@@ -40,14 +40,14 @@ void Background::Draw(HDC dc)
    }
 }
 
-StarryBackground::StarryBackground(int width, int height,
-                                   int numStars, int twinkleDelay)
+StarryBackground::StarryBackground(LONG width, LONG height,
+                                   LONG numStars, LONG twinkleDelay)
    : Background(width, height, 0)
 {
    m_numStars     = min(numStars, 100);
    m_twinkleDelay = twinkleDelay;
 
-   for ( int i = 0; i < m_numStars; i++ )
+   for ( LONG i = 0; i < m_numStars; i++ )
    {
       m_stars[ i ].x    = rtk::rand(0, width);
       m_stars[ i ].y    = rtk::rand(0, height);
@@ -71,11 +71,11 @@ StarryBackground::~StarryBackground( )
 
 void StarryBackground::Update( )
 {
-   for ( int i = 0; i < m_numStars; i++ )
+   for ( LONG i = 0; i < m_numStars; i++ )
    {
       if ( 0 == (rtk::rand(0, m_twinkleDelay)) )
       {
-         int iRGB = rtk::rand(0, 255);
+         LONG iRGB = rtk::rand(0, 255);
 
          m_starColors[ i ] = RGB(iRGB, iRGB, iRGB);
 
@@ -101,7 +101,7 @@ void StarryBackground::Draw(HDC dc)
    FillRect(dc, &rect, brush);
    DeleteObject(brush);
 
-   for ( int i = 0; i < m_numStars; i++ )
+   for ( LONG i = 0; i < m_numStars; i++ )
    {
       SetPixel(dc, m_stars[ i ].x, m_stars[ i ].y, m_starColors[ i ]);
 

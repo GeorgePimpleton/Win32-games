@@ -12,10 +12,10 @@ Bitmap::Bitmap(PCWSTR fileName)
    Create(fileName);
 }
 
-Bitmap::Bitmap(UINT resID, HINSTANCE inst)
+Bitmap::Bitmap(UINT resID)
    : m_bitmap(NULL), m_width(0), m_height(0)
 {
-   Create(resID, inst);
+   Create(resID);
 }
 
 Bitmap::Bitmap(HDC dc, int width, int height, COLORREF color)
@@ -51,7 +51,7 @@ BOOL Bitmap::Create(PCWSTR fileName)
       return FALSE;
    }
 
-   BITMAP bitmap;
+   BITMAP bitmap = { };
 
    GetObjectW(m_bitmap, sizeof(BITMAP), &bitmap);
 
@@ -61,7 +61,7 @@ BOOL Bitmap::Create(PCWSTR fileName)
    return TRUE;
 }
 
-BOOL Bitmap::Create(UINT resID, HINSTANCE inst)
+BOOL Bitmap::Create(UINT resID)
 {
    Free( );
 
@@ -74,7 +74,7 @@ BOOL Bitmap::Create(UINT resID, HINSTANCE inst)
       return FALSE;
    }
 
-   BITMAP bitmap;
+   BITMAP bitmap = { };
 
    GetObjectW(m_bitmap, sizeof(BITMAP), &bitmap);
 
@@ -93,20 +93,19 @@ BOOL Bitmap::Create(HDC dc, int width, int height, COLORREF color)
       return FALSE;
    }
 
-   m_width = width;
+   m_width  = width;
    m_height = height;
 
-   HDC hMemDC = CreateCompatibleDC(dc);
-   HBRUSH hBrush = CreateSolidBrush(color);
+   HDC     memDC     = CreateCompatibleDC(dc);
+   HBRUSH  brush     = CreateSolidBrush(color);
+   HBITMAP oldBitmap = (HBITMAP) SelectObject(memDC, m_bitmap);
+   RECT    bitmap    = { 0, 0, m_width, m_height };
 
-   HBITMAP hOldBitmap = (HBITMAP) SelectObject(hMemDC, m_bitmap);
+   FillRect(memDC, &bitmap, brush);
 
-   RECT rcBitmap = { 0, 0, m_width, m_height };
-   FillRect(hMemDC, &rcBitmap, hBrush);
-
-   SelectObject(hMemDC, hOldBitmap);
-   DeleteDC(hMemDC);
-   DeleteObject(hBrush);
+   SelectObject(memDC, oldBitmap);
+   DeleteDC(memDC);
+   DeleteObject(brush);
 
    return TRUE;
 }
@@ -121,21 +120,20 @@ void Bitmap::DrawPart(HDC dc, int x, int y, int xPart, int yPart,
 {
    if ( m_bitmap != NULL )
    {
-      HDC hMemDC = CreateCompatibleDC(dc);
-
-      HBITMAP hOldBitmap = (HBITMAP) SelectObject(hMemDC, m_bitmap);
+      HDC     memDC     = CreateCompatibleDC(dc);
+      HBITMAP oldBitmap = (HBITMAP) SelectObject(memDC, m_bitmap);
 
       if ( trans )
       {
-         TransparentBlt(dc, x, y, wPart, hPart, hMemDC, xPart, yPart,
+         TransparentBlt(dc, x, y, wPart, hPart, memDC, xPart, yPart,
                         wPart, hPart, transColor);
       }
       else
       {
-         BitBlt(dc, x, y, wPart, hPart, hMemDC, xPart, yPart, SRCCOPY);
+         BitBlt(dc, x, y, wPart, hPart, memDC, xPart, yPart, SRCCOPY);
       }
 
-      SelectObject(hMemDC, hOldBitmap);
-      DeleteDC(hMemDC);
+      SelectObject(memDC, oldBitmap);
+      DeleteDC(memDC);
    }
 }
