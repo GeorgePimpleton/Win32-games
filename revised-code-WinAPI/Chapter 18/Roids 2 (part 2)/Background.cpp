@@ -1,6 +1,6 @@
 #include "Background.hpp"
 
-Background::Background(int width, int height, COLORREF color)
+Background::Background(LONG width, LONG height, COLORREF color)
 {
   m_width  = width;
   m_height = height;
@@ -40,8 +40,8 @@ void Background::Draw(HDC dc)
    }
 }
 
-StarryBackground::StarryBackground(int width, int height,
-                                   int numStars, int twinkleDelay)
+StarryBackground::StarryBackground(LONG width, LONG height,
+                                   LONG numStars, LONG twinkleDelay)
    : Background(width, height, 0)
 {
    m_numStars     = min(numStars, 100);

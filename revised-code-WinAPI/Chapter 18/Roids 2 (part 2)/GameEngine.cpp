@@ -2,7 +2,7 @@
 
 #include "GameEngine.hpp"
 
-GameEngine* GameEngine::m_gameEngine = NULL;
+std::unique_ptr<GameEngine> GameEngine::m_gameEngine = NULL;
 
 int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int cmdShow)
 {
@@ -106,7 +106,8 @@ BOOL GameEngine::CheckSpriteCollision(Sprite* testSprite)
 GameEngine::GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
                        WORD icon, WORD smallIcon, int width, int height)
 {
-   m_gameEngine    = this;
+   m_gameEngine.reset(this);
+
    m_inst          = inst;
    m_wnd           = NULL;
    m_wndClass      = wndClass;
@@ -165,8 +166,10 @@ BOOL GameEngine::Initialize(int cmdShow)
    int yWindowPos = (GetSystemMetrics(SM_CYSCREEN) - windowHeight) / 2;
 
    m_wnd = CreateWindowW(m_wndClass, m_title, WS_POPUPWINDOW |
-                         WS_CAPTION | WS_MINIMIZEBOX, xWindowPos, yWindowPos, windowWidth,
-                         windowHeight, NULL, NULL, m_inst, NULL);
+                         WS_CAPTION | WS_MINIMIZEBOX,
+                         xWindowPos, yWindowPos,
+                         windowWidth, windowHeight,
+                         NULL, NULL, m_inst, NULL);
 
    if ( NULL == m_wnd )
    {
@@ -265,7 +268,7 @@ BOOL GameEngine::InitJoystick( )
 
    JOYCAPS joyCaps;
 
-   joyGetDevCaps(m_joyID, &joyCaps, sizeof(JOYCAPS));
+   joyGetDevCapsW(m_joyID, &joyCaps, sizeof(JOYCAPS));
 
    DWORD xCenter = ((DWORD) joyCaps.wXmin + joyCaps.wXmax) / 2;
    DWORD yCenter = ((DWORD) joyCaps.wYmin + joyCaps.wYmax) / 2;

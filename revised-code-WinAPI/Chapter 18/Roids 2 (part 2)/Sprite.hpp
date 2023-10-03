@@ -19,14 +19,14 @@ class Sprite
 {
 protected:
    Bitmap*      m_bitmap;
-   int          m_numFrames;
-   int          m_curFrame;
-   int          m_frameDelay;
-   int          m_frameTrigger;
+   LONG         m_numFrames;
+   LONG         m_curFrame;
+   LONG         m_frameDelay;
+   LONG         m_frameTrigger;
    RECT         m_position;
    RECT         m_collision;
    POINT        m_velocity;
-   int          m_zOrder;
+   LONG         m_zOrder;
    RECT         m_bounds;
    BOUNDSACTION m_boundsAction;
    BOOL         m_hidden;
@@ -39,36 +39,36 @@ protected:
 public:
             Sprite(Bitmap* bitmap);
             Sprite(Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction = BA_STOP);
-            Sprite(Bitmap* bitmap, POINT position, POINT velocity, int zOrder,
+            Sprite(Bitmap* bitmap, POINT position, POINT velocity, LONG zOrder,
                    RECT& bounds, BOUNDSACTION boundsAction = BA_STOP);
    virtual ~Sprite( );
 
    virtual SPRITEACTION Update( );
    void                 Draw(HDC dc);
-   BOOL                 IsPointInside(int x, int y);
+   BOOL                 IsPointInside(LONG x, LONG y);
    BOOL                 TestCollision(Sprite* testSprite);
    void                 Kill( ) { m_dying = TRUE; };
 
-   Bitmap* GetBitmap( )                               { return m_bitmap; };
-   void    SetNumFrames(int numFrames, BOOL oneCycle  = FALSE);
-   void    SetFrameDelay(int frameDelay)              { m_frameDelay = frameDelay; };
+   Bitmap* GetBitmap( ) const                         { return m_bitmap; };
+   void    SetNumFrames(LONG numFrames, BOOL oneCycle  = FALSE);
+   void    SetFrameDelay(LONG frameDelay)              { m_frameDelay = frameDelay; };
    RECT&   GetPosition( )                             { return m_position; };
-   void    SetPosition(int x, int y);
+   void    SetPosition(LONG x, LONG y);
    void    SetPosition(POINT position);
    void    SetPosition(RECT& position);
-   void    OffsetPosition(int x, int y);
+   void    OffsetPosition(LONG x, LONG y);
    RECT&   GetCollision( )                            { return m_collision; };
-   POINT   GetVelocity( )                             { return m_velocity; };
-   void    SetVelocity(int x, int y);
+   POINT   GetVelocity( ) const                       { return m_velocity; };
+   void    SetVelocity(LONG x, LONG y);
    void    SetVelocity(POINT velocity);
-   BOOL    GetZOrder( )                               { return m_zOrder; };
-   void    SetZOrder(int zOrder)                      { m_zOrder = zOrder; };
+   BOOL    GetZOrder( ) const                         { return m_zOrder; };
+   void    SetZOrder(LONG zOrder)                     { m_zOrder = zOrder; };
    void    SetBounds(RECT& rcBounds)                  { CopyRect(&m_bounds, &rcBounds); };
    void    SetBoundsAction(BOUNDSACTION boundsAction) { m_boundsAction = boundsAction; };
-   BOOL    IsHidden( )                                { return m_hidden; };
+   BOOL    IsHidden( ) const                          { return m_hidden; };
    void    SetHidden(BOOL hidden)                     { m_hidden = hidden; };
-   int     GetWidth( )                                { return m_bitmap-> GetWidth( ); };
-   int     GetHeight( )                               { return (m_bitmap-> GetHeight( ) / m_numFrames); };
+   LONG    GetWidth( ) const                          { return m_bitmap-> GetWidth( ); };
+   LONG    GetHeight( ) const                         { return (m_bitmap-> GetHeight( ) / m_numFrames); };
 };
 
 inline void Sprite::UpdateFrame( )
@@ -93,8 +93,8 @@ inline void Sprite::UpdateFrame( )
 
 inline void Sprite::CalcCollisionRect( )
 {
-   int xShrink = (m_position.left - m_position.right) / 12;
-   int yShrink = (m_position.top - m_position.bottom) / 12;
+   LONG xShrink = (m_position.left - m_position.right) / 12;
+   LONG yShrink = (m_position.top - m_position.bottom) / 12;
 
    CopyRect(&m_collision, &m_position);
    InflateRect(&m_collision, xShrink, yShrink);
@@ -110,7 +110,7 @@ inline BOOL Sprite::TestCollision(Sprite* testSprite)
           rcTest.top <= m_collision.bottom;
 }
 
-inline BOOL Sprite::IsPointInside(int x, int y)
+inline BOOL Sprite::IsPointInside(LONG x, LONG y)
 {
    POINT point = { };
 
@@ -120,7 +120,7 @@ inline BOOL Sprite::IsPointInside(int x, int y)
    return PtInRect(&m_position, point);
 }
 
-inline void Sprite::SetNumFrames(int numFrames, BOOL oneCycle)
+inline void Sprite::SetNumFrames(LONG numFrames, BOOL oneCycle)
 {
    m_numFrames = numFrames;
    m_oneCycle  = oneCycle;
@@ -131,7 +131,7 @@ inline void Sprite::SetNumFrames(int numFrames, BOOL oneCycle)
    SetPosition(rect);
 }
 
-inline void Sprite::SetPosition(int x, int y)
+inline void Sprite::SetPosition(LONG x, LONG y)
 {
    OffsetRect(&m_position, x - m_position.left, y - m_position.top);
    CalcCollisionRect( );
@@ -149,13 +149,13 @@ inline void Sprite::SetPosition(RECT& position)
    CalcCollisionRect( );
 }
 
-inline void Sprite::OffsetPosition(int x, int y)
+inline void Sprite::OffsetPosition(LONG x, LONG y)
 {
    OffsetRect(&m_position, x, y);
    CalcCollisionRect( );
 }
 
-inline void Sprite::SetVelocity(int x, int y)
+inline void Sprite::SetVelocity(LONG x, LONG y)
 {
    m_velocity.x = x;
    m_velocity.y = y;

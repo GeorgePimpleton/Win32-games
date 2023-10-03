@@ -16,34 +16,34 @@ class Background
 protected:
    Bitmap*  m_bitmap;
    COLORREF m_color;
-   int      m_width;
-   int      m_height;
+   LONG     m_width;
+   LONG     m_height;
 
 public:
-            Background(int width, int weight, COLORREF color);
+            Background(LONG width, LONG weight, COLORREF color);
             Background(Bitmap* bitmap);
    virtual ~Background( );
 
    virtual void Update( );
    virtual void Draw(HDC dc);
 
-   int GetWidth( ) const  { return m_width; };
-   int GetHeight( ) const { return m_height; };
+   constexpr LONG GetWidth( ) const  { return m_width; };
+   constexpr LONG GetHeight( ) const { return m_height; };
 };
 
 class StarryBackground : Background
 {
 protected:
-   int                       m_numStars;
-   int                       m_twinkleDelay;
+   LONG                      m_numStars;
+   LONG                      m_twinkleDelay;
    std::array<POINT, 100>    m_stars;
    std::array<COLORREF, 100> m_starColors;
    std::array<STARSIZE, 100> m_sizeStars;
 
 public:
-            StarryBackground(int width, int height,
-                             int numStars = 100,
-                             int twinkleDelay = 50);
+            StarryBackground(LONG width, LONG height,
+                             LONG numStars = 100,
+                             LONG twinkleDelay = 50);
    virtual ~StarryBackground( );
 
    virtual void Update( );

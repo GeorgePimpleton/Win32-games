@@ -25,10 +25,8 @@ void GameStart(HWND wnd)
 
    SelectObject(g_offscreenDC, g_offscreenBitmap);
 
-   HINSTANCE inst = g_game->GetInstance( );
-
-   g_asteroidBitmap = std::make_unique<Bitmap>(IDB_ASTEROID, inst);
-   g_saucerBitmap   = std::make_unique<Bitmap>(IDB_SAUCER, inst);
+   g_asteroidBitmap = std::make_unique<Bitmap>(IDB_ASTEROID);
+   g_saucerBitmap   = std::make_unique<Bitmap>(IDB_SAUCER);
 
    g_background = std::make_unique<StarryBackground>(500, 400);
 
