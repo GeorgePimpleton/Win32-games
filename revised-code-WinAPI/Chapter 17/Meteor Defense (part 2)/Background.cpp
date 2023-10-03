@@ -1,6 +1,6 @@
 #include "Background.hpp"
 
-Background::Background(int width, int height, COLORREF color)
+Background::Background(LONG width, LONG height, COLORREF color)
 {
    m_color  = color;
    m_bitmap = NULL;
@@ -41,14 +41,14 @@ void Background::Draw(HDC dc)
    }
 }
 
-StarryBackground::StarryBackground(int width, int height,
-                                   int numStars, int twinkleDelay)
+StarryBackground::StarryBackground(LONG width, LONG height,
+                                   LONG numStars, LONG twinkleDelay)
    : Background(width, height, 0)
 {
    m_numStars     = min(numStars, 100);
    m_twinkleDelay = twinkleDelay;
 
-   for ( int i = 0; i < m_numStars; i++ )
+   for ( LONG i = 0; i < m_numStars; i++ )
    {
       m_stars[ i ].x    = rtk::rand(0, width);
       m_stars[ i ].y    = rtk::rand(0, height);
@@ -76,11 +76,11 @@ StarryBackground::~StarryBackground( )
 void StarryBackground::Update( )
 {
    // randomly change the shade and size of the stars so that they twinkle
-   for ( int i = 0; i < m_numStars; i++ )
+   for ( LONG i = 0; i < m_numStars; i++ )
    {
       if ( 0 == (rtk::rand(0, m_twinkleDelay)) )
       {
-         int iRGB = rtk::rand(0, 255);
+         LONG iRGB = rtk::rand(0, 255);
 
          m_starColors[ i ] = RGB(iRGB, iRGB, iRGB);
 
@@ -111,16 +111,16 @@ void StarryBackground::Draw(HDC dc)
    DeleteObject(brush);
 
    // draw the stars
-   for ( int i = 0; i < m_numStars; i++ )
+   for ( LONG i = 0; i < m_numStars; i++ )
    {
       SetPixel(dc, m_stars[ i ].x, m_stars[ i ].y, m_starColors[ i ]);
 
       // draw extra pixels if the star is medium
       if ( m_sizeStars[ i ] == SS_MEDIUM )
       {
-         for ( int x = -1; x < 2; x++ )
+         for ( LONG x = -1; x < 2; x++ )
          {
-            for ( int y = -1; y < 2; y++ )
+            for ( LONG y = -1; y < 2; y++ )
             {
                SetPixel(dc, m_stars[ i ].x + x, m_stars[ i ].y + y, m_starColors[ i ]);
             }
@@ -129,9 +129,9 @@ void StarryBackground::Draw(HDC dc)
       // draw even more pixels if the star is large
       else if ( m_sizeStars[ i ] == SS_LARGE )
       {
-         for ( int x = -2; x < 3; x++ )
+         for ( LONG x = -2; x < 3; x++ )
          {
-            for ( int y = -2; y < 3; y++ )
+            for ( LONG y = -2; y < 3; y++ )
             {
                // don't draw the corners
                if ( (abs(x) == 2) && (abs(y) == 2) )

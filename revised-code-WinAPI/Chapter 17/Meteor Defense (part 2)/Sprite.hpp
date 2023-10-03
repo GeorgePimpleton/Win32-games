@@ -67,8 +67,8 @@ public:
    void    SetBoundsAction(BOUNDSACTION boundsAction) { m_boundsAction = boundsAction; };
    BOOL    IsHidden( ) const                          { return m_hidden; };
    void    SetHidden(BOOL hidden)                     { m_hidden = hidden; };
-   int     GetWidth( ) const                          { return m_bitmap-> GetWidth( ); };
-   int     GetHeight( ) const                         { return (m_bitmap-> GetHeight( ) / m_numFrames); };
+   int     GetWidth( ) const                          { return m_bitmap->GetWidth( ); };
+   int     GetHeight( ) const                         { return (m_bitmap->GetHeight( ) / m_numFrames); };
 };
 
 inline void Sprite::UpdateFrame( )

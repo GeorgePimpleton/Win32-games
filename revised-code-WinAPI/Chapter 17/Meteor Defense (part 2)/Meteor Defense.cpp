@@ -1,4 +1,4 @@
-#include "MeteorDefense.hpp"
+#include "Meteor Defense.hpp"
 
 BOOL GameInitialize(HINSTANCE inst)
 {
@@ -28,14 +28,12 @@ void GameStart(HWND wnd)
 
    SelectObject(g_offscreenDC, g_offscreenBitmap);
 
-   HINSTANCE inst = g_game->GetInstance( );
-
-   g_groundBitmap    = std::make_unique<Bitmap>(IDB_GROUND, inst);
-   g_cityBitmap      = std::make_unique<Bitmap>(IDB_CITY, inst);
-   g_meteorBitmap    = std::make_unique<Bitmap>(IDB_METEOR, inst);
-   g_missileBitmap   = std::make_unique<Bitmap>(IDB_MISSILE, inst);
-   g_explosionBitmap = std::make_unique<Bitmap>(IDB_EXPLOSION, inst);
-   g_gameOverBitmap  = std::make_unique<Bitmap>(IDB_GAMEOVER, inst);
+   g_groundBitmap    = std::make_unique<Bitmap>(IDB_GROUND);
+   g_cityBitmap      = std::make_unique<Bitmap>(IDB_CITY);
+   g_meteorBitmap    = std::make_unique<Bitmap>(IDB_METEOR);
+   g_missileBitmap   = std::make_unique<Bitmap>(IDB_MISSILE);
+   g_explosionBitmap = std::make_unique<Bitmap>(IDB_EXPLOSION);
+   g_gameOverBitmap  = std::make_unique<Bitmap>(IDB_GAMEOVER);
 
    g_background = std::make_unique<StarryBackground>(600, 450);
 
@@ -265,7 +263,7 @@ void SpriteDying(Sprite* spriteDying)
 
       // create an explosion sprite at the meteor's position
       RECT bounds = { 0, 0, 600, 450 };
-      RECT pos    = spriteDying-> GetPosition( );
+      RECT pos    = spriteDying->GetPosition( );
 
       Sprite* sprite = new Sprite(g_explosionBitmap.get( ), bounds);
 
