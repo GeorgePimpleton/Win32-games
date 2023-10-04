@@ -20,7 +20,7 @@ protected:
 public:
    BackgroundLayer(PCWSTR fileName, int speed,
                    SCROLLDIR scrollDirection);
-   BackgroundLayer(UINT resID, HINSTANCE inst, int speed = 0,
+   BackgroundLayer(UINT resID, int speed = 0,
                    SCROLLDIR scrollDirection = SD_LEFT);
 
    virtual void Update( );

@@ -22,16 +22,16 @@ Sprite::Sprite(Bitmap* bitmap)
 
 Sprite::Sprite(Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction)
 {
-   int iXPos = rand( ) % (bounds.right - bounds.left);
-   int iYPos = rand( ) % (bounds.bottom - bounds.top);
+   int xPos = rand( ) % (bounds.right - bounds.left);
+   int yPos = rand( ) % (bounds.bottom - bounds.top);
 
    m_bitmap    = bitmap;
    m_numFrames = 1;
    m_curFrame  = m_frameDelay = m_frameTrigger = 0;
 
-   SetRect(&m_position, iXPos, iYPos,
-           iXPos + bitmap->GetWidth( ),
-           iYPos + bitmap->GetHeight( ));
+   SetRect(&m_position, xPos, yPos,
+           xPos + bitmap->GetWidth( ),
+           yPos + bitmap->GetHeight( ));
    CalcCollisionRect( );
 
    m_velocity.x = m_velocity.y = 0;
@@ -45,7 +45,7 @@ Sprite::Sprite(Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction)
    m_oneCycle     = FALSE;
 }
 
-Sprite::Sprite(Bitmap* bitmap, POINT position, POINT velocity, int zOrder,
+Sprite::Sprite(Bitmap* bitmap, POINT position, POINT velocity, LONG zOrder,
                RECT& bounds, BOUNDSACTION boundsAction)
 {
    m_bitmap    = bitmap;
@@ -79,9 +79,9 @@ SPRITEACTION Sprite::Update( )
 
    UpdateFrame( );
 
-   POINT ptNewPosition;
-   POINT ptSpriteSize;
-   POINT ptBoundsSize;
+   POINT ptNewPosition = { };
+   POINT ptSpriteSize  = { };
+   POINT ptBoundsSize  = { };
 
    ptNewPosition.x = m_position.left + m_velocity.x;
    ptNewPosition.y = m_position.top + m_velocity.y;

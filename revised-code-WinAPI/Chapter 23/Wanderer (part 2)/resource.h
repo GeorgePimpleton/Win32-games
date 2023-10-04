@@ -3,9 +3,9 @@
 #define IDI_ICON          1001
 #define IDI_ICON_SM       1002
 
-#define IDB_BG_LANDSCAPE      2001
-#define IDB_BG_CLOUDS         2002
-#define IDB_PERSON            2003
+#define IDB_BG_LANDSCAPE  2001
+#define IDB_BG_CLOUDS     2002
+#define IDB_PERSON        2003
 
 #define  IDD_ABOUT        4001
 #define  IDC_STATIC       -1

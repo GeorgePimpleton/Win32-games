@@ -30,7 +30,7 @@ void GameStart(HWND wnd)
    // Create the scrolling background and landscape layer
    HDC dc = GetDC(wnd);
    g_background = std::make_unique<ScrollingBackground>(256, 256);
-   g_BGLandscapeLayer = std::make_unique<BackgroundLayer>(IDB_BG_LANDSCAPE, g_inst);
+   g_BGLandscapeLayer = std::make_unique<BackgroundLayer>(IDB_BG_LANDSCAPE);
 
    RECT viewport = { 352, 352, 608, 608 };
    g_BGLandscapeLayer->SetViewport(viewport);
@@ -38,14 +38,14 @@ void GameStart(HWND wnd)
 
    // Create the scrolling foreground and clouds layer
    g_foreground = std::make_unique<ScrollingBackground>(256, 256);
-   g_FGCloudsLayer = std::make_unique<BackgroundLayer>(IDB_BG_CLOUDS, g_inst);
+   g_FGCloudsLayer = std::make_unique<BackgroundLayer>(IDB_BG_CLOUDS);
    viewport.left = viewport.top = 64;
    viewport.right = viewport.bottom = 320;
    g_FGCloudsLayer->SetViewport(viewport);
    g_foreground->AddLayer(g_FGCloudsLayer.get( ));
 
    // Create and load the person bitmap
-   g_personBitmap = std::make_unique<Bitmap>(IDB_PERSON, g_inst);
+   g_personBitmap = std::make_unique<Bitmap>(IDB_PERSON);
 
    // Create the person sprite
    RECT bounds = { 115, 112, 26, 32 };
