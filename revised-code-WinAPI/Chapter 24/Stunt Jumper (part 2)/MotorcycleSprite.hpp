@@ -7,12 +7,12 @@
 class MotorcycleSprite : public Sprite
 {
 protected:
-   const int m_MINSPEED;
-   const int m_MAXSPEED;
-   const int m_HANGTIME;
-   BOOL      m_jumping;
-   int       m_jumpCounter;
-   BOOL      m_landedSafely;
+   const LONG m_MINSPEED;
+   const LONG m_MAXSPEED;
+   const LONG m_HANGTIME;
+   BOOL       m_jumping;
+   int        m_jumpCounter;
+   BOOL       m_landedSafely;
 
 public:
             MotorcycleSprite(Bitmap* bitmap, RECT& bounds,

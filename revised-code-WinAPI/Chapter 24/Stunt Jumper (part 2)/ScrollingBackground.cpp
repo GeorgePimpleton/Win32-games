@@ -12,9 +12,9 @@ BackgroundLayer::BackgroundLayer(PCWSTR fileName,
 }
 
 // Create a background layer from a bitmap resource
-BackgroundLayer::BackgroundLayer(UINT resID, HINSTANCE inst,
+BackgroundLayer::BackgroundLayer(UINT resID,
                                  int speed, SCROLLDIR direction)
-   : Bitmap(resID, inst), m_speed(speed),
+   : Bitmap(resID), m_speed(speed),
    m_direction(direction)
 {
    // Set the viewport to the entire layer image by default

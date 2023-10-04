@@ -18,14 +18,14 @@ class Sprite
 {
 protected:
    Bitmap*      m_bitmap;
-   int          m_numFrames;
-   int          m_curFrame;
-   int          m_frameDelay;
-   int          m_frameTrigger;
+   LONG         m_numFrames;
+   LONG         m_curFrame;
+   LONG         m_frameDelay;
+   LONG         m_frameTrigger;
    RECT         m_position;
    RECT         m_collision;
    POINT        m_velocity;
-   int          m_zOrder;
+   LONG         m_zOrder;
    RECT         m_bounds;
    BOUNDSACTION m_boundsAction;
    BOOL         m_hidden;
@@ -39,7 +39,7 @@ public:
             Sprite(Bitmap* bitmap);
             Sprite(Bitmap* bitmap, RECT& bounds,
                    BOUNDSACTION boundsAction = BA_STOP);
-            Sprite(Bitmap* bitmap, POINT position, POINT velocity, int zOrder,
+            Sprite(Bitmap* bitmap, POINT position, POINT velocity, LONG zOrder,
                    RECT& bounds, BOUNDSACTION boundsAction = BA_STOP);
    virtual ~Sprite( );
 
@@ -50,26 +50,26 @@ public:
    BOOL                 TestCollision(Sprite* testSprite);
    void                 Kill( ) { m_dying = TRUE; };
 
-   Bitmap* GetBitmap( )                                { return m_bitmap; };
-   void    SetNumFrames(int iNumFrames, BOOL bOneCycle = FALSE);
-   void    SetFrameDelay(int frameDelay)               { m_frameDelay = frameDelay; };
-   RECT&   GetPosition( )                              { return m_position; };
+   Bitmap* GetBitmap( ) const                           { return m_bitmap; };
+   void    SetNumFrames(LONG iNumFrames, BOOL bOneCycle = FALSE);
+   void    SetFrameDelay(LONG frameDelay)               { m_frameDelay = frameDelay; };
+   RECT&   GetPosition( )                               { return m_position; };
    void    SetPosition(int x, int y);
    void    SetPosition(POINT position);
    void    SetPosition(RECT& rcPosition);
    void    OffsetPosition(int x, int y);
-   RECT&   GetCollision( )                             { return m_collision; };
-   POINT   GetVelocity( )                              { return m_velocity; };
+   RECT&   GetCollision( )                              { return m_collision; };
+   POINT   GetVelocity( ) const                         { return m_velocity; };
    void    SetVelocity(int x, int y);
    void    SetVelocity(POINT velocity);
-   BOOL    GetZOrder( )                                { return m_zOrder; };
-   void    SetZOrder(int zOrder)                       { m_zOrder = zOrder; };
-   void    SetBounds(RECT& bounds)                     { CopyRect(&m_bounds, &bounds); };
-   void    SetBoundsAction(BOUNDSACTION boundsAction)  { m_boundsAction = boundsAction; };
-   BOOL    IsHidden( )                                 { return m_hidden; };
-   void    SetHidden(BOOL hidden)                      { m_hidden = hidden; };
-   int     GetWidth( )                                 { return m_bitmap->GetWidth( ); };
-   int     GetHeight( )                                { return (m_bitmap->GetHeight( ) / m_numFrames); };
+   BOOL    GetZOrder( ) const                           { return m_zOrder; };
+   void    SetZOrder(LONG zOrder)                       { m_zOrder = zOrder; };
+   void    SetBounds(RECT& bounds)                      { CopyRect(&m_bounds, &bounds); };
+   void    SetBoundsAction(BOUNDSACTION boundsAction)   { m_boundsAction = boundsAction; };
+   BOOL    IsHidden( ) const                            { return m_hidden; };
+   void    SetHidden(BOOL hidden)                       { m_hidden = hidden; };
+   int     GetWidth( ) const                            { return m_bitmap-> GetWidth( ); };
+   int     GetHeight( ) const                           { return (m_bitmap-> GetHeight( ) / m_numFrames); };
 };
 
 inline void Sprite::UpdateFrame( )
@@ -121,7 +121,7 @@ inline BOOL Sprite::IsPointInside(int x, int y)
    return PtInRect(&m_position, point);
 }
 
-inline void Sprite::SetNumFrames(int iNumFrames, BOOL bOneCycle)
+inline void Sprite::SetNumFrames(LONG iNumFrames, BOOL bOneCycle)
 {
    m_numFrames = iNumFrames;
    m_oneCycle  = bOneCycle;

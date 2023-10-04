@@ -29,21 +29,21 @@ void GameStart(HWND wnd)
 
    SelectObject(g_offscreenDC, g_offscreenBitmap);
 
-   g_splashBitmap    = std::make_unique <Bitmap>(IDB_SPLASH, g_inst);
-   g_pJumperBitmap   = std::make_unique<Bitmap>(IDB_JUMPER, g_inst);
-   g_busBitmap       = std::make_unique<Bitmap>(IDB_BUS, g_inst);
-   g_rampBitmap[ 0 ] = std::make_unique<Bitmap>(IDB_RAMPLEFT, g_inst);
-   g_rampBitmap[ 1 ] = std::make_unique<Bitmap>(IDB_RAMPRIGHT, g_inst);
-   g_gameOverBitmap  = std::make_unique<Bitmap>(IDB_GAMEOVER, g_inst);
+   g_splashBitmap    = std::make_unique <Bitmap>(IDB_SPLASH);
+   g_pJumperBitmap   = std::make_unique<Bitmap>(IDB_JUMPER);
+   g_busBitmap       = std::make_unique<Bitmap>(IDB_BUS);
+   g_rampBitmap[ 0 ] = std::make_unique<Bitmap>(IDB_RAMPLEFT);
+   g_rampBitmap[ 1 ] = std::make_unique<Bitmap>(IDB_RAMPRIGHT);
+   g_gameOverBitmap  = std::make_unique<Bitmap>(IDB_GAMEOVER);
 
    g_background = std::make_unique<ScrollingBackground>(750, 250);
-   g_BGSkyLayer = std::make_unique<BackgroundLayer>(IDB_BG_SKY, g_inst, 1, SD_LEFT);
+   g_BGSkyLayer = std::make_unique<BackgroundLayer>(IDB_BG_SKY, 1, SD_LEFT);
    g_background->AddLayer(g_BGSkyLayer.get( ));
-   g_BGMountainsLayer = std::make_unique<BackgroundLayer>(IDB_BG_MOUNTAINS, g_inst, 2, SD_LEFT);
+   g_BGMountainsLayer = std::make_unique<BackgroundLayer>(IDB_BG_MOUNTAINS, 2, SD_LEFT);
    g_background->AddLayer(g_BGMountainsLayer.get( ));
-   g_BGTreesLayer = std::make_unique<BackgroundLayer>(IDB_BG_TREES, g_inst, 3, SD_LEFT);
+   g_BGTreesLayer = std::make_unique<BackgroundLayer>(IDB_BG_TREES, 3, SD_LEFT);
    g_background->AddLayer(g_BGTreesLayer.get( ));
-   g_BGRoadLayer = std::make_unique<BackgroundLayer>(IDB_BG_ROAD, g_inst);
+   g_BGRoadLayer = std::make_unique<BackgroundLayer>(IDB_BG_ROAD);
    g_background->AddLayer(g_BGRoadLayer.get( ));
 
    g_splash   = TRUE;
