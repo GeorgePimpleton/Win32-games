@@ -2,7 +2,7 @@
 
 #include "GameEngine.hpp"
 
-GameEngine* GameEngine::m_gameEngine = NULL;
+std::unique_ptr<GameEngine> GameEngine::m_gameEngine = NULL;
 
 int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
                     _In_ PWSTR cmdLine, _In_ int cmdShow)
@@ -107,7 +107,8 @@ BOOL GameEngine::CheckSpriteCollision(Sprite* testSprite)
 GameEngine::GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
                        WORD icon, WORD smallIcon, int width, int height)
 {
-   m_gameEngine    = this;
+   m_gameEngine.reset(this);
+
    m_inst          = inst;
    m_wnd           = NULL;
    m_wndClass      = wndClass;
@@ -130,7 +131,7 @@ GameEngine::~GameEngine( )
 
 BOOL GameEngine::Initialize(int cmdShow)
 {
-   WNDCLASSEXW wc;
+   WNDCLASSEXW wc = { };
 
    wc.cbSize        = sizeof(wc);
    wc.style         = CS_HREDRAW | CS_VREDRAW;
@@ -266,7 +267,7 @@ BOOL GameEngine::InitJoystick( )
 
    JOYCAPS joyCaps;
 
-   joyGetDevCaps(m_joyID, &joyCaps, sizeof(JOYCAPS));
+   joyGetDevCapsW(m_joyID, &joyCaps, sizeof(JOYCAPS));
 
    DWORD xCenter = ((DWORD) joyCaps.wXmin + joyCaps.wXmax) / 2;
    DWORD yCenter = ((DWORD) joyCaps.wYmin + joyCaps.wYmax) / 2;
@@ -430,7 +431,7 @@ void GameEngine::PlayMIDISong(PCWSTR MIDIFileName, BOOL restart)
 {
    if ( m_MIDIPlayerID == 0 )
    {
-      MCI_OPEN_PARMSW mciOpenParms;
+      MCI_OPEN_PARMSW mciOpenParms = { };
 
       mciOpenParms.lpstrDeviceType  = L"sequencer";
       mciOpenParms.lpstrElementName = MIDIFileName;
@@ -448,7 +449,7 @@ void GameEngine::PlayMIDISong(PCWSTR MIDIFileName, BOOL restart)
 
    if ( restart )
    {
-      MCI_SEEK_PARMS mciSeekParms;
+      MCI_SEEK_PARMS mciSeekParms = { };
 
       if ( mciSendCommandW (m_MIDIPlayerID, MCI_SEEK, MCI_SEEK_TO_START,
                             (DWORD_PTR) &mciSeekParms) != 0 )
@@ -457,7 +458,7 @@ void GameEngine::PlayMIDISong(PCWSTR MIDIFileName, BOOL restart)
       }
    }
 
-   MCI_PLAY_PARMS mciPlayParms;
+   MCI_PLAY_PARMS mciPlayParms = { };
 
    if ( mciSendCommandW(m_MIDIPlayerID, MCI_PLAY, 0,
                         (DWORD_PTR) &mciPlayParms) != 0 )

@@ -30,20 +30,20 @@ void GameStart(HWND wnd)
 
    SelectObject(g_hOffscreenDC, g_hOffscreenBitmap);
 
-   g_splashBitmap         = std::make_unique<Bitmap>(IDB_SPLASH, g_inst);
-   g_desertBitmap         = std::make_unique<Bitmap>(IDB_DESERT, g_inst);
-   g_carBitmap            = std::make_unique<Bitmap>(IDB_CAR, g_inst);
-   g_smallCarBitmap       = std::make_unique<Bitmap>(IDB_SMCAR, g_inst);
-   g_missileBitmap        = std::make_unique<Bitmap>(IDB_MISSILE, g_inst);
-   g_BlobboBitmap         = std::make_unique<Bitmap>(IDB_BLOBBO, g_inst);
-   g_BMissileBitmap       = std::make_unique<Bitmap>(IDB_BMISSILE, g_inst);
-   g_JellyBitmap          = std::make_unique<Bitmap>(IDB_JELLY, g_inst);
-   g_JMissileBitmap       = std::make_unique<Bitmap>(IDB_JMISSILE, g_inst);
-   g_TimmyBitmap          = std::make_unique<Bitmap>(IDB_TIMMY, g_inst);
-   g_TMissileBitmap       = std::make_unique<Bitmap>(IDB_TMISSILE, g_inst);
-   g_smallExplosionBitmap = std::make_unique<Bitmap>(IDB_SMEXPLOSION, g_inst);
-   g_largeExplosionBitmap = std::make_unique<Bitmap>(IDB_LGEXPLOSION, g_inst);
-   g_gameOverBitmap       = std::make_unique<Bitmap>(IDB_GAMEOVER, g_inst);
+   g_splashBitmap         = std::make_unique<Bitmap>(IDB_SPLASH);
+   g_desertBitmap         = std::make_unique<Bitmap>(IDB_DESERT);
+   g_carBitmap            = std::make_unique<Bitmap>(IDB_CAR);
+   g_smallCarBitmap       = std::make_unique<Bitmap>(IDB_SMCAR);
+   g_missileBitmap        = std::make_unique<Bitmap>(IDB_MISSILE);
+   g_BlobboBitmap         = std::make_unique<Bitmap>(IDB_BLOBBO);
+   g_BMissileBitmap       = std::make_unique<Bitmap>(IDB_BMISSILE);
+   g_JellyBitmap          = std::make_unique<Bitmap>(IDB_JELLY);
+   g_JMissileBitmap       = std::make_unique<Bitmap>(IDB_JMISSILE);
+   g_TimmyBitmap          = std::make_unique<Bitmap>(IDB_TIMMY);
+   g_TMissileBitmap       = std::make_unique<Bitmap>(IDB_TMISSILE);
+   g_smallExplosionBitmap = std::make_unique<Bitmap>(IDB_SMEXPLOSION);
+   g_largeExplosionBitmap = std::make_unique<Bitmap>(IDB_LGEXPLOSION);
+   g_gameOverBitmap       = std::make_unique<Bitmap>(IDB_GAMEOVER);
 
    g_background = std::make_unique<StarryBackground>(600, 450);
 
@@ -98,7 +98,7 @@ void GamePaint(HDC dc)
       EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
 
       // draw the hi scores
-      WCHAR szText[ 64 ];
+      WCHAR text[ 64 ];
       RECT  rect = { 275, 250, 325, 270 };
 
       SetBkMode(dc, TRANSPARENT);
@@ -106,9 +106,9 @@ void GamePaint(HDC dc)
 
       for ( int i = 0; i < 5; i++ )
       {
-         wsprintfW(szText, L"%d", g_hiScores[ i ]);
+         wsprintfW(text, L"%d", g_hiScores[ i ]);
 
-         DrawTextW(dc, szText, -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+         DrawTextW(dc, text, -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
          rect.top    += 20;
          rect.bottom += 20;
@@ -117,15 +117,15 @@ void GamePaint(HDC dc)
    else
    {
       // draw the score
-      WCHAR szText[ 64 ];
+      WCHAR text[ 64 ];
       RECT  rect = { 460, 0, 510, 30 };
 
-      wsprintfW(szText, L"%d", g_score);
+      wsprintfW(text, L"%d", g_score);
 
       SetBkMode(dc, TRANSPARENT);
       SetTextColor(dc, RGB(255, 255, 255));
 
-      DrawTextW(dc, szText, -1, &rect, DT_SINGLELINE | DT_RIGHT | DT_VCENTER);
+      DrawTextW(dc, text, -1, &rect, DT_SINGLELINE | DT_RIGHT | DT_VCENTER);
 
       for ( UINT i = 0; i < g_numLives; i++ )
       {
