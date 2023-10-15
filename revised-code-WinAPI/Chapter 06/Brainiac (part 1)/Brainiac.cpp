@@ -18,7 +18,7 @@ BOOL GameInitialize(HINSTANCE hInstance)
     TEXT("Brainiac"), IDI_BRAINIAC, IDI_BRAINIAC_SM, 528, 512);
   if (g_pGame == NULL)
     return FALSE;
-  
+
   // Set the frame rate
   g_pGame->SetFrameRate(1);
 
@@ -155,7 +155,7 @@ void MouseButtonDown(int x, int y, BOOL bLeft)
           if (++g_iMatches == 8)
           {
             TCHAR szText[64];
-            wsprintf(szText, "You won in %d tries.", g_iTries);
+            wsprintf(szText, TEXT("You won in %d tries."), g_iTries);
             MessageBox(g_pGame->GetWindow(), szText, TEXT("Brainiac"), MB_OK);
           }
         }

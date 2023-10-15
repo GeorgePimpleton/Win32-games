@@ -21,15 +21,15 @@ void GameStart(HWND wnd)
 
    HINSTANCE inst = g_game->GetInstance();
 
-   g_tiles[ 0 ] = std::make_unique<Bitmap>(IDB_TILEBLANK, inst);
-   g_tiles[ 1 ] = std::make_unique<Bitmap>(IDB_TILE1, inst);
-   g_tiles[ 2 ] = std::make_unique<Bitmap>(IDB_TILE2, inst);
-   g_tiles[ 3 ] = std::make_unique<Bitmap>(IDB_TILE3, inst);
-   g_tiles[ 4 ] = std::make_unique<Bitmap>(IDB_TILE4, inst);
-   g_tiles[ 5 ] = std::make_unique<Bitmap>(IDB_TILE5, inst);
-   g_tiles[ 6 ] = std::make_unique<Bitmap>(IDB_TILE6, inst);
-   g_tiles[ 7 ] = std::make_unique<Bitmap>(IDB_TILE7, inst);
-   g_tiles[ 8 ] = std::make_unique<Bitmap>(IDB_TILE8, inst);
+   g_tiles[ 0 ] = std::make_unique<Bitmap>(IDB_TILEBLANK);
+   g_tiles[ 1 ] = std::make_unique<Bitmap>(IDB_TILE1);
+   g_tiles[ 2 ] = std::make_unique<Bitmap>(IDB_TILE2);
+   g_tiles[ 3 ] = std::make_unique<Bitmap>(IDB_TILE3);
+   g_tiles[ 4 ] = std::make_unique<Bitmap>(IDB_TILE4);
+   g_tiles[ 5 ] = std::make_unique<Bitmap>(IDB_TILE5);
+   g_tiles[ 6 ] = std::make_unique<Bitmap>(IDB_TILE6);
+   g_tiles[ 7 ] = std::make_unique<Bitmap>(IDB_TILE7);
+   g_tiles[ 8 ] = std::make_unique<Bitmap>(IDB_TILE8);
 
    GameNew( );
 }
@@ -42,7 +42,7 @@ void GameNew( )
       for ( UINT j = 0; j < 4; j++ )
       {
          g_tileState[ i ][ j ] = FALSE;
-         g_tile[ i ][ j ] = 0;
+         g_tile[ i ][ j ]      = 0;
       }
    }
 
@@ -67,7 +67,7 @@ void GameNew( )
    // initialize the tile selections and match/try count
    g_tile1.x = g_tile1.y = -1;
    g_tile2.x = g_tile2.y = -1;
-   g_matches = g_tries = 0;
+   g_matches = g_tries   = 0;
 
    // force a repaint to update the tiles
    InvalidateRect(g_game->GetWindow( ), NULL, FALSE);

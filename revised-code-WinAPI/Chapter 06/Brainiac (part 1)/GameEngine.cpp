@@ -75,17 +75,20 @@ LRESULT CALLBACK WndProc(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam)
 //-----------------------------------------------------------------
 // GameEngine Constructor(s)/Destructor
 //-----------------------------------------------------------------
-GameEngine::GameEngine(HINSTANCE hInstance, LPTSTR szWindowClass,
-  LPTSTR szTitle, WORD wIcon, WORD wSmallIcon, int iWidth, int iHeight)
+GameEngine::GameEngine(HINSTANCE hInstance, PCTSTR szWindowClass, PCTSTR szTitle,
+                       WORD wIcon, WORD wSmallIcon, int iWidth, int iHeight)
 {
   // Set the member variables for the game engine
   m_pGameEngine = this;
   m_hInstance = hInstance;
   m_hWindow = NULL;
+
   if (lstrlen(szWindowClass) > 0)
     lstrcpy(m_szWindowClass, szWindowClass);
+
   if (lstrlen(szTitle) > 0)
     lstrcpy(m_szTitle, szTitle);
+
   m_wIcon = wIcon;
   m_wSmallIcon = wSmallIcon;
   m_iWidth = iWidth;
@@ -126,9 +129,9 @@ BOOL GameEngine::Initialize(int iCmdShow)
     return FALSE;
 
   // Calculate the window size and position based upon the game size
-  int iWindowWidth = m_iWidth + GetSystemMetrics(SM_CXFIXEDFRAME) * 2,
+  int iWindowWidth = m_iWidth + GetSystemMetrics(SM_CXFIXEDFRAME) * 2 + 10,
       iWindowHeight = m_iHeight + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 +
-        GetSystemMetrics(SM_CYCAPTION);
+        GetSystemMetrics(SM_CYCAPTION) + 10;
   if (wndclass.lpszMenuName != NULL)
     iWindowHeight += GetSystemMetrics(SM_CYMENU);
   int iXWindowPos = (GetSystemMetrics(SM_CXSCREEN) - iWindowWidth) / 2,

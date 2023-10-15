@@ -11,33 +11,33 @@ protected:
 
 public:
             Bitmap( );
-            Bitmap(PCWSTR fileName);
-            Bitmap(UINT resID, HINSTANCE hInst);
-            Bitmap(HWND hwnd, LONG width, LONG height, COLORREF color = RGB(0, 0, 0));
+            Bitmap(PCWSTR);
+            Bitmap(UINT);
+            Bitmap(HWND, LONG, LONG, COLORREF = RGB(0, 0, 0));
    virtual ~Bitmap( );
 
 public:
-   BOOL Create(PCWSTR fileName);
-   BOOL Create(UINT resID, HINSTANCE inst);
-   BOOL Create(HWND wnd, LONG width, LONG height, COLORREF color);
+   BOOL Create(PCWSTR);
+   BOOL Create(UINT);
+   BOOL Create(HWND, LONG, LONG, COLORREF);
 
 public:
-   void Draw(HDC dc, int x, int y, BOOL trans = FALSE, COLORREF transColor = RGB(255, 0, 255));
+   void Draw(HDC, int, int, BOOL = FALSE, COLORREF = RGB(255, 0, 255));
 
 public:
-   LONG GetWidth( ) const;
-   LONG GetHeight( )const ;
+   constexpr LONG GetWidth( ) const;
+   constexpr LONG GetHeight( )const ;
 
 protected:
    void Free( );
 };
 
-inline LONG Bitmap::GetWidth( ) const
+inline constexpr LONG Bitmap::GetWidth( ) const
 {
    return m_width;
 };
 
-inline LONG Bitmap::GetHeight( ) const
+inline constexpr LONG Bitmap::GetHeight( ) const
 {
    return m_height;
 };

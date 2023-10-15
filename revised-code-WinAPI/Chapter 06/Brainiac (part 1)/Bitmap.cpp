@@ -1,3 +1,5 @@
+#pragma comment(lib, "msimg32.lib")
+
 //-----------------------------------------------------------------
 // Bitmap Object
 // C++ Source - Bitmap.cpp

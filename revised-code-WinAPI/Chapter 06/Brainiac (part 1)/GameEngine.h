@@ -14,7 +14,7 @@
 // Windows Function Declarations
 //-----------------------------------------------------------------
 int WINAPI        WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-                    PSTR szCmdLine, int iCmdShow);
+                          PSTR szCmdLine, int iCmdShow);
 LRESULT CALLBACK  WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 //-----------------------------------------------------------------
@@ -51,8 +51,8 @@ protected:
 
 public:
   // Constructor(s)/Destructor
-          GameEngine(HINSTANCE hInstance, LPTSTR szWindowClass, LPTSTR szTitle,
-            WORD wIcon, WORD wSmallIcon, int iWidth = 640, int iHeight = 480);
+          GameEngine(HINSTANCE hInstance, PCTSTR szWindowClass, PCTSTR szTitle,
+                     WORD wIcon, WORD wSmallIcon, int iWidth = 640, int iHeight = 480);
   virtual ~GameEngine();
 
   // General Methods
