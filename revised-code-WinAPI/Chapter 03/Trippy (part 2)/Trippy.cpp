@@ -81,8 +81,8 @@ void GameMenu(WPARAM wParam)
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT),
-                 g_game->GetWindow( ), (DLGPROC) DlgProc);
+      DialogBoxParamW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT),
+                      g_game->GetWindow( ), (DLGPROC) DlgProc, 0L);
       return;
    }
 }

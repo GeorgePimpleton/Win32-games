@@ -123,12 +123,9 @@ BOOL GameEngine::Initialize(int cmdShow)
       return FALSE;
    }
 
-   int iWindowWidth  = m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2;
-   int iWindowHeight = m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 +
-                       GetSystemMetrics(SM_CYCAPTION);
-
-   iWindowWidth  += 10;
-   iWindowHeight += 10;
+   int iWindowWidth  = m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2 + 10;
+   int iWindowHeight = m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2
+                                + GetSystemMetrics(SM_CYCAPTION) + 10;
 
    if ( wc.lpszMenuName != NULL )
    {
@@ -180,15 +177,15 @@ LRESULT GameEngine::HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam
       return 0;
 
    case WM_PAINT:
-      HDC         dc;
+   {
       PAINTSTRUCT ps;
-
-      dc = BeginPaint(wnd, &ps);
+      HDC         dc = BeginPaint(wnd, &ps);
 
       GamePaint(dc);
 
       EndPaint(wnd, &ps);
-      return 0;
+   }
+   return 0;
 
    case WM_DESTROY:
       GameEnd( );
