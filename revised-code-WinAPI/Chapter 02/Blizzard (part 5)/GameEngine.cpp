@@ -90,7 +90,7 @@ BOOL GameEngine::Initialize(int cmdShow)
    wc.lpszMenuName  = NULL;
    wc.lpszClassName = m_wndClass;
 
-   if ( !RegisterClassEx(&wc) )
+   if ( !RegisterClassExW(&wc) )
    {
       return FALSE;
    }
@@ -106,9 +106,11 @@ BOOL GameEngine::Initialize(int cmdShow)
    int xWindowPos = (GetSystemMetrics(SM_CXSCREEN) - windowWidth) / 2;
    int yWindowPos = (GetSystemMetrics(SM_CYSCREEN) - windowHeight) / 2;
 
-   m_wnd = CreateWindow(m_wndClass, m_title, WS_POPUPWINDOW |
-                            WS_CAPTION | WS_MINIMIZEBOX, xWindowPos, yWindowPos, windowWidth,
-                            windowHeight, NULL, NULL, m_inst, NULL);
+   m_wnd = CreateWindow(m_wndClass, m_title,
+                        WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
+                        xWindowPos, yWindowPos, windowWidth, windowHeight,
+                        NULL, NULL, m_inst, NULL);
+
    if ( !m_wnd )
    {
       return FALSE;
@@ -140,19 +142,20 @@ LRESULT GameEngine::HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam
       return 0;
 
    case WM_PAINT:
-      HDC         hDC;
+   {
       PAINTSTRUCT ps;
-      hDC = BeginPaint(wnd, &ps);
+      HDC         dc = BeginPaint(wnd, &ps);
 
-      GamePaint(hDC);
+      GamePaint(dc);
 
       EndPaint(wnd, &ps);
-      return 0;
+   }
+   return 0;
 
    case WM_DESTROY:
       GameEnd( );
       PostQuitMessage(0);
       return 0;
    }
-   return DefWindowProc(wnd, msg, wParam, lParam);
+   return DefWindowProcW(wnd, msg, wParam, lParam);
 }

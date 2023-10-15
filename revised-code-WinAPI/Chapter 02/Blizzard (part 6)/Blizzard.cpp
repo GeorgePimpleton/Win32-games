@@ -2,22 +2,22 @@
 
 BOOL GameInitialize(HINSTANCE inst)
 {
-  g_game = new GameEngine(inst, L"Blizzard", L"Blizzard",
+   g_game = new GameEngine(inst, L"Blizzard", L"Blizzard",
                            IDI_ICON, IDI_ICON_SM);
 
-  if ( g_game == NULL )
-  {
-     return FALSE;
-  }
+   if ( g_game == NULL )
+   {
+      return FALSE;
+   }
 
-  g_game->SetFrameRate(15);
+   g_game->SetFrameRate(15);
 
-  return TRUE;
+   return TRUE;
 }
 
 void GameStart(HWND wnd)
 {
-  rtk::srand();
+   rtk::srand( );
 }
 
 void GameNew( )
@@ -27,47 +27,47 @@ void GameNew( )
 
 void GameEnd( )
 {
-  delete g_game;
+   delete g_game;
 }
 
 void GameActivate(HWND wnd)
 {
-  HDC  dc = GetDC(wnd);
-  RECT rect;
+   HDC  dc = GetDC(wnd);
+   RECT rect;
 
-  GetClientRect(wnd, &rect);
+   GetClientRect(wnd, &rect);
 
-  DrawTextW(dc, L"Here comes the blizzard!", -1, &rect,
-            DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+   DrawTextW(dc, L"Here comes the blizzard!", -1, &rect,
+             DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
-  ReleaseDC(wnd, dc);
+   ReleaseDC(wnd, dc);
 }
 
 void GameDeactivate(HWND wnd)
 {
-  HDC  dc = GetDC(wnd);
-  RECT rect;
+   HDC  dc = GetDC(wnd);
+   RECT rect;
 
-  GetClientRect(wnd, &rect);
+   GetClientRect(wnd, &rect);
 
-  DrawTextW(dc, L"The blizzard has passed.", -1, &rect,
-            DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+   DrawTextW(dc, L"The blizzard has passed.", -1, &rect,
+             DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
-  ReleaseDC(wnd, dc);
+   ReleaseDC(wnd, dc);
 }
 
 void GamePaint(HDC dc)
 { }
 
-void GameCycle()
+void GameCycle( )
 {
    HWND wnd = g_game-> GetWindow( );
    HDC  dc  = GetDC(wnd);
 
    DrawIcon(dc, rtk::rand(0, g_game->GetWidth( )), rtk::rand(0, g_game->GetHeight( )),
-            (HICON) GetClassLongPtr(wnd, GCLP_HICON));
+            (HICON) GetClassLongPtrW(wnd, GCLP_HICON));
 
-    ReleaseDC(wnd, dc);
+   ReleaseDC(wnd, dc);
 }
 
 void GameMenu(WPARAM wParam)
@@ -84,8 +84,8 @@ void GameMenu(WPARAM wParam)
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT),
-                 g_game->GetWindow( ), (DLGPROC) DlgProc);
+      DialogBoxParamW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT),
+                      g_game->GetWindow( ), (DLGPROC) DlgProc, 0L);
       return;
    }
 }

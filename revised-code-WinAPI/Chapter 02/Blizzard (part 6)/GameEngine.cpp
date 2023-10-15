@@ -2,8 +2,10 @@
 
 GameEngine* GameEngine::m_gameEngine = NULL;
 
-int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
-                    _In_ PWSTR cmdLine, _In_ int cmdShow)
+int WINAPI wWinMain(_In_     HINSTANCE inst,
+                    _In_opt_ HINSTANCE prevInst,
+                    _In_     PWSTR     cmdLine,
+                    _In_     int       cmdShow)
 {
    if ( GameInitialize(inst) )
    {
@@ -102,7 +104,7 @@ GameEngine::~GameEngine( )
 
 BOOL GameEngine::Initialize(int cmdShow)
 {
-   WNDCLASSEXW wc;
+   WNDCLASSEXW wc = { };
 
    wc.cbSize        = sizeof(wc);
    wc.style         = CS_HREDRAW | CS_VREDRAW;
@@ -137,7 +139,8 @@ BOOL GameEngine::Initialize(int cmdShow)
    int yWindowPos = (GetSystemMetrics(SM_CYSCREEN) - windowHeight) / 2;
 
    m_wnd = CreateWindowW(m_wndClass, m_title, WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
-                         xWindowPos, yWindowPos, windowWidth, windowHeight,
+                         xWindowPos, yWindowPos,
+                         windowWidth, windowHeight,
                          NULL, NULL, m_inst, NULL);
 
    if ( !m_wnd )
@@ -178,15 +181,15 @@ LRESULT GameEngine::HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam
       return S_OK;
 
    case WM_PAINT:
-      HDC         dc;
+   {
       PAINTSTRUCT ps;
-
-      dc = BeginPaint(wnd, &ps);
+      HDC         dc = BeginPaint(wnd, &ps);
 
       GamePaint(dc);
 
       EndPaint(wnd, &ps);
-      return 0;
+   }
+   return 0;
 
    case WM_DESTROY:
       GameEnd( );

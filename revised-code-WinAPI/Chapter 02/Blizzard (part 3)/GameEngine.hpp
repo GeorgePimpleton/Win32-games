@@ -2,8 +2,7 @@
 
 #include <windows.h>
 
-int WINAPI        WinMain(HINSTANCE inst, HINSTANCE prevInst,
-                          PSTR cmdLine, int cmdShow);
+int WINAPI        WinMain(HINSTANCE inst, HINSTANCE prevInst, PSTR cmdLine, int cmdShow);
 LRESULT CALLBACK  WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 // Game Engine Function Declarations

@@ -2,10 +2,15 @@
  *
  * pre-C++20 header file */
 
- // v1.3.1
+ // v1.3.1.2
 
   // shamelessly stolen and adapted from a C++ working paper: WG21 N3551
   // http://www.open-std.org/JTC1/SC22/WG21/docs/papers/2013/n3551.pdf
+
+// stop the WinAPI MIN/MAX macros from being used
+// instead of C++ std::/min/std::max
+// use this define where <windows.h> is included
+// #define NOMINMAX
 
 #ifndef RANDOM_TOOLKIT
 #define RANDOM_TOOLKIT
@@ -62,6 +67,7 @@ namespace rtk
    {
       static std::uniform_int_distribution<> dist { };
 
+      // check to make sure the first param is less than or equal to the second
       if ( from > to ) { throw std::invalid_argument("bad int distribution params"); }
 
       return dist(urng( ), decltype(dist)::param_type { from, to });
@@ -73,8 +79,7 @@ namespace rtk
 
       // a real distribution kinda goes flakey when the params are equal, divide by zero will do that,
       // as well as reversed from expected
-      // if ( !(from < to && ((to - from) <= std::numeric_limits<double>::max( ))) )
-      if ( !(from < to && ((to - from) <= DBL_MAX)) ) // The WinAPI gets all whingey about the C++ max function()
+      if ( !(from < to && ((to - from) <= std::numeric_limits<double>::max( ))) )
       {
          throw std::invalid_argument("bad double distribution params");
       }
