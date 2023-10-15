@@ -27,9 +27,9 @@ void GameStart(HWND wnd)
 
    HINSTANCE inst = g_game->GetInstance( );
 
-   g_slides[ 4 ] = std::make_unique<Bitmap>(IDB_IMAGE4, inst);
-   g_slides[ 5 ] = std::make_unique<Bitmap>(IDB_IMAGE5, inst);
-   g_slides[ 6 ] = std::make_unique<Bitmap>(IDB_IMAGE6, inst);
+   g_slides[ 4 ] = std::make_unique<Bitmap>(IDB_IMAGE4);
+   g_slides[ 5 ] = std::make_unique<Bitmap>(IDB_IMAGE5);
+   g_slides[ 6 ] = std::make_unique<Bitmap>(IDB_IMAGE6);
 
    g_currentSlide = 1;
 }
@@ -79,8 +79,8 @@ void GameMenu(WPARAM wParam)
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT),
-                 g_game->GetWindow( ), (DLGPROC) DlgProc);
+      DialogBoxParamW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT),
+                      g_game->GetWindow( ), (DLGPROC) DlgProc, 0L);
       return;
    }
 }

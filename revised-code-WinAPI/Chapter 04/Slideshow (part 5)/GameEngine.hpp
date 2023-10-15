@@ -4,19 +4,19 @@
 #include "resource.h"
 #include <memory>
 
-int WINAPI       wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
-                          _In_ PWSTR cmdLine, _In_ int cmdShow);
-LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
-BOOL CALLBACK    DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam);
+int WINAPI       wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE,
+                          _In_ PWSTR, _In_ int);
+LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK    DlgProc(HWND, UINT, WPARAM, LPARAM);
 
-BOOL GameInitialize(HINSTANCE inst);
-void GameStart(HWND wnd);
+BOOL GameInitialize(HINSTANCE);
+void GameStart(HWND);
 void GameEnd( );
-void GameActivate(HWND wnd);
-void GameDeactivate(HWND wnd);
-void GamePaint(HDC dc);
+void GameActivate(HWND);
+void GameDeactivate(HWND);
+void GamePaint(HDC);
 void GameCycle( );
-void GameMenu(WPARAM wParam);
+void GameMenu(WPARAM);
 
 class GameEngine
 {
@@ -34,13 +34,13 @@ protected:
    BOOL                               m_asleep;
 
 public:
-            GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
-                       WORD icon, WORD smallIcon, int width = 640, int height = 480);
+            GameEngine(HINSTANCE, PCWSTR, PCWSTR,
+                       WORD, WORD, int width = 640, int height = 480);
    virtual ~GameEngine( );
 
    static GameEngine* GetEngine( ) { return m_gameEngine.get( ); };
-   BOOL               Initialize(int cmdShow);
-   LRESULT            HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
+   BOOL               Initialize(int);
+   LRESULT            HandleEvent(HWND, UINT, WPARAM, LPARAM);
 
    HINSTANCE GetInstance( )               { return m_inst; };
    HWND      GetWindow( )                 { return m_wnd; };
