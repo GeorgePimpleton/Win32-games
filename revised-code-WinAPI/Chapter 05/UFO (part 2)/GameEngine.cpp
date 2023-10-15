@@ -125,12 +125,9 @@ BOOL GameEngine::Initialize(int cmdShow)
       return FALSE;
    }
 
-   int windowWidth  = m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2;
+   int windowWidth  = m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2 + 10;
    int windowHeight = m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2
-                               + GetSystemMetrics(SM_CYCAPTION);
-
-   windowWidth  += 10;
-   windowHeight += 10;
+                               + GetSystemMetrics(SM_CYCAPTION) + 10;
 
    if ( wc.lpszMenuName != NULL )
    {

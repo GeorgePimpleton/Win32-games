@@ -13,16 +13,16 @@ protected:
 
 public:
             Bitmap( );
-            Bitmap(PCWSTR fileName);
-            Bitmap(UINT resID);
-            Bitmap(HDC dc, int width, int height, COLORREF color = RGB(0, 0, 0));
+            Bitmap(PCWSTR);
+            Bitmap(UINT);
+            Bitmap(HDC, int, int, COLORREF color = RGB(0, 0, 0));
    virtual ~Bitmap( );
 
-   BOOL Create(PCWSTR fileName);
-   BOOL Create(UINT resID);
-   BOOL Create(HDC dc, int width, int height, COLORREF color);
+   BOOL Create(PCWSTR);
+   BOOL Create(UINT);
+   BOOL Create(HDC, int, int, COLORREF);
 
-   void Draw(HDC dc, int x, int y, BOOL trans = FALSE,
+   void Draw(HDC, int, int, BOOL trans = FALSE,
              COLORREF transColor = RGB(255, 0, 255));
 
    constexpr LONG GetWidth( ) const  { return m_width; };
