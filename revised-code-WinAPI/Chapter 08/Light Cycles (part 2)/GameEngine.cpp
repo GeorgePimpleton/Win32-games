@@ -230,14 +230,14 @@ LRESULT GameEngine::HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam
 
 HRESULT GameEngine::InitJoystick( )
 {
-   UINT numJoysticks;
+   UINT numJoysticks = 0;
 
    if ( (numJoysticks = joyGetNumDevs( )) == 0 )
    {
       return E_FAIL;
    }
 
-   JOYINFO joyInfo;
+   JOYINFO joyInfo = { };
 
    if ( joyGetPos(JOYSTICKID1, &joyInfo) != JOYERR_UNPLUGGED )
    {
@@ -248,9 +248,9 @@ HRESULT GameEngine::InitJoystick( )
       return E_FAIL;
    }
 
-   JOYCAPS joyCaps;
+   JOYCAPSW joyCaps = { };
 
-   joyGetDevCaps(m_joyID, &joyCaps, sizeof(JOYCAPS));
+   joyGetDevCapsW(m_joyID, &joyCaps, sizeof(JOYCAPSW));
 
    WORD dwXCenter = (WORD) (((WORD) joyCaps.wXmin + joyCaps.wXmax) / 2);
    WORD dwYCenter = (WORD) (((WORD) joyCaps.wYmin + joyCaps.wYmax) / 2);
@@ -283,7 +283,7 @@ void GameEngine::CheckJoystick( )
 {
    if ( m_joyID == JOYSTICKID1 )
    {
-      JOYINFO  joyInfo;
+      JOYINFO  joyInfo  = { };
       JOYSTATE joyState = 0;
 
       if ( joyGetPos(m_joyID, &joyInfo) == JOYERR_NOERROR )

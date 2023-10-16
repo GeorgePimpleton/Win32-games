@@ -52,17 +52,17 @@ void GamePaint(HDC dc)
    g_background->Draw(dc, 0, 0);
 
    // draw the light cycle trails
-   for ( int i { }; i < 2; i++ )
+   for ( int i = 0; i < 2; i++ )
    {
       // create a blue/orange pen depending on which trail is being drawn
-      HPEN hPen { CreatePen(PS_SOLID, 5, (i == 0) ? RGB(0, 0, 255) : RGB(255, 146, 73)) };
+      HPEN hPen = CreatePen(PS_SOLID, 5, (i == 0) ? RGB(0, 0, 255) : RGB(255, 146, 73));
       SelectObject(dc, hPen);
 
       // start at the first point in the trail
       MoveToEx(dc, g_cycleTrail[ i ][ 0 ].x, g_cycleTrail[ i ][ 0 ].y, NULL);
 
       // draw a line to each of the remaining points
-      for ( int j { 1 }; j < g_trailLength[ i ]; j++ )
+      for ( int j = 1; j < g_trailLength[ i ]; j++ )
       {
          LineTo(dc, g_cycleTrail[ i ][ j ].x, g_cycleTrail[ i ][ j ].y);
       }
@@ -72,31 +72,31 @@ void GamePaint(HDC dc)
    }
 
    // determine the directions of the light cycles
-   int iDirection[ 2 ] = { 0, 0 };
+   int direction[ 2 ] = { 0, 0 };
 
    for ( int i = 0; i < 2; i++ )
    {
       if ( g_cycleSpeed[ i ].y < 0 )
       {
-         iDirection[ i ] = 0;
+         direction[ i ] = 0;
       }
       else if ( g_cycleSpeed[ i ].x > 0 )
       {
-         iDirection[ i ] = 1;
+         direction[ i ] = 1;
       }
       else if ( g_cycleSpeed[ i ].y > 0 )
       {
-         iDirection[ i ] = 2;
+         direction[ i ] = 2;
       }
       else if ( g_cycleSpeed[ i ].x < 0 )
       {
-         iDirection[ i ] = 3;
+         direction[ i ] = 3;
       }
    }
 
    // draw the light cycles
-   g_cycle[ 0 ][ iDirection[ 0 ] ]->Draw(dc, g_cyclePos[ 0 ].x, g_cyclePos[ 0 ].y, TRUE);
-   g_cycle[ 1 ][ iDirection[ 1 ] ]->Draw(dc, g_cyclePos[ 1 ].x, g_cyclePos[ 1 ].y, TRUE);
+   g_cycle[ 0 ][ direction[ 0 ] ]->Draw(dc, g_cyclePos[ 0 ].x, g_cyclePos[ 0 ].y, TRUE);
+   g_cycle[ 1 ][ direction[ 1 ] ]->Draw(dc, g_cyclePos[ 1 ].x, g_cyclePos[ 1 ].y, TRUE);
 }
 
 void GameCycle( )
@@ -128,7 +128,7 @@ void GameMenu(WPARAM wParam)
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT), g_game->GetWindow( ), (DLGPROC) DlgProc);
+      DialogBoxParamW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT), g_game->GetWindow( ), (DLGPROC) DlgProc, 0L);
       return;
    }
 }
@@ -255,7 +255,7 @@ void UpdateCycles( )
       }
 
       // see if the light cycle collided with its own trail
-      RECT tempTrail;
+      RECT tempTrail = { };
 
       if ( g_trailLength[ i ] > 2 ) // Must have steered at least once
       {
@@ -296,7 +296,7 @@ void UpdateCycles( )
 void SteerCycle(LONG cycle, LONG direction)
 {
    // remember the old light cycle speed
-   POINT oldSpeed;
+   POINT oldSpeed = { };
 
    oldSpeed.x = g_cycleSpeed[ cycle ].x;
    oldSpeed.y = g_cycleSpeed[ cycle ].y;
