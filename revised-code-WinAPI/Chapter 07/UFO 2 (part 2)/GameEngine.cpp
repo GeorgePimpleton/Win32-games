@@ -130,11 +130,9 @@ HRESULT GameEngine::Initialize(int cmdShow)
       return E_FAIL;
    }
 
-   UINT windowWidth  = m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2 ;
-   UINT windowHeight = m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 + GetSystemMetrics(SM_CYCAPTION);
-
-   windowWidth  += 10;
-   windowHeight += 10;
+   UINT windowWidth  = m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2 + 10;
+   UINT windowHeight = m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2
+                                + GetSystemMetrics(SM_CYCAPTION) + 10;
 
    if ( wc.lpszMenuName != NULL )
    {
@@ -231,7 +229,7 @@ LRESULT GameEngine::HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam
 HRESULT GameEngine::InitJoystick( )
 {
    // make sure joystick driver is present
-   UINT numJoysticks;
+   UINT numJoysticks = 0;
 
    if ( (numJoysticks = joyGetNumDevs( )) == 0 )
    {
@@ -239,7 +237,7 @@ HRESULT GameEngine::InitJoystick( )
    }
 
    // make sure the joystick is attached
-   JOYINFO joyInfo;
+   JOYINFO joyInfo = { };
 
    if ( joyGetPos(JOYSTICKID1, &joyInfo) != JOYERR_UNPLUGGED )
    {
@@ -251,9 +249,9 @@ HRESULT GameEngine::InitJoystick( )
    }
 
    // calculate the trip values
-   JOYCAPS joyCaps;
+   JOYCAPSW joyCaps = { };
 
-   joyGetDevCaps(m_joyID, &joyCaps, sizeof(JOYCAPS));
+   joyGetDevCapsW(m_joyID, &joyCaps, sizeof(JOYCAPSW));
 
    WORD xCenter = (WORD) (((WORD) joyCaps.wXmin + joyCaps.wXmax) / 2);
    WORD yCenter = (WORD) (((WORD) joyCaps.wYmin + joyCaps.wYmax) / 2);
@@ -291,7 +289,7 @@ void GameEngine::CheckJoystick( )
 {
    if ( m_joyID == JOYSTICKID1 )
    {
-      JOYINFO  joyInfo;
+      JOYINFO  joyInfo  = { };
       JOYSTATE joyState = 0;
 
       if ( joyGetPos(m_joyID, &joyInfo) == JOYERR_NOERROR )
