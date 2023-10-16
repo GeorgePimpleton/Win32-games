@@ -12,10 +12,10 @@ Bitmap::Bitmap(PCWSTR fileName)
    Create(fileName);
 }
 
-Bitmap::Bitmap(UINT resID, HINSTANCE inst)
+Bitmap::Bitmap(UINT resID)
    : m_bitmap(NULL), m_width(0), m_height(0)
 {
-   Create(resID, inst);
+   Create(resID);
 }
 
 Bitmap::Bitmap(HWND wnd, LONG width, LONG height, COLORREF color)
@@ -52,7 +52,7 @@ BOOL Bitmap::Create(PCWSTR fileName)
       return FALSE;
    }
 
-   BITMAP bitmap;
+   BITMAP bitmap = { };
 
    GetObjectW(m_bitmap, sizeof(BITMAP), &bitmap);
 
@@ -62,7 +62,7 @@ BOOL Bitmap::Create(PCWSTR fileName)
    return TRUE;
 }
 
-BOOL Bitmap::Create(UINT resID, HINSTANCE inst)
+BOOL Bitmap::Create(UINT resID)
 {
    Free( );
 
@@ -75,7 +75,7 @@ BOOL Bitmap::Create(UINT resID, HINSTANCE inst)
       return FALSE;
    }
 
-   BITMAP bitmap;
+   BITMAP bitmap = { };
 
    GetObjectW(m_bitmap, sizeof(BITMAP), &bitmap);
 
@@ -87,8 +87,8 @@ BOOL Bitmap::Create(UINT resID, HINSTANCE inst)
 
 BOOL Bitmap::Create(HWND wnd, LONG width, LONG height, COLORREF color)
 {
-   HDC      dc = GetDC(wnd);
-   m_bitmap    = CreateCompatibleBitmap(dc, width, height);
+   HDC dc   = GetDC(wnd);
+   m_bitmap = CreateCompatibleBitmap(dc, width, height);
 
    if ( NULL == m_bitmap )
    {

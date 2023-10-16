@@ -13,25 +13,25 @@ const JOYSTATE JOY_DOWN  = 0x0008L;
 const JOYSTATE JOY_FIRE1 = 0x0010L;
 const JOYSTATE JOY_FIRE2 = 0x0020L;
 
-int WINAPI       wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
-                          _In_ PWSTR cmdLine, _In_ int cmdShow);
-LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
-BOOL CALLBACK    DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam);
+int WINAPI       wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE prevInst,
+                          _In_ PWSTR, _In_ int);
+LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK    DlgProc(HWND, UINT, WPARAM, LPARAM);
 
-HRESULT GameInitialize(HINSTANCE inst);
-void    GameStart(HWND wnd);
+HRESULT GameInitialize(HINSTANCE);
+void    GameStart(HWND);
 void    GameNew( );
 void    GameEnd( );
-void    GameActivate(HWND wnd);
-void    GameDeactivate(HWND wnd);
-void    GamePaint(HDC dc);
+void    GameActivate(HWND);
+void    GameDeactivate(HWND);
+void    GamePaint(HDC);
 void    GameCycle( );
-void    GameMenu(WPARAM wParam);
+void    GameMenu(WPARAM);
 void    HandleKeys( );
-void    MouseButtonDown(LONG x, LONG y, BOOL left);
-void    MouseButtonUp(LONG x, LONG y, BOOL left);
-void    MouseMove(LONG x, LONG y);
-void    HandleJoystick(JOYSTATE joyState);
+void    MouseButtonDown(LONG, LONG, BOOL);
+void    MouseButtonUp(LONG, LONG, BOOL);
+void    MouseMove(LONG, LONG);
+void    HandleJoystick(JOYSTATE);
 
 class GameEngine
 {
@@ -51,14 +51,14 @@ protected:
    RECT                               m_joyTrip;
 
 public:
-            GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
-                       WORD icon, WORD smallIcon, UINT width = 640, UINT height = 480);
+            GameEngine(HINSTANCE, PCWSTR, PCWSTR,
+                       WORD, WORD, UINT = 640, UINT = 480);
    virtual ~GameEngine( );
 
 public:
    static GameEngine* GetEngine( ) { return m_gameEngine.get( ); }
-   HRESULT            Initialize(int cmdShow);
-   LRESULT            HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
+   HRESULT            Initialize(int);
+   LRESULT            HandleEvent(HWND, UINT, WPARAM, LPARAM);
    HRESULT            InitJoystick( );
    void               CaptureJoystick( );
    void               ReleaseJoystick( );

@@ -87,8 +87,8 @@ BOOL Bitmap::Create(UINT resID)
 
 BOOL Bitmap::Create(HWND wnd, LONG width, LONG height, COLORREF color)
 {
-   HDC      dc = GetDC(wnd);
-   m_bitmap    = CreateCompatibleBitmap(dc, width, height);
+   HDC dc   = GetDC(wnd);
+   m_bitmap = CreateCompatibleBitmap(dc, width, height);
 
    if ( NULL == m_bitmap )
    {

@@ -30,7 +30,7 @@ Sprite::Sprite(Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction)
    CopyRect(&m_bounds, &bounds);
 
    m_boundsAction = boundsAction;
-   m_hidden = FALSE;
+   m_hidden       = FALSE;
 }
 
 Sprite::Sprite(Bitmap* bitmap, POINT position, POINT velocity, LONG zOrder, RECT& bounds, BOUNDSACTION boundsAction)

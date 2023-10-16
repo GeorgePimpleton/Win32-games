@@ -11,18 +11,18 @@ protected:
 
 public:
             Bitmap( );
-            Bitmap(PCWSTR fileName);
-            Bitmap(UINT resID);
-            Bitmap(HWND wnd, LONG width, LONG height, COLORREF color = RGB(0, 0, 0));
+            Bitmap(PCWSTR);
+            Bitmap(UINT);
+            Bitmap(HWND, LONG, LONG, COLORREF = RGB(0, 0, 0));
    virtual ~Bitmap( );
 
 public:
-   BOOL Create(PCWSTR fileName);
-   BOOL Create(UINT resID);
-   BOOL Create(HWND wnd, LONG width, LONG height, COLORREF color);
+   BOOL Create(PCWSTR);
+   BOOL Create(UINT);
+   BOOL Create(HWND, LONG, LONG, COLORREF);
 
 public:
-   void Draw(HDC dc, int x, int y, BOOL trans = FALSE, COLORREF transColor = RGB(255, 0, 255));
+   void Draw(HDC, int, int, BOOL = FALSE, COLORREF = RGB(255, 0, 255));
 
 public:
    constexpr LONG GetWidth( ) const  { return m_width; }
