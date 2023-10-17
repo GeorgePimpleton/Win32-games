@@ -103,6 +103,7 @@ BOOL Bitmap::Create(HWND wnd, LONG width, LONG height, COLORREF color)
    HBRUSH  brush     = CreateSolidBrush(color);
    HBITMAP oldBitmap = (HBITMAP) SelectObject(memDC, m_bitmap);
    RECT    bitmap    = { 0, 0, m_width, m_height };
+
    FillRect(memDC, &bitmap, brush);
 
    SelectObject(memDC, oldBitmap);

@@ -14,7 +14,7 @@ CAPTION "About..."
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 {
    ICON           IDI_ICON, IDC_STATIC, 7, 7, 20, 20, SS_SUNKEN
-   CTEXT          "Planets2", IDC_STATIC, 40, 12, 100, 8
+   CTEXT          "Planets 2", IDC_STATIC, 40, 12, 100, 8
 
    CTEXT          "Managing a World of Sprites", IDC_STATIC, 7, 35, 166, 8
    CTEXT          "© This Year, Your Name", IDC_STATIC, 7, 47, 166, 8
