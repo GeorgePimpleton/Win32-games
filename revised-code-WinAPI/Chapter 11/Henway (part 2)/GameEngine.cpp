@@ -21,7 +21,7 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR
          return E_FAIL;
       }
 
-      MSG msg;
+      MSG msg = { };
 
       while ( TRUE )
       {
@@ -130,11 +130,9 @@ HRESULT GameEngine::Initialize(int cmdShow)
       return E_FAIL;
    }
 
-   UINT windowWidth  = m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2;
-   UINT windowHeight = m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 + GetSystemMetrics(SM_CYCAPTION);
-
-   windowWidth  += 10;
-   windowHeight += 10;
+   UINT windowWidth  = m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2 + 10;
+   UINT windowHeight = m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2
+                                + GetSystemMetrics(SM_CYCAPTION) + 10;
 
    if ( wc.lpszMenuName != NULL )
    {
@@ -229,14 +227,14 @@ LRESULT GameEngine::HandleEvent(HWND hWindow, UINT msg, WPARAM wParam, LPARAM lP
 
 HRESULT GameEngine::InitJoystick( )
 {
-   UINT numJoysticks;
+   UINT numJoysticks = { };
 
    if ( (numJoysticks = joyGetNumDevs( )) == 0 )
    {
       return E_FAIL;
    }
 
-   JOYINFO joyInfo;
+   JOYINFO joyInfo = { };
 
    if ( joyGetPos(JOYSTICKID1, &joyInfo) != JOYERR_UNPLUGGED )
    {
@@ -247,9 +245,9 @@ HRESULT GameEngine::InitJoystick( )
       return E_FAIL;
    }
 
-   JOYCAPS joyCaps;
+   JOYCAPSW joyCaps = { };
 
-   joyGetDevCaps(m_joyID, &joyCaps, sizeof(JOYCAPS));
+   joyGetDevCapsW(m_joyID, &joyCaps, sizeof(JOYCAPSW));
 
    WORD xCenter = ((WORD) joyCaps.wXmin + joyCaps.wXmax) / 2;
    WORD yCenter = ((WORD) joyCaps.wYmin + joyCaps.wYmax) / 2;
@@ -282,8 +280,8 @@ void GameEngine::CheckJoystick( )
 {
    if ( m_joyID == JOYSTICKID1 )
    {
-      JOYINFO  joyInfo;
-      JOYSTATE joyState = 0;
+      JOYINFO  joyInfo  = { };
+      JOYSTATE joyState = 0L;
 
       if ( joyGetPos(m_joyID, &joyInfo) == JOYERR_NOERROR )
       {
