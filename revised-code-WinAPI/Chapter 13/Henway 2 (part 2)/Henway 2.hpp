@@ -21,3 +21,6 @@ UINT                                   g_inputDelay;
 UINT                                   g_numLives;
 UINT                                   g_score;
 std::unique_ptr<Sprite>                g_chickenSprite;
+
+void MoveChicken(int, int);
+

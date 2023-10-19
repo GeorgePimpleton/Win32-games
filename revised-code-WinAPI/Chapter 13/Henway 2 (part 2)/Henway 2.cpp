@@ -22,7 +22,7 @@ void GameStart(HWND wnd)
    rtk::srand( );
 
    g_offscreenDC     = CreateCompatibleDC(GetDC(wnd));
-   g_offscreenBitmap = CreateCompatibleBitmap(GetDC(wnd), g_game-> GetWidth( ), g_game-> GetHeight( ));
+   g_offscreenBitmap = CreateCompatibleBitmap(GetDC(wnd), g_game->GetWidth( ), g_game->GetHeight( ));
 
    SelectObject(g_offscreenDC, g_offscreenBitmap);
 
@@ -92,14 +92,14 @@ void GameEnd( )
    DeleteDC(g_offscreenDC);
 }
 
-void GameActivate(HWND wnd)
+void GameActivate(HWND)
 {
    g_game->CaptureJoystick( );
 
    g_game->PlayMIDISong(L"", FALSE);
 }
 
-void GameDeactivate(HWND hWindow)
+void GameDeactivate(HWND)
 {
    g_game->ReleaseJoystick( );
 
@@ -138,7 +138,7 @@ void GameCycle( )
 
       g_game->UpdateSprites( );
 
-      HWND wnd = g_game-> GetWindow( );
+      HWND wnd = g_game->GetWindow( );
       HDC  dc  = GetDC(wnd);
 
       GamePaint(g_offscreenDC);
@@ -166,7 +166,8 @@ void GameMenu(WPARAM wParam)
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT), g_game->GetWindow( ), (DLGPROC) DlgProc);
+      DialogBoxParamW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT),
+                      g_game->GetWindow( ), (DLGPROC) DlgProc, 0L);
       return;
    }
 }
@@ -199,7 +200,7 @@ void HandleKeys( )
    }
 }
 
-void MouseButtonDown(LONG x, LONG y, BOOL left)
+void MouseButtonDown(LONG, LONG, BOOL)
 {
    // Start a new game, if necessary
    if ( g_gameOver == TRUE )
@@ -210,10 +211,10 @@ void MouseButtonDown(LONG x, LONG y, BOOL left)
    }
 }
 
-void MouseButtonUp(LONG x, LONG y, BOOL left)
+void MouseButtonUp(LONG, LONG, BOOL)
 { }
 
-void MouseMove(LONG x, LONG y)
+void MouseMove(LONG, LONG)
 { }
 
 void HandleJoystick(JOYSTATE joyState)

@@ -39,8 +39,8 @@ protected:
    static GameEngine* m_pGameEngine;
    HINSTANCE           m_hInstance;
    HWND                m_hWindow;
-   TCHAR               m_szWindowClass[ 32 ];
-   TCHAR               m_szTitle[ 32 ];
+   TCHAR               m_szWindowClass[ 64 ];
+   TCHAR               m_szTitle[ 64 ];
    WORD                m_wIcon, m_wSmallIcon;
    int                 m_iWidth, m_iHeight;
    int                 m_iFrameDelay;
