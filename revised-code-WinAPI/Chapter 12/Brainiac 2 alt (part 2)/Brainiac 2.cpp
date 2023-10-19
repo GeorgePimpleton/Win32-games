@@ -69,13 +69,12 @@ void GameNew( )
 }
 
 void GameEnd( )
-{
-}
-
-void GameActivate(HWND hWindow)
 { }
 
-void GameDeactivate(HWND hWindow)
+void GameActivate(HWND)
+{ }
+
+void GameDeactivate(HWND)
 { }
 
 void GamePaint(HDC dc)
@@ -116,7 +115,8 @@ void GameMenu(WPARAM wParam)
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT), g_game->GetWindow( ), (DLGPROC) DlgProc);
+      DialogBoxParamW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT),
+                      g_game->GetWindow( ), (DLGPROC) DlgProc, 0L);
       return;
    }
 }
@@ -177,7 +177,7 @@ void MouseButtonDown(LONG x, LONG y, BOOL left)
       {
          PlaySoundW((PCWSTR) IDW_WIN, g_game->GetInstance( ), SND_ASYNC | SND_RESOURCE);
 
-         TCHAR szText[ 64 ];
+         WCHAR szText[ 64 ];
 
          wsprintfW(szText, L"You won in %d tries.", g_tries);
 
@@ -188,16 +188,16 @@ void MouseButtonDown(LONG x, LONG y, BOOL left)
    }
 }
 
-void MouseButtonUp(LONG x, LONG y, BOOL left)
+void MouseButtonUp(LONG, LONG, BOOL)
 { }
 
-void MouseMove(LONG x, LONG y)
+void MouseMove(LONG, LONG)
 { }
 
-void HandleJoystick(JOYSTATE jsJoystickState)
+void HandleJoystick(JOYSTATE)
 { }
 
-BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
+BOOL SpriteCollision(Sprite*, Sprite*)
 {
    return FALSE;
 }
