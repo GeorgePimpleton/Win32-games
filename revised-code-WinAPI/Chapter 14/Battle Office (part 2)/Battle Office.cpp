@@ -20,7 +20,8 @@ void GameStart(HWND wnd)
    rtk::srand( );
 
    SetClassLongPtrW(wnd, GCLP_HCURSOR,
-                    (LONG64) LoadImageW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDC_CURSOR), IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR));
+                    (LONG64) LoadImageW(g_game->GetInstance( ),
+                                        MAKEINTRESOURCEW(IDC_CURSOR), IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR));
 
    g_offscreenDC     = CreateCompatibleDC(GetDC(wnd));
    g_offscreenBitmap = CreateCompatibleBitmap(GetDC(wnd), g_game-> GetWidth( ), g_game-> GetHeight( ));
@@ -221,14 +222,14 @@ void GameMenu(WPARAM wParam)
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT), g_game->GetWindow( ), (DLGPROC) DlgProc);
+      DialogBoxParamW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT),
+                      g_game->GetWindow( ), (DLGPROC) DlgProc, 0L);
       return;
    }
 }
 
 void HandleKeys( )
-{
-}
+{ }
 
 void MouseButtonDown(LONG x, LONG y, BOOL left)
 {
@@ -264,16 +265,16 @@ void MouseButtonDown(LONG x, LONG y, BOOL left)
    }
 }
 
-void MouseButtonUp(LONG x, LONG y, BOOL left)
+void MouseButtonUp(LONG, LONG, BOOL)
 { }
 
-void MouseMove(LONG x, LONG y)
+void MouseMove(LONG, LONG)
 { }
 
-void HandleJoystick(JOYSTATE jsJoystickState)
+void HandleJoystick(JOYSTATE)
 { }
 
-BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
+BOOL SpriteCollision(Sprite*, Sprite*)
 {
    return FALSE;
 }
