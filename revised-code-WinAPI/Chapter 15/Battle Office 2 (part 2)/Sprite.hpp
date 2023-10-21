@@ -34,30 +34,28 @@ protected:
    virtual void  CalcCollisionRect( );
 
 public:
-            Sprite(Bitmap* bitmap);
-            Sprite(Bitmap* bitmap, RECT& bounds,
-                   BOUNDSACTION boundsAction = BA_STOP);
-            Sprite(Bitmap* bitmap, POINT ptPosition, POINT velocity, LONG zOrder,
-                   RECT& bounds, BOUNDSACTION boundsAction = BA_STOP);
+            Sprite(Bitmap*);
+            Sprite(Bitmap*, RECT&, BOUNDSACTION = BA_STOP);
+            Sprite(Bitmap*, POINT, POINT, LONG, RECT&, BOUNDSACTION = BA_STOP);
    virtual ~Sprite( );
 
    virtual SPRITEACTION  Update( );
-   void                  Draw(HDC dc);
-   BOOL                  IsPointInside(LONG x, LONG y);
-   BOOL                  TestCollision(Sprite* testSprite);
+   void                  Draw(HDC);
+   BOOL                  IsPointInside(LONG, LONG);
+   BOOL                  TestCollision(Sprite*);
 
    Bitmap* GetBitmap( )                               { return m_bitmap; };
    void    SetNumFrames(UINT numFrames);
    void    SetFrameDelay(UINT frameDelay)             { m_frameDelay = frameDelay; };
    RECT&   GetPosition( )                             { return m_position; };
-   void    SetPosition(LONG x, LONG y);
-   void    SetPosition(POINT ptPosition);
-   void    SetPosition(RECT& position);
-   void    OffsetPosition(LONG x, LONG y);
+   void    SetPosition(LONG, LONG);
+   void    SetPosition(POINT);
+   void    SetPosition(RECT&);
+   void    OffsetPosition(LONG, LONG);
    RECT&   GetCollision( )                            { return m_collision; };
    POINT   GetVelocity( ) const                       { return m_velocity; };
-   void    SetVelocity(LONG x, LONG y);
-   void    SetVelocity(POINT velocity);
+   void    SetVelocity(LONG, LONG);
+   void    SetVelocity(POINT);
    BOOL    GetZOrder( ) const                         { return m_zOrder; };
    void    SetZOrder(LONG zOrder)                     { m_zOrder = zOrder; };
    void    SetBounds(RECT& bounds)                    { CopyRect(&m_bounds, &bounds); };

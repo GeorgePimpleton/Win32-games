@@ -82,7 +82,7 @@ void GameStart(HWND wnd)
    g_guySprites[ 4 ]->SetHidden(TRUE);
    g_game->AddSprite(g_guySprites[ 4 ].get( ));
 
-   g_game->PlayMIDISong(TEXT("Music.mid"));
+   g_game->PlayMIDISong(L"Music.mid");
 
    GameNew( );
 }
@@ -90,9 +90,9 @@ void GameStart(HWND wnd)
 void GameNew( )
 {
    g_guyMasterDelay = 50;
-   g_hits = 0;
-   g_misses = 0;
-   g_gameOver = FALSE;
+   g_hits           = 0;
+   g_misses         = 0;
+   g_gameOver       = FALSE;
 
    EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
 
@@ -109,12 +109,12 @@ void GameEnd( )
    g_game->CleanupSprites( );
 }
 
-void GameActivate(HWND wnd)
+void GameActivate(HWND)
 {
-   g_game->PlayMIDISong(TEXT(""), FALSE);
+   g_game->PlayMIDISong(L"", FALSE);
 }
 
-void GameDeactivate(HWND wnd)
+void GameDeactivate(HWND)
 {
    g_game->PauseMIDISong( );
 }
@@ -132,10 +132,14 @@ void GamePaint(HDC dc)
    DrawTextW(dc, text, -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
    for ( int i = 0; i < g_misses; i++ )
+   {
       g_smallGuyBitmap->Draw(dc, 389 + (g_smallGuyBitmap->GetWidth( ) * i), 359, TRUE);
+   }
 
    if ( g_gameOver )
+   {
       g_gameOverBitmap->Draw(dc, 120, 110, TRUE);
+   }
 }
 
 void GameCycle( )
@@ -143,9 +147,10 @@ void GameCycle( )
    if ( !g_gameOver )
    {
       for ( int i = 0; i < 5; i++ )
+      {
          if ( g_guySprites[ i ]->IsHidden( ) )
          {
-            if ( rand( ) % 60 == 0 )
+            if ( rtk::rand(0, 60) == 0 )
             {
                g_guySprites[ i ]->SetHidden(FALSE);
 
@@ -160,20 +165,22 @@ void GameCycle( )
                   g_guySprites[ i ]->SetPosition(260, 60);
                }
                else
-                  g_guyDelay[ i ] = 20 + (rand( ) % g_guyMasterDelay);
+               {
+                  g_guyDelay[ i ] = 20 + (rtk::rand(0, g_guyMasterDelay));
+               }
             }
          }
          else
          {
             if ( --g_guyDelay[ i ] == 0 )
             {
-               PlaySound((PCWSTR) IDW_TAUNT, g_inst, SND_ASYNC | SND_RESOURCE);
+               PlaySoundW((PCWSTR) IDW_TAUNT, g_inst, SND_ASYNC | SND_RESOURCE);
 
                g_guySprites[ i ]->SetHidden(TRUE);
 
                if ( ++g_misses == 5 )
                {
-                  PlaySound((PCWSTR) IDW_BOO, g_inst, SND_ASYNC | SND_RESOURCE);
+                  PlaySoundW((PCWSTR) IDW_BOO, g_inst, SND_ASYNC | SND_RESOURCE);
 
                   for ( int i = 0; i < 5; i++ )
                   {
@@ -189,6 +196,7 @@ void GameCycle( )
                }
             }
          }
+      }
 
       g_game->UpdateSprites( );
 
@@ -221,7 +229,8 @@ void GameMenu(WPARAM wParam)
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT), g_game->GetWindow( ), (DLGPROC) DlgProc);
+      DialogBoxParamW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT),
+                      g_game->GetWindow( ), (DLGPROC) DlgProc, 0L);
       return;
    }
 }
@@ -235,22 +244,26 @@ void MouseButtonDown(LONG x, LONG y, BOOL left)
    {
       g_powSprite->SetHidden(TRUE);
 
-      Sprite* pSprite;
-      if ( (pSprite = g_game->IsPointInSprite(x, y)) != NULL )
+      Sprite* sprite;
+
+      if ( (sprite = g_game->IsPointInSprite(x, y)) != NULL )
       {
-         PlaySound((PCWSTR) IDW_WHACK, g_inst, SND_ASYNC | SND_RESOURCE);
+         PlaySoundW((PCWSTR) IDW_WHACK, g_inst, SND_ASYNC | SND_RESOURCE);
 
          g_powSprite->SetPosition(x - (g_powSprite->GetWidth( ) / 2),
                                   y - (g_powSprite->GetHeight( ) / 2));
          g_powSprite->SetHidden(FALSE);
 
-         pSprite->SetHidden(TRUE);
+         sprite->SetHidden(TRUE);
 
          if ( (++g_hits % 5) == 0 )
+         {
             if ( --g_guyMasterDelay == 0 )
+            {
                g_guyMasterDelay = 1;
+            }
+         }
       }
-
    }
    else if ( g_gameOver && !left )
    {
@@ -260,16 +273,16 @@ void MouseButtonDown(LONG x, LONG y, BOOL left)
    }
 }
 
-void MouseButtonUp(LONG x, LONG y, BOOL left)
+void MouseButtonUp(LONG, LONG, BOOL)
 { }
 
-void MouseMove(LONG x, LONG y)
+void MouseMove(LONG, LONG)
 { }
 
-void HandleJoystick(JOYSTATE joyState)
+void HandleJoystick(JOYSTATE)
 { }
 
-BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
+BOOL SpriteCollision(Sprite*, Sprite*)
 {
    return FALSE;
 }

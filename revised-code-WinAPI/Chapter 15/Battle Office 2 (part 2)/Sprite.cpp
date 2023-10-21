@@ -170,9 +170,13 @@ void Sprite::Draw(HDC dc)
    if ( m_bitmap != NULL && !m_hidden )
    {
       if ( m_numFrames == 1 )
+      {
          m_bitmap->Draw(dc, m_position.left, m_position.top, TRUE);
+      }
       else
+      {
          m_bitmap->DrawPart(dc, m_position.left, m_position.top,
                             m_curFrame * GetWidth( ), 0, GetWidth( ), GetHeight( ), TRUE);
+      }
    }
 }
