@@ -4,9 +4,9 @@
 #include <memory>
 #include <vector>
 #include "resource.h"
+#include "GameEngine.hpp"
 #include "Bitmap.hpp"
 #include "Sprite.hpp"
-#include "GameEngine.hpp"
 #include "Background.hpp"
 
 std::unique_ptr<GameEngine>       g_game;

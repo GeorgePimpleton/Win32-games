@@ -20,12 +20,12 @@ protected:
    LONG     m_height;
 
 public:
-            Background(LONG width, LONG height, COLORREF color);
-            Background(Bitmap* bitmap);
+            Background(LONG, LONG, COLORREF);
+            Background(Bitmap*);
    virtual ~Background();
 
 public:
-   virtual void Draw(HDC dc);
+   virtual void Draw(HDC);
    virtual void Update( );
 
 public:
@@ -43,12 +43,12 @@ protected:
    std::array<STARSIZE, 100> m_sizeStars;
 
 public:
-            StarryBackground(LONG width, LONG height,
-                             LONG numStars = 100,
-                             LONG twinkleDelay = 50);
+            StarryBackground(LONG, LONG,
+                             LONG = 100,
+                             LONG = 50);
    virtual ~StarryBackground( );
 
 public:
-   virtual void Draw(HDC dc);
+   virtual void Draw(HDC);
    virtual void Update( );
 };

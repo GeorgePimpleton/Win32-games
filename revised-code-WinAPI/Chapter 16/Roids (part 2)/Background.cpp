@@ -48,8 +48,8 @@ StarryBackground::StarryBackground(LONG width, LONG height, LONG numStars, LONG 
 
    for ( LONG i = 0; i < m_numStars; i++ )
    {
-      m_stars[ i ].x = rtk::rand(0, width);
-      m_stars[ i ].y = rtk::rand(0, height);
+      m_stars[ i ].x    = rtk::rand(0, width);
+      m_stars[ i ].y    = rtk::rand(0, height);
       m_starColors[ i ] = RGB(128, 128, 128);
 
       // adjust the size of some random stars, small is the default size

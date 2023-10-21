@@ -100,12 +100,10 @@ BOOL Bitmap::Create(HWND wnd, LONG width, LONG height, COLORREF color)
    m_height = height;
 
    HDC     memDC     = CreateCompatibleDC(dc);
-
    HBRUSH  brush     = CreateSolidBrush(color);
-
    HBITMAP oldBitmap = (HBITMAP) SelectObject(memDC, m_bitmap);
-
    RECT    bitmap    = { 0, 0, m_width, m_height };
+
    FillRect(memDC, &bitmap, brush);
 
    SelectObject(memDC, oldBitmap);
@@ -125,8 +123,7 @@ void Bitmap::DrawPart(HDC dc, int x, int y, int xPart, int yPart, int wPart, int
 {
    if ( NULL != m_bitmap )
    {
-      HDC memDC = CreateCompatibleDC(dc);
-
+      HDC     memDC     = CreateCompatibleDC(dc);
       HBITMAP oldBitmap = (HBITMAP) SelectObject(memDC, m_bitmap);
 
       if ( trans )

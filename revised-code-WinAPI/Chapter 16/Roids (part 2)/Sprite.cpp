@@ -140,7 +140,7 @@ SPRITEACTION Sprite::Update( )
    else if ( m_boundsAction == BA_DIE )
    {
       if ( (newPosition.x + spriteSize.x) < m_bounds.left || newPosition.x > m_bounds.right ||
-          (newPosition.y + spriteSize.y) < m_bounds.top || newPosition.y > m_bounds.bottom )
+           (newPosition.y + spriteSize.y) < m_bounds.top || newPosition.y > m_bounds.bottom )
       {
          return SA_KILL;
       }
