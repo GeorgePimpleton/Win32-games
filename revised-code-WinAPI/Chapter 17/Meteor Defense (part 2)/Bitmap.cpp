@@ -112,13 +112,15 @@ BOOL Bitmap::Create(HWND wnd, int width, int height, COLORREF color)
    return TRUE;
 }
 
-void Bitmap::Draw(HDC dc, int x, int y, BOOL trans, COLORREF transColor)
+void Bitmap::Draw(HDC dc, int x, int y,
+                  BOOL trans, COLORREF transColor)
 {
    DrawPart(dc, x, y, 0, 0, GetWidth( ), GetHeight( ), trans, transColor);
 }
 
-void Bitmap::DrawPart(HDC dc, int x, int y, int xPart, int yPart,
-                      int wPart, int hPart, BOOL trans, COLORREF transColor)
+void Bitmap::DrawPart(HDC dc, int x, int y,
+                      int xPart, int yPart, int wPart, int hPart,
+                      BOOL trans, COLORREF transColor)
 {
    if ( NULL != m_bitmap )
    {

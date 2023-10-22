@@ -2,8 +2,8 @@
 
 Background::Background(LONG width, LONG height, COLORREF color)
 {
-   m_color  = color;
    m_bitmap = NULL;
+   m_color  = color;
    m_width  = width;
    m_height = height;
 }
@@ -99,7 +99,6 @@ void StarryBackground::Update( )
          }
       }
    }
-
 }
 
 void StarryBackground::Draw(HDC dc)

@@ -37,30 +37,30 @@ protected:
    virtual void CalcCollisionRect( );
 
 public:
-            Sprite(Bitmap* bitmap);
-            Sprite(Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction = BA_STOP);
-            Sprite(Bitmap* bitmap, POINT position, POINT velocity, int zOrder,
-                   RECT& bounds, BOUNDSACTION boundsAction = BA_STOP);
+            Sprite(Bitmap*);
+            Sprite(Bitmap*, RECT&, BOUNDSACTION = BA_STOP);
+            Sprite(Bitmap*, POINT, POINT, int,
+                   RECT&, BOUNDSACTION = BA_STOP);
    virtual ~Sprite( );
 
    virtual SPRITEACTION Update( );
-   void                 Draw(HDC dc);
-   BOOL                 IsPointInside(int x, int y);
-   BOOL                 TestCollision(Sprite* testSprite);
+   void                 Draw(HDC);
+   BOOL                 IsPointInside(int, int);
+   BOOL                 TestCollision(Sprite*);
    void                 Kill( ) { m_dying = TRUE; };
 
    Bitmap* GetBitmap( )                               { return m_bitmap; };
-   void    SetNumFrames(int numFrames, BOOL oneCycle  = FALSE);
+   void    SetNumFrames(int, BOOL = FALSE);
    void    SetFrameDelay(int frameDelay)              { m_frameDelay = frameDelay; };
    RECT&   GetPosition( )                             { return m_position; };
-   void    SetPosition(int x, int y);
-   void    SetPosition(POINT position);
-   void    SetPosition(RECT& position);
-   void    OffsetPosition(int x, int y);
+   void    SetPosition(int, int);
+   void    SetPosition(POINT);
+   void    SetPosition(RECT&);
+   void    OffsetPosition(int, int);
    RECT&   GetCollision( )                            { return m_collision; };
    POINT   GetVelocity( ) const                       { return m_velocity; };
-   void    SetVelocity(int x, int y);
-   void    SetVelocity(POINT velocity);
+   void    SetVelocity(int, int);
+   void    SetVelocity(POINT);
    BOOL    GetZOrder( ) const                         { return m_zOrder; };
    void    SetZOrder(int zOrder)                      { m_zOrder = zOrder; };
    void    SetBounds(RECT& bounds)                    { CopyRect(&m_bounds, &bounds); };
@@ -104,10 +104,8 @@ inline BOOL Sprite::TestCollision(Sprite* testSprite)
 {
    RECT& test = testSprite->GetCollision( );
 
-   return m_collision.left <= test.right &&
-          test.left <= m_collision.right &&
-          m_collision.top <= test.bottom &&
-          test.top <= m_collision.bottom;
+   return m_collision.left <= test.right && test.left <= m_collision.right &&
+          m_collision.top <= test.bottom && test.top <= m_collision.bottom;
 }
 
 inline BOOL Sprite::IsPointInside(int x, int y)

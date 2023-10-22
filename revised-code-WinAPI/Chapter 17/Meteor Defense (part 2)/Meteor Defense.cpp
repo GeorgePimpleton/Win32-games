@@ -85,12 +85,12 @@ void GameEnd( )
    g_game->CleanupSprites( );
 }
 
-void GameActivate(HWND wnd)
+void GameActivate(HWND)
 {
    g_game->PlayMIDISong(L"", FALSE);
 }
 
-void GameDeactivate(HWND wnd)
+void GameDeactivate(HWND)
 {
    g_game->PauseMIDISong( );
 }
@@ -161,7 +161,8 @@ void GameMenu(WPARAM wParam)
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT), g_game->GetWindow( ), (DLGPROC) DlgProc);
+      DialogBoxParamW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT),
+                      g_game->GetWindow( ), (DLGPROC) DlgProc, 0L);
       return;
    }
 }
@@ -205,13 +206,13 @@ void MouseButtonDown(int x, int y, BOOL bLeft)
    }
 }
 
-void MouseButtonUp(int x, int y, BOOL left)
+void MouseButtonUp(int, int, BOOL)
 { }
 
-void MouseMove(int x, int y)
+void MouseMove(int, int)
 { }
 
-void HandleJoystick(JOYSTATE joyState)
+void HandleJoystick(JOYSTATE)
 { }
 
 BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
