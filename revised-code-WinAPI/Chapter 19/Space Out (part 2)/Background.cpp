@@ -75,9 +75,9 @@ void StarryBackground::Update( )
    {
       if ( 0 == (rtk::rand(0, m_twinkleDelay)) )
       {
-         LONG iRGB = rtk::rand(0, 255);
+         LONG rgb = rtk::rand(0, 255);
 
-         m_starColors[ i ] = RGB(iRGB, iRGB, iRGB);
+         m_starColors[ i ] = RGB(rgb, rgb, rgb);
 
          m_sizeStars[ i ] = SS_SMALL;
 
@@ -96,7 +96,7 @@ void StarryBackground::Update( )
 void StarryBackground::Draw(HDC dc)
 {
    HBRUSH brush = CreateSolidBrush(RGB(0, 0, 0));
-   RECT   rect = { 0, 0, m_width, m_height };
+   RECT   rect  = { 0, 0, m_width, m_height };
 
    FillRect(dc, &rect, brush);
    DeleteObject(brush);

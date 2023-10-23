@@ -135,7 +135,8 @@ void GameMenu(WPARAM wParam)
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT), g_game->GetWindow( ), (DLGPROC) DlgProc);
+      DialogBoxParamW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT),
+                      g_game->GetWindow( ), (DLGPROC) DlgProc, 0L);
       return;
    }
 }
@@ -162,6 +163,7 @@ void HandleKeys()
       RECT    bounds = { 0, 0, 600, 450 };
       RECT    pos    = g_carSprite->GetPosition();
       Sprite* sprite = new Sprite(g_missileBitmap.get( ), bounds, BA_DIE);
+
       sprite->SetPosition(pos.left + 15, 400);
       sprite->SetVelocity(0, -7);
       g_game->AddSprite(sprite);
@@ -178,16 +180,16 @@ void HandleKeys()
   }
 }
 
-void MouseButtonDown(int x, int y, BOOL left)
+void MouseButtonDown(int, int, BOOL)
 { }
 
-void MouseButtonUp(int x, int y, BOOL left)
+void MouseButtonUp(int, int, BOOL)
 { }
 
-void MouseMove(int x, int y)
+void MouseMove(int, int)
 { }
 
-void HandleJoystick(JOYSTATE joyState)
+void HandleJoystick(JOYSTATE)
 { }
 
 BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
@@ -206,7 +208,7 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
     spriteHittee->Kill();
 
     RECT bounds = { 0, 0, 600, 450 };
-    RECT pos;
+    RECT pos    = { };
 
     if ( pHitter == g_missileBitmap.get( ) )
     {
@@ -218,6 +220,7 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
     }
 
     Sprite* sprite = new Sprite(g_largeExplosionBitmap.get( ), bounds);
+
     sprite->SetNumFrames(8, TRUE);
     sprite->SetPosition(pos.left, pos.top);
     g_game->AddSprite(sprite);
@@ -243,7 +246,7 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
     }
 
     RECT bounds = { 0, 0, 600, 480 };
-    RECT pos;
+    RECT pos    = { };
 
     if ( pHitter == g_carBitmap.get( ) )
     {
@@ -255,6 +258,7 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
     }
 
     Sprite* sprite = new Sprite(g_largeExplosionBitmap.get( ), bounds);
+
     sprite->SetNumFrames(8, TRUE);
     sprite->SetPosition(pos.left, pos.top);
     g_game->AddSprite(sprite);
@@ -285,6 +289,7 @@ void SpriteDying(Sprite* spriteDying)
     RECT    bounds = { 0, 0, 600, 450 };
     RECT    pos    = spriteDying->GetPosition();
     Sprite* sprite = new Sprite(g_smallExplosionBitmap.get( ), bounds);
+
     sprite->SetNumFrames(8, TRUE);
     sprite->SetPosition(pos.left, pos.top);
     g_game->AddSprite(sprite);

@@ -151,11 +151,9 @@ BOOL GameEngine::Initialize(int cmdShow)
       return FALSE;
    }
 
-   int windowWidth  = m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2;
-   int windowHeight = m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 + GetSystemMetrics(SM_CYCAPTION);
-
-   windowWidth  += 10;
-   windowHeight += 10;
+   int windowWidth  = m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2 + 10;
+   int windowHeight = m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2
+                               + GetSystemMetrics(SM_CYCAPTION) + 10;
 
    if ( wc.lpszMenuName != NULL )
    {
@@ -211,6 +209,7 @@ LRESULT GameEngine::HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam
    case WM_PAINT:
       HDC         dc;
       PAINTSTRUCT ps;
+
       dc = BeginPaint(wnd, &ps);
 
       GamePaint(dc);
@@ -248,14 +247,14 @@ LRESULT GameEngine::HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam
 
 BOOL GameEngine::InitJoystick( )
 {
-   UINT numJoysticks;
+   UINT numJoysticks = { };
 
    if ( (numJoysticks = joyGetNumDevs( )) == 0 )
    {
       return FALSE;
    }
 
-   JOYINFO joyInfo;
+   JOYINFO joyInfo = { };
 
    if ( joyGetPos(JOYSTICKID1, &joyInfo) != JOYERR_UNPLUGGED )
    {
@@ -266,9 +265,9 @@ BOOL GameEngine::InitJoystick( )
       return FALSE;
    }
 
-   JOYCAPS joyCaps;
+   JOYCAPSW joyCaps = { };
 
-   joyGetDevCapsW(m_joyID, &joyCaps, sizeof(JOYCAPS));
+   joyGetDevCapsW(m_joyID, &joyCaps, sizeof(JOYCAPSW));
 
    DWORD xCenter = ((DWORD) joyCaps.wXmin + joyCaps.wXmax) / 2;
    DWORD yCenter = ((DWORD) joyCaps.wYmin + joyCaps.wYmax) / 2;
@@ -301,7 +300,7 @@ void GameEngine::CheckJoystick( )
 {
    if ( m_joyID == JOYSTICKID1 )
    {
-      JOYINFO  joyInfo;
+      JOYINFO  joyInfo  = { };
       JOYSTATE joyState = 0;
 
       if ( joyGetPos(m_joyID, &joyInfo) == JOYERR_NOERROR )
@@ -374,8 +373,8 @@ void GameEngine::UpdateSprites( )
       m_sprites.reserve(m_sprites.capacity( ) * 2);
    }
 
-   RECT         oldSpritePos;
-   SPRITEACTION spriteAction;
+   RECT         oldSpritePos = { };
+   SPRITEACTION spriteAction = { };
 
    for ( auto iterSprite = m_sprites.begin( ); iterSprite != m_sprites.end( ); iterSprite++ )
    {
@@ -432,7 +431,7 @@ void GameEngine::PlayMIDISong(PCWSTR MIDIFileName, BOOL bRestart)
 {
    if ( m_MIDIPlayerID == 0 )
    {
-      MCI_OPEN_PARMSW mciOpenParms { };
+      MCI_OPEN_PARMSW mciOpenParms = { };
 
       mciOpenParms.lpstrDeviceType = L"sequencer";
       mciOpenParms.lpstrElementName = MIDIFileName;
@@ -450,7 +449,7 @@ void GameEngine::PlayMIDISong(PCWSTR MIDIFileName, BOOL bRestart)
 
    if ( bRestart )
    {
-      MCI_SEEK_PARMS mciSeekParms { };
+      MCI_SEEK_PARMS mciSeekParms = { };
 
       if ( mciSendCommandW(m_MIDIPlayerID, MCI_SEEK, MCI_SEEK_TO_START,
                            (DWORD_PTR) &mciSeekParms) != 0 )
@@ -459,7 +458,7 @@ void GameEngine::PlayMIDISong(PCWSTR MIDIFileName, BOOL bRestart)
       }
    }
 
-   MCI_PLAY_PARMS mciPlayParms { };
+   MCI_PLAY_PARMS mciPlayParms = { };
 
    if ( mciSendCommandW(m_MIDIPlayerID, MCI_PLAY, 0,
                         (DWORD_PTR) &mciPlayParms) != 0 )

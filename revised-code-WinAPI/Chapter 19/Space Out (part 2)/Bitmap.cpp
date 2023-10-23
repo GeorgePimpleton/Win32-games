@@ -55,7 +55,7 @@ BOOL Bitmap::Create(PCWSTR fileName)
 
    GetObjectW(m_bitmap, sizeof(BITMAP), &bitmap);
 
-   m_width = bitmap.bmWidth;
+   m_width  = bitmap.bmWidth;
    m_height = bitmap.bmHeight;
 
    return TRUE;
@@ -78,7 +78,7 @@ BOOL Bitmap::Create(UINT resID)
 
    GetObjectW(m_bitmap, sizeof(BITMAP), &bitmap);
 
-   m_width = bitmap.bmWidth;
+   m_width  = bitmap.bmWidth;
    m_height = bitmap.bmHeight;
 
    return TRUE;
