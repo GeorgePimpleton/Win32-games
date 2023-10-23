@@ -2,16 +2,16 @@
 [![Language](https://img.shields.io/badge/Language%20-C++-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 ### Background
-Win9X/Me is officially dead!  Windows API ANSI encoding is dead!  Windows XP and later now use Unicode!
+Win9X/Me is officially dead!  Windows API ANSI encoding is dead!  Windows XP and later now use strictly Unicode!
 
 Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
-### Why this repository exists
+### Why this github repository exists
 I own a couple of \*\****OLD***\*\* (© 2003 & 2004) books about creating 2D games using the Windows API.
 
 ![Sams Teach Yourself Game Programming in 24 Hours (2003)](tygp24h.jpg) ![Sams Beginning Game Programming (2004)](bgp.jpg)
 
-I've spent a lot of time -- years -- updating and revising this pre-C++11 code to work with modern Windows and the newer C++ language standards.
+I've spent a lot of time -- years -- updating and revising this pre-C++11 code to work with modern Windows and the newer C++ language and WinAPI standards.
 
 Why did it take so long you might ask?  I was learning C++/WinAPI fundamentals as they changed over the years as well.  Yeah, I'm a slow and methodical learner.
 
@@ -42,8 +42,10 @@ This is a "work in progress", there is no guarantee the entirety of the entire c
 
 If you find better ways to rework the code don't hesitate to let me know.
 
-### Musings on Windows© Games
-To be honest the game engine was created so many years ago makes it hard to convert to modern C++ practices.  It isn't bad code, it just fights back being modernized.  Maybe the game engine needs to be rewritten from top to bottom from scratch.  \**UGH*\*
+Do the games work on Win 11?  I honestly don't know.  They should, but all 3 of my computers are unable to upgrade to Win 11.  And TBH I really don't see any advantage to upgrading from Win 10 at this time.
+
+### Musings on Windows Games
+When I originally began revising this code I was using Win98SE.  I kinda skipped over revising the game code when I upgraded to WinXP.  The real intensive work began when using Win 7 and MS released their free IDE suites with Visual Studio 2015 Community.  Now I am on Win 10 and VS 2022.
 
 Revising the original code to work with a modern Windows compiler isn't hard, just a couple of changes and additions.
 
