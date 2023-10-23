@@ -47,7 +47,9 @@ Do the games work on Win 11?  I honestly don't know.  They should, but all 3 of 
 ### Musings on Windows Games
 When I originally began revising this code I was using Win98SE.  I kinda skipped over revising the game code when I upgraded to WinXP.  The real intensive work began when using Win 7 and MS released their free IDE suites with Visual Studio 2015 Community.  Now I am on Win 10 and VS 2022.
 
-Revising the original code to work with a modern Windows compiler isn't hard, just a couple of changes and additions.
+Revising the original code to work with a modern Windows compiler isn't hard, just a couple of changes and additions to get a bare-bones working version of each game.
 
 1. Add `#pragma comment(lib, "somelibrary.lib")` in one of the source files that uses a WinAPI library -- like the Windows multi-media system library -- and you are "good to go."  No need to modify/update your project's settings to use the .lib file(s).
 2. Update the WinAPI strings to be consts and usable for Unicode.  Change LPTSTR to PCTSTR/PCWSTR.  Yeah, those are Windows data types.
+
+I made other changes such as adding menus to make playing the games more intuitive in a GUI environment.
