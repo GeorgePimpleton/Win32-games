@@ -31,7 +31,9 @@ You should think about using VS 2022 as well.  It's free for the Community editi
 ### About the revised sources
 I've been working with the games source code from both books for years, plinking around and trying out newer C++ features as I've run across them.  Most of the example code is the same between the books, so I've combined the examples into one representative example for each chapter.
 
-The main difference between the books is the orientation of the animated sprite bitmaps.  When dealing with animated sprites all the source code is from the 2004 book, except for the first game example.  That one uses the code from 2003.  The last two examples are only found in the 2004 book and CD.
+The main difference between the books is the orientation of the animated sprite bitmaps.  When dealing with animated sprites all the source code is from the 2004 book, except for the first animated game example.  That one uses the code from 2003.
+
+The last two game examples are found only in the 2004 book and CD.
 
 ### Notes
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.
@@ -45,5 +47,5 @@ To be honest the game engine was created so many years ago makes it hard to conv
 
 Revising the original code to work with a modern Windows compiler isn't hard, just a couple of changes and additions.
 
-1. Add `#pragma comment(lib, "somelibrary.lib")` in one of the source files that uses a WinAPI library like the Windows multi-media system library and you are "good to go."  No need to modify your project's settings to use the .lib file(s).
+1. Add `#pragma comment(lib, "somelibrary.lib")` in one of the source files that uses a WinAPI library -- like the Windows multi-media system library -- and you are "good to go."  No need to modify/update your project's settings to use the .lib file(s).
 2. Update the WinAPI strings to be consts and usable for Unicode.  Change LPTSTR to PCTSTR/PCWSTR.  Yeah, those are Windows data types.
