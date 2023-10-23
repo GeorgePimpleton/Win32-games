@@ -151,16 +151,14 @@ BOOL GameEngine::Initialize(int cmdShow)
       return FALSE;
    }
 
-   int windowWidth  = m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2;
-   int windowHeight = m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 + GetSystemMetrics(SM_CYCAPTION);
+   int windowWidth  = m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2 + 10;
+   int windowHeight = m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2
+                               + GetSystemMetrics(SM_CYCAPTION) + 10;
 
    if ( NULL != wc.lpszMenuName )
    {
       windowHeight += GetSystemMetrics(SM_CYMENU);
    }
-
-   windowWidth  += 10;
-   windowHeight += 10;
 
    int xWindowPos = (GetSystemMetrics(SM_CXSCREEN) - windowWidth) / 2;
    int yWindowPos = (GetSystemMetrics(SM_CYSCREEN) - windowHeight) / 2;
@@ -209,11 +207,12 @@ LRESULT GameEngine::HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam
       return 0;
 
    case WM_PAINT:
-      HDC         hDC;
+      HDC         dc;
       PAINTSTRUCT ps;
-      hDC = BeginPaint(wnd, &ps);
 
-      GamePaint(hDC);
+      dc = BeginPaint(wnd, &ps);
+
+      GamePaint(dc);
 
       EndPaint(wnd, &ps);
       return 0;
@@ -248,14 +247,14 @@ LRESULT GameEngine::HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam
 
 BOOL GameEngine::InitJoystick( )
 {
-   UINT numJoysticks;
+   UINT numJoysticks = { };
 
    if ( 0 == (numJoysticks = joyGetNumDevs( )) )
    {
       return FALSE;
    }
 
-   JOYINFO joyInfo;
+   JOYINFO joyInfo = { };
 
    if ( joyGetPos(JOYSTICKID1, &joyInfo) != JOYERR_UNPLUGGED )
    {
@@ -266,9 +265,9 @@ BOOL GameEngine::InitJoystick( )
       return FALSE;
    }
 
-   JOYCAPS joyCaps;
+   JOYCAPSW joyCaps = { };
 
-   joyGetDevCapsW(m_joyID, &joyCaps, sizeof(JOYCAPS));
+   joyGetDevCapsW(m_joyID, &joyCaps, sizeof(JOYCAPSW));
 
    DWORD xCenter = ((DWORD) joyCaps.wXmin + joyCaps.wXmax) / 2;
    DWORD yCenter = ((DWORD) joyCaps.wYmin + joyCaps.wYmax) / 2;
@@ -301,7 +300,7 @@ void GameEngine::CheckJoystick( )
 {
    if ( JOYSTICKID1 == m_joyID )
    {
-      JOYINFO joyInfo;
+      JOYINFO  joyInfo  = { };
       JOYSTATE joyState = 0;
 
       if ( joyGetPos(m_joyID, &joyInfo) == JOYERR_NOERROR )
@@ -373,8 +372,8 @@ void GameEngine::UpdateSprites( )
       m_sprites.reserve(m_sprites.capacity( ) * 2);
    }
 
-   RECT          oldSpritePos;
-   SPRITEACTION  spriteAction;
+   RECT          oldSpritePos = { };
+   SPRITEACTION  spriteAction = { };
 
    for ( auto iterSprite = m_sprites.begin( ); iterSprite != m_sprites.end( ); iterSprite++ )
    {

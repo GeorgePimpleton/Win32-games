@@ -86,8 +86,8 @@ SPRITEACTION Sprite::Update( )
    boundsSize.x  = m_bounds.right - m_bounds.left;
    boundsSize.y  = m_bounds.bottom - m_bounds.top;
 
-   // Check the bounds
-   // Wrap?
+   // check the bounds
+   // wrap?
    if ( BA_WRAP == m_boundsAction )
    {
       if ( (newPosition.x + spriteSize.x) < m_bounds.left )
@@ -108,7 +108,7 @@ SPRITEACTION Sprite::Update( )
          newPosition.y = m_bounds.top - spriteSize.y;
       }
    }
-   // Bounce?
+   // bounce?
    else if ( BA_BOUNCE == m_boundsAction )
    {
       BOOL  bounce      = FALSE;
@@ -144,8 +144,8 @@ SPRITEACTION Sprite::Update( )
          SetVelocity(newVelocity);
       }
    }
-   // Die?
-   else if ( m_boundsAction == BA_DIE )
+   // die?
+   else if ( BA_DIE == m_boundsAction )
    {
       if ( (newPosition.x + spriteSize.x) < m_bounds.left ||
             newPosition.x > m_bounds.right ||
@@ -155,7 +155,7 @@ SPRITEACTION Sprite::Update( )
          return SA_KILL;
       }
    }
-   // Stop (default)
+   // stop (default)
    else
    {
       if ( newPosition.x  < m_bounds.left ||

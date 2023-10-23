@@ -37,33 +37,33 @@ protected:
    virtual void CalcCollisionRect( );
 
 public:
-            Sprite(Bitmap* bitmap);
-            Sprite(Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction = BA_STOP);
-            Sprite(Bitmap* bitmap, POINT position, POINT velocity, LONG zOrder,
-                   RECT& bounds, BOUNDSACTION boundsAction = BA_STOP);
+            Sprite(Bitmap*);
+            Sprite(Bitmap*, RECT&, BOUNDSACTION = BA_STOP);
+            Sprite(Bitmap*, POINT, POINT, LONG,
+                   RECT&, BOUNDSACTION = BA_STOP);
    virtual ~Sprite( );
 
    virtual SPRITEACTION Update( );
-   void                 Draw(HDC dc);
-   BOOL                 IsPointInside(LONG x, LONG y);
-   BOOL                 TestCollision(Sprite* testSprite);
+   void                 Draw(HDC);
+   BOOL                 IsPointInside(LONG, LONG);
+   BOOL                 TestCollision(Sprite*);
    void                 Kill( ) { m_dying = TRUE; };
 
    Bitmap* GetBitmap( ) const                         { return m_bitmap; };
-   void    SetNumFrames(LONG numFrames, BOOL oneCycle  = FALSE);
-   void    SetFrameDelay(LONG frameDelay)              { m_frameDelay = frameDelay; };
+   void    SetNumFrames(LONG, BOOL                    = FALSE);
+   void    SetFrameDelay(LONG frameDelay)             { m_frameDelay = frameDelay; };
    RECT&   GetPosition( )                             { return m_position; };
-   void    SetPosition(LONG x, LONG y);
-   void    SetPosition(POINT position);
-   void    SetPosition(RECT& position);
-   void    OffsetPosition(LONG x, LONG y);
+   void    SetPosition(LONG, LONG);
+   void    SetPosition(POINT);
+   void    SetPosition(RECT&);
+   void    OffsetPosition(LONG, LONG);
    RECT&   GetCollision( )                            { return m_collision; };
    POINT   GetVelocity( ) const                       { return m_velocity; };
-   void    SetVelocity(LONG x, LONG y);
-   void    SetVelocity(POINT velocity);
+   void    SetVelocity(LONG, LONG);
+   void    SetVelocity(POINT);
    BOOL    GetZOrder( ) const                         { return m_zOrder; };
    void    SetZOrder(LONG zOrder)                     { m_zOrder = zOrder; };
-   void    SetBounds(RECT& rcBounds)                  { CopyRect(&m_bounds, &rcBounds); };
+   void    SetBounds(RECT& bounds)                    { CopyRect(&m_bounds, &bounds); };
    void    SetBoundsAction(BOUNDSACTION boundsAction) { m_boundsAction = boundsAction; };
    BOOL    IsHidden( ) const                          { return m_hidden; };
    void    SetHidden(BOOL hidden)                     { m_hidden = hidden; };
@@ -104,10 +104,8 @@ inline BOOL Sprite::TestCollision(Sprite* testSprite)
 {
    RECT& rcTest = testSprite->GetCollision( );
 
-   return m_collision.left <= rcTest.right &&
-          rcTest.left <= m_collision.right &&
-          m_collision.top <= rcTest.bottom &&
-          rcTest.top <= m_collision.bottom;
+   return m_collision.left <= rcTest.right && rcTest.left <= m_collision.right &&
+          m_collision.top <= rcTest.bottom && rcTest.top <= m_collision.bottom;
 }
 
 inline BOOL Sprite::IsPointInside(LONG x, LONG y)
