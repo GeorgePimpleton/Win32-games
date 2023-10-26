@@ -323,7 +323,7 @@ void AddAlien()
   RECT         bounds = { 0, 0, 600, 410 };
   AlienSprite* sprite  = NULL;
 
-  switch (rtk::rand(0, 3))
+  switch (rtk::rand(0, 2))
   {
   case 0:
     // Blobbo
