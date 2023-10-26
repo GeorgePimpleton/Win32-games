@@ -164,7 +164,8 @@ void GameMenu(WPARAM wParam)
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT), g_game->GetWindow( ), (DLGPROC) DlgProc);
+      DialogBoxParamW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT),
+                      g_game->GetWindow( ), (DLGPROC) DlgProc, 0L);
       return;
    }
 }
@@ -215,16 +216,16 @@ void HandleKeys( )
    }
 }
 
-void MouseButtonDown(int x, int y, BOOL left)
+void MouseButtonDown(int, int, BOOL)
 { }
 
-void MouseButtonUp(int x, int y, BOOL left)
+void MouseButtonUp(int, int, BOOL)
 { }
 
-void MouseMove(int x, int y)
+void MouseMove(int, int)
 { }
 
-void HandleJoystick(JOYSTATE joyState)
+void HandleJoystick(JOYSTATE)
 { }
 
 BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
@@ -372,7 +373,7 @@ void AddAlien( )
    RECT         bounds = { 0, 0, 600, 410 };
    AlienSprite* sprite = NULL;
 
-   switch ( rtk::rand(0, 3) )
+   switch ( rtk::rand(0, 2) )
    {
    case 0:
       // Blobbo
