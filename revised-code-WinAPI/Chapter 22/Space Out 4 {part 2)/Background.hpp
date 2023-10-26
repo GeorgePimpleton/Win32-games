@@ -20,12 +20,12 @@ protected:
    int      m_height;
 
 public:
-            Background(int width, int height, COLORREF color);
-            Background(Bitmap* bitmap);
+            Background(int, int, COLORREF);
+            Background(Bitmap*);
    virtual ~Background( );
 
    virtual void Update( );
-   virtual void Draw(HDC dc);
+   virtual void Draw(HDC);
 
    int GetWidth( ) const  { return m_width; };
    int GetHeight( ) const { return m_height; };
@@ -41,10 +41,10 @@ protected:
    std::array<STARSIZE, 100> m_sizeStars;
 
 public:
-            StarryBackground(int width, int height,
-                             int numStars = 100, int twinkleDelay = 50);
+            StarryBackground(int, int,
+                             int = 100, int = 50);
    virtual ~StarryBackground( );
 
    virtual void Update( );
-   virtual void Draw(HDC dc);
+   virtual void Draw(HDC);
 };

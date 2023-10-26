@@ -78,9 +78,9 @@ SPRITEACTION Sprite::Update( )
 
    UpdateFrame( );
 
-   POINT newPosition;
-   POINT spriteSize;
-   POINT boundsSize;
+   POINT newPosition = { };
+   POINT spriteSize  = { };
+   POINT boundsSize  = { };
 
    newPosition.x = m_position.left + m_velocity.x;
    newPosition.y = m_position.top + m_velocity.y;
@@ -89,8 +89,8 @@ SPRITEACTION Sprite::Update( )
    boundsSize.x  = m_bounds.right - m_bounds.left;
    boundsSize.y  = m_bounds.bottom - m_bounds.top;
 
-   // Check the bounds
-   // Wrap?
+   // check the bounds
+   // wrap?
    if ( m_boundsAction == BA_WRAP )
    {
       if ( (newPosition.x + spriteSize.x) < m_bounds.left )
@@ -111,7 +111,7 @@ SPRITEACTION Sprite::Update( )
          newPosition.y = m_bounds.top - spriteSize.y;
       }
    }
-   // Bounce?
+   // bounce?
    else if ( m_boundsAction == BA_BOUNCE )
    {
       BOOL  bounce      = FALSE;
@@ -148,7 +148,7 @@ SPRITEACTION Sprite::Update( )
          SetVelocity(newVelocity);
       }
    }
-   // Die?
+   // die?
    else if ( m_boundsAction == BA_DIE )
    {
       if ( (newPosition.x + spriteSize.x) < m_bounds.left ||
@@ -159,7 +159,7 @@ SPRITEACTION Sprite::Update( )
          return SA_KILL;
       }
    }
-   // Stop (default)
+   // stop (default)
    else
    {
       if ( newPosition.x  < m_bounds.left ||

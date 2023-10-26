@@ -30,20 +30,20 @@ void GameStart(HWND wnd)
 
    SelectObject(g_hOffscreenDC, g_hOffscreenBitmap);
 
-   g_splashBitmap         = std::make_unique<Bitmap>(IDB_SPLASH, g_inst);
-   g_desertBitmap         = std::make_unique<Bitmap>(IDB_DESERT, g_inst);
-   g_carBitmap            = std::make_unique<Bitmap>(IDB_CAR, g_inst);
-   g_smallCarBitmap       = std::make_unique<Bitmap>(IDB_SMCAR, g_inst);
-   g_missileBitmap        = std::make_unique<Bitmap>(IDB_MISSILE, g_inst);
-   g_BlobboBitmap         = std::make_unique<Bitmap>(IDB_BLOBBO, g_inst);
-   g_BMissileBitmap       = std::make_unique<Bitmap>(IDB_BMISSILE, g_inst);
-   g_JellyBitmap          = std::make_unique<Bitmap>(IDB_JELLY, g_inst);
-   g_JMissileBitmap       = std::make_unique<Bitmap>(IDB_JMISSILE, g_inst);
-   g_TimmyBitmap          = std::make_unique<Bitmap>(IDB_TIMMY, g_inst);
-   g_TMissileBitmap       = std::make_unique<Bitmap>(IDB_TMISSILE, g_inst);
-   g_smallExplosionBitmap = std::make_unique<Bitmap>(IDB_SMEXPLOSION, g_inst);
-   g_largeExplosionBitmap = std::make_unique<Bitmap>(IDB_LGEXPLOSION, g_inst);
-   g_gameOverBitmap       = std::make_unique<Bitmap>(IDB_GAMEOVER, g_inst);
+   g_splashBitmap         = std::make_unique<Bitmap>(IDB_SPLASH);
+   g_desertBitmap         = std::make_unique<Bitmap>(IDB_DESERT);
+   g_carBitmap            = std::make_unique<Bitmap>(IDB_CAR);
+   g_smallCarBitmap       = std::make_unique<Bitmap>(IDB_SMCAR);
+   g_missileBitmap        = std::make_unique<Bitmap>(IDB_MISSILE);
+   g_BlobboBitmap         = std::make_unique<Bitmap>(IDB_BLOBBO);
+   g_BMissileBitmap       = std::make_unique<Bitmap>(IDB_BMISSILE);
+   g_JellyBitmap          = std::make_unique<Bitmap>(IDB_JELLY);
+   g_JMissileBitmap       = std::make_unique<Bitmap>(IDB_JMISSILE);
+   g_TimmyBitmap          = std::make_unique<Bitmap>(IDB_TIMMY);
+   g_TMissileBitmap       = std::make_unique<Bitmap>(IDB_TMISSILE);
+   g_smallExplosionBitmap = std::make_unique<Bitmap>(IDB_SMEXPLOSION);
+   g_largeExplosionBitmap = std::make_unique<Bitmap>(IDB_LGEXPLOSION);
+   g_gameOverBitmap       = std::make_unique<Bitmap>(IDB_GAMEOVER);
 
    g_background = std::make_unique<StarryBackground>(600, 450);
 
@@ -98,7 +98,7 @@ void GamePaint(HDC dc)
       EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
 
       // draw the hi scores
-      WCHAR szText[ 64 ];
+      WCHAR text[ 64 ];
       RECT  rect = { 275, 250, 325, 270 };
 
       SetBkMode(dc, TRANSPARENT);
@@ -106,9 +106,9 @@ void GamePaint(HDC dc)
 
       for ( int i = 0; i < 5; i++ )
       {
-         wsprintfW(szText, L"%d", g_hiScores[ i ]);
+         wsprintfW(text, L"%d", g_hiScores[ i ]);
 
-         DrawTextW(dc, szText, -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+         DrawTextW(dc, text, -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 
          rect.top    += 20;
          rect.bottom += 20;
@@ -117,15 +117,15 @@ void GamePaint(HDC dc)
    else
    {
       // draw the score
-      WCHAR szText[ 64 ];
+      WCHAR text[ 64 ];
       RECT  rect = { 460, 0, 510, 30 };
 
-      wsprintfW(szText, L"%d", g_score);
+      wsprintfW(text, L"%d", g_score);
 
       SetBkMode(dc, TRANSPARENT);
       SetTextColor(dc, RGB(255, 255, 255));
 
-      DrawTextW(dc, szText, -1, &rect, DT_SINGLELINE | DT_RIGHT | DT_VCENTER);
+      DrawTextW(dc, text, -1, &rect, DT_SINGLELINE | DT_RIGHT | DT_VCENTER);
 
       for ( UINT i = 0; i < g_numLives; i++ )
       {
@@ -155,8 +155,8 @@ void GameCycle( )
       g_background->Update( );
       g_game->UpdateSprites( );
 
-      HWND  wnd = g_game->GetWindow( );
-      HDC   dc = GetDC(wnd);
+      HWND wnd = g_game-> GetWindow( );
+      HDC  dc  = GetDC(wnd);
 
       GamePaint(g_hOffscreenDC);
 
@@ -188,7 +188,8 @@ void GameMenu(WPARAM wParam)
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT), g_game->GetWindow( ), (DLGPROC) DlgProc);
+      DialogBoxParamW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT),
+                      g_game->GetWindow( ), (DLGPROC) DlgProc, 0L);
       return;
    }
 }
@@ -212,8 +213,8 @@ void HandleKeys( )
 
       if ( (++g_fireInputDelay > 6) && GetAsyncKeyState(VK_SPACE) < 0 )
       {
-         RECT  bounds = { 0, 0, 600, 450 };
-         RECT  pos = g_carSprite->GetPosition( );
+         RECT    bounds = { 0, 0, 600, 450 };
+         RECT    pos    = g_carSprite-> GetPosition( );
          Sprite* sprite = new Sprite(g_missileBitmap.get( ), bounds, BA_DIE);
          sprite->SetPosition(pos.left + 15, 400);
          sprite->SetVelocity(0, -7);
@@ -239,16 +240,16 @@ void HandleKeys( )
    }
 }
 
-void MouseButtonDown(int x, int y, BOOL left)
+void MouseButtonDown(int, int, BOOL)
 { }
 
-void MouseButtonUp(int x, int y, BOOL left)
+void MouseButtonUp(int, int, BOOL)
 { }
 
-void MouseMove(int x, int y)
+void MouseMove(int, int)
 { }
 
-void HandleJoystick(JOYSTATE joyState)
+void HandleJoystick(JOYSTATE)
 { }
 
 BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
@@ -401,7 +402,7 @@ void AddAlien( )
    RECT         bounds = { 0, 0, 600, 410 };
    AlienSprite* sprite = NULL;
 
-   switch ( rtk::rand(0, 3) )
+   switch ( rtk::rand(0, 2) )
    {
    case 0:
       // Blobbo
@@ -458,10 +459,10 @@ void UpdateHiScores( )
 BOOL ReadHiScores( )
 {
    // open the hi score file (HiScores.dat)
-   HANDLE hFile = CreateFileA("HiScores.dat", GENERIC_READ, 0, NULL,
-                              OPEN_EXISTING, FILE_ATTRIBUTE_READONLY, NULL);
+   HANDLE file = CreateFileA("HiScores.dat", GENERIC_READ, 0, NULL,
+                             OPEN_EXISTING, FILE_ATTRIBUTE_READONLY, NULL);
 
-   if ( hFile == INVALID_HANDLE_VALUE )
+   if ( file == INVALID_HANDLE_VALUE )
    {
       // the hi score file doesn't exist, so initialize the scores to 0
       for ( int i = 0; i < 5; i++ )
@@ -475,32 +476,32 @@ BOOL ReadHiScores( )
    for ( int i = 0; i < 5; i++ )
    {
       // read the score
-      char  cData[ 6 ];
-      DWORD dwBytesRead;
+      char  data[ 6 ];
+      DWORD bytesRead;
 
-      if ( !ReadFile(hFile, &cData, 5, &dwBytesRead, NULL) )
+      if ( !ReadFile(file, &data, 5, &bytesRead, NULL) )
       {
          // something went wrong, so close the file handle
-         CloseHandle(hFile);
+         CloseHandle(file);
          return FALSE;
       }
-      cData[5] = '\0';
+      data[5] = '\0';
 
       // extract each integer score from the score data
-      g_hiScores[ i ] = atoi(cData);
+      g_hiScores[ i ] = atoi(data);
    }
 
    // close the file
-   return CloseHandle(hFile);
+   return CloseHandle(file);
 }
 
 BOOL WriteHiScores( )
 {
    // create the hi score file (HiScores.dat) for writing
-   HANDLE hFile = CreateFileA("HiScores.dat", GENERIC_WRITE, 0, NULL,
-                              CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+   HANDLE file = CreateFileA("HiScores.dat", GENERIC_WRITE, 0, NULL,
+                             CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
-   if ( hFile == INVALID_HANDLE_VALUE )
+   if ( file == INVALID_HANDLE_VALUE )
    {
       // the hi score file couldn't be created, so bail
       return FALSE;
@@ -510,20 +511,20 @@ BOOL WriteHiScores( )
    for ( int i = 0; i < 5; i++ )
    {
       // format each score for writing
-      CHAR cData[ 6 ];
-      wsprintfA(cData, "%05d", g_hiScores[ i ]);
+      CHAR data[ 6 ];
+      wsprintfA(data, "%05d", g_hiScores[ i ]);
 
       // write the score
-      DWORD dwBytesWritten;
+      DWORD bytesWritten;
 
-      if ( !WriteFile(hFile, &cData, 5, &dwBytesWritten, NULL) )
+      if ( !WriteFile(file, &data, 5, &bytesWritten, NULL) )
       {
          // something went wrong, so close the file handle
-         CloseHandle(hFile);
+         CloseHandle(file);
          return FALSE;
       }
    }
 
    // close the file
-   return CloseHandle(hFile);
+   return CloseHandle(file);
 }

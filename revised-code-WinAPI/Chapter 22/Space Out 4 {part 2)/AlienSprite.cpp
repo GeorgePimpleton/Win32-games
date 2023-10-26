@@ -44,7 +44,7 @@ Sprite* AlienSprite::AddSprite( )
       sprite->SetVelocity(0, 3);
    }
 
-   // Set the missile sprite's position and return it
+   // set the missile sprite's position and return it
    sprite->SetPosition(pos.left + (GetWidth( ) / 2), pos.bottom);
    return sprite;
 }

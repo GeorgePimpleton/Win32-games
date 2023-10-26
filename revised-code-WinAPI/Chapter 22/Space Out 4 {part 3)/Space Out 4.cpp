@@ -67,7 +67,7 @@ void GameEnd( )
    WriteHiScores( );
 }
 
-void GameActivate(HWND wnd)
+void GameActivate(HWND)
 {
    if ( !g_demo )
    {
@@ -75,7 +75,7 @@ void GameActivate(HWND wnd)
    }
 }
 
-void GameDeactivate(HWND wnd)
+void GameDeactivate(HWND)
 {
    if ( !g_demo )
    {
@@ -155,8 +155,8 @@ void GameCycle( )
       g_background->Update( );
       g_game->UpdateSprites( );
 
-      HWND  wnd = g_game->GetWindow( );
-      HDC   dc = GetDC(wnd);
+      HWND wnd = g_game-> GetWindow( );
+      HDC  dc  = GetDC(wnd);
 
       GamePaint(g_hOffscreenDC);
 
@@ -188,7 +188,8 @@ void GameMenu(WPARAM wParam)
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT), g_game->GetWindow( ), (DLGPROC) DlgProc);
+      DialogBoxParamW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT),
+                      g_game->GetWindow( ), (DLGPROC) DlgProc, 0L);
       return;
    }
 }
@@ -212,8 +213,8 @@ void HandleKeys( )
 
       if ( (++g_fireInputDelay > 6) && GetAsyncKeyState(VK_SPACE) < 0 )
       {
-         RECT  bounds = { 0, 0, 600, 450 };
-         RECT  pos = g_carSprite->GetPosition( );
+         RECT    bounds = { 0, 0, 600, 450 };
+         RECT    pos    = g_carSprite-> GetPosition( );
          Sprite* sprite = new Sprite(g_missileBitmap.get( ), bounds, BA_DIE);
          sprite->SetPosition(pos.left + 15, 400);
          sprite->SetVelocity(0, -7);
@@ -239,16 +240,16 @@ void HandleKeys( )
    }
 }
 
-void MouseButtonDown(int x, int y, BOOL left)
+void MouseButtonDown(int, int, BOOL)
 { }
 
-void MouseButtonUp(int x, int y, BOOL left)
+void MouseButtonUp(int, int, BOOL)
 { }
 
-void MouseMove(int x, int y)
+void MouseMove(int, int)
 { }
 
-void HandleJoystick(JOYSTATE joyState)
+void HandleJoystick(JOYSTATE)
 { }
 
 BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
@@ -401,7 +402,7 @@ void AddAlien( )
    RECT         bounds = { 0, 0, 600, 410 };
    AlienSprite* sprite = NULL;
 
-   switch ( rtk::rand(0, 3) )
+   switch ( rtk::rand(0, 2) )
    {
    case 0:
       // Blobbo
