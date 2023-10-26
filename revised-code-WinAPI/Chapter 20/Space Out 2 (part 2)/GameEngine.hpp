@@ -16,27 +16,27 @@ const JOYSTATE  JOY_NONE  = 0x0000L,
                 JOY_FIRE1 = 0x0010L,
                 JOY_FIRE2 = 0x0020L;
 
-int WINAPI       wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
-                          _In_ PWSTR cmdLine, _In_ int cmdShow);
-LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
-BOOL    CALLBACK DlgProc(HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam);
+int WINAPI       wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE,
+                          _In_ PWSTR,     _In_     int);
+LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+BOOL    CALLBACK DlgProc(HWND, UINT, WPARAM, LPARAM);
 
-BOOL GameInitialize(HINSTANCE inst);
-void GameStart(HWND wnd);
+BOOL GameInitialize(HINSTANCE);
+void GameStart(HWND);
 void GameNew( );
 void GameEnd( );
-void GameActivate(HWND wnd);
-void GameDeactivate(HWND wnd);
-void GamePaint(HDC dc);
+void GameActivate(HWND);
+void GameDeactivate(HWND);
+void GamePaint(HDC);
 void GameCycle( );
-void GameMenu(WPARAM wParam);
+void GameMenu(WPARAM);
 void HandleKeys( );
-void MouseButtonDown(int x, int y, BOOL left);
-void MouseButtonUp(int x, int y, BOOL left);
-void MouseMove(int x, int y);
-void HandleJoystick(JOYSTATE joyState);
-BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee);
-void SpriteDying(Sprite* spriteDying);
+void MouseButtonDown(int, int, BOOL);
+void MouseButtonUp(int, int, BOOL);
+void MouseMove(int, int);
+void HandleJoystick(JOYSTATE);
+BOOL SpriteCollision(Sprite*, Sprite*);
+void SpriteDying(Sprite*);
 
 class GameEngine
 {
@@ -57,26 +57,26 @@ protected:
    std::vector<Sprite*>               m_sprites;
    UINT                               m_MIDIPlayerID;
 
-   BOOL CheckSpriteCollision(Sprite* testSprite);
+   BOOL CheckSpriteCollision(Sprite*);
 
 public:
-            GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
-                       WORD icon, WORD smallIcon, int width = 640, int height = 480);
+            GameEngine(HINSTANCE, PCWSTR, PCWSTR,
+                       WORD, WORD, int = 640, int = 480);
    virtual ~GameEngine( );
 
-   static GameEngine* GetEngine( )                     { return m_gameEngine.get( ); };
-   BOOL               Initialize(int cmdShow);
-   LRESULT            HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
+   static GameEngine* GetEngine( )        { return m_gameEngine.get( ); };
+   BOOL               Initialize(int);
+   LRESULT            HandleEvent(HWND, UINT, WPARAM, LPARAM);
    BOOL               InitJoystick( );
    void               CaptureJoystick( );
    void               ReleaseJoystick( );
    void               CheckJoystick( );
-   void               AddSprite(Sprite* sprite);
-   void               DrawSprites(HDC dc);
+   void               AddSprite(Sprite*);
+   void               DrawSprites(HDC);
    void               UpdateSprites( );
    void               CleanupSprites( );
-   Sprite*            IsPointInSprite(int x, int y);
-   void               PlayMIDISong(PCWSTR MIDIFileName = L"", BOOL restart = TRUE);
+   Sprite*            IsPointInSprite(int, int);
+   void               PlayMIDISong(PCWSTR = L"", BOOL = TRUE);
    void               PauseMIDISong( );
    void               CloseMIDIPlayer( );
 

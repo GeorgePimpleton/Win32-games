@@ -60,7 +60,7 @@ void GameEnd( )
    g_game->CleanupSprites( );
 }
 
-void GameActivate(HWND wnd)
+void GameActivate(HWND)
 {
    if ( !g_splash )
    {
@@ -68,7 +68,7 @@ void GameActivate(HWND wnd)
    }
 }
 
-void GameDeactivate(HWND wnd)
+void GameDeactivate(HWND)
 {
    if ( !g_splash )
    {
@@ -90,15 +90,15 @@ void GamePaint(HDC dc)
    {
       g_game->DrawSprites(dc);
 
-      WCHAR szText[ 64 ];
+      WCHAR text[ 64 ];
       RECT  rect = { 460, 0, 510, 30 };
 
-      wsprintfW(szText, L"%d", g_score);
+      wsprintfW(text, L"%d", g_score);
 
       SetBkMode(dc, TRANSPARENT);
       SetTextColor(dc, RGB(255, 255, 255));
 
-      DrawTextW(dc, szText, -1, &rect, DT_SINGLELINE | DT_RIGHT | DT_VCENTER);
+      DrawTextW(dc, text, -1, &rect, DT_SINGLELINE | DT_RIGHT | DT_VCENTER);
 
       for ( UINT i = 0; i < g_numLives; i++ )
       {
@@ -152,7 +152,8 @@ void GameMenu(WPARAM wParam)
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT), g_game->GetWindow( ), (DLGPROC) DlgProc);
+      DialogBoxParamW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT),
+                      g_game->GetWindow( ), (DLGPROC) DlgProc, 0L);
       return;
    }
 }
@@ -203,16 +204,16 @@ void HandleKeys( )
    }
 }
 
-void MouseButtonDown(int x, int y, BOOL left)
+void MouseButtonDown(int, int, BOOL)
 { }
 
-void MouseButtonUp(int x, int y, BOOL left)
+void MouseButtonUp(int, int, BOOL)
 { }
 
-void MouseMove(int x, int y)
+void MouseMove(int, int)
 { }
 
-void HandleJoystick(JOYSTATE joyState)
+void HandleJoystick(JOYSTATE)
 { }
 
 BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)

@@ -37,32 +37,32 @@ protected:
    virtual void CalcCollisionRect( );
 
 public:
-            Sprite(Bitmap* bitmap);
-            Sprite(Bitmap* bitmap, RECT& bounds,
-                   BOUNDSACTION boundsAction = BA_STOP);
-            Sprite(Bitmap* bitmap, POINT ptPosition, POINT velocity, LONG zOrder,
-                   RECT& bounds, BOUNDSACTION boundsAction = BA_STOP);
+            Sprite(Bitmap*);
+            Sprite(Bitmap*, RECT&,
+                   BOUNDSACTION = BA_STOP);
+            Sprite(Bitmap*, POINT, POINT, LONG,
+                   RECT&, BOUNDSACTION = BA_STOP);
    virtual ~Sprite( );
 
    virtual SPRITEACTION Update( );
    virtual Sprite*      AddSprite( );
-   void                 Draw(HDC dc);
-   BOOL                 IsPointInside(int x, int y);
-   BOOL                 TestCollision(Sprite* testSprite);
+   void                 Draw(HDC);
+   BOOL                 IsPointInside(int, int);
+   BOOL                 TestCollision(Sprite*);
    void                 Kill( ) { m_dying = TRUE; };
 
    Bitmap* GetBitmap( )                                { return m_bitmap; };
-   void    SetNumFrames(LONG iNumFrames, BOOL oneCycle = FALSE);
+   void    SetNumFrames(LONG, BOOL = FALSE);
    void    SetFrameDelay(LONG frameDelay)              { m_frameDelay = frameDelay; };
    RECT&   GetPosition( )                              { return m_position; };
-   void    SetPosition(int x, int y);
-   void    SetPosition(POINT ptPosition);
-   void    SetPosition(RECT& position);
-   void    OffsetPosition(int x, int y);
+   void    SetPosition(int, int);
+   void    SetPosition(POINT);
+   void    SetPosition(RECT&);
+   void    OffsetPosition(int, int);
    RECT&   GetCollision( )                             { return m_collision; };
    POINT   GetVelocity( )                              { return m_velocity; };
-   void    SetVelocity(int x, int y);
-   void    SetVelocity(POINT velocity);
+   void    SetVelocity(int, int);
+   void    SetVelocity(POINT);
    BOOL    GetZOrder( )                                { return m_zOrder; };
    void    SetZOrder(LONG zOrder)                      { m_zOrder = zOrder; };
    void    SetBounds(RECT& bounds)                     { CopyRect(&m_bounds, &bounds); };
