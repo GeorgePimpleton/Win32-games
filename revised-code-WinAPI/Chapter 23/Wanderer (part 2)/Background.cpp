@@ -76,9 +76,9 @@ void StarryBackground::Update( )
    {
       if ( 0 == (rtk::rand(0, m_twinkleDelay)) )
       {
-         int iRGB = rtk::rand(0, 255);
+         int rgb = rtk::rand(0, 255);
 
-         m_starColors[ i ] = RGB(iRGB, iRGB, iRGB);
+         m_starColors[ i ] = RGB(rgb, rgb, rgb);
          m_sizeStars[ i ]  = SS_SMALL;
 
          if ( rtk::rand(0, 100) < 20 )

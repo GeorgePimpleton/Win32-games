@@ -27,34 +27,35 @@ void GameStart(HWND wnd)
 
    SelectObject(g_offscreenDC, g_offscreenBitmap);
 
-   // Create the scrolling background and landscape layer
+   // create the scrolling background and landscape layer
    HDC dc = GetDC(wnd);
-   g_background = std::make_unique<ScrollingBackground>(256, 256);
+
+   g_background       = std::make_unique<ScrollingBackground>(256, 256);
    g_BGLandscapeLayer = std::make_unique<BackgroundLayer>(IDB_BG_LANDSCAPE);
 
    RECT viewport = { 352, 352, 608, 608 };
    g_BGLandscapeLayer->SetViewport(viewport);
    g_background->AddLayer(g_BGLandscapeLayer.get( ));
 
-   // Create the scrolling foreground and clouds layer
-   g_foreground = std::make_unique<ScrollingBackground>(256, 256);
+   // create the scrolling foreground and clouds layer
+   g_foreground    = std::make_unique<ScrollingBackground>(256, 256);
    g_FGCloudsLayer = std::make_unique<BackgroundLayer>(IDB_BG_CLOUDS);
-   viewport.left = viewport.top = 64;
-   viewport.right = viewport.bottom = 320;
+   viewport.left   = viewport.top = 64;
+   viewport.right  = viewport.bottom = 320;
    g_FGCloudsLayer->SetViewport(viewport);
    g_foreground->AddLayer(g_FGCloudsLayer.get( ));
 
-   // Create and load the person bitmap
+   // create and load the person bitmap
    g_personBitmap = std::make_unique<Bitmap>(IDB_PERSON);
 
-   // Create the person sprite
+   // create the person sprite
    RECT bounds = { 115, 112, 26, 32 };
    g_personSprite = std::make_unique<PersonSprite>(g_personBitmap.get( ), bounds, BA_STOP);
    g_personSprite->SetNumFrames(2);
    g_personSprite->SetPosition(115, 112);
    g_game->AddSprite(g_personSprite.get( ));
 
-   // Play the background music
+   // play the background music
    g_game->PlayMIDISong(L"Music.mid");
 }
 
@@ -63,41 +64,41 @@ void GameNew( )
 
 void GameEnd( )
 {
-   // Close the MIDI player for the background music
+   // close the MIDI player for the background music
    g_game->CloseMIDIPlayer( );
 
-   // Cleanup the offscreen device context and bitmap
+   // cleanup the offscreen device context and bitmap
    DeleteObject(g_offscreenBitmap);
    DeleteDC(g_offscreenDC);
 
-   // Cleanup the sprites
+   // cleanup the sprites
    g_game->CleanupSprites( );
 }
 
 void GameActivate(HWND wnd)
 {
-   // Capture the joystick
+   // capture the joystick
    g_game->CaptureJoystick( );
 
-   // Resume the background music
+   // resume the background music
    g_game->PlayMIDISong(L"", FALSE);
 }
 
 void GameDeactivate(HWND wnd)
 {
-   // Release the joystick
+   // release the joystick
    g_game->ReleaseJoystick( );
 
-   // Pause the background music
+   // pause the background music
    g_game->PauseMIDISong( );
 }
 
 void GamePaint(HDC dc)
 {
-   // Draw the scrolling background
+   // draw the scrolling background
    g_background->Draw(dc);
 
-   // Draw the sprites
+   // draw the sprites
    g_game->DrawSprites(dc);
 
    // Draw the scrolling foreground
@@ -106,23 +107,23 @@ void GamePaint(HDC dc)
 
 void GameCycle( )
 {
-   // Update the background
+   // update the background
  //  g_pBackground->Update();
 
-   // Update the foreground
+   // update the foreground
  //  g_pForeground->Update();
 
-   // Update the sprites
+   // update the sprites
    g_game->UpdateSprites( );
 
-   // Obtain a device context for repainting the game
-   HWND  wnd = g_game->GetWindow( );
-   HDC   dc = GetDC(wnd);
+   // obtain a device context for repainting the game
+   HWND wnd = g_game-> GetWindow( );
+   HDC  dc  = GetDC(wnd);
 
-   // Paint the game to the offscreen device context
+   // paint the game to the offscreen device context
    GamePaint(g_offscreenDC);
 
-   // Blit the offscreen bitmap to the game screen
+   // blit the offscreen bitmap to the game screen
    BitBlt(dc, 0, 0, g_game->GetWidth( ), g_game->GetHeight( ),
           g_offscreenDC, 0, 0, SRCCOPY);
 
@@ -144,182 +145,113 @@ void GameMenu(WPARAM wParam)
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT), g_game->GetWindow( ), (DLGPROC) DlgProc);
+      DialogBoxParamW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT),
+                      g_game->GetWindow( ), (DLGPROC) DlgProc, 0L);
       return;
    }
 }
 
 void HandleKeys( )
 {
-   // Move the landscape/cloud layers based upon arrow key presses
+   // move the landscape/cloud layers based upon arrow key presses
    if ( g_inputDelay++ > 1 )
    {
       if ( GetAsyncKeyState(VK_LEFT) < 0 )
       {
-         // Make the person walk
-         g_personSprite->Walk( );
-
-         // Move the landscape layer to the right
-         g_BGLandscapeLayer->SetSpeed(16);
-         g_BGLandscapeLayer->SetDirection(SD_RIGHT);
-         g_BGLandscapeLayer->Update( );
-         g_BGLandscapeLayer->SetSpeed(0);
-
-         // Move the cloud layer to the right
-         g_FGCloudsLayer->SetSpeed(4);
-         g_FGCloudsLayer->SetDirection(SD_RIGHT);
-         g_FGCloudsLayer->Update( );
-         g_FGCloudsLayer->SetSpeed(0);
+         // move the wanderer to the left,
+         // move the landscape layer & the cloud layer to the right
+         UpdateView(SD_RIGHT);
       }
       else if ( GetAsyncKeyState(VK_RIGHT) < 0 )
       {
-         // Make the person walk
-         g_personSprite->Walk( );
-
-         // Move the landscape layer to the left
-         g_BGLandscapeLayer->SetSpeed(16);
-         g_BGLandscapeLayer->SetDirection(SD_LEFT);
-         g_BGLandscapeLayer->Update( );
-         g_BGLandscapeLayer->SetSpeed(0);
-
-         // Move the cloud layer to the left
-         g_FGCloudsLayer->SetSpeed(4);
-         g_FGCloudsLayer->SetDirection(SD_LEFT);
-         g_FGCloudsLayer->Update( );
-         g_FGCloudsLayer->SetSpeed(0);
+         // move the wanderer to the right,
+         // move the landscape layer & the cloud layer to the left
+         UpdateView(SD_LEFT);
       }
       else if ( GetAsyncKeyState(VK_UP) < 0 )
       {
-         // Make the person walk
-         g_personSprite->Walk( );
-
-         // Move the landscape layer down
-         g_BGLandscapeLayer->SetSpeed(16);
-         g_BGLandscapeLayer->SetDirection(SD_DOWN);
-         g_BGLandscapeLayer->Update( );
-         g_BGLandscapeLayer->SetSpeed(0);
-
-         // Move the cloud layer down
-         g_FGCloudsLayer->SetSpeed(4);
-         g_FGCloudsLayer->SetDirection(SD_DOWN);
-         g_FGCloudsLayer->Update( );
-         g_FGCloudsLayer->SetSpeed(0);
+         // move the wanderer up,
+         // move the landscape layer & the cloud layer down
+         UpdateView(SD_DOWN);
       }
       else if ( GetAsyncKeyState(VK_DOWN) < 0 )
       {
-         // Make the person walk
-         g_personSprite->Walk( );
-
-         // Move the landscape layer up
-         g_BGLandscapeLayer->SetSpeed(16);
-         g_BGLandscapeLayer->SetDirection(SD_UP);
-         g_BGLandscapeLayer->Update( );
-         g_BGLandscapeLayer->SetSpeed(0);
-
-         // Move the cloud layer up
-         g_FGCloudsLayer->SetSpeed(4);
-         g_FGCloudsLayer->SetDirection(SD_UP);
-         g_FGCloudsLayer->Update( );
-         g_FGCloudsLayer->SetSpeed(0);
+         // move the wanderer down,
+         // move the landscape layer & the cloud layer up
+         UpdateView(SD_UP);
       }
 
-      // Reset the input delay
+      // reset the input delay
       g_inputDelay = 0;
    }
 }
 
-void MouseButtonDown(int x, int y, BOOL left)
+void MouseButtonDown(int, int, BOOL)
 { }
 
-void MouseButtonUp(int x, int y, BOOL left)
+void MouseButtonUp(int, int, BOOL)
 { }
 
-void MouseMove(int x, int y)
+void MouseMove(int, int)
 { }
 
 void HandleJoystick(JOYSTATE joyState)
 {
    if ( ++g_inputDelay > 2 )
    {
-      // Check horizontal movement
+      // check horizontal movement
       if ( joyState & JOY_LEFT )
       {
-         // Make the person walk
-         g_personSprite->Walk( );
-
-         // Move the landscape layer to the right
-         g_BGLandscapeLayer->SetSpeed(16);
-         g_BGLandscapeLayer->SetDirection(SD_RIGHT);
-         g_BGLandscapeLayer->Update( );
-         g_BGLandscapeLayer->SetSpeed(0);
-
-         // Move the cloud layer to the right
-         g_FGCloudsLayer->SetSpeed(4);
-         g_FGCloudsLayer->SetDirection(SD_RIGHT);
-         g_FGCloudsLayer->Update( );
-         g_FGCloudsLayer->SetSpeed(0);
+         // move the wanderer to the left,
+         // move the landscape layer & the cloud layer to the right
+         UpdateView(SD_RIGHT);
       }
       else if ( joyState & JOY_RIGHT )
       {
-         // Make the person walk
-         g_personSprite->Walk( );
-
-         // Move the landscape layer to the left
-         g_BGLandscapeLayer->SetSpeed(16);
-         g_BGLandscapeLayer->SetDirection(SD_LEFT);
-         g_BGLandscapeLayer->Update( );
-         g_BGLandscapeLayer->SetSpeed(0);
-
-         // Move the cloud layer to the left
-         g_FGCloudsLayer->SetSpeed(4);
-         g_FGCloudsLayer->SetDirection(SD_LEFT);
-         g_FGCloudsLayer->Update( );
-         g_FGCloudsLayer->SetSpeed(0);
+         // move the wanderer to the right,
+         // move the landscape layer & the cloud layer to the left
+         UpdateView(SD_LEFT);
       }
       else if ( joyState & JOY_UP )
       {
-         // Make the person walk
-         g_personSprite->Walk( );
-
-         // Move the landscape layer down
-         g_BGLandscapeLayer->SetSpeed(16);
-         g_BGLandscapeLayer->SetDirection(SD_DOWN);
-         g_BGLandscapeLayer->Update( );
-         g_BGLandscapeLayer->SetSpeed(0);
-
-         // Move the cloud layer down
-         g_FGCloudsLayer->SetSpeed(4);
-         g_FGCloudsLayer->SetDirection(SD_DOWN);
-         g_FGCloudsLayer->Update( );
-         g_FGCloudsLayer->SetSpeed(0);
+         // move the wanderer up,
+         // move the landscape layer & the cloud layer down
+         UpdateView(SD_DOWN);
       }
       else if ( joyState & JOY_DOWN )
       {
-         // Make the person walk
-         g_personSprite->Walk( );
-
-         // Move the landscape layer up
-         g_BGLandscapeLayer->SetSpeed(16);
-         g_BGLandscapeLayer->SetDirection(SD_UP);
-         g_BGLandscapeLayer->Update( );
-         g_BGLandscapeLayer->SetSpeed(0);
-
-         // Move the cloud layer up
-         g_FGCloudsLayer->SetSpeed(4);
-         g_FGCloudsLayer->SetDirection(SD_UP);
-         g_FGCloudsLayer->Update( );
-         g_FGCloudsLayer->SetSpeed(0);
+         // move the wanderer down,
+         // move the landscape layer & the cloud layer up
+         UpdateView(SD_UP);
       }
 
-      // Reset the input delay
+      // reset the input delay
       g_inputDelay = 0;
    }
 }
 
-BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
+void UpdateView(SCROLLDIR sd)
+{
+   // make the person walk
+   g_personSprite->Walk( );
+
+   // move the landscape layer
+   g_BGLandscapeLayer->SetSpeed(16);
+   g_BGLandscapeLayer->SetDirection(sd);
+   g_BGLandscapeLayer->Update( );
+   g_BGLandscapeLayer->SetSpeed(0);
+
+   // move the cloud layer
+   g_FGCloudsLayer->SetSpeed(4);
+   g_FGCloudsLayer->SetDirection(sd);
+   g_FGCloudsLayer->Update( );
+   g_FGCloudsLayer->SetSpeed(0);
+}
+
+BOOL SpriteCollision(Sprite*, Sprite*)
 {
    return FALSE;
 }
 
-void SpriteDying(Sprite* spriteDying)
+void SpriteDying(Sprite*)
 { }

@@ -36,36 +36,36 @@ protected:
    virtual void CalcCollisionRect( );
 
 public:
-            Sprite(Bitmap* bitmap);
-            Sprite(Bitmap* bitmap, RECT& bounds,
-                   BOUNDSACTION boundsAction = BA_STOP);
-            Sprite(Bitmap* bitmap, POINT position, POINT velocity, LONG zOrder,
-                   RECT& bounds, BOUNDSACTION boundsAction = BA_STOP);
+            Sprite(Bitmap*);
+            Sprite(Bitmap*, RECT&,
+                   BOUNDSACTION = BA_STOP);
+            Sprite(Bitmap*, POINT, POINT, LONG,
+                   RECT&, BOUNDSACTION = BA_STOP);
    virtual ~Sprite( );
 
    virtual SPRITEACTION Update( );
    virtual Sprite*      AddSprite( );
-   void                 Draw(HDC dc);
-   BOOL                 IsPointInside(int x, int y);
-   BOOL                 TestCollision(Sprite* testSprite);
+   void                 Draw(HDC);
+   BOOL                 IsPointInside(int, int);
+   BOOL                 TestCollision(Sprite*);
    void                 Kill( ) { m_dying = TRUE; };
 
    Bitmap* GetBitmap( ) const                         { return m_bitmap; };
-   void    SetNumFrames(LONG numFrames, BOOL oneCycle = FALSE);
+   void    SetNumFrames(LONG, BOOL = FALSE);
    void    SetFrameDelay(LONG frameDelay)             { m_frameDelay = frameDelay; };
    RECT&   GetPosition( )                             { return m_position; };
-   void    SetPosition(int x, int y);
-   void    SetPosition(POINT position);
-   void    SetPosition(RECT& position);
-   void    OffsetPosition(int x, int y);
+   void    SetPosition(int, int);
+   void    SetPosition(POINT);
+   void    SetPosition(RECT&);
+   void    OffsetPosition(int, int);
    RECT&   GetCollision( )                            { return m_collision; };
    POINT   GetVelocity( ) const                       { return m_velocity; };
-   void    SetVelocity(int x, int y);
-   void    SetVelocity(POINT velocity);
+   void    SetVelocity(int, int);
+   void    SetVelocity(POINT);
    BOOL    GetZOrder( ) const                         { return m_zOrder; };
    void    SetZOrder(LONG zOrder)                     { m_zOrder = zOrder; };
    void    SetBounds(RECT& bounds)                    { CopyRect(&m_bounds, &bounds); };
-   void    SetBoundsAction(BOUNDSACTION ba)           { m_boundsAction = ba; };
+   void    SetBoundsAction(BOUNDSACTION boundsAction) { m_boundsAction = boundsAction; };
    BOOL    IsHidden( ) const                          { return m_hidden; };
    void    SetHidden(BOOL hidden)                     { m_hidden = hidden; };
    LONG    GetWidth( ) const                          { return m_bitmap-> GetWidth( ); };

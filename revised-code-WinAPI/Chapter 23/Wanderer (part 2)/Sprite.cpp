@@ -90,8 +90,8 @@ SPRITEACTION Sprite::Update( )
    ptBoundsSize.x = m_bounds.right - m_bounds.left;
    ptBoundsSize.y = m_bounds.bottom - m_bounds.top;
 
-   // Check the bounds
-   // Wrap?
+   // check the bounds
+   // wrap?
    if ( m_boundsAction == BA_WRAP )
    {
       if ( (ptNewPosition.x + ptSpriteSize.x) < m_bounds.left )
@@ -112,56 +112,58 @@ SPRITEACTION Sprite::Update( )
          ptNewPosition.y = m_bounds.top - ptSpriteSize.y;
       }
    }
-   // Bounce?
+   // bounce?
    else if ( m_boundsAction == BA_BOUNCE )
    {
-      BOOL bBounce = FALSE;
+      BOOL  bBounce       = FALSE;
       POINT ptNewVelocity = m_velocity;
 
       if ( ptNewPosition.x < m_bounds.left )
       {
-         bBounce = TRUE;
+         bBounce         = TRUE;
          ptNewPosition.x = m_bounds.left;
          ptNewVelocity.x = -ptNewVelocity.x;
       }
       else if ( (ptNewPosition.x + ptSpriteSize.x) > m_bounds.right )
       {
-         bBounce = TRUE;
+         bBounce         = TRUE;
          ptNewPosition.x = m_bounds.right - ptSpriteSize.x;
          ptNewVelocity.x = -ptNewVelocity.x;
       }
 
       if ( ptNewPosition.y < m_bounds.top )
       {
-         bBounce = TRUE;
+         bBounce         = TRUE;
          ptNewPosition.y = m_bounds.top;
          ptNewVelocity.y = -ptNewVelocity.y;
       }
       else if ( (ptNewPosition.y + ptSpriteSize.y) > m_bounds.bottom )
       {
-         bBounce = TRUE;
+         bBounce         = TRUE;
          ptNewPosition.y = m_bounds.bottom - ptSpriteSize.y;
          ptNewVelocity.y = -ptNewVelocity.y;
       }
       if ( bBounce )
+      {
          SetVelocity(ptNewVelocity);
+      }
    }
-   // Die?
+   // die?
    else if ( m_boundsAction == BA_DIE )
    {
       if ( (ptNewPosition.x + ptSpriteSize.x) < m_bounds.left ||
-          ptNewPosition.x > m_bounds.right ||
-          (ptNewPosition.y + ptSpriteSize.y) < m_bounds.top ||
-          ptNewPosition.y > m_bounds.bottom )
+            ptNewPosition.x > m_bounds.right ||
+           (ptNewPosition.y + ptSpriteSize.y) < m_bounds.top ||
+            ptNewPosition.y > m_bounds.bottom )
       {
          return SA_KILL;
       }
    }
-   // Stop (default)
+   // stop (default)
    else
    {
       if ( ptNewPosition.x  < m_bounds.left ||
-          ptNewPosition.x >(m_bounds.right - ptSpriteSize.x) )
+           ptNewPosition.x >(m_bounds.right - ptSpriteSize.x) )
       {
          ptNewPosition.x = max(m_bounds.left, min(ptNewPosition.x,
                                                     m_bounds.right - ptSpriteSize.x));
@@ -169,7 +171,7 @@ SPRITEACTION Sprite::Update( )
       }
 
       if ( ptNewPosition.y  < m_bounds.top ||
-          ptNewPosition.y >(m_bounds.bottom - ptSpriteSize.y) )
+           ptNewPosition.y >(m_bounds.bottom - ptSpriteSize.y) )
       {
          ptNewPosition.y = max(m_bounds.top, min(ptNewPosition.y,
                                                    m_bounds.bottom - ptSpriteSize.y));

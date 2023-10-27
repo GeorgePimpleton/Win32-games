@@ -20,3 +20,5 @@ std::unique_ptr<ScrollingBackground> g_foreground;
 std::unique_ptr<Bitmap>              g_personBitmap;
 std::unique_ptr<PersonSprite>        g_personSprite;
 int                                  g_inputDelay;
+
+void UpdateView(SCROLLDIR);
