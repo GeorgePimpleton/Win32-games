@@ -14,20 +14,20 @@ protected:
 
 public:
             Bitmap( );
-            Bitmap(PCWSTR fileName);
-            Bitmap(UINT resID);
-            Bitmap(HDC dc, LONG width, LONG height, COLORREF color = RGB(0, 0, 0));
+            Bitmap(PCWSTR);
+            Bitmap(UINT);
+            Bitmap(HDC, LONG, LONG, COLORREF = RGB(0, 0, 0));
    virtual ~Bitmap( );
 
-   BOOL Create(PCWSTR fileName);
-   BOOL Create(UINT resID);
-   BOOL Create(HDC dc, LONG width, LONG height, COLORREF color);
+   BOOL Create(PCWSTR);
+   BOOL Create(UINT);
+   BOOL Create(HDC, LONG, LONG, COLORREF);
 
-   virtual void Draw(HDC dc, int x, int y, BOOL trans = FALSE,
-                     COLORREF transColor = RGB(255, 0, 255));
-   void DrawPart(HDC dc, int x, int y, int xPart, int yPart,
-                 int wPart, int hPart, BOOL trans = FALSE,
-                 COLORREF transColor = RGB(255, 0, 255));
+   virtual void Draw(HDC dc, int, int, BOOL = FALSE,
+                     COLORREF = RGB(255, 0, 255));
+   void DrawPart(HDC dc, int, int, int, int,
+                 int, int, BOOL = FALSE,
+                 COLORREF = RGB(255, 0, 255));
 
    constexpr LONG GetWidth( ) const  { return m_width; };
    constexpr LONG GetHeight( ) const { return m_height; };

@@ -1,6 +1,6 @@
 #include "ScrollingBackground.hpp"
 
-// Create a background layer from a bitmap file
+// create a background layer from a bitmap file
 BackgroundLayer::BackgroundLayer(PCWSTR fileName,
                                  int speed, SCROLLDIR direction)
    : Bitmap(fileName), m_speed(speed), m_direction(direction)
@@ -11,13 +11,13 @@ BackgroundLayer::BackgroundLayer(PCWSTR fileName,
    m_viewport.bottom = m_height;
 }
 
-// Create a background layer from a bitmap resource
+// create a background layer from a bitmap resource
 BackgroundLayer::BackgroundLayer(UINT resID,
                                  int speed, SCROLLDIR direction)
    : Bitmap(resID), m_speed(speed),
    m_direction(direction)
 {
-   // Set the viewport to the entire layer image by default
+   // set the viewport to the entire layer image by default
    m_viewport.left   = m_viewport.top = 0;
    m_viewport.right  = m_width;
    m_viewport.bottom = m_height;
@@ -26,10 +26,10 @@ BackgroundLayer::BackgroundLayer(UINT resID,
 void BackgroundLayer::Draw(HDC dc, int x, int y, BOOL trans,
                            COLORREF transColor)
 {
-   // Draw only the part of the layer seen through the viewport
+   // draw only the part of the layer seen through the viewport
    if ( m_viewport.top < 0 && m_viewport.left < 0 )
    {
-      // Draw the split viewport wrapping top to bottom AND left to right
+      // draw the split viewport wrapping top to bottom and left to right
       DrawPart(dc, x, y,
                m_width + m_viewport.left, m_height + m_viewport.top,
                -m_viewport.left, -m_viewport.top,
@@ -49,7 +49,7 @@ void BackgroundLayer::Draw(HDC dc, int x, int y, BOOL trans,
    }
    else if ( m_viewport.top < 0 && m_viewport.right > m_width )
    {
-      // Draw the split viewport wrapping top to bottom AND right to left
+      // draw the split viewport wrapping top to bottom and right to left
       DrawPart(dc, x, y,
                m_viewport.left, m_height + m_viewport.top,
                m_width - m_viewport.left, -m_viewport.top,
@@ -69,7 +69,7 @@ void BackgroundLayer::Draw(HDC dc, int x, int y, BOOL trans,
    }
    else if ( m_viewport.bottom > m_height && m_viewport.left < 0 )
    {
-      // Draw the split viewport wrapping bottom to top AND left to right
+      // draw the split viewport wrapping bottom to top and left to right
       DrawPart(dc, x, y,
                m_width + m_viewport.left, m_viewport.top,
                -m_viewport.left, m_height - m_viewport.top,
@@ -89,7 +89,7 @@ void BackgroundLayer::Draw(HDC dc, int x, int y, BOOL trans,
    }
    else if ( m_viewport.bottom > m_height && m_viewport.right > m_width )
    {
-      // Draw the split viewport wrapping bottom to top AND right to left
+      // draw the split viewport wrapping bottom to top and right to left
       DrawPart(dc, x, y,
                m_viewport.left, m_viewport.top,
                m_width - m_viewport.left, m_height - m_viewport.top,
@@ -109,7 +109,7 @@ void BackgroundLayer::Draw(HDC dc, int x, int y, BOOL trans,
    }
    else if ( m_viewport.top < 0 )
    {
-      // Draw the split viewport wrapping from top to bottom
+      // draw the split viewport wrapping from top to bottom
       DrawPart(dc, x, y,
                m_viewport.left, m_height + m_viewport.top,
                m_viewport.right - m_viewport.left, -m_viewport.top,
@@ -121,7 +121,7 @@ void BackgroundLayer::Draw(HDC dc, int x, int y, BOOL trans,
    }
    else if ( m_viewport.right > m_width )
    {
-      // Draw the split viewport wrapping from right to left
+      // draw the split viewport wrapping from right to left
       DrawPart(dc, x, y,
                m_viewport.left, m_viewport.top,
                m_width - m_viewport.left, m_viewport.bottom - m_viewport.top,
@@ -133,7 +133,7 @@ void BackgroundLayer::Draw(HDC dc, int x, int y, BOOL trans,
    }
    else if ( m_viewport.bottom > m_height )
    {
-      // Draw the split viewport wrapping from bottom to top
+      // draw the split viewport wrapping from bottom to top
       DrawPart(dc, x, y,
                m_viewport.left, m_viewport.top,
                m_viewport.right - m_viewport.left, m_height - m_viewport.top,
@@ -145,7 +145,7 @@ void BackgroundLayer::Draw(HDC dc, int x, int y, BOOL trans,
    }
    else if ( m_viewport.left < 0 )
    {
-      // Draw the split viewport wrapping from left to right
+      // draw the split viewport wrapping from left to right
       DrawPart(dc, x, y,
                m_width + m_viewport.left, m_viewport.top,
                -m_viewport.left, m_viewport.bottom - m_viewport.top,
@@ -156,11 +156,13 @@ void BackgroundLayer::Draw(HDC dc, int x, int y, BOOL trans,
                trans, transColor);
    }
    else
-      // Draw the entire viewport at once
+   {
+      // draw the entire viewport at once
       DrawPart(dc, x, y,
                m_viewport.left, m_viewport.top,
                m_viewport.right - m_viewport.left, m_viewport.bottom - m_viewport.top,
                trans, transColor);
+   }
 }
 
 void BackgroundLayer::Update( )
@@ -168,7 +170,7 @@ void BackgroundLayer::Update( )
    switch ( m_direction )
    {
    case SD_UP:
-      // Move the layer up (slide the viewport down)
+      // move the layer up (slide the viewport down)
       m_viewport.top    += m_speed;
       m_viewport.bottom += m_speed;
 
@@ -180,7 +182,7 @@ void BackgroundLayer::Update( )
       break;
 
    case SD_RIGHT:
-      // Move the layer right (slide the viewport left)
+      // move the layer right (slide the viewport left)
       m_viewport.left  -= m_speed;
       m_viewport.right -= m_speed;
 
@@ -192,7 +194,7 @@ void BackgroundLayer::Update( )
       break;
 
    case SD_DOWN:
-      // Move the layer down (slide the viewport up)
+      // move the layer down (slide the viewport up)
       m_viewport.top    -= m_speed;
       m_viewport.bottom -= m_speed;
 
@@ -204,7 +206,7 @@ void BackgroundLayer::Update( )
       break;
 
    case SD_LEFT:
-      // Move the layer left (slide the viewport right)
+      // move the layer left (slide the viewport right)
       m_viewport.left  += m_speed;
       m_viewport.right += m_speed;
 
@@ -226,7 +228,7 @@ ScrollingBackground::~ScrollingBackground( )
 
 void ScrollingBackground::Update( )
 {
-   // Update the layers
+   // update the layers
    for ( int i = 0; i < m_numLayers; i++ )
    {
       m_layers[ i ]->Update( );
@@ -236,7 +238,7 @@ void ScrollingBackground::Update( )
 void ScrollingBackground::Draw(HDC dc, BOOL trans,
                                COLORREF transColor)
 {
-   // Draw the layers
+   // draw the layers
    for ( int i = 0; i < m_numLayers; i++ )
    {
       m_layers[ i ]->Draw(dc, 0, 0, trans, transColor);
@@ -245,7 +247,7 @@ void ScrollingBackground::Draw(HDC dc, BOOL trans,
 
 void ScrollingBackground::AddLayer(BackgroundLayer* layer)
 {
-   // Add the new layer (maximum of 10)
+   // add the new layer (maximum of 10)
    if ( m_numLayers < 10 )
    {
       m_layers[ m_numLayers++ ] = layer;

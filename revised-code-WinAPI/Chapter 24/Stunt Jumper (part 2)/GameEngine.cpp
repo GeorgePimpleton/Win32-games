@@ -11,14 +11,15 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
    {
       if ( !GameEngine::GetEngine( )->Initialize(cmdShow) )
       {
-         return FALSE;
+         return E_FAIL;
       }
 
       HACCEL accel = LoadAcceleratorsW(inst, MAKEINTRESOURCEW(IDR_ACCELERATORS));
 
       if ( NULL == accel )
       {
-         MessageBoxW(NULL, L"Unable to Load the Accelerators!", GameEngine::GetEngine( )->GetTitle( ), MB_OK | MB_ICONERROR);
+         MessageBoxW(NULL, L"Unable to Load the Accelerators!", GameEngine::GetEngine( )->GetTitle( ),
+                     MB_OK | MB_ICONERROR);
          return E_FAIL;
       }
 
@@ -62,7 +63,7 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
 
    GameEnd( );
 
-   return TRUE;
+   return S_OK;
 }
 
 LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -151,12 +152,9 @@ BOOL GameEngine::Initialize(int cmdShow)
       return FALSE;
    }
 
-   int windowWidth  = m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2;
+   int windowWidth  = m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2 + 10;
    int windowHeight = m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2
-                               + GetSystemMetrics(SM_CYCAPTION);
-
-   windowWidth  += 10;
-   windowHeight += 10;
+                               + GetSystemMetrics(SM_CYCAPTION) + 10;
 
    if ( wc.lpszMenuName != NULL )
    {
@@ -210,6 +208,7 @@ LRESULT GameEngine::HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam
    case WM_PAINT:
       HDC         dc;
       PAINTSTRUCT ps;
+
       dc = BeginPaint(wnd, &ps);
 
       GamePaint(dc);
@@ -247,14 +246,14 @@ LRESULT GameEngine::HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam
 
 BOOL GameEngine::InitJoystick( )
 {
-   UINT nNumJoysticks;
+   UINT nNumJoysticks = { };
 
    if ( (nNumJoysticks = joyGetNumDevs( )) == 0 )
    {
       return FALSE;
    }
 
-   JOYINFO joyInfo;
+   JOYINFO joyInfo = { };
 
    if ( joyGetPos(JOYSTICKID1, &joyInfo) != JOYERR_UNPLUGGED )
    {
@@ -265,9 +264,9 @@ BOOL GameEngine::InitJoystick( )
       return FALSE;
    }
 
-   JOYCAPS joyCaps;
+   JOYCAPSW joyCaps = { } ;
 
-   joyGetDevCapsW(m_joyID, &joyCaps, sizeof(JOYCAPS));
+   joyGetDevCapsW(m_joyID, &joyCaps, sizeof(JOYCAPSW));
 
    DWORD xCenter = ((DWORD) joyCaps.wXmin + joyCaps.wXmax) / 2;
    DWORD yCenter = ((DWORD) joyCaps.wYmin + joyCaps.wYmax) / 2;
@@ -373,8 +372,8 @@ void GameEngine::UpdateSprites( )
       m_sprites.reserve(m_sprites.capacity( ) * 2);
    }
 
-   RECT          oldSpritePos;
-   SPRITEACTION  spriteAction;
+   RECT          oldSpritePos = { };
+   SPRITEACTION  spriteAction = { };
 
    for ( auto iterSprite = m_sprites.begin( ); iterSprite != m_sprites.end( ); iterSprite++ )
    {

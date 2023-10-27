@@ -22,8 +22,8 @@ Sprite::Sprite(Bitmap* bitmap)
 
 Sprite::Sprite(Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction)
 {
-   int xPos = rand( ) % (bounds.right - bounds.left);
-   int yPos = rand( ) % (bounds.bottom - bounds.top);
+   int xPos = rtk::rand(0, bounds.right - bounds.left);
+   int yPos = rtk::rand(0, bounds.bottom - bounds.top);
 
    m_bitmap    = bitmap;
    m_numFrames = 1;
@@ -89,8 +89,8 @@ SPRITEACTION Sprite::Update( )
    boundsSize.x = m_bounds.right - m_bounds.left;
    boundsSize.y = m_bounds.bottom - m_bounds.top;
 
-   // Check the bounds
-   // Wrap?
+   // check the bounds
+   // wrap?
    if ( m_boundsAction == BA_WRAP )
    {
       if ( (newPosition.x + spriteSize.x) < m_bounds.left )
@@ -111,7 +111,7 @@ SPRITEACTION Sprite::Update( )
          newPosition.y = m_bounds.top - spriteSize.y;
       }
    }
-   // Bounce?
+   // bounce?
    else if ( m_boundsAction == BA_BOUNCE )
    {
       BOOL  bounce      = FALSE;
@@ -148,7 +148,7 @@ SPRITEACTION Sprite::Update( )
          SetVelocity(newVelocity);
       }
    }
-   // Die?
+   // die?
    else if ( m_boundsAction == BA_DIE )
    {
       if ( (newPosition.x + spriteSize.x) < m_bounds.left ||
@@ -159,7 +159,7 @@ SPRITEACTION Sprite::Update( )
          return SA_KILL;
       }
    }
-   // Stop (default)
+   // stop (default)
    else
    {
       if ( newPosition.x  < m_bounds.left ||

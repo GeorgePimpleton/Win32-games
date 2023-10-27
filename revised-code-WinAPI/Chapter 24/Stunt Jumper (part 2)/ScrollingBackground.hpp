@@ -17,14 +17,14 @@ protected:
    SCROLLDIR m_direction;
 
 public:
-   BackgroundLayer(PCWSTR fileName, int speed,
-                   SCROLLDIR direction);
-   BackgroundLayer(UINT resID, int iSpeed = 0,
-                   SCROLLDIR direction = SD_LEFT);
+   BackgroundLayer(PCWSTR, int,
+                   SCROLLDIR);
+   BackgroundLayer(UINT, int = 0,
+                   SCROLLDIR = SD_LEFT);
 
    virtual void Update( );
-   virtual void Draw(HDC dc, int x, int y, BOOL trans = FALSE,
-                     COLORREF transColor = RGB(255, 0, 255));
+   virtual void Draw(HDC, int, int, BOOL = FALSE,
+                     COLORREF = RGB(255, 0, 255));
 
    void SetSpeed(int speed)               { m_speed = speed; };
    void SetDirection(SCROLLDIR direction) { m_direction = direction; };
@@ -38,11 +38,12 @@ protected:
    BackgroundLayer* m_layers[ 10 ];
 
 public:
-            ScrollingBackground(int width, int height);
+            ScrollingBackground(int, int);
    virtual ~ScrollingBackground( );
 
    virtual void Update( );
-   virtual void Draw(HDC dc, BOOL trans = FALSE,
-                     COLORREF transColor = RGB(255, 0, 255));
-   void         AddLayer(BackgroundLayer* layer);
+   virtual void Draw(HDC, BOOL = FALSE,
+                     COLORREF = RGB(255, 0, 255));
+
+   void         AddLayer(BackgroundLayer*);
 };
