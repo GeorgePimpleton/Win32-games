@@ -42,7 +42,7 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
             if ( !GameEngine::GetEngine( )->GetSleep( ) )
             {
                static ULONGLONG tickTrigger = 0;
-               ULONGLONG        tickCount = GetTickCount64( );
+               ULONGLONG        tickCount   = GetTickCount64( );
 
                if ( tickCount > tickTrigger )
                {

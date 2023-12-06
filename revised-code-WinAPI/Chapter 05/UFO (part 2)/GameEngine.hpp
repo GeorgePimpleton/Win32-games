@@ -46,16 +46,16 @@ public:
    BOOL               Initialize(int);
    LRESULT            HandleEvent(HWND, UINT, WPARAM, LPARAM);
 
-   HINSTANCE GetInstance( )               { return m_inst; };
-   HWND      GetWindow( )                 { return m_wnd; };
-   void      SetWindow(HWND wnd)          { m_wnd = wnd; };
-   PCWSTR    GetTitle( )                  { return m_title; };
-   WORD      GetIcon( )                   { return m_icon; };
-   WORD      GetSmallIcon( )              { return m_smallIcon; };
-   int       GetWidth( )                  { return m_width; };
-   int       GetHeight( )                 { return m_height; };
-   int       GetFrameDelay( )             { return m_frameDelay; };
-   void      SetFrameRate(int iFrameRate) { m_frameDelay = 1000 / iFrameRate; };
-   BOOL      GetSleep( )                  { return m_asleep; };
-   void      SetSleep(BOOL asleep)        { m_asleep = asleep; };
+   HINSTANCE GetInstance( )              { return m_inst; };
+   HWND      GetWindow( )                { return m_wnd; };
+   void      SetWindow(HWND wnd)         { m_wnd = wnd; };
+   PCWSTR    GetTitle( )                 { return m_title; };
+   WORD      GetIcon( )                  { return m_icon; };
+   WORD      GetSmallIcon( )             { return m_smallIcon; };
+   int       GetWidth( )                 { return m_width; };
+   int       GetHeight( )                { return m_height; };
+   int       GetFrameDelay( )            { return m_frameDelay; };
+   void      SetFrameRate(int frameRate) { m_frameDelay = 1000 / frameRate; };
+   BOOL      GetSleep( )                 { return m_asleep; };
+   void      SetSleep(BOOL asleep)       { m_asleep = asleep; };
 };
