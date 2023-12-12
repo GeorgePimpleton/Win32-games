@@ -14,7 +14,7 @@ Using GDI+: https://learn.microsoft.com/en-us/windows/win32/gdiplus/-gdiplus-usi
 
 There are samples available, 'classic' (Not UWP) samples: https://github.com/microsoft/Windows-classic-samples
 
-Not all of the games will be replicated to use GDI+.
+Not all of the games will be replicated to use GDI+ because GDI+ does only graphics.  Not input or music/sound.
 
 ### Notes
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.
