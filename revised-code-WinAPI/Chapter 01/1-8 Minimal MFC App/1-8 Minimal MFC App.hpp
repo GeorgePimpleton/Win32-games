@@ -3,8 +3,11 @@
 #pragma once
 
 // compiling for Windows 10
-#define WINVER       0x0A00
-#define _WIN32_WINNT 0x0A00
+// #define WINVER       0x0A00
+// #define _WIN32_WINNT 0x0A00
+
+// compiling for latest Win version
+#include <sdkddkver.h>
 
 #include <afxwin.h>
 
