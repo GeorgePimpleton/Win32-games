@@ -10,6 +10,7 @@ using namespace Gdiplus;
 #pragma comment(lib, "Gdiplus.lib" )
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+
 void OnPaint(HWND hwnd);
 void OnDestroy(HWND hwnd);
 
