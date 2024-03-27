@@ -15,7 +15,7 @@ void OnPaint( HWND hwnd )
    HBITMAP     hBitmap;
    HDC         memDC;
 
-   hBitmap = ( HBITMAP ) ( HBITMAP ) LoadImageW( NULL, L"climber.bmp", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION | LR_LOADFROMFILE );
+   hBitmap = ( HBITMAP ) LoadImageW( NULL, L"climber.bmp", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION | LR_LOADFROMFILE );
 
    memDC = CreateCompatibleDC( hdc );
    SelectObject( memDC, hBitmap );
