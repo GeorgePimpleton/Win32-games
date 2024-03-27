@@ -11,13 +11,13 @@ using namespace Gdiplus;
 LRESULT CALLBACK WndProc( HWND, UINT, WPARAM, LPARAM );
 
 void OnDestroy( HWND );
-void OnPaint( HWND hwnd )
+void OnPaint( HWND wnd )
 {
    PAINTSTRUCT ps;
 
-   HDC hdc = BeginPaint( hwnd, &ps );
+   HDC dc { BeginPaint( wnd, &ps ) };
 
-   Graphics   graphics( hdc );
+   Graphics   graphics( dc );
    SolidBrush brush( Color( 255, 0, 0, 255 ) );
    FontFamily fontFamily( L"Times New Roman" );
    Font       font( &fontFamily, 24, FontStyleRegular, UnitPixel );
@@ -25,19 +25,19 @@ void OnPaint( HWND hwnd )
 
    graphics.DrawString( L"Hello World!", -1, &font, pointF, &brush );
 
-   EndPaint( hwnd, &ps );
+   EndPaint( wnd, &ps );
 }
 
-int WINAPI wWinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
-                     _In_ PWSTR     szCmdLine, _In_     int       nWinMode )
+int WINAPI wWinMain( _In_ HINSTANCE inst,    _In_opt_ HINSTANCE prevInst,
+                     _In_ PWSTR     cmdLine, _In_     int       winMode )
 {
-   static const WCHAR szAppName[ ] { L"GDI+DrawStrings" };
+   static PCWSTR appName { L"GDI+DrawStrings" };
 
    WNDCLASSEXW wc { };
 
    GdiplusStartupInput  gdiplusStartupInput;
    ULONG_PTR            gdiplusToken;
-   Status               status = GdiplusStartup( &gdiplusToken, &gdiplusStartupInput, NULL );
+   Status               status { GdiplusStartup( &gdiplusToken, &gdiplusStartupInput, NULL ) };
 
    if ( Ok != status )
    {
@@ -51,36 +51,36 @@ int WINAPI wWinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
    wc.lpfnWndProc   = WndProc;
    wc.cbClsExtra    = 0;
    wc.cbWndExtra    = 0;
-   wc.hInstance     = hInstance;
+   wc.hInstance     = inst;
    wc.hIcon         = ( HICON )   LoadImageW( NULL, IDI_APPLICATION, IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR );
    wc.hIconSm       = ( HICON )   LoadImageW( NULL, IDI_APPLICATION, IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR );
    wc.hCursor       = ( HCURSOR ) LoadImageW( NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED );
    wc.hbrBackground = ( HBRUSH ) ( COLOR_WINDOW + 1 );
    wc.lpszMenuName  = NULL;
-   wc.lpszClassName = szAppName;
+   wc.lpszClassName = appName;
 
    if ( FAILED( RegisterClassExW( &wc ) ) )
    {
-      MessageBoxW( NULL, L"Can't Register the Window Class!", szAppName, MB_OK | MB_ICONERROR );
+      MessageBoxW( NULL, L"Can't Register the Window Class!", appName, MB_OK | MB_ICONERROR );
       return E_FAIL;
    }
 
-   static const WCHAR szAppTitle[ ] { L"Using GDI+ To Draw Strings" };
+   static PCWSTR appTitle { L"Using GDI+ To Draw Strings" };
 
-   HWND hwnd { CreateWindowW( szAppName, szAppTitle,
-                              WS_OVERLAPPEDWINDOW,
-                              CW_USEDEFAULT, CW_USEDEFAULT,
-                              CW_USEDEFAULT, CW_USEDEFAULT,
-                              NULL, NULL, hInstance, NULL ) };
+   HWND wnd { CreateWindowW( appName, appTitle,
+                             WS_OVERLAPPEDWINDOW,
+                             CW_USEDEFAULT, CW_USEDEFAULT,
+                             CW_USEDEFAULT, CW_USEDEFAULT,
+                             NULL, NULL, inst, NULL ) };
 
-   if ( NULL == hwnd )
+   if ( NULL == wnd )
    {
-      MessageBoxW( NULL, L"Unable to Create the Main Window!", szAppName, MB_OK | MB_ICONERROR );
+      MessageBoxW( NULL, L"Unable to Create the Main Window!", appName, MB_OK | MB_ICONERROR );
       return E_FAIL;
    }
 
-   ShowWindow( hwnd, nWinMode );
-   UpdateWindow( hwnd );
+   ShowWindow( wnd, winMode );
+   UpdateWindow( wnd );
 
    MSG msg;
 
@@ -95,18 +95,18 @@ int WINAPI wWinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
    return ( int ) msg.wParam;
 }
 
-LRESULT CALLBACK WndProc( HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam )
+LRESULT CALLBACK WndProc( HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam )
 {
-   switch ( message )
+   switch ( msg )
    {
-      HANDLE_MSG( hwnd, WM_PAINT, OnPaint );
-      HANDLE_MSG( hwnd, WM_DESTROY, OnDestroy );
+      HANDLE_MSG( wnd, WM_PAINT, OnPaint );
+      HANDLE_MSG( wnd, WM_DESTROY, OnDestroy );
    }
 
-   return DefWindowProcW( hwnd, message, wParam, lParam );
+   return DefWindowProcW( wnd, msg, wParam, lParam );
 }
 
-void OnDestroy( HWND hwnd )
+void OnDestroy( HWND wnd )
 {
    PostQuitMessage( 0 );
 }

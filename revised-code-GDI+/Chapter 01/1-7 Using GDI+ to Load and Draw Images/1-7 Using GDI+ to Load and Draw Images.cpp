@@ -11,30 +11,30 @@ using namespace Gdiplus;
 LRESULT CALLBACK WndProc( HWND, UINT, WPARAM, LPARAM );
 
 void OnDestroy( HWND );
-void OnPaint( HWND hwnd )
+void OnPaint( HWND wnd )
 {
    PAINTSTRUCT ps;
 
-   HDC hdc = BeginPaint( hwnd, &ps );
+   HDC dc { BeginPaint( wnd, &ps ) };
 
-   Graphics graphics( hdc );
+   Graphics graphics( dc );
    Image    image( L"climber.jpg" );
 
    graphics.DrawImage( &image, 10, 10, image.GetWidth( ), image.GetHeight( ) );
 
-   EndPaint( hwnd, &ps );
+   EndPaint( wnd, &ps );
 }
 
-int WINAPI wWinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
-                     _In_ PWSTR     szCmdLine, _In_     int       nWinMode )
+int WINAPI wWinMain( _In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
+                     _In_ PWSTR     cmdLine, _In_     int       winMode )
 {
-   static const WCHAR szAppName[ ] { L"GDI+DrawImages" };
+   static PCWSTR appName { L"GDI+DrawImages" };
 
    WNDCLASSEXW wc { };
 
    GdiplusStartupInput gdiplusStartupInput;
    ULONG_PTR           gdiplusToken;
-   Status              status = GdiplusStartup( &gdiplusToken, &gdiplusStartupInput, NULL );
+   Status              status { GdiplusStartup( &gdiplusToken, &gdiplusStartupInput, NULL ) };
 
    if ( Ok != status )
    {
@@ -48,35 +48,35 @@ int WINAPI wWinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
    wc.lpfnWndProc   = WndProc;
    wc.cbClsExtra    = 0;
    wc.cbWndExtra    = 0;
-   wc.hInstance     = hInstance;
-   wc.hIcon         = ( HICON )   LoadImageW( NULL, IDI_APPLICATION, IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR );
-   wc.hIconSm       = ( HICON )   LoadImageW( NULL, IDI_APPLICATION, IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR );
+   wc.hInstance     = inst;
+   wc.hIcon         = ( HICON ) LoadImageW( NULL, IDI_APPLICATION, IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR );
+   wc.hIconSm       = ( HICON ) LoadImageW( NULL, IDI_APPLICATION, IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR );
    wc.hCursor       = ( HCURSOR ) LoadImageW( NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED );
    wc.hbrBackground = ( HBRUSH ) ( COLOR_WINDOW + 1 );
    wc.lpszMenuName  = NULL;
-   wc.lpszClassName = szAppName;
+   wc.lpszClassName = appName;
 
    if ( FAILED( RegisterClassExW( &wc ) ) )
    {
-      MessageBoxW( NULL, L"Can't Register the Window Class!", szAppName, MB_OK | MB_ICONERROR );
+      MessageBoxW( NULL, L"Can't Register the Window Class!", appName, MB_OK | MB_ICONERROR );
       return E_FAIL;
    }
 
-   static const WCHAR szAppTitle[ ] { L"Using GDI+ To Draw Images" };
+   static PCWSTR appTitle { L"Using GDI+ To Draw Images" };
 
-   HWND hwnd { CreateWindowW( szAppName, szAppTitle,
+   HWND hwnd { CreateWindowW( appName, appTitle,
                               WS_OVERLAPPEDWINDOW,
                               CW_USEDEFAULT, CW_USEDEFAULT,
                               CW_USEDEFAULT, CW_USEDEFAULT,
-                              NULL, NULL, hInstance, NULL ) };
+                              NULL, NULL, inst, NULL ) };
 
    if ( NULL == hwnd )
    {
-      MessageBoxW( NULL, L"Unable to Create the Main Window!", szAppName, MB_OK | MB_ICONERROR );
+      MessageBoxW( NULL, L"Unable to Create the Main Window!", appName, MB_OK | MB_ICONERROR );
       return E_FAIL;
    }
 
-   ShowWindow( hwnd, nWinMode );
+   ShowWindow( hwnd, winMode );
    UpdateWindow( hwnd );
 
    MSG msg;
@@ -92,18 +92,18 @@ int WINAPI wWinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
    return ( int ) msg.wParam;
 }
 
-LRESULT CALLBACK WndProc( HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam )
+LRESULT CALLBACK WndProc( HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam )
 {
-   switch ( message )
+   switch ( msg )
    {
-      HANDLE_MSG( hwnd, WM_PAINT, OnPaint );
-      HANDLE_MSG( hwnd, WM_DESTROY, OnDestroy );
+      HANDLE_MSG( wnd, WM_PAINT, OnPaint );
+      HANDLE_MSG( wnd, WM_DESTROY, OnDestroy );
    }
 
-   return DefWindowProcW( hwnd, message, wParam, lParam );
+   return DefWindowProcW( wnd, msg, wParam, lParam );
 }
 
-void OnDestroy( HWND hwnd )
+void OnDestroy( HWND wnd )
 {
    PostQuitMessage( 0 );
 }
