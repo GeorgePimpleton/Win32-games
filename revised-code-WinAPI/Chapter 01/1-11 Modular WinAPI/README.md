@@ -5,7 +5,6 @@
 The basics of programming using the Windows API, in a quick nutshell.  
 
 ### Possible types of apps that can be created on Windows
-
 11. modularizing WinAPI
 
 Modularizing the methods WM_ messages are handled.

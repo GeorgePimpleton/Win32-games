@@ -8,7 +8,8 @@ The basics of programming using the Windows API, in a quick nutshell.  Starting 
 
 2. using a custom C++ header file to use C++11 (and later) random engine features instead of the C library functions
     + using my custom C\+\+20 module to use C++11 (and later) random engine features instead of the C library functions
+    + using my custom C\+\+23 module
 
 This example uses a header only toolkit to make it easier to use the C++ random engine features.
 
-The example code requires C++20, the header only toolkit doesn't.
+The module example code requires C++20\23, the header only toolkit doesn't.

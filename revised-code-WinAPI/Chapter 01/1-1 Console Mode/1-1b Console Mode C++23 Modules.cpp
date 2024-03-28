@@ -1,4 +1,4 @@
-import <iostream>;
+import std;
 
 int main( )
 {

@@ -7,6 +7,7 @@ The basics of programming using the Windows API, in a quick nutshell.  Starting 
 ### Possible types of apps that can be created on Windows
 
 1. console mode using C++
-    + console mode using C++20's modules
+    + console mode using C++20 import modules
+    + console mode using C++23 import module
 
 If you have done any C/C++ programming you've seen this example.

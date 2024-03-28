@@ -1,10 +1,8 @@
 #pragma once
 
-// icons               range : 1000 - 1999
 #define IDI_ICON       1001
 #define IDI_ICON_SM    1002
 
-// cursors             range : 2000 - 2999
 #define IDC_CURSOR     2001
 
 // main menu           range : 3000 - 3999

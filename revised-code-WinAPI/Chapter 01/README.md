@@ -14,9 +14,7 @@
 5. a minimal skeletal WinAPI app
    + a revision for resizing the window and using a different WinAPI char string
 6. a realistic skeletal WinAPI app with custom assets
-   + a revision for using a different WinAPI char string
 7. a skeletal WinAPI app using C++ wide strings using modernized C++ practices
-    + using <windowsx.h>
 8. a minimum MFC app
 9. modularizing WinAPI
 10. modularizing WinAPI

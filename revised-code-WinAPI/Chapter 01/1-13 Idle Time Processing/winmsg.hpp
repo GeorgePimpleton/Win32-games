@@ -2,8 +2,10 @@
 
 #include <windows.h>
 
-void OnLButtonDown(HWND, BOOL, int, int, UINT);
+void OnLButtonDown( HWND, BOOL, int, int, UINT );
 
-void OnRButtonDown(HWND, BOOL, int, int, UINT);
+void OnRButtonDown( HWND, BOOL, int, int, UINT );
 
-void OnDestroy(HWND);
+void OnPaint( HWND );
+
+void OnDestroy( HWND );

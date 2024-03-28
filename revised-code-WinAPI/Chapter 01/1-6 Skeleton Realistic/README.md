@@ -5,8 +5,6 @@
 The basics of programming using the Windows API, in a quick nutshell.  
 
 ### Possible types of apps that can be created on Windows
-
 6. a realistic skeletal Win API app with custom assets
-   + a revision for using a different WinAPI char string
 
 This example creates a custom main menu and a custom "About...." dialog box.
