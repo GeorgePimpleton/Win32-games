@@ -2,12 +2,12 @@
 
 GameEngine* GameEngine::m_gameEngine = NULL;
 
-int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
-                    _In_ PWSTR cmdLine, _In_ int cmdShow)
+int WINAPI wWinMain( _In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
+                     _In_ PWSTR cmdLine, _In_ int cmdShow )
 {
-   if ( GameInitialize(inst) )
+   if ( GameInitialize( inst ) )
    {
-      if ( !GameEngine::GetEngine( )->Initialize(cmdShow) )
+      if ( !GameEngine::GetEngine( )->Initialize( cmdShow ) )
       {
          return FALSE;
       }
@@ -16,15 +16,15 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
 
       while ( TRUE )
       {
-         if ( PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE) )
+         if ( PeekMessageW( &msg, NULL, 0, 0, PM_REMOVE ) )
          {
             if ( msg.message == WM_QUIT )
             {
                break;
             }
 
-            TranslateMessage(&msg);
-            DispatchMessageW(&msg);
+            TranslateMessage( &msg );
+            DispatchMessageW( &msg );
          }
          else
          {
@@ -41,7 +41,7 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
             }
          }
       }
-      return (int) msg.wParam;
+      return ( int ) msg.wParam;
    }
 
    GameEnd( );
@@ -49,13 +49,13 @@ int WINAPI wWinMain(_In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
    return TRUE;
 }
 
-LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WndProc( HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam )
 {
-   return GameEngine::GetEngine( )->HandleEvent(wnd, msg, wParam, lParam);
+   return GameEngine::GetEngine( )->HandleEvent( wnd, msg, wParam, lParam );
 }
 
-GameEngine::GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
-                       WORD icon, WORD smallIcon, int width, int height)
+GameEngine::GameEngine( HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
+                        WORD icon, WORD smallIcon, int width, int height )
 {
    m_gameEngine = this;
    m_inst       = inst;
@@ -73,89 +73,89 @@ GameEngine::GameEngine(HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
 GameEngine::~GameEngine( )
 { }
 
-BOOL GameEngine::Initialize(int cmdShow)
+BOOL GameEngine::Initialize( int cmdShow )
 {
    WNDCLASSEXW wc;
 
-   wc.cbSize        = sizeof(wc);
+   wc.cbSize        = sizeof( wc );
    wc.style         = CS_HREDRAW | CS_VREDRAW;
    wc.lpfnWndProc   = WndProc;
    wc.cbClsExtra    = 0;
    wc.cbWndExtra    = 0;
    wc.hInstance     = m_inst;
-   wc.hIcon         = (HICON)   LoadImageW(m_inst, MAKEINTRESOURCEW(IDI_BLIZZARD), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR);
-   wc.hIconSm       = (HICON)   LoadImageW(m_inst, MAKEINTRESOURCEW(IDI_BLIZZARD_SM), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR); ;
-   wc.hCursor       = (HCURSOR) LoadImageW(NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED);
-   wc.hbrBackground = (HBRUSH)  (COLOR_WINDOW + 1);
+   wc.hIcon         = ( HICON ) LoadImageW( m_inst, MAKEINTRESOURCEW( IDI_BLIZZARD ), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR );
+   wc.hIconSm       = ( HICON ) LoadImageW( m_inst, MAKEINTRESOURCEW( IDI_BLIZZARD_SM ), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR ); ;
+   wc.hCursor       = ( HCURSOR ) LoadImageW( NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED );
+   wc.hbrBackground = ( HBRUSH ) ( COLOR_WINDOW + 1 );
    wc.lpszMenuName  = NULL;
    wc.lpszClassName = m_wndClass;
 
-   if ( !RegisterClassExW(&wc) )
+   if ( !RegisterClassExW( &wc ) )
    {
       return FALSE;
    }
 
-   int windowWidth  = m_width + GetSystemMetrics(SM_CXFIXEDFRAME) * 2;
-   int windowHeight = m_height + GetSystemMetrics(SM_CYFIXEDFRAME) * 2 + GetSystemMetrics(SM_CYCAPTION);
+   int windowWidth  = m_width  + GetSystemMetrics( SM_CXFIXEDFRAME ) * 2;
+   int windowHeight = m_height + GetSystemMetrics( SM_CYFIXEDFRAME ) * 2  + GetSystemMetrics( SM_CYCAPTION );
 
    if ( wc.lpszMenuName != NULL )
    {
-      windowHeight += GetSystemMetrics(SM_CYMENU);
+      windowHeight += GetSystemMetrics( SM_CYMENU );
    }
 
-   int xWindowPos = (GetSystemMetrics(SM_CXSCREEN) - windowWidth) / 2;
-   int yWindowPos = (GetSystemMetrics(SM_CYSCREEN) - windowHeight) / 2;
+   int xWindowPos = ( GetSystemMetrics( SM_CXSCREEN ) - windowWidth ) / 2;
+   int yWindowPos = ( GetSystemMetrics( SM_CYSCREEN ) - windowHeight ) / 2;
 
-   m_wnd = CreateWindow(m_wndClass, m_title,
-                        WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
-                        xWindowPos, yWindowPos, windowWidth, windowHeight,
-                        NULL, NULL, m_inst, NULL);
+   m_wnd = CreateWindow( m_wndClass, m_title,
+                         WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
+                         xWindowPos, yWindowPos, windowWidth, windowHeight,
+                         NULL, NULL, m_inst, NULL );
 
    if ( !m_wnd )
    {
       return FALSE;
    }
 
-   ShowWindow(m_wnd, cmdShow);
-   UpdateWindow(m_wnd);
+   ShowWindow( m_wnd, cmdShow );
+   UpdateWindow( m_wnd );
 
    return TRUE;
 }
 
-LRESULT GameEngine::HandleEvent(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT GameEngine::HandleEvent( HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam )
 {
    switch ( msg )
    {
    case WM_CREATE:
-      SetWindow(wnd);
-      GameStart(wnd);
+      SetWindow( wnd );
+      GameStart( wnd );
       return 0;
 
    case WM_SETFOCUS:
-      GameActivate(wnd);
-      SetSleep(FALSE);
+      GameActivate( wnd );
+      SetSleep( FALSE );
       return 0;
 
    case WM_KILLFOCUS:
-      GameDeactivate(wnd);
-      SetSleep(TRUE);
+      GameDeactivate( wnd );
+      SetSleep( TRUE );
       return 0;
 
    case WM_PAINT:
    {
       PAINTSTRUCT ps;
-      HDC         dc = BeginPaint(wnd, &ps);
+      HDC         dc = BeginPaint( wnd, &ps );
 
-      GamePaint(dc);
+      GamePaint( dc );
 
-      EndPaint(wnd, &ps);
+      EndPaint( wnd, &ps );
    }
    return 0;
 
    case WM_DESTROY:
       GameEnd( );
-      PostQuitMessage(0);
+      PostQuitMessage( 0 );
       return 0;
    }
-   return DefWindowProcW(wnd, msg, wParam, lParam);
+   return DefWindowProcW( wnd, msg, wParam, lParam );
 }

@@ -1,21 +1,21 @@
 #include "Blizzard.hpp"
 
-BOOL GameInitialize(HINSTANCE inst)
+BOOL GameInitialize( HINSTANCE inst )
 {
-   g_game = new GameEngine(inst, L"Blizzard", L"Blizzard",
-                           IDI_ICON, IDI_ICON_SM);
+   g_game = new GameEngine( inst, L"Blizzard 6", L"Blizzard 6",
+                            IDI_ICON, IDI_ICON_SM );
 
    if ( g_game == NULL )
    {
       return FALSE;
    }
 
-   g_game->SetFrameRate(15);
+   g_game->SetFrameRate( 15 );
 
    return TRUE;
 }
 
-void GameStart(HWND wnd)
+void GameStart( HWND wnd )
 {
    rtk::srand( );
 }
@@ -30,49 +30,49 @@ void GameEnd( )
    delete g_game;
 }
 
-void GameActivate(HWND wnd)
+void GameActivate( HWND wnd )
 {
-   HDC  dc = GetDC(wnd);
+   HDC  dc = GetDC( wnd );
    RECT rect;
 
-   GetClientRect(wnd, &rect);
+   GetClientRect( wnd, &rect );
 
-   DrawTextW(dc, L"Here comes the blizzard!", -1, &rect,
-             DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+   DrawTextW( dc, L"Here comes the blizzard!", -1, &rect,
+              DT_SINGLELINE | DT_CENTER | DT_VCENTER );
 
-   ReleaseDC(wnd, dc);
+   ReleaseDC( wnd, dc );
 }
 
-void GameDeactivate(HWND wnd)
+void GameDeactivate( HWND wnd )
 {
-   HDC  dc = GetDC(wnd);
+   HDC  dc = GetDC( wnd );
    RECT rect;
 
-   GetClientRect(wnd, &rect);
+   GetClientRect( wnd, &rect );
 
-   DrawTextW(dc, L"The blizzard has passed.", -1, &rect,
-             DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+   DrawTextW( dc, L"The blizzard has passed.", -1, &rect,
+              DT_SINGLELINE | DT_CENTER | DT_VCENTER );
 
-   ReleaseDC(wnd, dc);
+   ReleaseDC( wnd, dc );
 }
 
-void GamePaint(HDC dc)
+void GamePaint( HDC dc )
 { }
 
 void GameCycle( )
 {
-   HWND wnd = g_game-> GetWindow( );
-   HDC  dc  = GetDC(wnd);
+   HWND wnd = g_game->GetWindow( );
+   HDC  dc  = GetDC( wnd );
 
-   DrawIcon(dc, rtk::rand(0, g_game->GetWidth( )), rtk::rand(0, g_game->GetHeight( )),
-            (HICON) GetClassLongPtrW(wnd, GCLP_HICON));
+   DrawIcon( dc, rtk::rand( 0, g_game->GetWidth( ) ), rtk::rand( 0, g_game->GetHeight( ) ),
+             ( HICON ) GetClassLongPtrW( wnd, GCLP_HICON ) );
 
-   ReleaseDC(wnd, dc);
+   ReleaseDC( wnd, dc );
 }
 
-void GameMenu(WPARAM wParam)
+void GameMenu( WPARAM wParam )
 {
-   switch ( LOWORD(wParam) )
+   switch ( LOWORD( wParam ) )
    {
    case IDM_GAME_NEW:
       GameNew( );
@@ -80,12 +80,12 @@ void GameMenu(WPARAM wParam)
 
    case IDM_GAME_EXIT:
       GameEnd( );
-      PostQuitMessage(0);
+      PostQuitMessage( 0 );
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxParamW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT),
-                      g_game->GetWindow( ), (DLGPROC) DlgProc, 0L);
+      DialogBoxParamW( g_game->GetInstance( ), MAKEINTRESOURCEW( IDD_ABOUT ),
+                       g_game->GetWindow( ), ( DLGPROC ) DlgProc, 0L );
       return;
    }
 }

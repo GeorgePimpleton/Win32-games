@@ -1,15 +1,15 @@
 #include <windows.h>
 #include "resource.h"
 
-IDI_ICON       ICON         "Res/Blizzard.ico"
-IDI_ICON_SM    ICON         "Res/Blizzard_sm.ico"
+IDI_ICON    ICON "Res/Blizzard.ico"
+IDI_ICON_SM ICON "Res/Blizzard_sm.ico"
 
 IDD_ABOUT   DIALOG   DISCARDABLE    32, 32, 180, 102
 CAPTION "About..."
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 {
    ICON          IDI_ICON, IDC_STATIC, 7, 7, 20, 20, SS_SUNKEN
-   CTEXT         "Blizzard", IDC_STATIC, 40, 12, 100, 8
+   CTEXT         "Blizzard 7", IDC_STATIC, 40, 12, 100, 8
 
    CTEXT         "Creating An Engine For Games", IDC_STATIC, 7, 35, 166, 8
    CTEXT         "© This Year, Your Name", IDC_STATIC, 7, 47, 166, 8

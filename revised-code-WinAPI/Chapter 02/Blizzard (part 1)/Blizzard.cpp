@@ -1,10 +1,10 @@
 #include "Blizzard.h"
 
-BOOL GameInitialize(HINSTANCE hInstance)
+BOOL GameInitialize( HINSTANCE hInstance )
 {
    // Create the game engine
-   g_pGame = new GameEngine(hInstance, TEXT("Blizzard"), TEXT("Blizzard"),
-                            IDI_BLIZZARD, IDI_BLIZZARD_SM);
+   g_pGame = new GameEngine( hInstance, TEXT( "Blizzard" ), TEXT( "Blizzard" ),
+                             IDI_BLIZZARD, IDI_BLIZZARD_SM );
 
    if ( g_pGame == NULL )
    {
@@ -12,15 +12,15 @@ BOOL GameInitialize(HINSTANCE hInstance)
    }
 
    // Set the frame rate
-   g_pGame->SetFrameRate(15);
+   g_pGame->SetFrameRate( 15 );
 
    return TRUE;
 }
 
-void GameStart(HWND hWindow)
+void GameStart( HWND hWindow )
 {
    // Seed the random number generator
-   srand(GetTickCount( ));
+   srand( GetTickCount( ) );
 }
 
 void GameEnd( )
@@ -29,39 +29,39 @@ void GameEnd( )
    delete g_pGame;
 }
 
-void GameActivate(HWND hWindow)
+void GameActivate( HWND hWindow )
 {
    HDC  hDC;
    RECT rect;
 
    // Draw activation text on the game screen
-   GetClientRect(hWindow, &rect);
+   GetClientRect( hWindow, &rect );
 
-   hDC = GetDC(hWindow);
+   hDC = GetDC( hWindow );
 
-   DrawText(hDC, TEXT("Here comes the blizzard!"), -1, &rect,
-            DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+   DrawText( hDC, TEXT( "Here comes the blizzard!" ), -1, &rect,
+             DT_SINGLELINE | DT_CENTER | DT_VCENTER );
 
-   ReleaseDC(hWindow, hDC);
+   ReleaseDC( hWindow, hDC );
 }
 
-void GameDeactivate(HWND hWindow)
+void GameDeactivate( HWND hWindow )
 {
    HDC  hDC;
    RECT rect;
 
    // Draw deactivation text on the game screen
-   GetClientRect(hWindow, &rect);
+   GetClientRect( hWindow, &rect );
 
-   hDC = GetDC(hWindow);
+   hDC = GetDC( hWindow );
 
-   DrawText(hDC, TEXT("The blizzard has passed."), -1, &rect,
-            DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+   DrawText( hDC, TEXT( "The blizzard has passed." ), -1, &rect,
+             DT_SINGLELINE | DT_CENTER | DT_VCENTER );
 
-   ReleaseDC(hWindow, hDC);
+   ReleaseDC( hWindow, hDC );
 }
 
-void GamePaint(HDC hDC)
+void GamePaint( HDC hDC )
 { }
 
 void GameCycle( )
@@ -70,10 +70,10 @@ void GameCycle( )
    HWND hWindow = g_pGame->GetWindow( );
 
    // Draw the snowflake icon at random positions on the game screen
-   hDC = GetDC(hWindow);
+   hDC = GetDC( hWindow );
 
-   DrawIcon(hDC, rand( ) % g_pGame->GetWidth( ), rand( ) % g_pGame->GetHeight( ),
-            (HICON) GetClassLongPtr(hWindow, GCLP_HICON));
+   DrawIcon( hDC, rand( ) % g_pGame->GetWidth( ), rand( ) % g_pGame->GetHeight( ),
+             ( HICON ) GetClassLongPtr( hWindow, GCLP_HICON ) );
 
-   ReleaseDC(hWindow, hDC);
+   ReleaseDC( hWindow, hDC );
 }
