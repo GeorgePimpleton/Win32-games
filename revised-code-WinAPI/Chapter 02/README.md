@@ -10,7 +10,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 Blizzard, creates and uses the Game Engine class.  From the 2004 CD.
 
 ### Blizzard Versions
-0. Original CD game files written in 2004.
+0. Original CD game files written in 2004.  If you can get this code to work, more power to ya.
 1. The bare minimum changes to work with modern C++/WinAPI x86 & x64.
 2. Removed the old WinAPI Hungarian Notation from variables.  Even MS recommends not using it.
 3. Changed file names.

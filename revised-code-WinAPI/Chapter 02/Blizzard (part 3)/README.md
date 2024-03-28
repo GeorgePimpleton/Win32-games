@@ -3,7 +3,6 @@
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 
 ### Blizzard Versions
-
 3. Changed file names.
 
 .h to .hpp.  A cosmetic change, but one I use to distinquish between C and C++ header files.

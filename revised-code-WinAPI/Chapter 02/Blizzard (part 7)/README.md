@@ -1,8 +1,8 @@
 # Win32 Games, Chapter 2, part 7
 [![Language](https://img.shields.io/badge/Language%20-C++-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
-### Blizzard Versions
 
+### Blizzard Versions
 7. Use C++ strings instead of Windows string pointers.
 
 This was done as a test, using C++ strings will not be used in the rest of the examples.

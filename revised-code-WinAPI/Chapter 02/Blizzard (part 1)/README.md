@@ -10,7 +10,7 @@
 - Reformatted the source to look better for easier readability.
    - Separated several class data members so they are declared separately.
    - One part of "looks better" means adding parentheses on control statements for better readability of the code blocks.
-- Increased the size of the GameEngine class data members, m_szWindowClass and m_szTitle, to 64.  A length of 32 TCHARs just seems too small to me.
+- Increased the size of the GameEngine class data members, m_szWindowClass and m_szTitle, to 64.  A length of 32 TCHARs seems just too small to me.
 
 The following changes had to happen to be compileable:
 + Changed two of the GameEngine ctor's parameter types from LPTSTR to LPCTSTR.

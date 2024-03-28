@@ -1,8 +1,8 @@
 # Win32 Games, Chapter 2, Part 6
 [![Language](https://img.shields.io/badge/Language%20-C++-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
-### Blizzard Versions
 
+### Blizzard Versions
 6. Added a main menu with accelerators.
 
 ### Notes

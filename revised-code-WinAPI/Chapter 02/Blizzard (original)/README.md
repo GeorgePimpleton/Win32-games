@@ -4,13 +4,11 @@
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 
 ### Blizzard Versions
+0. Original CD game files written in 2004.  If the code works for ya, great.
 
-0. Original CD game files written in 2004.
-
-Has it been nearly 20 years and multiple C++ revisions since this code was created?  Yes, it has.
+Has it been 20 years and multiple C++ revisions since this code was created?  Yes, it has.
 
 ### Notes
-
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.
 
 This is a "work in progress", there is no guarantee the entirety of the entire collection of games will ever be modernized any time soon or to what degree of modern usage.
