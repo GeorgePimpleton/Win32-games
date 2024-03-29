@@ -1,8 +1,8 @@
 #include "resource.h"
 #include <windows.h>
 
-IDI_ICON         ICON         "Res/Trippy.ico"
-IDI_ICON_SM      ICON         "Res/Trippy_sm.ico"
+IDI_ICON    ICON "Res/Trippy.ico"
+IDI_ICON_SM ICON "Res/Trippy_sm.ico"
 
 IDD_ABOUT   DIALOG   DISCARDABLE    32, 32, 180, 102
 CAPTION "About..."
