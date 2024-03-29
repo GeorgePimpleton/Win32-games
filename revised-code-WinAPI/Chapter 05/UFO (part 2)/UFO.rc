@@ -12,7 +12,7 @@ CAPTION "About..."
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 {
    ICON           IDI_ICON, IDC_STATIC, 7, 7, 20, 20, SS_SUNKEN
-   CTEXT          "UFO",    IDC_STATIC, 40, 12, 100, 8
+   CTEXT          "UFO 2",    IDC_STATIC, 40, 12, 100, 8
 
    CTEXT          "Controlling Games with the Keyboard and Mouse",
                      IDC_STATIC, 7, 35, 166, 8
