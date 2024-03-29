@@ -9,7 +9,7 @@
 #include "resource.h"
 #include "Bitmap.hpp"
 #include "GameEngine.hpp"
-#include "random_toolkit.hpp"
+#include "random_toolkit_v1312.hpp"
 
 std::unique_ptr<GameEngine>            g_game;
 std::array<std::unique_ptr<Bitmap>, 9> g_tiles;
