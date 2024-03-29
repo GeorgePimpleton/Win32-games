@@ -1,35 +1,21 @@
-//-----------------------------------------------------------------
-// Bitmap Object
-// C++ Source - Bitmap.cpp
-//-----------------------------------------------------------------
-
-//-----------------------------------------------------------------
-// Include Files
-//-----------------------------------------------------------------
 #include "Bitmap.h"
 
-//-----------------------------------------------------------------
-// Bitmap Constructor(s)/Destructor
-//-----------------------------------------------------------------
 Bitmap::Bitmap( )
    : m_hBitmap(NULL), m_iWidth(0), m_iHeight(0)
 { }
 
-// Create a bitmap from a file
 Bitmap::Bitmap(HDC hDC, PCTSTR szFileName)
    : m_hBitmap(NULL), m_iWidth(0), m_iHeight(0)
 {
    Create(hDC, szFileName);
 }
 
-// Create a bitmap from a resource
 Bitmap::Bitmap(HDC hDC, UINT uiResID, HINSTANCE hInstance)
    : m_hBitmap(NULL), m_iWidth(0), m_iHeight(0)
 {
    Create(hDC, uiResID, hInstance);
 }
 
-// Create a blank bitmap from scratch
 Bitmap::Bitmap(HDC hDC, int iWidth, int iHeight, COLORREF crColor)
    : m_hBitmap(NULL), m_iWidth(0), m_iHeight(0)
 {
@@ -41,12 +27,8 @@ Bitmap::~Bitmap( )
    Free( );
 }
 
-//-----------------------------------------------------------------
-// Bitmap Helper Methods
-//-----------------------------------------------------------------
 void Bitmap::Free( )
 {
-   // Delete the bitmap graphics object
    if ( m_hBitmap != NULL )
    {
       DeleteObject(m_hBitmap);
@@ -54,9 +36,6 @@ void Bitmap::Free( )
    }
 }
 
-//-----------------------------------------------------------------
-// Bitmap General Methods
-//-----------------------------------------------------------------
 BOOL Bitmap::Create(HDC hDC, PCTSTR szFileName)
 {
    // free any previous bitmap info
@@ -78,7 +57,7 @@ BOOL Bitmap::Create(HDC hDC, PCTSTR szFileName)
    GetObjectW(m_hBitmap, sizeof(BITMAP), &bitmap);
 
    // store the width and height of the bitmap
-   m_iWidth = bitmap.bmWidth;
+   m_iWidth  = bitmap.bmWidth;
    m_iHeight = bitmap.bmHeight;
 
    return TRUE;
@@ -105,7 +84,7 @@ BOOL Bitmap::Create(HDC hDC, UINT uiResID, HINSTANCE hInstance)
    GetObjectW(m_hBitmap, sizeof(BITMAP), &bitmap);
 
    // store the width and height of the bitmap
-   m_iWidth = bitmap.bmWidth;
+   m_iWidth  = bitmap.bmWidth;
    m_iHeight = bitmap.bmHeight;
 
    return TRUE;
@@ -119,7 +98,7 @@ BOOL Bitmap::Create(HDC hDC, int iWidth, int iHeight, COLORREF crColor)
       return FALSE;
 
    // Set the width and height
-   m_iWidth = iWidth;
+   m_iWidth  = iWidth;
    m_iHeight = iHeight;
 
    // Create a memory device context to draw on the bitmap

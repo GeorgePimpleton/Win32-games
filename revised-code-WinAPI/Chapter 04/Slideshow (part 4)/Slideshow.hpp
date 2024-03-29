@@ -4,7 +4,6 @@
 #include "resource.h"
 #include "GameEngine.hpp"
 #include "Bitmap.hpp"
-// #include "random_toolkit.hpp" // <-- no randomization needed
 #include <vector>
 #include <memory>
 
