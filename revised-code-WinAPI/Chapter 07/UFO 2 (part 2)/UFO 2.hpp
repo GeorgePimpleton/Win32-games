@@ -1,11 +1,12 @@
 #pragma once
 
 #include <windows.h>
+#include <algorithm>
 #include <memory>
 #include <array>
 #include "Bitmap.hpp"
 #include "GameEngine.hpp"
-#include "random_toolkit.hpp"
+#include "random_toolkit_v131.hpp"
 
 const LONG g_MAXSPEED = 8;
 
