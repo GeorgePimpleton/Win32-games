@@ -4,13 +4,13 @@
 
 ### Possible types of apps that can be created on Windows
 1. console mode using C++
-    + console mode using C++20's modules
+   + console mode using C++20's modules
 2. using a custom C++ header file to use C++11 (and later) random engine features instead of the C library functions
-    + using a custom C\+\+20 module to use C++11 (and later) random engine features instead of the C library functions
+   + using a custom C\+\+20 module to use C++11 (and later) random engine features instead of the C library functions
 3. a Windows API MessageBox
-    + a WinAPI MessageBox using modern coding
+   + a WinAPI MessageBox using modern coding
 4. a minimal WinAPI app
-     + a minimal WinAPI app using modern coding
+   + a minimal WinAPI app using modern coding
 5. a minimal skeletal WinAPI app
    + a revision for resizing the window and using a different WinAPI char string
 6. a realistic skeletal WinAPI app with custom assets
@@ -22,9 +22,9 @@
 12. modularizing WinAPI
 13. modularizing WinAPI
 
-Some examples on the basics of C/C++ & rudimentary Win API programming.
+Some examples on the basics of C/C++ & rudimentary WinAPI programming.
 
-The Win API has a lot of custom data types available.  You should familiarize yourself with them,  I will be using them.
+The WinAPI has a lot of custom data types available.  You should familiarize yourself with them,  I will be using them.
 
 [Windows data types](https://learn.microsoft.com/en-us/windows/win32/winprog/windows-data-types)
 
