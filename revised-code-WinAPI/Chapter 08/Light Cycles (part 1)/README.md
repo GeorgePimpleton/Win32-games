@@ -1,8 +1,8 @@
-# Win32 Games, Chapter 8, part 1
+# Win32 Games, Chapter 8, part 1: Minimal Code Revisions
 [![Language](https://img.shields.io/badge/Language%20-C++-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
-### Example Game: Light Cycles
 
+### Example Game: Light Cycles
 1. minimal update...
 
 ### Notes
