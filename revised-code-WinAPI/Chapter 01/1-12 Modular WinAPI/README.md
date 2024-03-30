@@ -1,16 +1,16 @@
-# Programming Windows© Games, Chapter 1
+# Programming Windows© Games, Chapter 1, Using "Message Crackers"
 [![Language](https://img.shields.io/badge/Language%20-C++-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 
 The basics of programming using the Windows API, in a quick nutshell.  
 
 ### Possible types of apps that can be created on Windows
-12. modularizing WinAPI
+12. Using "Message Crackers"
 
 ### About <windowsx.h> and "message cracking"
 The WndProc function is especially susceptible to bloated code.  The more functionality you add to your Win API app, the more WM_messages you have to handle, the more switch cases you create.  The more switch cases the bigger the  WndProc function grows.
 
-Enter the idea of writing WinAPI that "cracks windows messages."
+Enter the idea of writing WinAPI code that "cracks windows messages."
 
 Previous examples have shown a different method for this.
 

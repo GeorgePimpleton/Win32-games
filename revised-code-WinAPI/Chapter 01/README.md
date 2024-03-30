@@ -19,10 +19,10 @@
 9. modularizing WinAPI
 10. modularizing WinAPI
 11. modularizing WinAPI
-12. modularizing WinAPI
-13. modularizing WinAPI
+12. Using "Message Crackers"
+13. Idle-time Message Processing
 
-Some examples on the basics of C/C++ & rudimentary WinAPI programming.
+Several examples on the basics of C/C++ & rudimentary WinAPI programming.
 
 The WinAPI has a lot of custom data types available.  You should familiarize yourself with them,  I will be using them.
 

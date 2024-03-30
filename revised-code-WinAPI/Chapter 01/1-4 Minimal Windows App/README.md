@@ -1,11 +1,11 @@
-# Programming Windows Games, Chapter 1
+# Programming Windows Games, Chapter 1, Minimal WinAPI App
 [![Language](https://img.shields.io/badge/Language%20-C++-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 
 The basics of programming using the Windows API, in a quick nutshell.  
 
 ### Possible types of apps that can be created on Windows
-4. a minimal WinAPI app <----- this example
+4. a minimal WinAPI app
    + a minimal WinAPI app using modern coding
    + a minimal WinAPI app using modern coding with different WinAPI data types and structures
 
@@ -19,6 +19,6 @@ I also use SAL, MS source-code annotation language, on WinMain.  Visual Studio '
 
 https://learn.microsoft.com/en-us/cpp/code-quality/understanding-sal
 
-The third example uses different WinAPI data types and structures from the second example.  This is the style I use when creating WinAPI apps.
+The third example uses a few different WinAPI data types and structures from the second example.  This is the style I use when creating WinAPI apps.
 
 Get used to it.  "This will be on 'the test'."

@@ -1,11 +1,10 @@
-# Programming Windows Games, Chapter 1
+# Programming Windows Games, Chapter 1, WinAPI MessageBox
 [![Language](https://img.shields.io/badge/Language%20-C++-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 
 The basics of programming using the Windows API, in a quick nutshell.  
 
 ### Possible types of apps that can be created on Windows
-
 3. a Windows MessageBox
    + a WinAPI MessageBox using modern coding
 
@@ -15,6 +14,6 @@ The second example uses strictly Unicode/wide char functions, so you'll see a lo
 
 I also use SAL, MS source-code annotation language, on WinMain.  Visual Studio 'whinges' if it is missing.  It doesn't stop the code from compiling or the executable from running.
 
-// https://learn.microsoft.com/en-us/cpp/code-quality/understanding-sal
+https://learn.microsoft.com/en-us/cpp/code-quality/understanding-sal
 
 Get used to it.  "This will be on 'the test'."
