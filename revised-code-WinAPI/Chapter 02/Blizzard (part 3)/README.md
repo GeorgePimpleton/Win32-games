@@ -1,9 +1,9 @@
-# Win32 Games, Chapter 2, part 3
+# Win32 Games, Chapter 2, part 3: Modifying File Name Extensions
 [![Language](https://img.shields.io/badge/Language%20-C++-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 
 ### Blizzard Versions
-3. Changed file names.
+3. Changed file name extensions.
 
 .h to .hpp.  A cosmetic change, but one I use to distinquish between C and C++ header files.
 
