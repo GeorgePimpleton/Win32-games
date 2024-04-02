@@ -79,8 +79,7 @@ void GameMenu( WPARAM wParam )
       return;
 
    case IDM_GAME_EXIT:
-      GameEnd( );
-      PostQuitMessage( 0 );
+      DestroyWindow( g_game->GetWindow( ) );
       return;
 
    case IDM_HELP_ABOUT:
