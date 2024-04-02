@@ -2,7 +2,7 @@
 
 BOOL GameInitialize( HINSTANCE inst )
 {
-   g_game = std::make_unique<GameEngine>( inst, L"Trippy", L"Trippy: Learning to Draw Basic Graphics",
+   g_game = std::make_unique<GameEngine>( inst, L"Trippy", L"Trippy b: Learning to Draw Basic Graphics",
                                           IDI_ICON, IDI_ICON_SM );
 
    if ( g_game == NULL )
@@ -76,8 +76,7 @@ void GameMenu( WPARAM wParam )
       return;
 
    case IDM_GAME_EXIT:
-      GameEnd( );
-      PostQuitMessage( 0 );
+      DestroyWindow( g_game->GetWindow( ) );
       return;
 
    case IDM_HELP_ABOUT:
