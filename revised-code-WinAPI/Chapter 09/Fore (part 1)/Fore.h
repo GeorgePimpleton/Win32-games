@@ -10,6 +10,6 @@ HINSTANCE   _hInstance;
 GameEngine* _pGame;
 Bitmap*     _pForestBitmap;
 Bitmap*     _pGolfBallBitmap;
-Sprite*     _pGolfBallSprite[ 3 ];
+Sprite*     _pGolfBallSprite[3];
 BOOL        _bDragging;
 int         _iDragBall;
