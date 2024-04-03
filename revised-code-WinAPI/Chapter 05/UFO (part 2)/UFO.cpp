@@ -2,7 +2,7 @@
 
 BOOL GameInitialize( HINSTANCE inst )
 {
-   g_game = std::make_unique<GameEngine>( inst, L"UFO", L"UFO 2: Controlling Games with the Keyboard and Mouse",
+   g_game = std::make_unique<GameEngine>( inst, L"UFO", L"UFO b: Controlling Games with the Keyboard and Mouse",
                                           IDI_ICON, IDI_ICON_SM, 500, 400 );
 
    if ( g_game == NULL )
@@ -58,8 +58,7 @@ void GameMenu( WPARAM wParam )
       return;
 
    case IDM_GAME_EXIT:
-      GameEnd( );
-      PostQuitMessage( 0 );
+      DestroyWindow( g_game->GetWindow( ) );
       return;
 
    case IDM_HELP_ABOUT:

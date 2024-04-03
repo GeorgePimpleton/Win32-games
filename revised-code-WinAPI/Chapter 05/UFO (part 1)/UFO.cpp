@@ -3,7 +3,7 @@
 BOOL GameInitialize( HINSTANCE hInstance )
 {
    g_pGame = new GameEngine( hInstance, TEXT( "UFO" ),
-                             TEXT( "UFO 1: Controlling Games with the Keyboard and Mouse" ), IDI_UFO, IDI_UFO_SM, 500, 400 );
+                             TEXT( "UFO a: Controlling Games with the Keyboard and Mouse" ), IDI_UFO, IDI_UFO_SM, 500, 400 );
    if ( g_pGame == NULL )
       return FALSE;
 

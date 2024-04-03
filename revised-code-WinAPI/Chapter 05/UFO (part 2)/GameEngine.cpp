@@ -96,7 +96,7 @@ GameEngine::GameEngine( HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
    m_smallIcon  = smallIcon;
    m_width      = width;
    m_height     = height;
-   m_frameDelay = 50;   // 20 FPS default
+   m_frameDelay = 50;
    m_asleep     = TRUE;
 }
 
@@ -133,7 +133,7 @@ BOOL GameEngine::Initialize( int cmdShow )
       windowHeight += GetSystemMetrics( SM_CYMENU );
    }
 
-   int xWindowPos = ( GetSystemMetrics( SM_CXSCREEN ) - windowWidth )  / 2;
+   int xWindowPos = ( GetSystemMetrics( SM_CXSCREEN ) - windowWidth ) / 2;
    int yWindowPos = ( GetSystemMetrics( SM_CYSCREEN ) - windowHeight ) / 2;
 
    m_wnd = CreateWindowW( m_wndClass, m_title,
