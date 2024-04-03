@@ -1,6 +1,6 @@
 #include "GameEngine.hpp"
 
-GameEngine* GameEngine::m_gameEngine = NULL;
+std::unique_ptr<GameEngine> GameEngine::m_gameEngine = NULL;
 
 int WINAPI wWinMain( _In_ HINSTANCE inst,    _In_opt_ HINSTANCE prevInst,
                      _In_ PWSTR     cmdLine, _In_     int       cmdShow )
@@ -84,7 +84,8 @@ BOOL CALLBACK DlgProc( HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam )
 GameEngine::GameEngine( HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
                         WORD icon, WORD smallIcon, int width, int height )
 {
-   m_gameEngine = this;
+   m_gameEngine.reset( this );
+
    m_inst       = inst;
    m_wnd        = NULL;
    m_wndClass   = wndClass;
@@ -122,7 +123,7 @@ BOOL GameEngine::Initialize( int cmdShow )
       return FALSE;
    }
 
-   int windowWidth  = m_width  + GetSystemMetrics( SM_CXFIXEDFRAME ) * 2 + 10;
+   int windowWidth  = m_width + GetSystemMetrics( SM_CXFIXEDFRAME ) * 2 + 10;
    int windowHeight = m_height + GetSystemMetrics( SM_CYFIXEDFRAME ) * 2 + GetSystemMetrics( SM_CYCAPTION ) + 10;
 
    if ( wc.lpszMenuName != NULL )
@@ -130,11 +131,13 @@ BOOL GameEngine::Initialize( int cmdShow )
       windowHeight += GetSystemMetrics( SM_CYMENU );
    }
 
-   int xWindowPos = ( GetSystemMetrics( SM_CXSCREEN ) - windowWidth )  / 2;
+   int xWindowPos = ( GetSystemMetrics( SM_CXSCREEN ) - windowWidth ) / 2;
    int yWindowPos = ( GetSystemMetrics( SM_CYSCREEN ) - windowHeight ) / 2;
 
-   m_wnd = CreateWindowW( m_wndClass, m_title, WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
-                          xWindowPos, yWindowPos, windowWidth, windowHeight,
+   m_wnd = CreateWindowW( m_wndClass, m_title,
+                          WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
+                          xWindowPos, yWindowPos,
+                          windowWidth, windowHeight,
                           NULL, NULL, m_inst, NULL );
 
    if ( !m_wnd )

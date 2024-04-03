@@ -1,15 +1,15 @@
 #include <windows.h>
 #include "resource.h"
 
-IDI_ICON           ICON         "Res/Slideshow.ico"
-IDI_ICON_SM        ICON         "Res/Slideshow_sm.ico"
+IDI_ICON    ICON   "Res/Slideshow.ico"
+IDI_ICON_SM ICON   "Res/Slideshow_sm.ico"
 
-IDB_IMAGE1         BITMAP       "Res/Image1.bmp"
-IDB_IMAGE2         BITMAP       "Res/Image2.bmp"
-IDB_IMAGE3         BITMAP       "Res/Image3.bmp"
-IDB_IMAGE4         BITMAP       "Res/Image4.bmp"
-IDB_IMAGE5         BITMAP       "Res/Image5.bmp"
-IDB_IMAGE6         BITMAP       "Res/Image6.bmp"
+IDB_IMAGE1  BITMAP "Res/Image1.bmp"
+IDB_IMAGE2  BITMAP "Res/Image2.bmp"
+IDB_IMAGE3  BITMAP "Res/Image3.bmp"
+IDB_IMAGE4  BITMAP "Res/Image4.bmp"
+IDB_IMAGE5  BITMAP "Res/Image5.bmp"
+IDB_IMAGE6  BITMAP "Res/Image6.bmp"
 
 IDD_ABOUT   DIALOG   DISCARDABLE    32, 32, 180, 102
 CAPTION "About..."
@@ -19,7 +19,7 @@ STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
    CTEXT          "Slideshow 4", IDC_STATIC, 40, 12, 100, 8
 
    CTEXT          "Drawing Graphical Images", IDC_STATIC, 7, 35, 166, 8
-   CTEXT          "© This Year, Your Name", IDC_STATIC, 7, 47, 166, 8
+   CTEXT          "Â© This Year, Your Name", IDC_STATIC, 7, 47, 166, 8
 
    DEFPUSHBUTTON  "OK", IDOK, 66, 81, 50, 14
 }

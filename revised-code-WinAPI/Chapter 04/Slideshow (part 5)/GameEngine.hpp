@@ -2,8 +2,10 @@
 
 #include <windows.h>
 #include "resource.h"
+#include <memory>
 
-int WINAPI       wWinMain( _In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ PWSTR, _In_ int );
+int WINAPI       wWinMain( _In_ HINSTANCE, _In_opt_ HINSTANCE,
+                           _In_ PWSTR,     _In_     int );
 LRESULT CALLBACK WndProc( HWND, UINT, WPARAM, LPARAM );
 BOOL CALLBACK    DlgProc( HWND, UINT, WPARAM, LPARAM );
 
@@ -19,25 +21,24 @@ void GameMenu( WPARAM );
 class GameEngine
 {
 protected:
-   // Member Variables
-   static GameEngine* m_gameEngine;
-   HINSTANCE          m_inst;
-   HWND               m_wnd;
-   PCWSTR             m_wndClass;
-   PCWSTR             m_title;
-   WORD               m_icon;
-   WORD               m_smallIcon;
-   int                m_width;
-   int                m_height;
-   int                m_frameDelay;
-   BOOL               m_asleep;
+   static std::unique_ptr<GameEngine> m_gameEngine;
+   HINSTANCE                          m_inst;
+   HWND                               m_wnd;
+   PCWSTR                             m_wndClass;
+   PCWSTR                             m_title;
+   WORD                               m_icon;
+   WORD                               m_smallIcon;
+   int                                m_width;
+   int                                m_height;
+   int                                m_frameDelay;
+   BOOL                               m_asleep;
 
 public:
-   GameEngine( HINSTANCE, PCWSTR, PCWSTR,
-               WORD, WORD, int width = 640, int height = 480 );
+            GameEngine( HINSTANCE, PCWSTR, PCWSTR,
+                        WORD, WORD, int width = 640, int height = 480 );
    virtual ~GameEngine( );
 
-   static GameEngine* GetEngine( ) { return m_gameEngine; };
+   static GameEngine* GetEngine( ) { return m_gameEngine.get( ); };
    BOOL               Initialize( int );
    LRESULT            HandleEvent( HWND, UINT, WPARAM, LPARAM );
 
