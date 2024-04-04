@@ -15,7 +15,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 4. Updated the logic so a new game can only be started when a previous game was won
    + Uses the alternate set of tile artwork from the 2004 CD, same game code.
 
-I like the game tile artwork from 2003 more than the artwork from 2004.
+I like the game tile artwork from 2003 more than the artwork from 2004.  Of course YMMV.
 
 ### Notes
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.

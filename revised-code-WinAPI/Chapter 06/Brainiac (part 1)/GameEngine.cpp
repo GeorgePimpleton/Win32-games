@@ -94,12 +94,12 @@ BOOL GameEngine::Initialize( int iCmdShow )
    if ( !RegisterClassEx( &wndclass ) )
       return FALSE;
 
-   int iWindowWidth  = m_iWidth  + GetSystemMetrics( SM_CXFIXEDFRAME ) * 2 + 10,
-       iWindowHeight = m_iHeight + GetSystemMetrics( SM_CYFIXEDFRAME ) * 2 + GetSystemMetrics( SM_CYCAPTION ) + 10;
+   int iWindowWidth  = m_iWidth + GetSystemMetrics( SM_CXFIXEDFRAME ) * 2 + 10,
+      iWindowHeight = m_iHeight + GetSystemMetrics( SM_CYFIXEDFRAME ) * 2 + GetSystemMetrics( SM_CYCAPTION ) + 10;
    if ( wndclass.lpszMenuName != NULL )
       iWindowHeight += GetSystemMetrics( SM_CYMENU );
-   int iXWindowPos = ( GetSystemMetrics( SM_CXSCREEN ) - iWindowWidth )  / 2,
-       iYWindowPos = ( GetSystemMetrics( SM_CYSCREEN ) - iWindowHeight ) / 2;
+   int iXWindowPos = ( GetSystemMetrics( SM_CXSCREEN ) - iWindowWidth ) / 2,
+      iYWindowPos = ( GetSystemMetrics( SM_CYSCREEN ) - iWindowHeight ) / 2;
 
    m_hWindow = CreateWindow( m_szWindowClass, m_szTitle, WS_POPUPWINDOW |
                              WS_CAPTION | WS_MINIMIZEBOX, iXWindowPos, iYWindowPos, iWindowWidth,

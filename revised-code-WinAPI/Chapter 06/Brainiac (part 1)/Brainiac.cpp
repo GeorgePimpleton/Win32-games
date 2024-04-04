@@ -3,7 +3,7 @@
 BOOL GameInitialize( HINSTANCE hInstance )
 {
    g_pGame = new GameEngine( hInstance, TEXT( "Brainiac" ),
-                             TEXT( "Brainiac 1" ), IDI_BRAINIAC, IDI_BRAINIAC_SM, 528, 512 );
+                             TEXT( "Brainiac a" ), IDI_BRAINIAC, IDI_BRAINIAC_SM, 528, 512 );
    if ( g_pGame == NULL )
       return FALSE;
 
@@ -75,8 +75,8 @@ void GameDeactivate( HWND hWindow )
 void GamePaint( HDC hDC )
 {
    // Draw the tiles
-   int iTileWidth  = g_pTiles[0]-> GetWidth( );
-   int iTileHeight = g_pTiles[0]-> GetHeight( );
+   int iTileWidth  = g_pTiles[0]->GetWidth( );
+   int iTileHeight = g_pTiles[0]->GetHeight( );
    for ( int i = 0; i < 4; i++ )
       for ( int j = 0; j < 4; j++ )
          if ( g_bTileStates[i][j] || ( ( i == g_ptTile1.x ) && ( j == g_ptTile1.y ) ) ||

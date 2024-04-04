@@ -19,10 +19,10 @@ CAPTION "About..."
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 {
    ICON          IDI_ICON, IDC_STATIC, 7, 7, 20, 20, SS_SUNKEN
-   CTEXT         "Brainiac", IDC_STATIC, 40, 12, 100, 8
+   CTEXT         "Brainiac alt", IDC_STATIC, 40, 12, 100, 8
 
    CTEXT         "Example Game", IDC_STATIC, 7, 35, 166, 8
-   CTEXT         "© This Year, Your Name", IDC_STATIC, 7, 47, 166, 8
+   CTEXT         "Â© This Year, Your Name", IDC_STATIC, 7, 47, 166, 8
 
    DEFPUSHBUTTON "OK", IDOK, 66, 81, 50, 14
 }

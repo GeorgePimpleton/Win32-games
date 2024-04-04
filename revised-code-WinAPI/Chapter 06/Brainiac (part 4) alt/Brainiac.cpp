@@ -2,7 +2,7 @@
 
 HRESULT GameInitialize( HINSTANCE inst )
 {
-   g_game = std::make_unique<GameEngine>( inst, L"Brainiac", L"Example Game: Brainiac",
+   g_game = std::make_unique<GameEngine>( inst, L"Brainiac", L"Example Game: Brainiac alt",
                                           IDI_ICON, IDI_ICON_SM, 528, 508 );
 
    if ( NULL == g_game )
@@ -36,10 +36,8 @@ void GameStart( HWND wnd )
 
 void GameNew( )
 {
-   // check if the game is over so a new one can be started
    if ( g_gameOver )
    {
-      // clear the tile states and images
       for ( UINT i = 0; i < 4; i++ )
       {
          for ( UINT j = 0; j < 4; j++ )
@@ -49,7 +47,6 @@ void GameNew( )
          }
       }
 
-      // initialize the tile images randomly
       for ( UINT i = 0; i < 2; i++ )
       {
          for ( UINT j = 1; j < 9; j++ )
@@ -67,17 +64,14 @@ void GameNew( )
          }
       }
 
-      // initialize the tile selections and match/try count
       g_tile1.x = g_tile1.y = -1;
       g_tile2.x = g_tile2.y = -1;
       g_matches = g_tries   = 0;
 
       g_gameOver = FALSE;
 
-      // disable the new game menu item
       EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
 
-      // force a repaint to update the tiles
       InvalidateRect( g_game->GetWindow( ), NULL, FALSE );
    }
 }
@@ -93,7 +87,6 @@ void GameDeactivate( HWND wnd )
 
 void GamePaint( HDC dc )
 {
-   // draw the tiles
    UINT tileWidth { ( UINT ) g_tiles[0]->GetWidth( ) };
    UINT tileHeight { ( UINT ) g_tiles[0]->GetHeight( ) };
 
@@ -126,8 +119,7 @@ void GameMenu( WPARAM wParam )
       return;
 
    case IDM_GAME_EXIT:
-      GameEnd( );
-      PostQuitMessage( 0 );
+      DestroyWindow( g_game->GetWindow( ) );
       return;
 
    case IDM_HELP_ABOUT:
@@ -141,17 +133,13 @@ void HandleKeys( )
 
 void MouseButtonDown( LONG x, LONG y, BOOL left )
 {
-   // determine which tile was clicked
    int tileX = x / g_tiles[0]->GetWidth( );
    int tileY = y / g_tiles[0]->GetHeight( );
 
-   // make sure the tile hasn't already been matched
    if ( !g_tileState[tileX][tileY] )
    {
-      // see if this is the first tile selected
       if ( g_tile1.x == -1 )
       {
-         // set the first tile selection
          g_tile1.x = tileX;
          g_tile1.y = tileY;
       }
@@ -159,37 +147,29 @@ void MouseButtonDown( LONG x, LONG y, BOOL left )
       {
          if ( g_tile2.x == -1 )
          {
-            // increase the number of tries
             g_tries++;
 
-            // set the second tile selection
             g_tile2.x = tileX;
             g_tile2.y = tileY;
 
-            // see if it's a match
             if ( g_tile[g_tile1.x][g_tile1.y] == g_tile[g_tile2.x][g_tile2.y] )
             {
-               // set the tile state to indicate the match
                g_tileState[g_tile1.x][g_tile1.y] = TRUE;
                g_tileState[g_tile2.x][g_tile2.y] = TRUE;
 
-               // clear the tile selections
                g_tile1.x = g_tile1.y = g_tile2.x = g_tile2.y = -1;
 
-               // update the match count
                ++g_matches;
             }
          }
          else
          {
-            // clear the tile selections
             g_tile1.x = g_tile1.y = g_tile2.x = g_tile2.y = -1;
          }
       }
 
       InvalidateRect( g_game->GetWindow( ), NULL, FALSE );
 
-      // check for winner
       if ( g_matches == 8 )
       {
          std::wstring s = std::format( L"You won in {} tries.", g_tries );
@@ -198,7 +178,6 @@ void MouseButtonDown( LONG x, LONG y, BOOL left )
 
          g_gameOver = TRUE;
 
-         // enable the new game menu item so it can be selected
          EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
 
       }
