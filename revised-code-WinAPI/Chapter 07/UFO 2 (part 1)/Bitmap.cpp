@@ -4,10 +4,8 @@
 
 Bitmap::Bitmap( )
    : m_hBitmap( NULL ), m_iWidth( 0 ), m_iHeight( 0 )
-{
-}
+{ }
 
-// Create a bitmap from a file
 Bitmap::Bitmap( HDC hDC, PCTSTR szFileName )
    : m_hBitmap( NULL ), m_iWidth( 0 ), m_iHeight( 0 )
 {
@@ -154,7 +152,6 @@ BOOL Bitmap::Create( HDC hDC, int iWidth, int iHeight, COLORREF crColor )
    RECT rcBitmap = { 0, 0, m_iWidth, m_iHeight };
    FillRect( hMemDC, &rcBitmap, hBrush );
 
-   // Cleanup
    SelectObject( hMemDC, hOldBitmap );
    DeleteDC( hMemDC );
    DeleteObject( hBrush );

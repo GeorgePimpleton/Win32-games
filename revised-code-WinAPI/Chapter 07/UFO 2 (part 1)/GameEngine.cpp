@@ -66,7 +66,7 @@ GameEngine::GameEngine( HINSTANCE hInstance, PCTSTR szWindowClass,
    m_wSmallIcon   = wSmallIcon;
    m_iWidth       = iWidth;
    m_iHeight      = iHeight;
-   m_iFrameDelay  = 50;   // 20 FPS default
+   m_iFrameDelay  = 50;
    m_bSleep       = TRUE;
    m_uiJoystickID = 0;
 }

@@ -4,8 +4,8 @@
 
 std::unique_ptr<GameEngine> GameEngine::m_gameEngine = NULL;
 
-int WINAPI wWinMain( _In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
-                     _In_ PWSTR cmdLine, _In_ int cmdShow )
+int WINAPI wWinMain( _In_ HINSTANCE inst,    _In_opt_ HINSTANCE prevInst,
+                     _In_ PWSTR     cmdLine, _In_     int       cmdShow )
 {
 
    if ( GameInitialize( inst ) == S_OK )
@@ -225,10 +225,8 @@ LRESULT GameEngine::HandleEvent( HWND wnd, UINT msg, WPARAM wParam, LPARAM lPara
    return DefWindowProc( wnd, msg, wParam, lParam );
 }
 
-// initializes the joystick
 HRESULT GameEngine::InitJoystick( )
 {
-   // make sure joystick driver is present
    UINT numJoysticks = 0;
 
    if ( ( numJoysticks = joyGetNumDevs( ) ) == 0 )
@@ -236,7 +234,6 @@ HRESULT GameEngine::InitJoystick( )
       return E_FAIL;
    }
 
-   // make sure the joystick is attached
    JOYINFO joyInfo = { };
 
    if ( joyGetPos( JOYSTICKID1, &joyInfo ) != JOYERR_UNPLUGGED )
@@ -248,7 +245,6 @@ HRESULT GameEngine::InitJoystick( )
       return E_FAIL;
    }
 
-   // calculate the trip values
    JOYCAPSW joyCaps = { };
 
    joyGetDevCapsW( m_joyID, &joyCaps, sizeof( JOYCAPSW ) );
@@ -264,27 +260,22 @@ HRESULT GameEngine::InitJoystick( )
    return S_OK;
 }
 
-// captures the joystick
 void GameEngine::CaptureJoystick( )
 {
-   // capture the joystick
    if ( m_joyID == JOYSTICKID1 )
    {
       joySetCapture( m_wnd, m_joyID, NULL, TRUE );
    }
 }
 
-// releases the joystick
 void GameEngine::ReleaseJoystick( )
 {
-   // release the joystick
    if ( m_joyID == JOYSTICKID1 )
    {
       joyReleaseCapture( m_joyID );
    }
 }
 
-// handles joystick changes
 void GameEngine::CheckJoystick( )
 {
    if ( m_joyID == JOYSTICKID1 )
@@ -294,7 +285,6 @@ void GameEngine::CheckJoystick( )
 
       if ( joyGetPos( m_joyID, &joyInfo ) == JOYERR_NOERROR )
       {
-         // check horizontal movement
          if ( joyInfo.wXpos < ( WORD ) m_joyTrip.left )
          {
             joyState |= JOY_LEFT;
@@ -304,7 +294,6 @@ void GameEngine::CheckJoystick( )
             joyState |= JOY_RIGHT;
          }
 
-         // check vertical movement
          if ( joyInfo.wYpos < ( WORD ) m_joyTrip.top )
          {
             joyState |= JOY_UP;
@@ -314,7 +303,6 @@ void GameEngine::CheckJoystick( )
             joyState |= JOY_DOWN;
          }
 
-         // check if 1st and 2nd buttons were pressed
          if ( joyInfo.wButtons & JOY_BUTTON1 )
          {
             joyState |= JOY_FIRE1;
@@ -326,7 +314,6 @@ void GameEngine::CheckJoystick( )
          }
       }
 
-      // allow the game to handle the joystick
       HandleJoystick( joyState );
    }
 }
