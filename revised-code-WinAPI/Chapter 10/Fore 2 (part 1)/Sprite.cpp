@@ -1,43 +1,43 @@
 #include "Sprite.h"
 
-Sprite::Sprite(Bitmap* pBitmap)
+Sprite::Sprite( Bitmap* pBitmap )
 {
    m_pBitmap = pBitmap;
-   SetRect(&m_rcPosition, 0, 0, pBitmap->GetWidth( ), pBitmap->GetHeight( ));
+   SetRect( &m_rcPosition, 0, 0, pBitmap->GetWidth( ), pBitmap->GetHeight( ) );
    CalcCollisionRect( );
    m_ptVelocity.x = m_ptVelocity.y = 0;
    m_iZOrder = 0;
-   SetRect(&m_rcBounds, 0, 0, 640, 480);
+   SetRect( &m_rcBounds, 0, 0, 640, 480 );
    m_baBoundsAction = BA_STOP;
    m_bHidden = FALSE;
 }
 
-Sprite::Sprite(Bitmap* pBitmap, RECT& rcBounds, BOUNDSACTION baBoundsAction)
+Sprite::Sprite( Bitmap* pBitmap, RECT& rcBounds, BOUNDSACTION baBoundsAction )
 {
-   int iXPos = rand( ) % (rcBounds.right - rcBounds.left);
-   int iYPos = rand( ) % (rcBounds.bottom - rcBounds.top);
+   int iXPos = rand( ) % ( rcBounds.right - rcBounds.left );
+   int iYPos = rand( ) % ( rcBounds.bottom - rcBounds.top );
 
    m_pBitmap = pBitmap;
-   SetRect(&m_rcPosition, iXPos, iYPos, iXPos + pBitmap->GetWidth( ),
-           iYPos + pBitmap->GetHeight( ));
+   SetRect( &m_rcPosition, iXPos, iYPos, iXPos + pBitmap->GetWidth( ),
+            iYPos + pBitmap->GetHeight( ) );
    CalcCollisionRect( );
    m_ptVelocity.x = m_ptVelocity.y = 0;
    m_iZOrder = 0;
-   CopyRect(&m_rcBounds, &rcBounds);
+   CopyRect( &m_rcBounds, &rcBounds );
    m_baBoundsAction = baBoundsAction;
    m_bHidden = FALSE;
 }
 
-Sprite::Sprite(Bitmap* pBitmap, POINT ptPosition, POINT ptVelocity, int iZOrder,
-               RECT& rcBounds, BOUNDSACTION baBoundsAction)
+Sprite::Sprite( Bitmap* pBitmap, POINT ptPosition, POINT ptVelocity, int iZOrder,
+                RECT& rcBounds, BOUNDSACTION baBoundsAction )
 {
    m_pBitmap = pBitmap;
-   SetRect(&m_rcPosition, ptPosition.x, ptPosition.y, pBitmap->GetWidth( ),
-           pBitmap->GetHeight( ));
+   SetRect( &m_rcPosition, ptPosition.x, ptPosition.y, pBitmap->GetWidth( ),
+            pBitmap->GetHeight( ) );
    CalcCollisionRect( );
    m_ptVelocity = ptPosition;
    m_iZOrder = iZOrder;
-   CopyRect(&m_rcBounds, &rcBounds);
+   CopyRect( &m_rcBounds, &rcBounds );
    m_baBoundsAction = baBoundsAction;
    m_bHidden = FALSE;
 }
@@ -55,20 +55,17 @@ SPRITEACTION Sprite::Update( )
    ptBoundsSize.x = m_rcBounds.right - m_rcBounds.left;
    ptBoundsSize.y = m_rcBounds.bottom - m_rcBounds.top;
 
-   // Check the bounds
-   // Wrap?
    if ( m_baBoundsAction == BA_WRAP )
    {
-      if ( (ptNewPosition.x + ptSpriteSize.x) < m_rcBounds.left )
+      if ( ( ptNewPosition.x + ptSpriteSize.x ) < m_rcBounds.left )
          ptNewPosition.x = m_rcBounds.right;
       else if ( ptNewPosition.x > m_rcBounds.right )
          ptNewPosition.x = m_rcBounds.left - ptSpriteSize.x;
-      if ( (ptNewPosition.y + ptSpriteSize.y) < m_rcBounds.top )
+      if ( ( ptNewPosition.y + ptSpriteSize.y ) < m_rcBounds.top )
          ptNewPosition.y = m_rcBounds.bottom;
       else if ( ptNewPosition.y > m_rcBounds.bottom )
          ptNewPosition.y = m_rcBounds.top - ptSpriteSize.y;
    }
-   // Bounce?
    else if ( m_baBoundsAction == BA_BOUNCE )
    {
       BOOL bBounce = FALSE;
@@ -79,7 +76,7 @@ SPRITEACTION Sprite::Update( )
          ptNewPosition.x = m_rcBounds.left;
          ptNewVelocity.x = -ptNewVelocity.x;
       }
-      else if ( (ptNewPosition.x + ptSpriteSize.x) > m_rcBounds.right )
+      else if ( ( ptNewPosition.x + ptSpriteSize.x ) > m_rcBounds.right )
       {
          bBounce = TRUE;
          ptNewPosition.x = m_rcBounds.right - ptSpriteSize.x;
@@ -91,49 +88,47 @@ SPRITEACTION Sprite::Update( )
          ptNewPosition.y = m_rcBounds.top;
          ptNewVelocity.y = -ptNewVelocity.y;
       }
-      else if ( (ptNewPosition.y + ptSpriteSize.y) > m_rcBounds.bottom )
+      else if ( ( ptNewPosition.y + ptSpriteSize.y ) > m_rcBounds.bottom )
       {
          bBounce = TRUE;
          ptNewPosition.y = m_rcBounds.bottom - ptSpriteSize.y;
          ptNewVelocity.y = -ptNewVelocity.y;
       }
       if ( bBounce )
-         SetVelocity(ptNewVelocity);
+         SetVelocity( ptNewVelocity );
    }
-   // Die?
    else if ( m_baBoundsAction == BA_DIE )
    {
-      if ( (ptNewPosition.x + ptSpriteSize.x) < m_rcBounds.left ||
-          ptNewPosition.x > m_rcBounds.right ||
-          (ptNewPosition.y + ptSpriteSize.y) < m_rcBounds.top ||
-          ptNewPosition.y > m_rcBounds.bottom )
+      if ( ( ptNewPosition.x + ptSpriteSize.x ) < m_rcBounds.left ||
+           ptNewPosition.x > m_rcBounds.right ||
+           ( ptNewPosition.y + ptSpriteSize.y ) < m_rcBounds.top ||
+           ptNewPosition.y > m_rcBounds.bottom )
          return SA_KILL;
    }
-   // Stop (default)
    else
    {
       if ( ptNewPosition.x  < m_rcBounds.left ||
-          ptNewPosition.x >(m_rcBounds.right - ptSpriteSize.x) )
+           ptNewPosition.x >( m_rcBounds.right - ptSpriteSize.x ) )
       {
-         ptNewPosition.x = max(m_rcBounds.left, min(ptNewPosition.x,
-                                                    m_rcBounds.right - ptSpriteSize.x));
-         SetVelocity(0, 0);
+         ptNewPosition.x = max( m_rcBounds.left, min( ptNewPosition.x,
+                                m_rcBounds.right - ptSpriteSize.x ) );
+         SetVelocity( 0, 0 );
       }
       if ( ptNewPosition.y  < m_rcBounds.top ||
-          ptNewPosition.y >(m_rcBounds.bottom - ptSpriteSize.y) )
+           ptNewPosition.y >( m_rcBounds.bottom - ptSpriteSize.y ) )
       {
-         ptNewPosition.y = max(m_rcBounds.top, min(ptNewPosition.y,
-                                                   m_rcBounds.bottom - ptSpriteSize.y));
-         SetVelocity(0, 0);
+         ptNewPosition.y = max( m_rcBounds.top, min( ptNewPosition.y,
+                                m_rcBounds.bottom - ptSpriteSize.y ) );
+         SetVelocity( 0, 0 );
       }
    }
-   SetPosition(ptNewPosition);
+   SetPosition( ptNewPosition );
 
    return SA_NONE;
 }
 
-void Sprite::Draw(HDC hDC)
+void Sprite::Draw( HDC hDC )
 {
    if ( m_pBitmap != NULL && !m_bHidden )
-      m_pBitmap->Draw(hDC, m_rcPosition.left, m_rcPosition.top, TRUE);
+      m_pBitmap->Draw( hDC, m_rcPosition.left, m_rcPosition.top, TRUE );
 }
