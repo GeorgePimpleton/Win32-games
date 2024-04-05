@@ -65,8 +65,6 @@ void Sprite::Update( )
    boundsSize.x = m_bounds.right - m_bounds.left;
    boundsSize.y = m_bounds.bottom - m_bounds.top;
 
-   // check the bounds
-   // wrap?
    if ( BA_WRAP == m_boundsAction )
    {
       if ( ( newPosition.x + spriteSize.x ) < m_bounds.left )
@@ -88,7 +86,6 @@ void Sprite::Update( )
       }
    }
 
-   // bounce?
    else if ( BA_BOUNCE == m_boundsAction )
    {
       BOOL  bounce      = FALSE;
@@ -126,7 +123,6 @@ void Sprite::Update( )
       }
    }
 
-   // stop (default)
    else
    {
       if ( newPosition.x  < m_bounds.left || newPosition.x >( m_bounds.right - spriteSize.x ) )

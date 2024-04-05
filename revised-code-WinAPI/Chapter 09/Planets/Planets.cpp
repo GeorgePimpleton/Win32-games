@@ -19,7 +19,7 @@ void GameStart( HWND hWindow )
 {
    rtk::srand( );
 
-   g_galaxyBitmap      = std::make_unique<Bitmap>( IDB_GALAXY );
+   g_galaxyBitmap    = std::make_unique<Bitmap>( IDB_GALAXY );
    g_planetBitmap[0] = std::make_unique<Bitmap>( IDB_PLANET1 );
    g_planetBitmap[1] = std::make_unique<Bitmap>( IDB_PLANET2 );
    g_planetBitmap[2] = std::make_unique<Bitmap>( IDB_PLANET3 );
@@ -80,8 +80,7 @@ void GameMenu( WPARAM wParam )
       return;
 
    case IDM_GAME_EXIT:
-      GameEnd( );
-      PostQuitMessage( 0 );
+      DestroyWindow( g_game->GetWindow( ) );
       return;
 
    case IDM_HELP_ABOUT:

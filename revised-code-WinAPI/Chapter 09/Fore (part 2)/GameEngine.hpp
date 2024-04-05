@@ -13,8 +13,8 @@ const JOYSTATE JOY_DOWN  = 0x0008L;
 const JOYSTATE JOY_FIRE1 = 0x0010L;
 const JOYSTATE JOY_FIRE2 = 0x0020L;
 
-int WINAPI       wWinMain( _In_ HINSTANCE, _In_opt_ HINSTANCE prevInst,
-                           _In_ PWSTR, _In_ int );
+int WINAPI       wWinMain( _In_ HINSTANCE, _In_opt_ HINSTANCE,
+                           _In_ PWSTR,     _In_     int );
 LRESULT CALLBACK WndProc( HWND, UINT, WPARAM, LPARAM );
 BOOL CALLBACK    DlgProc( HWND, UINT, WPARAM, LPARAM );
 
