@@ -13,7 +13,7 @@ const JOYSTATE  JOY_NONE  = 0x0000L,
                 JOY_FIRE2 = 0x0020L;
 
 int WINAPI        WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
-                           PSTR szCmdLine, int iCmdShow );
+                           PSTR      szCmdLine, int       iCmdShow );
 LRESULT CALLBACK  WndProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
 
 BOOL GameInitialize( HINSTANCE hInstance );

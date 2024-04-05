@@ -51,8 +51,8 @@ void GamePaint( HDC dc )
 
    for ( int i = 0; i < 2; i++ )
    {
-      HPEN hPen = CreatePen( PS_SOLID, 5, ( i == 0 ) ? RGB( 0, 0, 255 ) : RGB( 255, 146, 73 ) );
-      SelectObject( dc, hPen );
+      HPEN pen = CreatePen( PS_SOLID, 5, ( i == 0 ) ? RGB( 0, 0, 255 ) : RGB( 255, 146, 73 ) );
+      SelectObject( dc, pen );
 
       MoveToEx( dc, g_cycleTrail[i][0].x, g_cycleTrail[i][0].y, NULL );
 
@@ -61,7 +61,7 @@ void GamePaint( HDC dc )
          LineTo( dc, g_cycleTrail[i][j].x, g_cycleTrail[i][j].y );
       }
 
-      DeleteObject( hPen );
+      DeleteObject( pen );
    }
 
    int direction[2] = { 0, 0 };
@@ -112,8 +112,7 @@ void GameMenu( WPARAM wParam )
       return;
 
    case IDM_GAME_EXIT:
-      GameEnd( );
-      PostQuitMessage( 0 );
+      DestroyWindow( g_game->GetWindow( ) );
       return;
 
    case IDM_HELP_ABOUT:
@@ -143,12 +142,6 @@ void HandleKeys( )
          SteerCycle( 0, 3 );
       }
    }
-   // removed this so pressing enter after the message box displays
-   // doesn't start a new game ::sad::
-   //else if (GetAsyncKeyState(VK_RETURN) < 0)
-   //{
-   //   NewGame();
-   //}
 }
 
 void MouseButtonDown( LONG x, LONG y, BOOL left )
@@ -234,7 +227,7 @@ void UpdateCycles( )
 
       RECT tempTrail = { };
 
-      if ( g_trailLength[i] > 2 ) // Must have steered at least once
+      if ( g_trailLength[i] > 2 )
       {
          for ( int j = 0; j < g_trailLength[i] - 2; j++ )
          {
@@ -276,7 +269,7 @@ void SteerCycle( LONG cycle, LONG direction )
 
    switch ( direction )
    {
-   case 0: // up (0 degrees)
+   case 0:
       if ( 0 == g_cycleSpeed[cycle].y )
       {
          g_cycleSpeed[cycle].x = 0;
@@ -284,7 +277,7 @@ void SteerCycle( LONG cycle, LONG direction )
       }
       break;
 
-   case 1: // right (90 degrees)
+   case 1:
       if ( 0 == g_cycleSpeed[cycle].x )
       {
          g_cycleSpeed[cycle].x = g_SPEED;
@@ -292,7 +285,7 @@ void SteerCycle( LONG cycle, LONG direction )
       }
       break;
 
-   case 2: // down (180 degrees)
+   case 2:
       if ( 0 == g_cycleSpeed[cycle].y )
       {
          g_cycleSpeed[cycle].x = 0;
@@ -300,7 +293,7 @@ void SteerCycle( LONG cycle, LONG direction )
       }
       break;
 
-   case 3: // left (270 degrees)
+   case 3:
       if ( 0 == g_cycleSpeed[cycle].x )
       {
          g_cycleSpeed[cycle].x = -g_SPEED;
