@@ -14,3 +14,5 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 ### Notes
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.
+
+I prefer the images from 2003, there is just something 'off' about the 2004 images.  The chicken looks weird.

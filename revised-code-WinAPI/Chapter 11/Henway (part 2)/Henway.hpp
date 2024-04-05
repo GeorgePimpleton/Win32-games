@@ -5,7 +5,7 @@
 #include "Bitmap.hpp"
 #include "Sprite.hpp"
 #include "GameEngine.hpp"
-#include "random_toolkit.hpp"
+#include "random_toolkit_v131.hpp"
 
 std::unique_ptr<GameEngine>            g_game;
 std::unique_ptr<Bitmap>                g_highwayBitmap;
@@ -20,4 +20,4 @@ UINT                                   g_numLives;
 UINT                                   g_score;
 std::unique_ptr<Sprite>                g_chickenSprite;
 
-void MoveChicken(int xDistance, int yDistance);
+void MoveChicken( int xDistance, int yDistance );
