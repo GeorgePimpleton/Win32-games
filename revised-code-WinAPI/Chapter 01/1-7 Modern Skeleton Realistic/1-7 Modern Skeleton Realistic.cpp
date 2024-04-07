@@ -80,7 +80,7 @@ LRESULT CALLBACK WndProc( HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam )
       switch ( LOWORD( wParam ) )
       {
       case IDM_APP_EXIT:
-         PostQuitMessage( 0 );
+         DestroyWindow( wnd );
          return S_OK;
 
       case IDM_HELP_ABOUT:

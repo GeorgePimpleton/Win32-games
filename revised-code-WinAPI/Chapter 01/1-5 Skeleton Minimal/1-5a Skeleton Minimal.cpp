@@ -27,7 +27,7 @@ int WINAPI wWinMain( _In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWST
       return E_FAIL;
    }
 
-   PCWSTR appTitle { L"Minimal Windows Skeleton Application" };
+   PCWSTR appTitle { L"Minimal Windows Skeleton Application, Rev. A" };
 
    HWND wnd { CreateWindowW( appName, appTitle,
                              WS_OVERLAPPEDWINDOW,

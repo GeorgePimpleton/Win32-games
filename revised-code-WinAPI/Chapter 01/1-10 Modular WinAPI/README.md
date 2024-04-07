@@ -5,6 +5,6 @@
 The basics of programming using the Windows API, in a quick nutshell.  
 
 ### Possible types of apps that can be created on Windows
-10. modularizing WinAPI
+10. modularizing WinAPI, Version 2
 
 The modular functions are now placed into separate header/source files.

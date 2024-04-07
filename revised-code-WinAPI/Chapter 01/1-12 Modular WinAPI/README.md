@@ -5,7 +5,7 @@
 The basics of programming using the Windows API, in a quick nutshell.  
 
 ### Possible types of apps that can be created on Windows
-12. Using "Message Crackers"
+12. modularizing WinAPI, using "Message Crackers"
 
 ### About <windowsx.h> and "message cracking"
 The WndProc function is especially susceptible to bloated code.  The more functionality you add to your Win API app, the more WM_messages you have to handle, the more switch cases you create.  The more switch cases the bigger the  WndProc function grows.

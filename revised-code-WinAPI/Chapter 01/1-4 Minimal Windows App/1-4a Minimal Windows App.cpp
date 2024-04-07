@@ -20,7 +20,7 @@ int WINAPI wWinMain( _In_ HINSTANCE inst,    _In_opt_ HINSTANCE prevInst,
    wc.lpszMenuName  = NULL;
    wc.lpszClassName = appName;
 
-   // using the FAILED() macro for generic return testing failure
+   // using the FAILED() macro for generic return testing success/failure
    if ( FAILED( RegisterClassW( &wc ) ) )
    {
       MessageBoxW( NULL, L"Can't Register the Window Class!", appName, MB_OK | MB_ICONERROR );
@@ -28,7 +28,7 @@ int WINAPI wWinMain( _In_ HINSTANCE inst,    _In_opt_ HINSTANCE prevInst,
    }
 
    // Win32 is now known as the Windows API (WinAPI) since x64 Windows
-   static const WCHAR appTitle[ ] { L"Windows API Skeletal Application" };
+   static const WCHAR appTitle[ ] { L"Windows API Skeletal Application, Rev. A" };
 
    HWND wnd { CreateWindowW( appName, appTitle,
                              WS_OVERLAPPEDWINDOW,

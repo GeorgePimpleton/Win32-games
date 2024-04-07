@@ -5,10 +5,11 @@
 The basics of programming using the Windows API, in a quick nutshell.  
 
 ### Possible types of apps that can be created on Windows
-3. a Windows MessageBox
+3. a Windows API MessageBox using a .c file
+   + a WinAPI MessageBox as a .cpp file
    + a WinAPI MessageBox using modern coding
 
-The two examples shows the bare minimum needed to recreate the "Hello World" console example using a WinAPI message box.  The first example shows older WinAPI usages, allowing for ANSI and Unicode encodings for the WinAPI functio ns.  This is original style WinAPI coding as done by Charles Petzold back in the Win9X/Me days.  This style should be dead and buried.
+The three examples shows the bare minimum needed to recreate the "Hello World" console example using a WinAPI message box.  The first two examples show older WinAPI usages, allowing for ANSI and Unicode encodings for the WinAPI functio ns.  This is original style WinAPI coding as done by Charles Petzold back in the Win9X/Me days.  This style should be dead and buried.
 
 The second example uses strictly Unicode/wide char functions, so you'll see a lot of W suffixes on function names.  I also use generic return code labels (S_OK, E_FAIL) for better readability. This is the style I use when creating WinAPI apps.
 

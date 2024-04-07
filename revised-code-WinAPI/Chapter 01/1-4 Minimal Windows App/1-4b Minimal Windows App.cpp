@@ -30,7 +30,7 @@ int WINAPI wWinMain( _In_ HINSTANCE inst,    _In_opt_ HINSTANCE prevInst,
       return E_FAIL;
    }
 
-   static PCWSTR appTitle { L"Windows API Skeletal Application" };
+   static PCWSTR appTitle { L"Windows API Skeletal Application, Rev. B" };
 
    HWND wnd { CreateWindowW( appName, appTitle,
                              WS_OVERLAPPEDWINDOW,

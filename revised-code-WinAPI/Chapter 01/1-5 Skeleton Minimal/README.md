@@ -5,7 +5,7 @@
 The basics of programming using the Windows API, in a quick nutshell.  
 
 ### Possible types of apps that can be created on Windows
-5. a minimal skeletal Win API app
+5. a minimal skeletal WinAPI app with custom cursor and icon
    + a revision for resizing the window and the custom resources in a separate folder
    
 These examples uses custom icons and cursor, using a resource script to utilize the assets.

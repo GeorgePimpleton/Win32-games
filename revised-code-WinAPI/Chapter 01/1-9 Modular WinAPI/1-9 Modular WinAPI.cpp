@@ -7,7 +7,7 @@ HRESULT InitApplication( HINSTANCE );
 HRESULT InitInstance( HINSTANCE, int );
 int     MessageLoop( );
 
-static PCWSTR winName { L"ModWin1" };
+static PCWSTR winName  { L"ModWin1" };
 static PCWSTR appTitle { L"Modular WinAPI Application, Version 1" };
 
 int WINAPI wWinMain( _In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int winMode )
