@@ -1,0 +1,6 @@
+#include "resource.h"
+
+IDC_SKELETON    CURSOR "Res/Skeleton.cur"
+
+IDI_SKELETON    ICON   "Res/Skeleton.ico"
+IDI_SKELETON_SM ICON   "Res/Skeleton_sm.ico"

@@ -1,0 +1,11 @@
+// resource definitions
+
+// include the resource identifiers header
+#include "resource.h"
+
+// define the cursor(s)
+IDC_SKELETON    CURSOR "Skeleton.cur"
+
+// define the icon(s)
+IDI_SKELETON    ICON   "Skeleton.ico"
+IDI_SKELETON_SM ICON   "Skeleton_sm.ico"

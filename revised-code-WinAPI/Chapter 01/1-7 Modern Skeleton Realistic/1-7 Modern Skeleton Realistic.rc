@@ -1,0 +1,38 @@
+#include <windows.h>
+#include "resource.h"
+
+IDI_ICON    ICON   "Res\Skeleton.ico"
+IDI_ICON_SM ICON   "Res\Skeleton_sm.ico"
+
+IDC_CURSOR  CURSOR "Res\Skeleton.cur"
+
+IDD_ABOUT   DIALOG   32, 32, 180, 102
+CAPTION "About..."
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+{
+   ICON          IDI_ICON, IDC_STATIC, 7, 7, 20, 20, SS_SUNKEN
+   CTEXT         "Skeleton C++", IDC_STATIC, 40, 12, 100, 8
+
+   CTEXT         "A C++ Modernized Realistic Windows Skeleton Application", IDC_STATIC, 7, 35, 166, 8
+   CTEXT         "© This Year, Your Name", IDC_STATIC, 7, 47, 166, 8
+
+   DEFPUSHBUTTON "OK", IDOK, 66, 81, 50, 14
+}
+
+IDR_MENU MENU
+{
+   POPUP "&File"
+   {
+      MENUITEM "E&xit\tALT + F4", IDM_APP_EXIT
+   }
+
+   POPUP "&Help"
+   {
+      MENUITEM "&About...\tF1",   IDM_HELP_ABOUT
+   }
+}
+
+IDR_ACCEL ACCELERATORS
+{
+   VK_F1, IDM_HELP_ABOUT,   VIRTKEY
+}
