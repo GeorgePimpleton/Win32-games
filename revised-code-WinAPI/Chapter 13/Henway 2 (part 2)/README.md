@@ -3,7 +3,6 @@
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 
 ### Henway 2: Play MIDI Music
-
 2. modernized code...
 
 ### Notes

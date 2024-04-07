@@ -3,7 +3,7 @@
 #include <windows.h>
 #include <memory>
 #include <array>
-#include "random_toolkit.hpp"
+#include "random_toolkit_v131.hpp"
 #include "resource.h"
 #include "Bitmap.hpp"
 #include "Sprite.hpp"
@@ -22,5 +22,4 @@ UINT                                   g_numLives;
 UINT                                   g_score;
 std::unique_ptr<Sprite>                g_chickenSprite;
 
-void MoveChicken(int, int);
-
+void MoveChicken( int, int );

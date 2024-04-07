@@ -73,7 +73,6 @@ namespace rtk
 
       // a real distribution kinda goes flakey when the params are equal, divide by zero will do that,
       // as well as reversed from expected
-      // if ( !(from < to && ((to - from) <= std::numeric_limits<double>::max( ))) )
       if ( !(from < to && ((to - from) <= DBL_MAX)) ) // The WinAPI gets all whingey about the C++ max function()
       {
          throw std::invalid_argument("bad double distribution params");
