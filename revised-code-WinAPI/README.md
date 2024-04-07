@@ -8,8 +8,10 @@ Win9X/Me is officially dead!  Windows API ANSI encoding is dead!  Windows XP and
 Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
 ## The Game Code in 24 (or so) Chapters
+![under construction](construction.gif)  \*\* ***under construction*** \*\*  ![under construction](construction.gif)
+1. A Basic Programming Primer (Not just WinAPI)
 
-1. A Programming Primer (Not just WinAPI)
+![queue](queue.jpg)  \*\* ***in the queue*** \*\*  ![queue](queue.jpg)
 2. Blizzard: Creating An Engine For Games
 3. Trippy: Learning to Draw Basic Graphics
 4. Slideshow: Drawing Graphical Images
@@ -33,11 +35,6 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 22. Space Out 4: Keeping Track of High Scores
 23. Wanderer: Changing Perspective with Scrolling Backgrounds
 24. Example Game: Stunt Jumper
-
-![under construction](construction.gif)  \*\* ***under construction*** \*\*  ![under construction](construction.gif)
-
-
-![queue](queue.jpg)  \*\* ***in the queue*** \*\*  ![queue](queue.jpg)
 
 ----
 ### Caveat on the original 2003 & 2004 source code
