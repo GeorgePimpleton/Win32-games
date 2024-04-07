@@ -32,3 +32,5 @@ The WinAPI has a lot of custom data types available.  You should familiarize you
 
 ### Notes
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.
+
+WinAPI seemingly doesn't like some C++ stdlib assets, I will be going as much as possible with WinAPI assets.

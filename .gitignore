@@ -19,6 +19,8 @@ x64/
 *.user
 *.vcxproj
 *.filter
+*.rar
+*.zip
 
 # MacOS-specific
 .DS_Store

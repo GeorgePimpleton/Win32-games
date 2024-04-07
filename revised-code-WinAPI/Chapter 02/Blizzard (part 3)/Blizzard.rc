@@ -1,4 +1,0 @@
-#include "resource.h"
-
-IDI_BLIZZARD    ICON "Res/Blizzard.ico"
-IDI_BLIZZARD_SM ICON "Res/Blizzard_sm.ico"

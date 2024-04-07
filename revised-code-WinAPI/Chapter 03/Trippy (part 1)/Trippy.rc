@@ -1,4 +1,0 @@
-#include "resource.h"
-
-IDI_TRIPPY    ICON "Res/Trippy.ico"
-IDI_TRIPPY_SM ICON "Res/Trippy_sm.ico"
