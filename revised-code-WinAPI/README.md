@@ -55,4 +55,4 @@ There is also no guarantee the source files, orginal or modernized, will work fo
 If you find better ways to rework the code please drop me a note and let me know.
 
 ### Musings on Windows Games
-The game engine as created may be old, but still is (mostly) workable for modern WinAPI and C++ practices.
+The game engine as created may be old, but still is (mostly) workable for modern WinAPI practices.  The WinAPI/Visual Studio/Windows 10 doesn't like some C++ stdlib assets.
