@@ -1,0 +1,4 @@
+#include "resource.h"
+
+IDI_CROPCIRCLES    ICON "Res/CropCircles.ico"
+IDI_CROPCIRCLES_SM ICON "Res/CropCircles_sm.ico"
