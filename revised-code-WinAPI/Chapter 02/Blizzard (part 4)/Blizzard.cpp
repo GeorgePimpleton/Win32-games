@@ -2,8 +2,8 @@
 
 BOOL GameInitialize( HINSTANCE inst )
 {
-   g_game = new GameEngine( inst, TEXT( "Blizzard" ), TEXT( "Blizzard d" ),
-                             IDI_BLIZZARD, IDI_BLIZZARD_SM );
+   g_game = new GameEngine( inst, L"Blizzard", L"Blizzard d",
+                            IDI_ICON, IDI_ICON_SM );
 
    if ( g_game == NULL )
    {
@@ -32,8 +32,8 @@ void GameActivate( HWND wnd )
 
    GetClientRect( wnd, &rect );
 
-   DrawText( dc, TEXT( "Here comes the blizzard!" ), -1, &rect,
-             DT_SINGLELINE | DT_CENTER | DT_VCENTER );
+   DrawTextW( dc, L"Here comes the blizzard!", -1, &rect,
+              DT_SINGLELINE | DT_CENTER | DT_VCENTER );
 
    ReleaseDC( wnd, dc );
 }
@@ -45,8 +45,8 @@ void GameDeactivate( HWND wnd )
 
    GetClientRect( wnd, &rect );
 
-   DrawText( dc, TEXT( "The blizzard has passed." ), -1, &rect,
-             DT_SINGLELINE | DT_CENTER | DT_VCENTER );
+   DrawTextW( dc, L"The blizzard has passed.", -1, &rect,
+              DT_SINGLELINE | DT_CENTER | DT_VCENTER );
 
    ReleaseDC( wnd, dc );
 }
@@ -60,7 +60,7 @@ void GameCycle( )
    HDC  dc  = GetDC( wnd );
 
    DrawIcon( dc, rand( ) % g_game->GetWidth( ), rand( ) % g_game->GetHeight( ),
-             ( HICON ) GetClassLongPtr( wnd, GCLP_HICON ) );
+             ( HICON ) GetClassLongPtrW( wnd, GCLP_HICON ) );
 
    ReleaseDC( wnd, dc );
 }

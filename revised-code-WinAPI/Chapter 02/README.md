@@ -16,7 +16,8 @@ Blizzard, creates and uses the Game Engine class.  Used code from the 2004 CD.
 2. Removed the old WinAPI Hungarian Notation from variables.  Even MS recommends not using it.
 3. Changed file names.
 4. Refined the code for Unicode only and modern Windows OSes.
-5. Added a main menu with accelerators.
+5. Using smart pointers.
+6. Added a main menu with accelerators.
 
 ### Notes
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.

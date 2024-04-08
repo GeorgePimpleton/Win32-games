@@ -14,14 +14,6 @@ int WINAPI wWinMain( _In_     HINSTANCE inst,
          return FALSE;
       }
 
-      HACCEL accel = LoadAcceleratorsW( inst, MAKEINTRESOURCEW( IDR_ACCELERATORS ) );
-
-      if ( NULL == accel )
-      {
-         MessageBoxW( NULL, L"Unable to Load the Accelerators!", GameEngine::GetEngine( )->GetTitle( ), MB_OK | MB_ICONERROR );
-         return E_FAIL;
-      }
-
       MSG msg;
 
       while ( TRUE )
@@ -33,11 +25,8 @@ int WINAPI wWinMain( _In_     HINSTANCE inst,
                break;
             }
 
-            if ( 0 == TranslateAcceleratorW( GameEngine::GetEngine( )->GetWindow( ), accel, &msg ) )
-            {
-               TranslateMessage( &msg );
-               DispatchMessageW( &msg );
-            }
+            TranslateMessage( &msg );
+            DispatchMessageW( &msg );
          }
          else
          {
@@ -67,22 +56,6 @@ LRESULT CALLBACK WndProc( HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam )
    return GameEngine::GetEngine( )->HandleEvent( wnd, msg, wParam, lParam );
 }
 
-BOOL CALLBACK DlgProc( HWND dlg, UINT msg, WPARAM wParam, LPARAM lParam )
-{
-   switch ( msg )
-   {
-   case WM_COMMAND:
-      switch ( LOWORD( wParam ) )
-      {
-      case IDOK:
-         EndDialog( dlg, 0 );
-         return TRUE;
-      }
-   }
-
-   return FALSE;
-}
-
 GameEngine::GameEngine( HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
                         WORD icon, WORD smallIcon, int width, int height )
 {
@@ -95,7 +68,7 @@ GameEngine::GameEngine( HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
    m_smallIcon  = smallIcon;
    m_width      = width;
    m_height     = height;
-   m_frameDelay = 50;   // 20 FPS default
+   m_frameDelay = 50;
    m_asleep     = TRUE;
 }
 
@@ -104,7 +77,7 @@ GameEngine::~GameEngine( )
 
 BOOL GameEngine::Initialize( int cmdShow )
 {
-   WNDCLASSEXW wc = { };
+   WNDCLASSEXW wc;
 
    wc.cbSize        = sizeof( wc );
    wc.style         = CS_HREDRAW | CS_VREDRAW;
@@ -116,7 +89,7 @@ BOOL GameEngine::Initialize( int cmdShow )
    wc.hIconSm       = ( HICON ) LoadImageW( m_inst, MAKEINTRESOURCEW( IDI_ICON_SM ), IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR ); ;
    wc.hCursor       = ( HCURSOR ) LoadImageW( NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED );
    wc.hbrBackground = ( HBRUSH ) ( COLOR_WINDOW + 1 );
-   wc.lpszMenuName  = MAKEINTRESOURCEW( IDR_MENU );
+   wc.lpszMenuName  = NULL;
    wc.lpszClassName = m_wndClass;
 
    if ( !RegisterClassExW( &wc ) )
@@ -132,12 +105,12 @@ BOOL GameEngine::Initialize( int cmdShow )
       windowHeight += GetSystemMetrics( SM_CYMENU );
    }
 
-   int xWindowPos = ( GetSystemMetrics( SM_CXSCREEN ) - windowWidth )  / 2;
+   int xWindowPos = ( GetSystemMetrics( SM_CXSCREEN ) - windowWidth ) / 2;
    int yWindowPos = ( GetSystemMetrics( SM_CYSCREEN ) - windowHeight ) / 2;
 
-   m_wnd = CreateWindowW( m_wndClass, m_title, WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
-                          xWindowPos, yWindowPos,
-                          windowWidth, windowHeight,
+   m_wnd = CreateWindowW( m_wndClass, m_title,
+                          WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
+                          xWindowPos, yWindowPos, windowWidth, windowHeight,
                           NULL, NULL, m_inst, NULL );
 
    if ( !m_wnd )
@@ -160,22 +133,15 @@ LRESULT GameEngine::HandleEvent( HWND wnd, UINT msg, WPARAM wParam, LPARAM lPara
       GameStart( wnd );
       return 0;
 
-   case WM_ACTIVATE:
-      if ( wParam != WA_INACTIVE )
-      {
-         GameActivate( wnd );
-         SetSleep( FALSE );
-      }
-      else
-      {
-         GameDeactivate( wnd );
-         SetSleep( TRUE );
-      }
-      return S_OK;
+   case WM_SETFOCUS:
+      GameActivate( wnd );
+      SetSleep( FALSE );
+      return 0;
 
-   case WM_COMMAND:
-      GameMenu( wParam );
-      return S_OK;
+   case WM_KILLFOCUS:
+      GameDeactivate( wnd );
+      SetSleep( TRUE );
+      return 0;
 
    case WM_PAINT:
    {
