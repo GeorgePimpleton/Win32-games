@@ -2,8 +2,8 @@
 
 BOOL GameInitialize( HINSTANCE inst )
 {
-   g_game = new GameEngine( inst, L"Slideshow", L"Slideshow d: Drawing Graphical Images",
-                            IDI_ICON, IDI_ICON_SM );
+   g_game = std::make_unique<GameEngine>( inst, L"Slideshow", L"Slideshow d: Drawing Graphical Images",
+                                          IDI_ICON, IDI_ICON_SM );
 
    if ( g_game == NULL )
    {
@@ -19,26 +19,19 @@ BOOL GameInitialize( HINSTANCE inst )
 
 void GameStart( HWND wnd )
 {
-   g_slides[0] = new Bitmap( GetDC( wnd ), 640, 480, RGB( 128, 128, 64 ) );
-   g_slides[1] = new Bitmap( L"Res/Image1.bmp" );
-   g_slides[2] = new Bitmap( L"Res/Image2.bmp" );
-   g_slides[3] = new Bitmap( L"Res/Image3.bmp" );
-   g_slides[4] = new Bitmap( IDB_IMAGE4 );
-   g_slides[5] = new Bitmap( IDB_IMAGE5 );
-   g_slides[6] = new Bitmap( IDB_IMAGE6 );
+   g_slides[0] = std::make_unique<Bitmap>( GetDC( wnd ), 640, 480, RGB( 128, 128, 64 ) );
+   g_slides[1] = std::make_unique<Bitmap>( L"Res/Image1.bmp" );
+   g_slides[2] = std::make_unique<Bitmap>( L"Res/Image2.bmp" );
+   g_slides[3] = std::make_unique<Bitmap>( L"Res/Image3.bmp" );
+   g_slides[4] = std::make_unique<Bitmap>( IDB_IMAGE4 );
+   g_slides[5] = std::make_unique<Bitmap>( IDB_IMAGE5 );
+   g_slides[6] = std::make_unique<Bitmap>( IDB_IMAGE6 );
 
    g_currentSlide = 1;
 }
 
 void GameEnd( )
-{
-   for ( int i = 0; i < g_NUMSLIDES; i++ )
-   {
-      delete g_slides[i];
-   }
-
-   delete g_game;
-}
+{ }
 
 void GameActivate( HWND hWindow )
 { }

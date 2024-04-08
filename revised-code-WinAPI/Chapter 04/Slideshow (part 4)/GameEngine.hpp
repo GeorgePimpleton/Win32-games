@@ -40,16 +40,16 @@ public:
    LRESULT            HandleEvent( HWND, UINT, WPARAM, LPARAM );
    void               ErrorQuit( PCWSTR );
 
-   HINSTANCE GetInstance( )                { return m_inst; };
-   HWND      GetWindow( )                  { return m_wnd; };
+   HINSTANCE GetInstance( ) const          { return m_inst; };
+   HWND      GetWindow( ) const            { return m_wnd; };
    void      SetWindow( HWND wnd )         { m_wnd = wnd; };
-   PCWSTR    GetTitle( )                   { return m_title; };
-   WORD      GetIcon( )                    { return m_icon; };
-   WORD      GetSmallIcon( )               { return m_smallIcon; };
-   int       GetWidth( )                   { return m_width; };
-   int       GetHeight( )                  { return m_height; };
-   int       GetFrameDelay( )              { return m_frameDelay; };
+   PCWSTR    GetTitle( ) const             { return m_title; };
+   WORD      GetIcon( ) const              { return m_icon; };
+   WORD      GetSmallIcon( ) const         { return m_smallIcon; };
+   int       GetWidth( ) const             { return m_width; };
+   int       GetHeight( ) const            { return m_height; };
+   int       GetFrameDelay( ) const        { return m_frameDelay; };
    void      SetFrameRate( int frameRate ) { m_frameDelay = 1000 / frameRate; };
-   BOOL      GetSleep( )                   { return m_asleep; };
+   BOOL      GetSleep( ) const             { return m_asleep; };
    void      SetSleep( BOOL asleep )       { m_asleep = asleep; };
 };
