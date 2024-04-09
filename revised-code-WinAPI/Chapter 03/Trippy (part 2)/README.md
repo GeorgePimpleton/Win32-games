@@ -3,7 +3,7 @@
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 
 ### Trippy Versions
-2. updated with menus/About... dialog, fully modern WinAPI compliance and using smart pointers and using my RTK
+2. updated with menus/About... dialog
 
 ### Notes
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.

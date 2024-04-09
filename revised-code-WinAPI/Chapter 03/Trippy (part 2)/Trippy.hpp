@@ -1,8 +1,9 @@
 #pragma once
 
 #include <windows.h>
+#include <memory>
 #include "resource.h"
 #include "GameEngine.hpp"
 
-GameEngine* g_game;
-RECT        g_rect;
+std::unique_ptr<GameEngine> g_game;
+RECT                        g_rect;

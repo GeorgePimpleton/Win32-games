@@ -2,8 +2,8 @@
 
 BOOL GameInitialize( HINSTANCE inst )
 {
-   g_game = new GameEngine( inst, L"Trippy", L"Trippy b: Learning to Draw Basic Graphics",
-                            IDI_ICON, IDI_ICON_SM );
+   g_game = std::make_unique<GameEngine>( inst, L"Trippy", L"Trippy b: Learning to Draw Basic Graphics",
+                                          IDI_ICON, IDI_ICON_SM );
 
    if ( g_game == NULL )
    {
@@ -26,9 +26,7 @@ void GameStart( HWND wnd )
 }
 
 void GameEnd( )
-{
-   delete g_game;
-}
+{ }
 
 void GameActivate( HWND wnd )
 { }

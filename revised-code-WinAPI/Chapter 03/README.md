@@ -16,7 +16,7 @@ Trippy shows how to do basic drawing using the WinAPI GDI.  From the 2003 CD.  T
    - Crop Circles, available on the 2004 CD.
 2. updated with menus/About... dialog, fully modern WinAPI compliance
 
-I've also included a minimal revision for Crop Circles, available on the 2004 CD.
+I've included a minimal revision for Crop Circles, available on the 2004 CD
 
 ### Notes
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.
