@@ -15,6 +15,7 @@ Trippy shows how to do basic drawing using the WinAPI GDI.  From the 2003 CD.  T
 1. minimum revisions needed to work with modern Windows© compilers.
    - Crop Circles, available on the 2004 CD.
 2. updated with menus/About... dialog, fully modern WinAPI compliance
+3. replaced C/WinAPI random number functions with my C++11 random toolkit
 
 I've included a minimal revision for Crop Circles, available on the 2004 CD
 
