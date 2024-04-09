@@ -18,6 +18,7 @@ Blizzard, creates and uses the Game Engine class.  Used code from the 2004 CD.
 4. Refined the code for Unicode only and modern Windows OSes.
 5. Using smart pointers.
 6. Added a main menu with accelerators.
+7. Replaced C/WinAPI random functions with my custom random toolkit that uses the C++11 random library.
 
 ### Notes
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.
