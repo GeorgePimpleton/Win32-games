@@ -1,0 +1,14 @@
+#include "Resource.h"
+
+IDI_BRAINIAC    ICON   "Res/Brainiac.ico"
+IDI_BRAINIAC_SM ICON   "Res/Brainiac_sm.ico"
+
+IDB_TILEBLANK   BITMAP "Res/TileBlank.bmp"
+IDB_TILE1       BITMAP "Res/Tile1.bmp"
+IDB_TILE2       BITMAP "Res/Tile2.bmp"
+IDB_TILE3       BITMAP "Res/Tile3.bmp"
+IDB_TILE4       BITMAP "Res/Tile4.bmp"
+IDB_TILE5       BITMAP "Res/Tile5.bmp"
+IDB_TILE6       BITMAP "Res/Tile6.bmp"
+IDB_TILE7       BITMAP "Res/Tile7.bmp"
+IDB_TILE8       BITMAP "Res/Tile8.bmp"
