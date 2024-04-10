@@ -17,15 +17,14 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 7. UFO 2: Improving Input with Joysticks
 8. Example Game: Light Cycles
 9. Fore: Making Things Move with Sprites
+10. Fore 2: Managing a World of Sprites
 
 ![under construction](construction.gif)  \*\* ***under construction*** \*\*  ![under construction](construction.gif)
 
-10. Fore 2: Managing a World of Sprites
+11. Example Game: Henway
 
 ![queue](queue.jpg)  \*\* ***in the queue*** \*\*  ![queue](queue.jpg)
 
-10. Fore 2: Managing a World of Sprites
-11. Example Game: Henway
 12. Brainiac 2: Playing Digital Sound Effects/Wave Files
 13. Henway 2: Playing MIDI Music
 14. Example Game: Battle Office
@@ -44,7 +43,7 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 ### Caveat on the original 2003 & 2004 source code
 Since the original source code for the Win Games was written in 2003/2004 the game examples aren't likely to compile with a modern compiler such as Visual Studio 2022. The WinAPI has changed a lot to work for x64 processors as well as other changes for the 21st Century.  The first pass in each chapter will be the bare minimum needed to work now for both x86 (32-bit) and x64, with some minor reformatting and excessive comment cleanup.
 
-There is a difference in the frame layout for the animated sprites between the two books.  I used the 2003 source code for the first animated sprite example, for all the rest of the examples that have versions in both books I use the source from the 2004 book.  The last two examples are only in the 2004 book
+There is a difference in the frame layout for the animated sprites between the two books.  One has the frame arranged horizontally, the other vertically.  I used the 2003 source code for the first animated sprite example (horizontal), for all the rest of the examples that have versions in both books I use the source from the 2004 book.  The last two examples are only in the 2004 book
 
 ----
 ### Notes
