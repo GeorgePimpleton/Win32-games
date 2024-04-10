@@ -1,0 +1,54 @@
+#include "windows.h"
+#include "resource.h"
+
+IDI_ICON      ICON   "Res/Brainiac.ico"
+IDI_ICON_SM   ICON   "Res/Brainiac_sm.ico"
+
+IDB_TILE1     BITMAP "Res/Tile1.bmp"
+IDB_TILE2     BITMAP "Res/Tile2.bmp"
+IDB_TILE3     BITMAP "Res/Tile3.bmp"
+IDB_TILE4     BITMAP "Res/Tile4.bmp"
+IDB_TILE5     BITMAP "Res/Tile5.bmp"
+IDB_TILE6     BITMAP "Res/Tile6.bmp"
+IDB_TILE7     BITMAP "Res/Tile7.bmp"
+IDB_TILE8     BITMAP "Res/Tile8.bmp"
+IDB_TILEBLANK BITMAP "Res/TileBlank.bmp"
+
+IDW_SELECT    WAVE   "Res/Select.wav"
+IDW_MATCH     WAVE   "Res/Match.wav"
+IDW_MISMATCH  WAVE   "Res/Mismatch.wav"
+IDW_WIN       WAVE   "Res/Win.wav"
+
+IDD_ABOUT   DIALOG   32, 32, 180, 102
+CAPTION "About..."
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+{
+   ICON           IDI_ICON, IDC_STATIC, 7, 7, 20, 20, SS_SUNKEN
+   CTEXT          "Brainiac 2 b", IDC_STATIC, 40, 12, 100, 8
+
+   CTEXT          "Playing Wave Sounds", IDC_STATIC, 7, 35, 166, 8
+   CTEXT          "(c) This Year, Your Name", IDC_STATIC, 7, 47, 166, 8
+
+   DEFPUSHBUTTON  "OK", IDOK, 66, 81, 50, 14
+}
+
+IDR_MENU    MENU
+{
+   POPUP "&Game"
+   {
+      MENUITEM "&New\tCTRL + N",   IDM_GAME_NEW GRAYED
+      MENUITEM SEPARATOR
+      MENUITEM "E&xit\tALT + F4",  IDM_GAME_EXIT
+   }
+
+   POPUP "&Help"
+   {
+      MENUITEM "&About...\tF1",  IDM_HELP_ABOUT
+   }
+}
+
+IDR_ACCELERATORS ACCELERATORS
+{
+   "^N",    IDM_GAME_NEW
+   VK_F1,   IDM_HELP_ABOUT,   VIRTKEY
+}
