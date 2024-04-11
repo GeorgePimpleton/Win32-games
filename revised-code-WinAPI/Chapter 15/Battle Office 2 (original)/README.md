@@ -3,7 +3,6 @@
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 
 ### Battle Office 2: Animating the Appearance of Sprites
-
 0. Chapter 17 on 2003 CD, chapter 15 on 2004 CD.
 
 ### Notes
