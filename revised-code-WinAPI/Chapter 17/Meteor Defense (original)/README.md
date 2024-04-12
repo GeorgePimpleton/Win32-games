@@ -1,8 +1,8 @@
 # Win32 Games, Chapter 17
 [![Language](https://img.shields.io/badge/Language%20-C++-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
 [![Platform](https://img.shields.io/badge/Platform%20-Win32-blue.svg)](https://github.com/GeorgePimpleton/Win32-games/)
-### Example Game: Meteor Defense
 
+### Example Game: Meteor Defense
 0. Chapter 19 on 2003 CD, chapter 17 on 2004 CD.
 
 ### Notes
