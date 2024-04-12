@@ -23,14 +23,14 @@ Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 13. Henway 2: Playing MIDI Music
 14. Example Game: Battle Office
 15. Battle Office 2: Animating the Appearance of Sprites
+16. Roids: Creating Backgrounds for Your Sprites
 
 ![under construction](construction.gif)  \*\* ***under construction*** \*\*  ![under construction](construction.gif)
 
-16. Roids: Creating Backgrounds for Your Sprites
+17. Example Game: Meteor Defense
 
 ![queue](queue.jpg)  \*\* ***in the queue*** \*\*  ![queue](queue.jpg)
 
-17. Example Game: Meteor Defense
 18. Roids 2: Teaching Games to Think
 19. Example Game: Space Out
 20. Space Out 2: Adding Pizzazz to Your Game with a Splash Screen
