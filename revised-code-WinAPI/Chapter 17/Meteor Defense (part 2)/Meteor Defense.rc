@@ -1,27 +1,27 @@
 #include <windows.h>
 #include "resource.h"
 
-IDI_ICON              ICON         "Res/MeteorDefense.ico"
-IDI_ICON_SM           ICON         "Res/MeteorDefense_sm.ico"
-IDC_CURSOR            CURSOR       "Res/MeteorDefense.cur"
+IDI_ICON       ICON   "Res/MeteorDefense.ico"
+IDI_ICON_SM    ICON   "Res/MeteorDefense_sm.ico"
+IDC_CURSOR     CURSOR "Res/MeteorDefense.cur"
 
-IDB_GROUND            BITMAP       "Res/Ground.bmp"
-IDB_CITY              BITMAP       "Res/City.bmp"
-IDB_METEOR            BITMAP       "Res/Meteor.bmp"
-IDB_MISSILE           BITMAP       "Res/Missile.bmp"
-IDB_EXPLOSION         BITMAP       "Res/Explosion.bmp"
-IDB_GAMEOVER          BITMAP       "Res/GameOver.bmp"
+IDB_GROUND     BITMAP "Res/Ground.bmp"
+IDB_CITY       BITMAP "Res/City.bmp"
+IDB_METEOR     BITMAP "Res/Meteor.bmp"
+IDB_MISSILE    BITMAP "Res/Missile.bmp"
+IDB_EXPLOSION  BITMAP "Res/Explosion.bmp"
+IDB_GAMEOVER   BITMAP "Res/GameOver.bmp"
 
-IDW_FIRE              WAVE         "Res/Fire.wav"
-IDW_EXPLODE           WAVE         "Res/Explode.wav"
-IDW_BIGEXPLODE        WAVE         "Res/BigExplode.wav"
+IDW_FIRE       WAVE   "Res/Fire.wav"
+IDW_EXPLODE    WAVE   "Res/Explode.wav"
+IDW_BIGEXPLODE WAVE   "Res/BigExplode.wav"
 
 IDD_ABOUT   DIALOG   32, 32, 180, 102
 CAPTION "About..."
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 {
    ICON           IDI_ICON, IDC_STATIC, 7, 7, 20, 20, SS_SUNKEN
-   CTEXT          "Meteor Defense", IDC_STATIC, 40, 12, 100, 8
+   CTEXT          "Meteor Defense b", IDC_STATIC, 40, 12, 100, 8
 
    CTEXT          "Example Game", IDC_STATIC, 7, 35, 166, 8
    CTEXT          "© This Year, Your Name", IDC_STATIC, 7, 47, 166, 8

@@ -1,43 +1,43 @@
 #include "Meteor Defense.hpp"
 
-BOOL GameInitialize(HINSTANCE inst)
+HRESULT GameInitialize( HINSTANCE inst )
 {
-   g_game = std::make_unique<GameEngine>(inst, L"Meteor Defense", L"Example Game: Meteor Defense",
-                                         IDI_ICON, IDI_ICON_SM, 600, 450);
+   g_game = std::make_unique<GameEngine>( inst, L"Meteor Defense", L"Example Game: Meteor Defense b",
+                                          IDI_ICON, IDI_ICON_SM, 600, 450 );
 
    if ( NULL == g_game )
    {
-      return FALSE;
+      return E_FAIL;
    }
 
-   g_game->SetFrameRate(30);
+   g_game->SetFrameRate( 30 );
 
-   return TRUE;
+   return S_OK;
 }
 
-void GameStart(HWND wnd)
+void GameStart( HWND wnd )
 {
    rtk::srand( );
 
-   SetClassLongPtrW(wnd, GCLP_HCURSOR,
-                    (LONG64) LoadImageW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDC_CURSOR),
-                                        IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR));
+   SetClassLongPtrW( wnd, GCLP_HCURSOR,
+                     ( LONG64 ) LoadImageW( g_game->GetInstance( ), MAKEINTRESOURCEW( IDC_CURSOR ),
+                     IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR ) );
 
-   g_offscreenDC     = CreateCompatibleDC(GetDC(wnd));
-   g_offscreenBitmap = CreateCompatibleBitmap(GetDC(wnd), g_game->GetWidth( ), g_game->GetHeight( ));
+   g_offscreenDC     = CreateCompatibleDC( GetDC( wnd ) );
+   g_offscreenBitmap = CreateCompatibleBitmap( GetDC( wnd ), g_game->GetWidth( ), g_game->GetHeight( ) );
 
-   SelectObject(g_offscreenDC, g_offscreenBitmap);
+   SelectObject( g_offscreenDC, g_offscreenBitmap );
 
-   g_groundBitmap    = std::make_unique<Bitmap>(IDB_GROUND);
-   g_cityBitmap      = std::make_unique<Bitmap>(IDB_CITY);
-   g_meteorBitmap    = std::make_unique<Bitmap>(IDB_METEOR);
-   g_missileBitmap   = std::make_unique<Bitmap>(IDB_MISSILE);
-   g_explosionBitmap = std::make_unique<Bitmap>(IDB_EXPLOSION);
-   g_gameOverBitmap  = std::make_unique<Bitmap>(IDB_GAMEOVER);
+   g_groundBitmap    = std::make_unique<Bitmap>( IDB_GROUND );
+   g_cityBitmap      = std::make_unique<Bitmap>( IDB_CITY );
+   g_meteorBitmap    = std::make_unique<Bitmap>( IDB_METEOR );
+   g_missileBitmap   = std::make_unique<Bitmap>( IDB_MISSILE );
+   g_explosionBitmap = std::make_unique<Bitmap>( IDB_EXPLOSION );
+   g_gameOverBitmap  = std::make_unique<Bitmap>( IDB_GAMEOVER );
 
-   g_background = std::make_unique<StarryBackground>(600, 450);
+   g_background = std::make_unique<StarryBackground>( 600, 450 );
 
-   g_game->PlayMIDISong(L"Music.mid");
+   g_game->PlayMIDISong( L"Music.mid" );
 
    GameNew( );
 }
@@ -48,29 +48,28 @@ void GameNew( )
 
    RECT bounds = { 0, 0, 600, 450 };
 
-   // Create the city sprites
-   Sprite* sprite = new Sprite(g_cityBitmap.get( ), bounds);
-   sprite->SetPosition(2, 370);
-   g_game->AddSprite(sprite);
+   Sprite* sprite = new Sprite( g_cityBitmap.get( ), bounds );
+   sprite->SetPosition( 2, 370 );
+   g_game->AddSprite( sprite );
 
-   sprite = new Sprite(g_cityBitmap.get( ), bounds);
-   sprite->SetPosition(186, 370);
-   g_game->AddSprite(sprite);
+   sprite = new Sprite( g_cityBitmap.get( ), bounds );
+   sprite->SetPosition( 186, 370 );
+   g_game->AddSprite( sprite );
 
-   sprite = new Sprite(g_cityBitmap.get( ), bounds);
-   sprite->SetPosition(302, 370);
-   g_game->AddSprite(sprite);
+   sprite = new Sprite( g_cityBitmap.get( ), bounds );
+   sprite->SetPosition( 302, 370 );
+   g_game->AddSprite( sprite );
 
-   sprite = new Sprite(g_cityBitmap.get( ), bounds);
-   sprite->SetPosition(490, 370);
-   g_game->AddSprite(sprite);
+   sprite = new Sprite( g_cityBitmap.get( ), bounds );
+   sprite->SetPosition( 490, 370 );
+   g_game->AddSprite( sprite );
 
    g_score      = 0;
    g_numCities  = 4;
    g_difficulty = 50;
    g_gameOver   = FALSE;
 
-   EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_GRAYED);
+   EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
 
    g_game->PlayMIDISong( );
 }
@@ -79,43 +78,41 @@ void GameEnd( )
 {
    g_game->CloseMIDIPlayer( );
 
-   DeleteObject(g_offscreenBitmap);
-   DeleteDC(g_offscreenDC);
-
-   g_game->CleanupSprites( );
+   DeleteObject( g_offscreenBitmap );
+   DeleteDC( g_offscreenDC );
 }
 
-void GameActivate(HWND)
+void GameActivate( HWND )
 {
-   g_game->PlayMIDISong(L"", FALSE);
+   g_game->PlayMIDISong( L"", FALSE );
 }
 
-void GameDeactivate(HWND)
+void GameDeactivate( HWND )
 {
    g_game->PauseMIDISong( );
 }
 
-void GamePaint(HDC dc)
+void GamePaint( HDC dc )
 {
-   g_background->Draw(dc);
+   g_background->Draw( dc );
 
-   g_groundBitmap->Draw(dc, 0, 398, TRUE);
+   g_groundBitmap->Draw( dc, 0, 398, TRUE );
 
-   g_game->DrawSprites(dc);
+   g_game->DrawSprites( dc );
 
-   WCHAR text[ 64 ];
+   WCHAR text[64];
    RECT  rect = { 275, 0, 325, 50 };
 
-   wsprintfW(text, L"%d", g_score);
+   wsprintfW( text, L"%d", g_score );
 
-   SetBkMode(dc, TRANSPARENT);
-   SetTextColor(dc, RGB(255, 255, 255));
+   SetBkMode( dc, TRANSPARENT );
+   SetTextColor( dc, RGB( 255, 255, 255 ) );
 
-   DrawTextW(dc, text, -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+   DrawTextW( dc, text, -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER );
 
    if ( g_gameOver )
    {
-      g_gameOverBitmap->Draw(dc, 170, 150, TRUE);
+      g_gameOverBitmap->Draw( dc, 170, 150, TRUE );
    }
 }
 
@@ -123,7 +120,7 @@ void GameCycle( )
 {
    if ( !g_gameOver )
    {
-      if ( 0 == (rtk::rand(0,  g_difficulty)) )
+      if ( 0 == ( rtk::rand( 0, g_difficulty ) ) )
       {
          AddMeteor( );
       }
@@ -133,20 +130,20 @@ void GameCycle( )
       g_game->UpdateSprites( );
 
       HWND wnd = g_game->GetWindow( );
-      HDC  dc  = GetDC(wnd);
+      HDC  dc  = GetDC( wnd );
 
-      GamePaint(g_offscreenDC);
+      GamePaint( g_offscreenDC );
 
-      BitBlt(dc, 0, 0, g_game->GetWidth( ), g_game->GetHeight( ),
-             g_offscreenDC, 0, 0, SRCCOPY);
+      BitBlt( dc, 0, 0, g_game->GetWidth( ), g_game->GetHeight( ),
+              g_offscreenDC, 0, 0, SRCCOPY );
 
-      ReleaseDC(wnd, dc);
+      ReleaseDC( wnd, dc );
    }
 }
 
-void GameMenu(WPARAM wParam)
+void GameMenu( WPARAM wParam )
 {
-   switch ( LOWORD(wParam) )
+   switch ( LOWORD( wParam ) )
    {
    case IDM_GAME_NEW:
       if ( g_gameOver )
@@ -156,13 +153,12 @@ void GameMenu(WPARAM wParam)
       return;
 
    case IDM_GAME_EXIT:
-      GameEnd( );
-      PostQuitMessage(0);
+      DestroyWindow( g_game->GetWindow( ) );
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxParamW(g_game->GetInstance( ), MAKEINTRESOURCEW(IDD_ABOUT),
-                      g_game->GetWindow( ), (DLGPROC) DlgProc, 0L);
+      DialogBoxParamW( g_game->GetInstance( ), MAKEINTRESOURCEW( IDD_ABOUT ),
+                       g_game->GetWindow( ), ( DLGPROC ) DlgProc, 0L );
       return;
    }
 }
@@ -170,35 +166,30 @@ void GameMenu(WPARAM wParam)
 void HandleKeys( )
 { }
 
-void MouseButtonDown(int x, int y, BOOL bLeft)
+void MouseButtonDown( int x, int y, BOOL bLeft )
 {
    if ( !g_gameOver && bLeft )
    {
-      // create a new missile sprite and set its position
       RECT bounds = { 0, 0, 600, 450 };
-      int  xPos    = (x < 300) ? 144 : 449;
+      int  xPos   = ( x < 300 ) ? 144 : 449;
 
-      Sprite* sprite = new Sprite(g_missileBitmap.get( ), bounds, BA_DIE);
+      Sprite* sprite = new Sprite( g_missileBitmap.get( ), bounds, BA_DIE );
 
-      sprite->SetPosition(xPos, 365);
+      sprite->SetPosition( xPos, 365 );
 
-      // calculate the velocity so that it is aimed at the target
       int xVel = 0;
       int yVel = -6;
 
-      y    = min(y, 300);
-      xVel = (yVel * ((xPos + 8) - x)) / (365 - y);
+      y    = min( y, 300 );
+      xVel = ( yVel * ( ( xPos + 8 ) - x ) ) / ( 365 - y );
 
-      sprite->SetVelocity(xVel, yVel);
+      sprite->SetVelocity( xVel, yVel );
 
-      // add the missile sprite
-      g_game->AddSprite(sprite);
+      g_game->AddSprite( sprite );
 
-      // play the fire sound
-      PlaySoundW((PCWSTR) IDW_FIRE, g_game->GetInstance( ), SND_ASYNC | SND_RESOURCE | SND_NOSTOP);
+      PlaySoundW( ( PCWSTR ) IDW_FIRE, g_game->GetInstance( ), SND_ASYNC | SND_RESOURCE | SND_NOSTOP );
 
-      // update the score
-      g_score = max(--g_score, 0);
+      g_score = max( --g_score, 0 );
    }
    else if ( g_gameOver && !bLeft )
    {
@@ -206,46 +197,37 @@ void MouseButtonDown(int x, int y, BOOL bLeft)
    }
 }
 
-void MouseButtonUp(int, int, BOOL)
+void MouseButtonUp( int, int, BOOL )
 { }
 
-void MouseMove(int, int)
+void MouseMove( int, int )
 { }
 
-void HandleJoystick(JOYSTATE)
+void HandleJoystick( JOYSTATE )
 { }
 
-BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
+BOOL SpriteCollision( Sprite* spriteHitter, Sprite* spriteHittee )
 {
-   if ( (spriteHitter->GetBitmap( ) == g_missileBitmap.get( ) &&
-         spriteHittee->GetBitmap( ) == g_meteorBitmap.get( )) ||
-        (spriteHitter->GetBitmap( ) == g_meteorBitmap.get( ) &&
-         spriteHittee->GetBitmap( ) == g_missileBitmap.get( )) )
+   if ( ( spriteHitter->GetBitmap( ) == g_missileBitmap.get( ) && spriteHittee->GetBitmap( ) == g_meteorBitmap.get( ) ) ||
+        ( spriteHitter->GetBitmap( ) == g_meteorBitmap.get( )  && spriteHittee->GetBitmap( ) == g_missileBitmap.get( ) ) )
    {
-      // kill both sprites
       spriteHitter->Kill( );
       spriteHittee->Kill( );
 
-      // update the score
       g_score      += 6;
-      g_difficulty  = max(50 - (g_score / 10), 5);
+      g_difficulty  = max( 50 - ( g_score / 10 ), 5 );
    }
 
-   // see if a meteor has collided with a city
-   if ( spriteHitter->GetBitmap( ) == g_meteorBitmap.get( ) &&
-        spriteHittee->GetBitmap( ) == g_cityBitmap.get( ) )
+   if ( spriteHitter->GetBitmap( ) == g_meteorBitmap.get( ) && spriteHittee->GetBitmap( ) == g_cityBitmap.get( ) )
    {
-      // play the big explosion sound
-      PlaySoundW((PCWSTR) IDW_BIGEXPLODE, g_game->GetInstance( ), SND_ASYNC | SND_RESOURCE);
+      PlaySoundW( ( PCWSTR ) IDW_BIGEXPLODE, g_game->GetInstance( ), SND_ASYNC | SND_RESOURCE );
 
-      // kill both sprites
       spriteHitter->Kill( );
       spriteHittee->Kill( );
 
-      // see if the game is over
-      if ( 0 == (--g_numCities) )
+      if ( 0 == ( --g_numCities ) )
       {
-         EnableMenuItem(GetMenu(g_game->GetWindow( )), (UINT) MAKEINTRESOURCEW(IDM_GAME_NEW), MF_ENABLED);
+         EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
 
          g_gameOver = TRUE;
       }
@@ -254,61 +236,55 @@ BOOL SpriteCollision(Sprite* spriteHitter, Sprite* spriteHittee)
    return FALSE;
 }
 
-void SpriteDying(Sprite* spriteDying)
+void SpriteDying( Sprite* spriteDying )
 {
-   // see if a meteor sprite is dying
    if ( spriteDying->GetBitmap( ) == g_meteorBitmap.get( ) )
    {
-      // play the explosion sound
-      PlaySoundW((PCWSTR) IDW_EXPLODE, g_game->GetInstance( ), SND_ASYNC | SND_RESOURCE | SND_NOSTOP);
+      PlaySoundW( ( PCWSTR ) IDW_EXPLODE, g_game->GetInstance( ), SND_ASYNC | SND_RESOURCE | SND_NOSTOP );
 
-      // create an explosion sprite at the meteor's position
       RECT bounds = { 0, 0, 600, 450 };
       RECT pos    = spriteDying->GetPosition( );
 
-      Sprite* sprite = new Sprite(g_explosionBitmap.get( ), bounds);
+      Sprite* sprite = new Sprite( g_explosionBitmap.get( ), bounds );
 
-      sprite->SetNumFrames(12, TRUE);
-      sprite->SetPosition(pos.left, pos.top);
-      g_game->AddSprite(sprite);
+      sprite->SetNumFrames( 12, TRUE );
+      sprite->SetPosition( pos.left, pos.top );
+      g_game->AddSprite( sprite );
    }
 }
 
 void AddMeteor( )
 {
-   // create a new meteor sprite and set its position
    RECT    bounds = { 0, 0, 600, 390 };
-   int     xPos   = rtk::rand(0, 600);
-   Sprite* sprite = new Sprite(g_meteorBitmap.get( ), bounds, BA_DIE);
+   int     xPos   = rtk::rand( 0, 600 );
+   Sprite* sprite = new Sprite( g_meteorBitmap.get( ), bounds, BA_DIE );
 
-   sprite->SetNumFrames(14);
-   sprite->SetPosition(xPos, 0);
+   sprite->SetNumFrames( 14 );
+   sprite->SetPosition( xPos, 0 );
 
-   // calculate the velocity so that it is aimed at one of the cities
    int xVel = 0;
-   int yVel = rtk::rand(3, 4 );
+   int yVel = rtk::rand( 3, 4 );
 
-   switch ( rtk::rand(0, 4) )
+   switch ( rtk::rand( 0, 4 ) )
    {
    case 0:
-      xVel = (yVel * (56 - (xPos + 50))) / 400;
+      xVel = ( yVel * ( 56 - ( xPos + 50 ) ) ) / 400;
       break;
 
    case 1:
-      xVel = (yVel * (240 - (xPos + 50))) / 400;
+      xVel = ( yVel * ( 240 - ( xPos + 50 ) ) ) / 400;
       break;
 
    case 2:
-      xVel = (yVel * (360 - (xPos + 50))) / 400;
+      xVel = ( yVel * ( 360 - ( xPos + 50 ) ) ) / 400;
       break;
 
    case 3:
-      xVel = (yVel * (546 - (xPos + 50))) / 400;
+      xVel = ( yVel * ( 546 - ( xPos + 50 ) ) ) / 400;
       break;
    }
 
-   sprite->SetVelocity(xVel, yVel);
+   sprite->SetVelocity( xVel, yVel );
 
-   // add the meteor sprite
-   g_game->AddSprite(sprite);
+   g_game->AddSprite( sprite );
 }
