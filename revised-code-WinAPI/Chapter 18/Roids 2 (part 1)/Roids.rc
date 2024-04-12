@@ -1,0 +1,7 @@
+#include "resource.h"
+
+IDI_ROIDS           ICON         "Res/Roids.ico"
+IDI_ROIDS_SM        ICON         "Res/Roids_sm.ico"
+
+IDB_ASTEROID        BITMAP       "Res/Asteroid.bmp"
+IDB_SAUCER          BITMAP       "Res/Saucer.bmp"
