@@ -1,58 +1,58 @@
 #include "Sprite.hpp"
 
-Sprite::Sprite(Bitmap* bitmap)
+Sprite::Sprite( Bitmap* bitmap )
 {
    m_bitmap    = bitmap;
    m_numFrames = 1;
    m_curFrame  = m_frameDelay = m_frameTrigger = 0;
 
-   SetRect(&m_position, 0, 0, bitmap->GetWidth( ), bitmap->GetHeight( ));
+   SetRect( &m_position, 0, 0, bitmap->GetWidth( ), bitmap->GetHeight( ) );
    CalcCollisionRect( );
 
    m_velocity.x = m_velocity.y = 0;
    m_zOrder     = 0;
 
-   SetRect(&m_bounds, 0, 0, 640, 480);
+   SetRect( &m_bounds, 0, 0, 640, 480 );
 
    m_boundsAction = BA_STOP;
    m_hidden = FALSE;
 }
 
-Sprite::Sprite(Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction)
+Sprite::Sprite( Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction )
 {
-   int xPos = rtk::rand(0, (bounds.right - bounds.left));
-   int yPos = rtk::rand(0, (bounds.bottom - bounds.top));
+   int xPos = rtk::rand( 0, ( bounds.right - bounds.left ) );
+   int yPos = rtk::rand( 0, ( bounds.bottom - bounds.top ) );
 
    m_bitmap    = bitmap;
    m_numFrames = 1;
    m_curFrame  = m_frameDelay = m_frameTrigger = 0;
 
-   SetRect(&m_position, xPos, yPos, xPos + bitmap->GetWidth( ), yPos + bitmap->GetHeight( ));
+   SetRect( &m_position, xPos, yPos, xPos + bitmap->GetWidth( ), yPos + bitmap->GetHeight( ) );
    CalcCollisionRect( );
 
    m_velocity.x = m_velocity.y = 0;
    m_zOrder     = 0;
 
-   CopyRect(&m_bounds, &bounds);
+   CopyRect( &m_bounds, &bounds );
 
    m_boundsAction = boundsAction;
    m_hidden       = FALSE;
 }
 
-Sprite::Sprite(Bitmap* bitmap, POINT position, POINT velocity, LONG zOrder,
-               RECT& bounds, BOUNDSACTION boundsAction)
+Sprite::Sprite( Bitmap* bitmap, POINT position, POINT velocity, LONG zOrder,
+                RECT& bounds, BOUNDSACTION boundsAction )
 {
    m_bitmap    = bitmap;
    m_numFrames = 1;
    m_curFrame  = m_frameDelay = m_frameTrigger = 0;
 
-   SetRect(&m_position, position.x, position.y, position.x + bitmap->GetWidth( ), position.y + bitmap->GetHeight( ));
+   SetRect( &m_position, position.x, position.y, position.x + bitmap->GetWidth( ), position.y + bitmap->GetHeight( ) );
    CalcCollisionRect( );
 
    m_velocity = velocity;
    m_zOrder   = zOrder;
 
-   CopyRect(&m_bounds, &bounds);
+   CopyRect( &m_bounds, &bounds );
 
    m_boundsAction = boundsAction;
    m_hidden       = FALSE;
@@ -81,7 +81,7 @@ SPRITEACTION Sprite::Update( )
    // wrap?
    if ( BA_WRAP == m_boundsAction )
    {
-      if ( (newPosition.x + spriteSize.x) < m_bounds.left )
+      if ( ( newPosition.x + spriteSize.x ) < m_bounds.left )
       {
          newPosition.x = m_bounds.right;
       }
@@ -90,7 +90,7 @@ SPRITEACTION Sprite::Update( )
          newPosition.x = m_bounds.left - spriteSize.x;
       }
 
-      if ( (newPosition.y + spriteSize.y) < m_bounds.top )
+      if ( ( newPosition.y + spriteSize.y ) < m_bounds.top )
       {
          newPosition.y = m_bounds.bottom;
       }
@@ -111,7 +111,7 @@ SPRITEACTION Sprite::Update( )
          newPosition.x = m_bounds.left;
          newVelocity.x = -newVelocity.x;
       }
-      else if ( (newPosition.x + spriteSize.x) > m_bounds.right )
+      else if ( ( newPosition.x + spriteSize.x ) > m_bounds.right )
       {
          bounce        = TRUE;
          newPosition.x = m_bounds.right - spriteSize.x;
@@ -124,7 +124,7 @@ SPRITEACTION Sprite::Update( )
          newPosition.y = m_bounds.top;
          newVelocity.y = -newVelocity.y;
       }
-      else if ( (newPosition.y + spriteSize.y) > m_bounds.bottom )
+      else if ( ( newPosition.y + spriteSize.y ) > m_bounds.bottom )
       {
          bounce        = TRUE;
          newPosition.y = m_bounds.bottom - spriteSize.y;
@@ -133,14 +133,14 @@ SPRITEACTION Sprite::Update( )
 
       if ( bounce )
       {
-         SetVelocity(newVelocity);
+         SetVelocity( newVelocity );
       }
    }
    // die?
    else if ( m_boundsAction == BA_DIE )
    {
-      if ( (newPosition.x + spriteSize.x) < m_bounds.left || newPosition.x > m_bounds.right ||
-           (newPosition.y + spriteSize.y) < m_bounds.top || newPosition.y > m_bounds.bottom )
+      if ( ( newPosition.x + spriteSize.x ) < m_bounds.left || newPosition.x > m_bounds.right ||
+           ( newPosition.y + spriteSize.y ) < m_bounds.top || newPosition.y > m_bounds.bottom )
       {
          return SA_KILL;
       }
@@ -148,37 +148,37 @@ SPRITEACTION Sprite::Update( )
    // stop (default)
    else
    {
-      if ( newPosition.x  < m_bounds.left || newPosition.x >(m_bounds.right - spriteSize.x) )
+      if ( newPosition.x  < m_bounds.left || newPosition.x >( m_bounds.right - spriteSize.x ) )
       {
-         newPosition.x = max(m_bounds.left, min(newPosition.x, m_bounds.right - spriteSize.x));
+         newPosition.x = max( m_bounds.left, min( newPosition.x, m_bounds.right - spriteSize.x ) );
 
-         SetVelocity(0, 0);
+         SetVelocity( 0, 0 );
       }
 
-      if ( newPosition.y  < m_bounds.top || newPosition.y >(m_bounds.bottom - spriteSize.y) )
+      if ( newPosition.y  < m_bounds.top || newPosition.y >( m_bounds.bottom - spriteSize.y ) )
       {
-         newPosition.y = max(m_bounds.top, min(newPosition.y, m_bounds.bottom - spriteSize.y));
+         newPosition.y = max( m_bounds.top, min( newPosition.y, m_bounds.bottom - spriteSize.y ) );
 
-         SetVelocity(0, 0);
+         SetVelocity( 0, 0 );
       }
    }
 
-   SetPosition(newPosition);
+   SetPosition( newPosition );
 
    return SA_NONE;
 }
 
-void Sprite::Draw(HDC dc)
+void Sprite::Draw( HDC dc )
 {
    if ( m_bitmap != NULL && !m_hidden )
    {
       if ( m_numFrames == 1 )
       {
-         m_bitmap->Draw(dc, m_position.left, m_position.top, TRUE);
+         m_bitmap->Draw( dc, m_position.left, m_position.top, TRUE );
       }
       else
       {
-         m_bitmap->DrawPart(dc, m_position.left, m_position.top, 0, m_curFrame * GetHeight( ), GetWidth( ), GetHeight( ), TRUE);
+         m_bitmap->DrawPart( dc, m_position.left, m_position.top, 0, m_curFrame * GetHeight( ), GetWidth( ), GetHeight( ), TRUE );
       }
    }
 }
