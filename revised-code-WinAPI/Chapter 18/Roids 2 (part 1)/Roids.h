@@ -14,7 +14,7 @@ HBITMAP           g_hOffscreenBitmap;
 Bitmap*           g_pAsteroidBitmap;
 Bitmap*           g_pSaucerBitmap;
 StarryBackground* g_pBackground;
-Sprite*           g_pAsteroids[ 3 ];
+Sprite*           g_pAsteroids[3];
 Sprite*           g_pSaucer;
 
 void UpdateSaucer( );
