@@ -396,7 +396,14 @@ void GameEngine::UpdateSprites( )
 }
 
 void GameEngine::CleanupSprites( )
-{ }
+{
+   for ( auto iterSprite = m_sprites.begin( ); iterSprite != m_sprites.end( ); iterSprite++ )
+   {
+      delete ( *iterSprite );
+      m_sprites.erase( iterSprite );
+      iterSprite--;
+   }
+}
 
 Sprite* GameEngine::IsPointInSprite( int x, int y )
 {
