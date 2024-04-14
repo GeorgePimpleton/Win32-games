@@ -6,9 +6,9 @@ GameEngine* GameEngine::m_gameEngine = NULL;
 
 int WINAPI wWinMain( _In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int cmdShow )
 {
-   if ( S_OK == GameInitialize( inst ) )
+   if ( SUCCEEDED( GameInitialize( inst ) ) )
    {
-      if ( S_OK != GameEngine::GetEngine( )->Initialize( cmdShow ) )
+      if ( FAILED( GameEngine::GetEngine( )->Initialize( cmdShow ) ) )
       {
          return E_FAIL;
       }
@@ -376,7 +376,14 @@ void GameEngine::UpdateSprites( )
 }
 
 void GameEngine::CleanupSprites( )
-{ }
+{
+   for ( auto iterSprite = m_sprites.begin( ); iterSprite != m_sprites.end( ); iterSprite++ )
+   {
+      delete ( *iterSprite );
+      m_sprites.erase( iterSprite );
+      iterSprite--;
+   }
+}
 
 Sprite* GameEngine::IsPointInSprite( int x, int y )
 {

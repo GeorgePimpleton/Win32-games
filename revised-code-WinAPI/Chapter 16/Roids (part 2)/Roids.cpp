@@ -26,10 +26,8 @@ void GameStart( HWND wnd )
 
    g_asteroidBitmap = std::make_unique<Bitmap>( IDB_ASTEROID );
 
-   // create the starry background
    g_background = std::make_unique<StarryBackground>( 500, 400 );
 
-   // create the asteroid sprites
    RECT    bounds = { 0, 0, 500, 400 };
    Sprite* sprite;
 
@@ -69,8 +67,6 @@ void GameEnd( )
 {
    DeleteObject( g_offscreenBitmap );
    DeleteDC( g_offscreenDC );
-
-   // g_game->CleanupSprites( );
 }
 
 void GameActivate( HWND )
