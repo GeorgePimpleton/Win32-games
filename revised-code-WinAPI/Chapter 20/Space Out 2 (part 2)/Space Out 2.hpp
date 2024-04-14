@@ -3,17 +3,18 @@
 #include <windows.h>
 #include "resource.h"
 #include <memory>
-#include "random_toolkit.hpp"
+#include "random_toolkit_v131.hpp"
 #include "GameEngine.hpp"
 #include "Bitmap.hpp"
 #include "Sprite.hpp"
 #include "Background.hpp"
 #include "AlienSprite.hpp"
 
-HINSTANCE                         g_inst;
-std::unique_ptr<GameEngine>       g_game;
-HDC                               g_hOffscreenDC;
-HBITMAP                           g_hOffscreenBitmap;
+HINSTANCE                   g_inst;
+std::unique_ptr<GameEngine> g_game;
+HDC                         g_hOffscreenDC;
+HBITMAP                     g_hOffscreenBitmap;
+
 std::unique_ptr<Bitmap>           g_splashBitmap;
 std::unique_ptr<Bitmap>           g_desertBitmap;
 std::unique_ptr<Bitmap>           g_carBitmap;
@@ -30,11 +31,12 @@ std::unique_ptr<Bitmap>           g_largeExplosionBitmap;
 std::unique_ptr<Bitmap>           g_gameOverBitmap;
 std::unique_ptr<StarryBackground> g_background;
 std::unique_ptr<Sprite>           g_carSprite;
-UINT                              g_fireInputDelay;
-UINT                              g_numLives;
-UINT                              g_score;
-UINT                              g_difficulty;
-BOOL                              g_gameOver;
-BOOL                              g_splash;
+
+UINT g_fireInputDelay;
+UINT g_numLives;
+UINT g_score;
+UINT g_difficulty;
+BOOL g_gameOver;
+BOOL g_splash;
 
 void AddAlien( );
