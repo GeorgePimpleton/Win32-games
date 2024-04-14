@@ -2,7 +2,7 @@
 
 HRESULT GameInitialize( HINSTANCE inst )
 {
-   g_game = std::make_unique<GameEngine>( inst, L"Space Out", L"Example Game: Space Out B",
+   g_game = std::make_unique<GameEngine>( inst, L"Space Out", L"Example Game: Space Out b",
                                           IDI_ICON, IDI_ICON_SM, 600, 450 );
 
    if ( g_game == NULL )
