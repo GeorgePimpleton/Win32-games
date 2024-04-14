@@ -21,6 +21,10 @@ void GameStart( HWND wnd )
 {
    rtk::srand( );
 
+   SetClassLongPtrW( wnd, GCLP_HCURSOR,
+                     ( LONG64 ) LoadImageW( g_game->GetInstance( ),
+                     MAKEINTRESOURCEW( IDC_CURSOR ), IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR ) );
+
    g_offscreenDC     = CreateCompatibleDC( GetDC( wnd ) );
    g_offscreenBitmap = CreateCompatibleBitmap( GetDC( wnd ), g_game->GetWidth( ), g_game->GetHeight( ) );
 
