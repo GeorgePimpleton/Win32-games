@@ -13,20 +13,20 @@ protected:
 
 public:
             Bitmap( );
-            Bitmap(PCWSTR);
-            Bitmap(UINT);
-            Bitmap(HDC, int, int, COLORREF = RGB(0, 0, 0));
+            Bitmap( PCWSTR );
+            Bitmap( UINT );
+            Bitmap( HDC, int, int, COLORREF = RGB( 0, 0, 0 ) );
    virtual ~Bitmap( );
 
-   BOOL Create(PCWSTR);
-   BOOL Create(UINT);
-   BOOL Create(HDC, int, int, COLORREF);
+   BOOL Create( PCWSTR );
+   BOOL Create( UINT );
+   BOOL Create( HDC, int, int, COLORREF );
 
-   void Draw(HDC, int, int, BOOL = FALSE,
-             COLORREF = RGB(255, 0, 255));
-   void DrawPart(HDC, int, int, int, int,
-                 int, int, BOOL = FALSE,
-                 COLORREF = RGB(255, 0, 255));
+   void Draw( HDC, int, int, BOOL = FALSE,
+              COLORREF = RGB( 255, 0, 255 ) );
+   void DrawPart( HDC, int, int, int, int,
+                  int, int, BOOL = FALSE,
+                  COLORREF = RGB( 255, 0, 255 ) );
 
    int GetWidth( ) const  { return m_width; };
    int GetHeight( ) const { return m_height; };

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <windows.h>
-#include "random_toolkit.hpp"
+#include "random_toolkit_v131.hpp"
 #include "Bitmap.hpp"
 #include <array>
 
@@ -20,12 +20,12 @@ protected:
    int      m_height;
 
 public:
-            Background(int, int, COLORREF);
-            Background(Bitmap*);
+            Background( int, int, COLORREF );
+            Background( Bitmap* );
    virtual ~Background( );
 
    virtual void Update( );
-   virtual void Draw(HDC);
+   virtual void Draw( HDC );
 
    int GetWidth( ) const  { return m_width; };
    int GetHeight( ) const { return m_height; };
@@ -41,10 +41,10 @@ protected:
    std::array<STARSIZE, 100> m_sizeStars;
 
 public:
-            StarryBackground(int, int,
-                             int = 100, int = 50);
+            StarryBackground( int, int,
+                              int = 100, int = 50 );
    virtual ~StarryBackground( );
 
    virtual void Update( );
-   virtual void Draw(HDC);
+   virtual void Draw( HDC );
 };
