@@ -1,53 +1,52 @@
 #include "SpaceOut.h"
 
-BOOL GameInitialize(HINSTANCE hInstance)
+BOOL GameInitialize( HINSTANCE hInstance )
 {
-   g_pGame = new GameEngine(hInstance, TEXT("Space Out 4"), TEXT("Space Out 4: Keeping Track of High Scores"),
-                            IDI_SPACEOUT, IDI_SPACEOUT_SM, 600, 450);
+   g_pGame = new GameEngine( hInstance, TEXT( "Space Out 4" ), TEXT( "Space Out 4 a: Keeping Track of High Scores" ),
+                             IDI_SPACEOUT, IDI_SPACEOUT_SM, 600, 450 );
 
    if ( g_pGame == NULL )
    {
       return FALSE;
    }
 
-   g_pGame->SetFrameRate(30);
+   g_pGame->SetFrameRate( 30 );
 
    g_hInstance = hInstance;
 
    return TRUE;
 }
 
-void GameStart(HWND hWindow)
+void GameStart( HWND hWindow )
 {
-   // read the hi scores
    ReadHiScores( );
 
-   srand(GetTickCount( ));
+   srand( GetTickCount( ) );
 
-   g_hOffscreenDC     = CreateCompatibleDC(GetDC(hWindow));
-   g_hOffscreenBitmap = CreateCompatibleBitmap(GetDC(hWindow),
-                                               g_pGame->GetWidth( ), g_pGame->GetHeight( ));
+   g_hOffscreenDC     = CreateCompatibleDC( GetDC( hWindow ) );
+   g_hOffscreenBitmap = CreateCompatibleBitmap( GetDC( hWindow ),
+                                                g_pGame->GetWidth( ), g_pGame->GetHeight( ) );
 
-   SelectObject(g_hOffscreenDC, g_hOffscreenBitmap);
+   SelectObject( g_hOffscreenDC, g_hOffscreenBitmap );
 
-   HDC hDC = GetDC(hWindow);
+   HDC hDC = GetDC( hWindow );
 
-   g_pSplashBitmap = new Bitmap(hDC, IDB_SPLASH, g_hInstance);
-   g_pDesertBitmap = new Bitmap(hDC, IDB_DESERT, g_hInstance);
-   g_pCarBitmap = new Bitmap(hDC, IDB_CAR, g_hInstance);
-   g_pSmCarBitmap = new Bitmap(hDC, IDB_SMCAR, g_hInstance);
-   g_pMissileBitmap = new Bitmap(hDC, IDB_MISSILE, g_hInstance);
-   g_pBlobboBitmap = new Bitmap(hDC, IDB_BLOBBO, g_hInstance);
-   g_pBMissileBitmap = new Bitmap(hDC, IDB_BMISSILE, g_hInstance);
-   g_pJellyBitmap = new Bitmap(hDC, IDB_JELLY, g_hInstance);
-   g_pJMissileBitmap = new Bitmap(hDC, IDB_JMISSILE, g_hInstance);
-   g_pTimmyBitmap = new Bitmap(hDC, IDB_TIMMY, g_hInstance);
-   g_pTMissileBitmap = new Bitmap(hDC, IDB_TMISSILE, g_hInstance);
-   g_pSmExplosionBitmap = new Bitmap(hDC, IDB_SMEXPLOSION, g_hInstance);
-   g_pLgExplosionBitmap = new Bitmap(hDC, IDB_LGEXPLOSION, g_hInstance);
-   g_pGameOverBitmap = new Bitmap(hDC, IDB_GAMEOVER, g_hInstance);
+   g_pSplashBitmap      = new Bitmap( hDC, IDB_SPLASH, g_hInstance );
+   g_pDesertBitmap      = new Bitmap( hDC, IDB_DESERT, g_hInstance );
+   g_pCarBitmap         = new Bitmap( hDC, IDB_CAR, g_hInstance );
+   g_pSmCarBitmap       = new Bitmap( hDC, IDB_SMCAR, g_hInstance );
+   g_pMissileBitmap     = new Bitmap( hDC, IDB_MISSILE, g_hInstance );
+   g_pBlobboBitmap      = new Bitmap( hDC, IDB_BLOBBO, g_hInstance );
+   g_pBMissileBitmap    = new Bitmap( hDC, IDB_BMISSILE, g_hInstance );
+   g_pJellyBitmap       = new Bitmap( hDC, IDB_JELLY, g_hInstance );
+   g_pJMissileBitmap    = new Bitmap( hDC, IDB_JMISSILE, g_hInstance );
+   g_pTimmyBitmap       = new Bitmap( hDC, IDB_TIMMY, g_hInstance );
+   g_pTMissileBitmap    = new Bitmap( hDC, IDB_TMISSILE, g_hInstance );
+   g_pSmExplosionBitmap = new Bitmap( hDC, IDB_SMEXPLOSION, g_hInstance );
+   g_pLgExplosionBitmap = new Bitmap( hDC, IDB_LGEXPLOSION, g_hInstance );
+   g_pGameOverBitmap    = new Bitmap( hDC, IDB_GAMEOVER, g_hInstance );
 
-   g_pBackground = new StarryBackground(600, 450);
+   g_pBackground = new StarryBackground( 600, 450 );
 
    g_bDemo = TRUE;
    NewGame( );
@@ -57,10 +56,9 @@ void GameEnd( )
 {
    g_pGame->CloseMIDIPlayer( );
 
-   DeleteObject(g_hOffscreenBitmap);
-   DeleteDC(g_hOffscreenDC);
+   DeleteObject( g_hOffscreenBitmap );
+   DeleteDC( g_hOffscreenDC );
 
-   // Cleanup the bitmaps
    delete g_pSplashBitmap;
    delete g_pDesertBitmap;
    delete g_pCarBitmap;
@@ -82,19 +80,18 @@ void GameEnd( )
 
    delete g_pGame;
 
-   // save the hi scores
    WriteHiScores( );
 }
 
-void GameActivate(HWND hWindow)
+void GameActivate( HWND hWindow )
 {
    if ( !g_bDemo )
    {
-      g_pGame->PlayMIDISong(TEXT(""), FALSE);
+      g_pGame->PlayMIDISong( TEXT( "" ), FALSE );
    }
 }
 
-void GameDeactivate(HWND hWindow)
+void GameDeactivate( HWND hWindow )
 {
    if ( !g_bDemo )
    {
@@ -102,55 +99,53 @@ void GameDeactivate(HWND hWindow)
    }
 }
 
-void GamePaint(HDC hDC)
+void GamePaint( HDC hDC )
 {
-   g_pBackground->Draw(hDC);
+   g_pBackground->Draw( hDC );
 
-   g_pDesertBitmap->Draw(hDC, 0, 371);
+   g_pDesertBitmap->Draw( hDC, 0, 371 );
 
-   g_pGame->DrawSprites(hDC);
+   g_pGame->DrawSprites( hDC );
 
    if ( g_bDemo )
    {
-      g_pSplashBitmap->Draw(hDC, 142, 20, TRUE);
+      g_pSplashBitmap->Draw( hDC, 142, 20, TRUE );
 
-      // draw the hi scores
-      TCHAR szText[ 64 ];
+      TCHAR szText[64];
       RECT  rect = { 275, 250, 325, 270 };
 
-      SetBkMode(hDC, TRANSPARENT);
-      SetTextColor(hDC, RGB(255, 255, 255));
+      SetBkMode( hDC, TRANSPARENT );
+      SetTextColor( hDC, RGB( 255, 255, 255 ) );
 
       for ( int i = 0; i < 5; i++ )
       {
-         wsprintf(szText, TEXT("%d"), g_iHiScores[ i ]);
-         DrawText(hDC, szText, -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+         wsprintf( szText, TEXT( "%d" ), g_iHiScores[i] );
+         DrawText( hDC, szText, -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER );
          rect.top    += 20;
          rect.bottom += 20;
       }
    }
    else
    {
-      // draw the score
-      TCHAR szText[ 64 ];
+      TCHAR szText[64];
       RECT  rect = { 460, 0, 510, 30 };
 
-      wsprintf(szText, TEXT("%d"), g_iScore);
+      wsprintf( szText, TEXT( "%d" ), g_iScore );
 
-      SetBkMode(hDC, TRANSPARENT);
-      SetTextColor(hDC, RGB(255, 255, 255));
+      SetBkMode( hDC, TRANSPARENT );
+      SetTextColor( hDC, RGB( 255, 255, 255 ) );
 
-      DrawText(hDC, szText, -1, &rect, DT_SINGLELINE | DT_RIGHT | DT_VCENTER);
+      DrawText( hDC, szText, -1, &rect, DT_SINGLELINE | DT_RIGHT | DT_VCENTER );
 
       for ( int i = 0; i < g_iNumLives; i++ )
       {
-         g_pSmCarBitmap->Draw(hDC, 520 + (g_pSmCarBitmap->GetWidth( ) * i),
-                              10, TRUE);
+         g_pSmCarBitmap->Draw( hDC, 520 + ( g_pSmCarBitmap->GetWidth( ) * i ),
+                               10, TRUE );
       }
 
       if ( g_bGameOver )
       {
-         g_pGameOverBitmap->Draw(hDC, 170, 100, TRUE);
+         g_pGameOverBitmap->Draw( hDC, 170, 100, TRUE );
       }
    }
 }
@@ -161,7 +156,7 @@ void GameCycle( )
    {
       if ( !g_bDemo )
       {
-         if ( (rand( ) % g_iDifficulty) == 0 )
+         if ( ( rand( ) % g_iDifficulty ) == 0 )
          {
             AddAlien( );
          }
@@ -171,15 +166,15 @@ void GameCycle( )
 
       g_pGame->UpdateSprites( );
 
-      HWND hWindow = g_pGame-> GetWindow( );
-      HDC  hDC     = GetDC(hWindow);
+      HWND hWindow = g_pGame->GetWindow( );
+      HDC  hDC     = GetDC( hWindow );
 
-      GamePaint(g_hOffscreenDC);
+      GamePaint( g_hOffscreenDC );
 
-      BitBlt(hDC, 0, 0, g_pGame->GetWidth( ), g_pGame->GetHeight( ),
-             g_hOffscreenDC, 0, 0, SRCCOPY);
+      BitBlt( hDC, 0, 0, g_pGame->GetWidth( ), g_pGame->GetHeight( ),
+              g_hOffscreenDC, 0, 0, SRCCOPY );
 
-      ReleaseDC(hWindow, hDC);
+      ReleaseDC( hWindow, hDC );
    }
    else
    {
@@ -198,33 +193,33 @@ void HandleKeys( )
    {
       POINT ptVelocity = g_pCarSprite->GetVelocity( );
 
-      if ( GetAsyncKeyState(VK_LEFT) < 0 )
+      if ( GetAsyncKeyState( VK_LEFT ) < 0 )
       {
-         ptVelocity.x = max(ptVelocity.x - 1, -4);
-         g_pCarSprite->SetVelocity(ptVelocity);
+         ptVelocity.x = max( ptVelocity.x - 1, -4 );
+         g_pCarSprite->SetVelocity( ptVelocity );
       }
-      else if ( GetAsyncKeyState(VK_RIGHT) < 0 )
+      else if ( GetAsyncKeyState( VK_RIGHT ) < 0 )
       {
-         ptVelocity.x = min(ptVelocity.x + 2, 6);
-         g_pCarSprite->SetVelocity(ptVelocity);
+         ptVelocity.x = min( ptVelocity.x + 2, 6 );
+         g_pCarSprite->SetVelocity( ptVelocity );
       }
 
-      if ( (++g_iFireInputDelay > 6) && GetAsyncKeyState(VK_SPACE) < 0 )
+      if ( ( ++g_iFireInputDelay > 6 ) && GetAsyncKeyState( VK_SPACE ) < 0 )
       {
          RECT    rcBounds = { 0, 0, 600, 450 };
-         RECT    rcPos    = g_pCarSprite-> GetPosition( );
-         Sprite* pSprite  = new Sprite(g_pMissileBitmap, rcBounds, BA_DIE);
-         pSprite->SetPosition(rcPos.left + 15, 400);
-         pSprite->SetVelocity(0, -7);
-         g_pGame->AddSprite(pSprite);
+         RECT    rcPos    = g_pCarSprite->GetPosition( );
+         Sprite* pSprite  = new Sprite( g_pMissileBitmap, rcBounds, BA_DIE );
+         pSprite->SetPosition( rcPos.left + 15, 400 );
+         pSprite->SetVelocity( 0, -7 );
+         g_pGame->AddSprite( pSprite );
 
-         PlaySound((PCTSTR) IDW_MISSILE, g_hInstance, SND_ASYNC | SND_RESOURCE | SND_NOSTOP);
+         PlaySound( ( PCTSTR ) IDW_MISSILE, g_hInstance, SND_ASYNC | SND_RESOURCE | SND_NOSTOP );
 
          g_iFireInputDelay = 0;
       }
    }
 
-   if ( GetAsyncKeyState(VK_RETURN) < 0 )
+   if ( GetAsyncKeyState( VK_RETURN ) < 0 )
       if ( g_bDemo )
       {
          g_bDemo = FALSE;
@@ -236,29 +231,27 @@ void HandleKeys( )
       }
 }
 
-void MouseButtonDown(int x, int y, BOOL bLeft)
+void MouseButtonDown( int x, int y, BOOL bLeft )
 { }
 
-void MouseButtonUp(int x, int y, BOOL bLeft)
+void MouseButtonUp( int x, int y, BOOL bLeft )
 { }
 
-void MouseMove(int x, int y)
+void MouseMove( int x, int y )
 { }
 
-void HandleJoystick(JOYSTATE jsJoystickState)
+void HandleJoystick( JOYSTATE jsJoystickState )
 { }
 
-BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
+BOOL SpriteCollision( Sprite* pSpriteHitter, Sprite* pSpriteHittee )
 {
    Bitmap* pHitter = pSpriteHitter->GetBitmap( );
    Bitmap* pHittee = pSpriteHittee->GetBitmap( );
 
-   if ( (pHitter == g_pMissileBitmap && (pHittee == g_pBlobboBitmap ||
-                                         pHittee == g_pJellyBitmap || pHittee == g_pTimmyBitmap)) ||
-       (pHittee == g_pMissileBitmap && (pHitter == g_pBlobboBitmap ||
-                                        pHitter == g_pJellyBitmap || pHitter == g_pTimmyBitmap)) )
+   if ( ( pHitter == g_pMissileBitmap && ( pHittee == g_pBlobboBitmap || pHittee == g_pJellyBitmap || pHittee == g_pTimmyBitmap ) ) ||
+        ( pHittee == g_pMissileBitmap && ( pHitter == g_pBlobboBitmap || pHitter == g_pJellyBitmap || pHitter == g_pTimmyBitmap ) ) )
    {
-      PlaySound((PCTSTR) IDW_LGEXPLODE, g_hInstance, SND_ASYNC | SND_RESOURCE);
+      PlaySound( ( PCTSTR ) IDW_LGEXPLODE, g_hInstance, SND_ASYNC | SND_RESOURCE );
 
       pSpriteHitter->Kill( );
       pSpriteHittee->Kill( );
@@ -275,21 +268,19 @@ BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
          rcPos = pSpriteHitter->GetPosition( );
       }
 
-      Sprite* pSprite = new Sprite(g_pLgExplosionBitmap, rcBounds);
-      pSprite->SetNumFrames(8, TRUE);
-      pSprite->SetPosition(rcPos.left, rcPos.top);
-      g_pGame->AddSprite(pSprite);
+      Sprite* pSprite = new Sprite( g_pLgExplosionBitmap, rcBounds );
+      pSprite->SetNumFrames( 8, TRUE );
+      pSprite->SetPosition( rcPos.left, rcPos.top );
+      g_pGame->AddSprite( pSprite );
 
       g_iScore      += 25;
-      g_iDifficulty  = max(80 - (g_iScore / 20), 20);
+      g_iDifficulty  = max( 80 - ( g_iScore / 20 ), 20 );
    }
 
-   if ( (pHitter == g_pCarBitmap && (pHittee == g_pBMissileBitmap ||
-                                     pHittee == g_pJMissileBitmap || pHittee == g_pTMissileBitmap)) ||
-       (pHittee == g_pCarBitmap && (pHitter == g_pBMissileBitmap ||
-                                    pHitter == g_pJMissileBitmap || pHitter == g_pTMissileBitmap)) )
+   if ( ( pHitter == g_pCarBitmap && ( pHittee == g_pBMissileBitmap || pHittee == g_pJMissileBitmap || pHittee == g_pTMissileBitmap ) ) ||
+        ( pHittee == g_pCarBitmap && ( pHitter == g_pBMissileBitmap || pHitter == g_pJMissileBitmap || pHitter == g_pTMissileBitmap ) ) )
    {
-      PlaySound((PCTSTR) IDW_LGEXPLODE, g_hInstance, SND_ASYNC | SND_RESOURCE);
+      PlaySound( ( PCTSTR ) IDW_LGEXPLODE, g_hInstance, SND_ASYNC | SND_RESOURCE );
 
       if ( pHitter == g_pCarBitmap )
       {
@@ -312,20 +303,19 @@ BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
          rcPos = pSpriteHittee->GetPosition( );
       }
 
-      Sprite* pSprite = new Sprite(g_pLgExplosionBitmap, rcBounds);
-      pSprite->SetNumFrames(8, TRUE);
-      pSprite->SetPosition(rcPos.left, rcPos.top);
-      g_pGame->AddSprite(pSprite);
+      Sprite* pSprite = new Sprite( g_pLgExplosionBitmap, rcBounds );
+      pSprite->SetNumFrames( 8, TRUE );
+      pSprite->SetPosition( rcPos.left, rcPos.top );
+      g_pGame->AddSprite( pSprite );
 
-      g_pCarSprite->SetPosition(300, 405);
+      g_pCarSprite->SetPosition( 300, 405 );
 
       if ( --g_iNumLives == 0 )
       {
-         PlaySound((PCTSTR) IDW_GAMEOVER, g_hInstance, SND_ASYNC | SND_RESOURCE);
+         PlaySound( ( PCTSTR ) IDW_GAMEOVER, g_hInstance, SND_ASYNC | SND_RESOURCE );
          g_bGameOver = TRUE;
          g_iGameOverDelay = 150;
 
-         // update the hi scores
          UpdateHiScores( );
       }
    }
@@ -333,24 +323,24 @@ BOOL SpriteCollision(Sprite* pSpriteHitter, Sprite* pSpriteHittee)
    return FALSE;
 }
 
-void SpriteDying(Sprite* pSpriteDying)
+void SpriteDying( Sprite* pSpriteDying )
 {
    if ( pSpriteDying->GetBitmap( ) == g_pBMissileBitmap ||
-       pSpriteDying->GetBitmap( ) == g_pJMissileBitmap ||
-       pSpriteDying->GetBitmap( ) == g_pTMissileBitmap )
+        pSpriteDying->GetBitmap( ) == g_pJMissileBitmap ||
+        pSpriteDying->GetBitmap( ) == g_pTMissileBitmap )
    {
       if ( !g_bDemo )
       {
-         PlaySound((PCTSTR) IDW_SMEXPLODE, g_hInstance, SND_ASYNC |
-                   SND_RESOURCE | SND_NOSTOP);
+         PlaySound( ( PCTSTR ) IDW_SMEXPLODE, g_hInstance, SND_ASYNC |
+                    SND_RESOURCE | SND_NOSTOP );
       }
 
       RECT    rcBounds = { 0, 0, 600, 450 };
-      RECT    rcPos    = pSpriteDying-> GetPosition( );
-      Sprite* pSprite  = new Sprite(g_pSmExplosionBitmap, rcBounds);
-      pSprite->SetNumFrames(8, TRUE);
-      pSprite->SetPosition(rcPos.left, rcPos.top);
-      g_pGame->AddSprite(pSprite);
+      RECT    rcPos    = pSpriteDying->GetPosition( );
+      Sprite* pSprite  = new Sprite( g_pSmExplosionBitmap, rcBounds );
+      pSprite->SetNumFrames( 8, TRUE );
+      pSprite->SetPosition( rcPos.left, rcPos.top );
+      g_pGame->AddSprite( pSprite );
    }
 }
 
@@ -374,11 +364,11 @@ void NewGame( )
    else
    {
       RECT rcBounds = { 0, 0, 600, 450 };
-      g_pCarSprite  = new Sprite(g_pCarBitmap, rcBounds, BA_WRAP);
-      g_pCarSprite->SetPosition(300, 405);
-      g_pGame->AddSprite(g_pCarSprite);
+      g_pCarSprite  = new Sprite( g_pCarBitmap, rcBounds, BA_WRAP );
+      g_pCarSprite->SetPosition( 300, 405 );
+      g_pGame->AddSprite( g_pCarSprite );
 
-      g_pGame->PlayMIDISong(TEXT("Music.mid"));
+      g_pGame->PlayMIDISong( TEXT( "Music.mid" ) );
    }
 }
 
@@ -390,125 +380,106 @@ void AddAlien( )
    switch ( rand( ) % 3 )
    {
    case 0:
-      // Blobbo
-      pSprite = new AlienSprite(g_pBlobboBitmap, rcBounds, BA_BOUNCE);
-      pSprite->SetNumFrames(8);
-      pSprite->SetPosition(((rand( ) % 2) == 0) ? 0 : 600, rand( ) % 370);
-      pSprite->SetVelocity((rand( ) % 7) - 2, (rand( ) % 7) - 2);
+      pSprite = new AlienSprite( g_pBlobboBitmap, rcBounds, BA_BOUNCE );
+      pSprite->SetNumFrames( 8 );
+      pSprite->SetPosition( ( ( rand( ) % 2 ) == 0 ) ? 0 : 600, rand( ) % 370 );
+      pSprite->SetVelocity( ( rand( ) % 7 ) - 2, ( rand( ) % 7 ) - 2 );
       break;
 
    case 1:
-      // Jelly
-      pSprite = new AlienSprite(g_pJellyBitmap, rcBounds, BA_BOUNCE);
-      pSprite->SetNumFrames(8);
-      pSprite->SetPosition(rand( ) % 600, rand( ) % 370);
-      pSprite->SetVelocity((rand( ) % 5) - 2, (rand( ) % 5) + 3);
+      pSprite = new AlienSprite( g_pJellyBitmap, rcBounds, BA_BOUNCE );
+      pSprite->SetNumFrames( 8 );
+      pSprite->SetPosition( rand( ) % 600, rand( ) % 370 );
+      pSprite->SetVelocity( ( rand( ) % 5 ) - 2, ( rand( ) % 5 ) + 3 );
       break;
 
    case 2:
-      // Timmy
-      pSprite = new AlienSprite(g_pTimmyBitmap, rcBounds, BA_WRAP);
-      pSprite->SetNumFrames(8);
-      pSprite->SetPosition(rand( ) % 600, rand( ) % 370);
-      pSprite->SetVelocity((rand( ) % 7) + 3, 0);
+      pSprite = new AlienSprite( g_pTimmyBitmap, rcBounds, BA_WRAP );
+      pSprite->SetNumFrames( 8 );
+      pSprite->SetPosition( rand( ) % 600, rand( ) % 370 );
+      pSprite->SetVelocity( ( rand( ) % 7 ) + 3, 0 );
       break;
    }
 
-   g_pGame->AddSprite(pSprite);
+   g_pGame->AddSprite( pSprite );
 }
 
 void UpdateHiScores( )
 {
-   // see if the current score made the hi score list
    int i;
 
    for ( i = 0; i < 5; i++ )
    {
-      if ( g_iScore > g_iHiScores[ i ] )
+      if ( g_iScore > g_iHiScores[i] )
       {
          break;
       }
    }
 
-   // insert the current score into the hi score list
    if ( i < 5 )
    {
       for ( int j = 4; j > i; j-- )
       {
-         g_iHiScores[ j ] = g_iHiScores[ j - 1 ];
+         g_iHiScores[j] = g_iHiScores[j - 1];
       }
-      g_iHiScores[ i ] = g_iScore;
+      g_iHiScores[i] = g_iScore;
    }
 }
 
 BOOL ReadHiScores( )
 {
-   // open the hi score file (HiScores.dat)
-   HANDLE hFile = CreateFile(TEXT("HiScores.dat"), GENERIC_READ, 0, NULL,
-                             OPEN_EXISTING, FILE_ATTRIBUTE_READONLY, NULL);
+   HANDLE hFile = CreateFile( TEXT( "HiScores.dat" ), GENERIC_READ, 0, NULL,
+                              OPEN_EXISTING, FILE_ATTRIBUTE_READONLY, NULL );
 
    if ( hFile == INVALID_HANDLE_VALUE )
    {
-      // the hi score file doesn't exist, so initialize the scores to 0
       for ( int i = 0; i < 5; i++ )
       {
-         g_iHiScores[ i ] = 0;
+         g_iHiScores[i] = 0;
       }
       return FALSE;
    }
 
-   // read the scores
    for ( int i = 0; i < 5; i++ )
    {
-      // read the score
-      char  cData[ 6 ];
+      char  cData[6];
       DWORD dwBytesRead;
 
-      if ( !ReadFile(hFile, &cData, 5, &dwBytesRead, NULL) )
+      if ( !ReadFile( hFile, &cData, 5, &dwBytesRead, NULL ) )
       {
-         // something went wrong, so close the file handle
-         CloseHandle(hFile);
+         CloseHandle( hFile );
          return FALSE;
       }
 
-      // extract each integer score from the score data
-      g_iHiScores[ i ] = atoi(cData);
+      g_iHiScores[i] = atoi( cData );
    }
 
-   // close the file
-   return CloseHandle(hFile);
+   return CloseHandle( hFile );
 }
 
 BOOL WriteHiScores( )
 {
-   // create the hi score file (HiScores.dat) for writing
-   HANDLE hFile = CreateFile(TEXT("HiScores.dat"), GENERIC_WRITE, 0, NULL,
-                             CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+   HANDLE hFile = CreateFile( TEXT( "HiScores.dat" ), GENERIC_WRITE, 0, NULL,
+                              CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
 
    if ( hFile == INVALID_HANDLE_VALUE )
    {
-      // the hi score file couldn't be created, so bail
       return FALSE;
    }
 
-   // write the scores
    for ( int i = 0; i < 5; i++ )
    {
-      // format each score for writing
-      CHAR cData[ 6 ];
-      wsprintfA(cData, "%05d", g_iHiScores[ i ]);
+      CHAR cData[6];
+      wsprintfA( cData, "%05d", g_iHiScores[i] );
 
-      // write the score
       DWORD dwBytesWritten;
 
-      if ( !WriteFile(hFile, &cData, 5, &dwBytesWritten, NULL) )
+      if ( !WriteFile( hFile, &cData, 5, &dwBytesWritten, NULL ) )
       {
-         // something went wrong, so close the file handle
-         CloseHandle(hFile);
+         CloseHandle( hFile );
          return FALSE;
       }
    }
 
-   // close the file
-   return CloseHandle(hFile);
+   return CloseHandle( hFile );
 }
