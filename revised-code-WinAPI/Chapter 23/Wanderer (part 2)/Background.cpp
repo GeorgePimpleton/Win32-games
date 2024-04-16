@@ -20,9 +20,7 @@ Background::~Background( )
 { }
 
 void Background::Update( )
-{
-   // do nothing since the basic background is not animated
-}
+{ }
 
 void Background::Draw(HDC dc)
 {

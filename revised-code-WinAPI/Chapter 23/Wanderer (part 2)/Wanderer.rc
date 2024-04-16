@@ -1,19 +1,19 @@
 #include <windows.h>
 #include "resource.h"
 
-IDI_ICON          ICON         "Res/Wanderer.ico"
-IDI_ICON_SM       ICON         "Res/Wanderer_sm.ico"
+IDI_ICON         ICON   "Res/Wanderer.ico"
+IDI_ICON_SM      ICON   "Res/Wanderer_sm.ico"
 
-IDB_BG_LANDSCAPE  BITMAP       "Res/Background_Landscape.bmp"
-IDB_BG_CLOUDS     BITMAP       "Res/Background_Clouds.bmp"
-IDB_PERSON        BITMAP       "Res/Person.bmp"
+IDB_BG_LANDSCAPE BITMAP "Res/Background_Landscape.bmp"
+IDB_BG_CLOUDS    BITMAP "Res/Background_Clouds.bmp"
+IDB_PERSON       BITMAP "Res/Person.bmp"
 
 IDD_ABOUT   DIALOG   32, 32, 180, 102
 CAPTION "About..."
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 {
    ICON           IDI_ICON, IDC_STATIC, 7, 7, 20, 20, SS_SUNKEN
-   CTEXT          "Wanderer", IDC_STATIC, 40, 12, 100, 8
+   CTEXT          "Wanderer b", IDC_STATIC, 40, 12, 100, 8
 
    CTEXT          "Changing Perspective with Scrolling Backgrounds", IDC_STATIC, 7, 35, 166, 8
    CTEXT          "© This Year, Your Name", IDC_STATIC, 7, 47, 166, 8
