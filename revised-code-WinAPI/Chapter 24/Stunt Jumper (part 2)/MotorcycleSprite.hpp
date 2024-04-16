@@ -15,8 +15,8 @@ protected:
    BOOL       m_landedSafely;
 
 public:
-            MotorcycleSprite(Bitmap*, RECT&,
-                             BOUNDSACTION = BA_STOP);
+            MotorcycleSprite( Bitmap*, RECT&,
+                              BOUNDSACTION = BA_STOP );
    virtual ~MotorcycleSprite( );
 
    virtual void UpdateFrame( );

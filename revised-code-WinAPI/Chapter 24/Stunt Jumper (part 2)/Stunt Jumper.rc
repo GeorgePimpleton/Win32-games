@@ -1,31 +1,31 @@
 #include <windows.h>
 #include "resource.h"
 
-IDI_ICON              ICON         "Res/StuntJumper.ico"
-IDI_ICON_SM           ICON         "Res/StuntJumper_sm.ico"
+IDI_ICON         ICON   "Res/StuntJumper.ico"
+IDI_ICON_SM      ICON   "Res/StuntJumper_sm.ico"
 
-IDB_SPLASH            BITMAP       "Res/Splash.bmp"
-IDB_BG_ROAD           BITMAP       "Res/Background_Road.bmp"
-IDB_BG_TREES          BITMAP       "Res/Background_Trees.bmp"
-IDB_BG_MOUNTAINS      BITMAP       "Res/Background_Mountains.bmp"
-IDB_BG_SKY            BITMAP       "Res/Background_Sky.bmp"
-IDB_JUMPER            BITMAP       "Res/Jumper.bmp"
-IDB_BUS               BITMAP       "Res/Bus.bmp"
-IDB_RAMPLEFT          BITMAP       "Res/RampLeft.bmp"
-IDB_RAMPRIGHT         BITMAP       "Res/RampRight.bmp"
-IDB_GAMEOVER          BITMAP       "Res/GameOver.bmp"
+IDB_SPLASH       BITMAP "Res/Splash.bmp"
+IDB_BG_ROAD      BITMAP "Res/Background_Road.bmp"
+IDB_BG_TREES     BITMAP "Res/Background_Trees.bmp"
+IDB_BG_MOUNTAINS BITMAP "Res/Background_Mountains.bmp"
+IDB_BG_SKY       BITMAP "Res/Background_Sky.bmp"
+IDB_JUMPER       BITMAP "Res/Jumper.bmp"
+IDB_BUS          BITMAP "Res/Bus.bmp"
+IDB_RAMPLEFT     BITMAP "Res/RampLeft.bmp"
+IDB_RAMPRIGHT    BITMAP "Res/RampRight.bmp"
+IDB_GAMEOVER     BITMAP "Res/GameOver.bmp"
 
-IDW_ENGINE            WAVE         "Res/Engine.wav"
-IDW_BRAKES            WAVE         "Res/Brakes.wav"
-IDW_CELEBRATION       WAVE         "Res/Celebration.wav"
-IDW_CRASH             WAVE         "Res/Crash.wav"
+IDW_ENGINE       WAVE   "Res/Engine.wav"
+IDW_BRAKES       WAVE   "Res/Brakes.wav"
+IDW_CELEBRATION  WAVE   "Res/Celebration.wav"
+IDW_CRASH        WAVE   "Res/Crash.wav"
 
 IDD_ABOUT   DIALOG   32, 32, 180, 102
 CAPTION "About..."
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 {
    ICON           IDI_ICON, IDC_STATIC, 7, 7, 20, 20, SS_SUNKEN
-   CTEXT          "Stunt Jumper", IDC_STATIC, 40, 12, 100, 8
+   CTEXT          "Stunt Jumper b", IDC_STATIC, 40, 12, 100, 8
 
    CTEXT          "Example Game", IDC_STATIC, 7, 35, 166, 8
    CTEXT          "© This Year, Your Name", IDC_STATIC, 7, 47, 166, 8
