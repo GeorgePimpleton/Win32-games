@@ -4,16 +4,15 @@
 #include "Bitmap.hpp"
 #include "random_toolkit_v131.hpp"
 
-enum class BOUNDSACTION : WORD { BA_STOP   = 0,
-                                 BA_WRAP   = 1,
-                                 BA_BOUNCE = 2,
-                                 BA_DIE    = 3 };
+using BOUNDSACTION           = WORD;
+const BOUNDSACTION BA_STOP   = 0,
+                   BA_WRAP   = 1,
+                   BA_BOUNCE = 2,
+                   BA_DIE    = 3;
 
-using enum BOUNDSACTION;
-
-using SPRITEACTION          = WORD;
-const SPRITEACTION  SA_NONE = 0x0000L;
-const SPRITEACTION  SA_KILL = 0x0001L;
+using SPRITEACTION         = WORD;
+const SPRITEACTION SA_NONE = 0x0000L;
+const SPRITEACTION SA_KILL = 0x0001L;
 
 class Sprite
 {
