@@ -105,7 +105,7 @@ BOOL GameEngine::Initialize( int cmdShow )
       windowHeight += GetSystemMetrics( SM_CYMENU );
    }
 
-   int xWindowPos = ( GetSystemMetrics( SM_CXSCREEN ) - windowWidth ) / 2;
+   int xWindowPos = ( GetSystemMetrics( SM_CXSCREEN ) - windowWidth  ) / 2;
    int yWindowPos = ( GetSystemMetrics( SM_CYSCREEN ) - windowHeight ) / 2;
 
    m_wnd = CreateWindowW( m_wndClass, m_title,

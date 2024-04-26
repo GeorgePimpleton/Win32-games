@@ -2,15 +2,15 @@
 
 BOOL GameInitialize( HINSTANCE inst )
 {
-   g_pGame = new GameEngine( inst, TEXT( "Blizzard" ), TEXT( "Blizzard c" ),
-                             IDI_BLIZZARD, IDI_BLIZZARD_SM );
+   g_game = new GameEngine( inst, TEXT( "Blizzard" ), TEXT( "Blizzard c" ),
+                            IDI_BLIZZARD, IDI_BLIZZARD_SM );
 
-   if ( g_pGame == NULL )
+   if ( g_game == NULL )
    {
       return FALSE;
    }
 
-   g_pGame->SetFrameRate( 15 );
+   g_game->SetFrameRate( 15 );
 
    return TRUE;
 }
@@ -22,7 +22,7 @@ void GameStart( HWND wnd )
 
 void GameEnd( )
 {
-   delete g_pGame;
+   delete g_game;
 }
 
 void GameActivate( HWND wnd )
@@ -56,10 +56,10 @@ void GamePaint( HDC dc )
 
 void GameCycle( )
 {
-   HWND wnd = g_pGame->GetWindow( );
+   HWND wnd = g_game->GetWindow( );
    HDC  dc = GetDC( wnd );
 
-   DrawIcon( dc, rand( ) % g_pGame->GetWidth( ), rand( ) % g_pGame->GetHeight( ),
+   DrawIcon( dc, rand( ) % g_game->GetWidth( ), rand( ) % g_game->GetHeight( ),
              ( HICON ) GetClassLongPtr( wnd, GCLP_HICON ) );
 
    ReleaseDC( wnd, dc );

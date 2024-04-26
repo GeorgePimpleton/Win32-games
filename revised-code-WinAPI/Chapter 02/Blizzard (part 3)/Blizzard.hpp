@@ -4,4 +4,4 @@
 #include "resource.h"
 #include "GameEngine.hpp"
 
-GameEngine* g_pGame;
+GameEngine* g_game;

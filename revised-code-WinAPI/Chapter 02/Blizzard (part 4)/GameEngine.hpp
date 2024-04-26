@@ -34,7 +34,7 @@ public:
                         WORD, WORD, int width = 640, int height = 480 );
    virtual ~GameEngine( );
 
-   static GameEngine* GetEngine( )        { return m_gameEngine; };
+   static GameEngine* GetEngine( ) { return m_gameEngine; };
 
    BOOL    Initialize( int );
    LRESULT HandleEvent( HWND, UINT, WPARAM, LPARAM );
