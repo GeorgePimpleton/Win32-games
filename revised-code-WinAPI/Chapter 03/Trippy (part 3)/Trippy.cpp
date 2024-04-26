@@ -17,7 +17,6 @@ BOOL GameInitialize( HINSTANCE inst )
 
 void GameStart( HWND wnd )
 {
-   // srand( ( unsigned ) GetTickCount64( ) );
    rtk::srand( );
 
    g_rect.left   = g_game->GetWidth( )  * 2 / 5;
@@ -37,9 +36,9 @@ void GameDeactivate( HWND wnd )
 
 void GamePaint( HDC dc )
 {
-   const int iGridLines = 50;
+   const unsigned iGridLines = 50;
 
-   for ( int i = 1; i <= iGridLines; i++ )
+   for ( unsigned i = 1; i <= iGridLines; i++ )
    {
       MoveToEx( dc, g_game->GetWidth( ) * i / iGridLines, 0, NULL );
       LineTo( dc, g_game->GetWidth( ) * i / iGridLines, g_game->GetHeight( ) );

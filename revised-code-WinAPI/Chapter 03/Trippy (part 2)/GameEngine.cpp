@@ -91,7 +91,6 @@ GameEngine::GameEngine( HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
    m_wnd        = NULL;
    m_wndClass   = wndClass;
    m_title      = title;
-
    m_icon       = icon;
    m_smallIcon  = smallIcon;
    m_width      = width;
@@ -105,7 +104,7 @@ GameEngine::~GameEngine( )
 
 BOOL GameEngine::Initialize( int iCmdShow )
 {
-   WNDCLASSEXW wc;
+   WNDCLASSEXW wc = { };
 
    wc.cbSize        = sizeof( wc );
    wc.style         = CS_HREDRAW | CS_VREDRAW;
@@ -125,11 +124,8 @@ BOOL GameEngine::Initialize( int iCmdShow )
       return FALSE;
    }
 
-   int windowWidth  = m_width  + GetSystemMetrics( SM_CXFIXEDFRAME ) * 2;
-   int windowHeight = m_height + GetSystemMetrics( SM_CYFIXEDFRAME ) * 2 + GetSystemMetrics( SM_CYCAPTION );
-
-   windowWidth  += 10;
-   windowHeight += 10;
+   int windowWidth  = m_width  + GetSystemMetrics( SM_CXFIXEDFRAME ) * 2 + 10;
+   int windowHeight = m_height + GetSystemMetrics( SM_CYFIXEDFRAME ) * 2 + GetSystemMetrics( SM_CYCAPTION ) + 10;
 
    if ( wc.lpszMenuName != NULL )
    {
@@ -139,9 +135,10 @@ BOOL GameEngine::Initialize( int iCmdShow )
    int xWindowPos = ( GetSystemMetrics( SM_CXSCREEN ) - windowWidth )  / 2;
    int yWindowPos = ( GetSystemMetrics( SM_CYSCREEN ) - windowHeight ) / 2;
 
-   m_wnd = CreateWindowW( m_wndClass, m_title, WS_POPUPWINDOW |
-                          WS_CAPTION | WS_MINIMIZEBOX, xWindowPos, yWindowPos, windowWidth,
-                          windowHeight, NULL, NULL, m_inst, NULL );
+   m_wnd = CreateWindowW( m_wndClass, m_title,
+                          WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
+                          xWindowPos, yWindowPos, windowWidth, windowHeight,
+                          NULL, NULL, m_inst, NULL );
 
    if ( !m_wnd )
    {
