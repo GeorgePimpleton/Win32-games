@@ -70,7 +70,8 @@ void GameNew( )
 
       g_gameOver = FALSE;
 
-      EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
+      EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                      ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
 
       InvalidateRect( g_game->GetWindow( ), NULL, FALSE );
    }
@@ -178,7 +179,8 @@ void MouseButtonDown( LONG x, LONG y, BOOL left )
 
          g_gameOver = TRUE;
 
-         EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
+         EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                         ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
 
       }
    }
