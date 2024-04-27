@@ -3,7 +3,7 @@
 #include <windows.h>
 #include "resource.h"
 
-using JOYSTATE           = WORD;
+using JOYSTATE = WORD;
 const JOYSTATE JOY_NONE  = 0x0000L;
 const JOYSTATE JOY_LEFT  = 0x0001L;
 const JOYSTATE JOY_RIGHT = 0x0002L;
@@ -55,12 +55,13 @@ public:
 
 public:
    static GameEngine* GetEngine( ) { return m_gameEngine; }
-   HRESULT            Initialize( int );
-   LRESULT            HandleEvent( HWND, UINT, WPARAM, LPARAM );
-   HRESULT            InitJoystick( );
-   void               CaptureJoystick( );
-   void               ReleaseJoystick( );
-   void               CheckJoystick( );
+
+   HRESULT Initialize( int );
+   LRESULT HandleEvent( HWND, UINT, WPARAM, LPARAM );
+   HRESULT InitJoystick( );
+   void    CaptureJoystick( );
+   void    ReleaseJoystick( );
+   void    CheckJoystick( );
 
 public:
    HINSTANCE GetInstance( ) const;

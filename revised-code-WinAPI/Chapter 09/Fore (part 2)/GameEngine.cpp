@@ -4,8 +4,10 @@
 
 GameEngine* GameEngine::m_gameEngine = NULL;
 
-int WINAPI wWinMain( _In_ HINSTANCE inst,    _In_opt_ HINSTANCE prevInst,
-                     _In_ PWSTR     cmdLine, _In_     int       cmdShow )
+int WINAPI wWinMain( _In_     HINSTANCE inst,
+                     _In_opt_ HINSTANCE prevInst,
+                     _In_     PWSTR     cmdLine,
+                     _In_     int       cmdShow )
 {
    if ( GameInitialize( inst ) == S_OK )
    {
@@ -130,8 +132,7 @@ HRESULT GameEngine::Initialize( int iCmdShow )
    }
 
    UINT windowWidth  = m_width + GetSystemMetrics( SM_CXFIXEDFRAME )  * 2 + 10;
-   UINT windowHeight = m_height + GetSystemMetrics( SM_CYFIXEDFRAME ) * 2
-                                + GetSystemMetrics( SM_CYCAPTION ) + 10;
+   UINT windowHeight = m_height + GetSystemMetrics( SM_CYFIXEDFRAME ) * 2 + GetSystemMetrics( SM_CYCAPTION ) + 10;
 
    if ( wc.lpszMenuName != NULL )
    {

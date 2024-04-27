@@ -5,10 +5,10 @@
 #include "random_toolkit_v131.hpp"
 
 using BOUNDSACTION = WORD;
-const BOUNDSACTION   BA_STOP   = 0,
-                     BA_WRAP   = 1,
-                     BA_BOUNCE = 2,
-                     BA_DIE    = 3;
+const BOUNDSACTION BA_STOP   = 0,
+                   BA_WRAP   = 1,
+                   BA_BOUNCE = 2,
+                   BA_DIE    = 3;
 
 class Sprite
 {
