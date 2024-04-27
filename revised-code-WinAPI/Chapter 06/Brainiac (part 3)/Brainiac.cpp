@@ -80,7 +80,7 @@ void GameDeactivate( HWND wnd )
 
 void GamePaint( HDC dc )
 {
-   UINT tileWidth { ( UINT ) g_tiles[0]->GetWidth( ) };
+   UINT tileWidth  { ( UINT ) g_tiles[0]->GetWidth( ) };
    UINT tileHeight { ( UINT ) g_tiles[0]->GetHeight( ) };
 
    for ( UINT i = 0; i < 4; i++ )
@@ -116,7 +116,8 @@ void GameMenu( WPARAM wParam )
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW( g_game->GetInstance( ), MAKEINTRESOURCEW( IDD_ABOUT ), g_game->GetWindow( ), ( DLGPROC ) DlgProc );
+      DialogBoxW( g_game->GetInstance( ), MAKEINTRESOURCEW( IDD_ABOUT ),
+                  g_game->GetWindow( ), ( DLGPROC ) DlgProc );
       return;
    }
 }

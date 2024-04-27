@@ -31,6 +31,7 @@ public:
 
 public:
    static GameEngine* GetEngine( ) { return m_gameEngine; }
+
    HRESULT            Initialize( int );
    LRESULT            HandleEvent( HWND, UINT, WPARAM, LPARAM );
 
