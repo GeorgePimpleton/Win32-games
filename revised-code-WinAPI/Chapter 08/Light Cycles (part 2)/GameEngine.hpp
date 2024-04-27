@@ -12,10 +12,9 @@ const JOYSTATE JOY_DOWN  = 0x0008L;
 const JOYSTATE JOY_FIRE1 = 0x0010L;
 const JOYSTATE JOY_FIRE2 = 0x0020L;
 
-int WINAPI       wWinMain( _In_ HINSTANCE, _In_opt_ HINSTANCE,
-                           _In_ PWSTR,     _In_     int );
+int     WINAPI   wWinMain( _In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ PWSTR, _In_ int );
 LRESULT CALLBACK WndProc( HWND, UINT, WPARAM, LPARAM );
-BOOL CALLBACK    DlgProc( HWND, UINT, WPARAM, LPARAM );
+BOOL    CALLBACK DlgProc( HWND, UINT, WPARAM, LPARAM );
 
 HRESULT GameInitialize( HINSTANCE );
 void    GameStart( HWND );
@@ -55,12 +54,13 @@ public:
 
 public:
    static GameEngine* GetEngine( ) { return m_gameEngine; }
-   HRESULT            Initialize( int );
-   LRESULT            HandleEvent( HWND, UINT, WPARAM wParam, LPARAM );
-   HRESULT            InitJoystick( );
-   void               CaptureJoystick( );
-   void               ReleaseJoystick( );
-   void               CheckJoystick( );
+
+   HRESULT Initialize( int );
+   LRESULT HandleEvent( HWND, UINT, WPARAM wParam, LPARAM );
+   HRESULT InitJoystick( );
+   void    CaptureJoystick( );
+   void    ReleaseJoystick( );
+   void    CheckJoystick( );
 
 public:
    HINSTANCE GetInstance( ) const           { return m_inst; }
