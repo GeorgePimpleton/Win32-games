@@ -32,6 +32,7 @@ public:
    virtual ~GameEngine( );
 
    static GameEngine* GetEngine( ) { return m_pGameEngine; };
+
    BOOL               Initialize( int iCmdShow );
    LRESULT            HandleEvent( HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam );
    void               ErrorQuit( LPTSTR szErrorMsg );

@@ -180,6 +180,7 @@ LRESULT GameEngine::HandleEvent( HWND wnd, UINT msg, WPARAM wParam, LPARAM lPara
    case WM_PAINT:
       HDC         dc;
       PAINTSTRUCT ps;
+
       dc = BeginPaint( wnd, &ps );
 
       GamePaint( dc );

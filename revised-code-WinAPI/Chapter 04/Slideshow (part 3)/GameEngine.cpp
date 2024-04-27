@@ -38,7 +38,6 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
       return ( int ) msg.wParam;
    }
 
-   // End the game
    GameEnd( );
 
    return TRUE;
@@ -55,10 +54,13 @@ GameEngine::GameEngine( HINSTANCE hInstance, PCTSTR szWindowClass,
    m_pGameEngine = this;
    m_hInstance   = hInstance;
    m_hWindow     = NULL;
+
    if ( lstrlen( szWindowClass ) > 0 )
       lstrcpy( m_szWindowClass, szWindowClass );
+
    if ( lstrlen( szTitle ) > 0 )
       lstrcpy( m_szTitle, szTitle );
+
    m_wIcon       = wIcon;
    m_wSmallIcon  = wSmallIcon;
    m_iWidth      = iWidth;

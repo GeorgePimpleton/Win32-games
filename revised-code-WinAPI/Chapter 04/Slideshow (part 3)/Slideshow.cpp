@@ -2,8 +2,9 @@
 
 BOOL GameInitialize( HINSTANCE hInstance )
 {
-   g_pGame = new GameEngine( hInstance, TEXT( "Slideshow" ),
-                             TEXT( "Slideshow c: Drawing Graphical Images" ), IDI_SLIDESHOW, IDI_SLIDESHOW_SM );
+   g_pGame = new GameEngine( hInstance, TEXT( "Slideshow" ), TEXT( "Slideshow c: Drawing Graphical Images" ),
+                             IDI_SLIDESHOW, IDI_SLIDESHOW_SM );
+
    if ( g_pGame == NULL )
       return FALSE;
 
