@@ -42,6 +42,7 @@ public:
    virtual ~GameEngine( );
 
    static GameEngine* GetEngine( ) { return m_gameEngine; };
+
    BOOL               Initialize( int );
    LRESULT            HandleEvent( HWND, UINT, WPARAM, LPARAM );
 
