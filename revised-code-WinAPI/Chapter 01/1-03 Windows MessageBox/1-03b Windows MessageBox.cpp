@@ -1,3 +1,5 @@
+// WinAPI code can be compiled as C++, no changes necessary
+
 #include <windows.h>
 
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR szCmdLine, int iCmdShow )

@@ -10,7 +10,8 @@
    + using a custom C\+\+23 module to use C++11 (and later) random engine features instead of the C library functions
 3. a Windows API MessageBox using a .c file
    + a WinAPI MessageBox as a .cpp file
-   + a WinAPI MessageBox using modern coding
+   + exclude  some of the less common WinAPI declarations
+   + a WinAPI MessageBox using modern coding practices
 4. a minimal WinAPI app
    + a minimal WinAPI app using modern coding
    + a minimal WinAPI app using modern coding with different WinAPI data types and structures
