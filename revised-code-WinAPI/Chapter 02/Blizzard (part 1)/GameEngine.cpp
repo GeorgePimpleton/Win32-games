@@ -1,6 +1,6 @@
 #include "GameEngine.h"
 
-// Static Variable Initialization
+// static variable initialization
 GameEngine* GameEngine::m_pGameEngine = NULL;
 
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow )
@@ -11,18 +11,18 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 
    if ( GameInitialize( hInstance ) )
    {
-      // Initialize the game engine
+      // initialize the game engine
       if ( !GameEngine::GetEngine( )->Initialize( iCmdShow ) )
       {
          return FALSE;
       }
 
-      // Enter the main message loop
+      // enter the main message loop
       while ( TRUE )
       {
          if ( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) )
          {
-            // Process the message
+            // process the message
             if ( msg.message == WM_QUIT )
             {
                break;
@@ -33,10 +33,10 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
          }
          else
          {
-            // Make sure the game engine isn't sleeping
+            // make sure the game engine isn't sleeping
             if ( !GameEngine::GetEngine( )->GetSleep( ) )
             {
-               // Check the tick count to see if a game cycle has elapsed
+               // check the tick count to see if a game cycle has elapsed
                iTickCount = GetTickCount( );
 
                if ( iTickCount > iTickTrigger )
@@ -50,7 +50,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
       return ( int ) msg.wParam;
    }
 
-   // End the game
+   // end the game
    GameEnd( );
 
    return TRUE;
@@ -58,15 +58,15 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 
 LRESULT CALLBACK WndProc( HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam )
 {
-   // Route all Windows messages to the game engine
+   // route all windows messages to the game engine
    return GameEngine::GetEngine( )->HandleEvent( hWindow, msg, wParam, lParam );
 }
 
-// GameEngine Constructor(s)/Destructor
+// GameEngine constructor(s)/destructor
 GameEngine::GameEngine( HINSTANCE hInstance, PCTSTR szWindowClass, PCTSTR szTitle,
                         WORD wIcon, WORD wSmallIcon, int iWidth, int iHeight )
 {
-   // Set the member variables for the game engine
+   // set the data members for the game engine
    m_pGameEngine = this;
    m_hInstance   = hInstance;
    m_hWindow     = NULL;
@@ -89,7 +89,7 @@ BOOL GameEngine::Initialize( int iCmdShow )
 {
    WNDCLASSEX wndclass;
 
-   // Create the window class for the main window
+   // create the window class for the main window
    wndclass.cbSize        = sizeof( wndclass );
    wndclass.style         = CS_HREDRAW | CS_VREDRAW;
    wndclass.lpfnWndProc   = WndProc;
@@ -109,7 +109,7 @@ BOOL GameEngine::Initialize( int iCmdShow )
       return FALSE;
    }
 
-   // Calculate the window size and position based upon the game size
+   // calculate the window size and position based upon the game size
    int iWindowWidth  = m_iWidth  + GetSystemMetrics( SM_CXFIXEDFRAME ) * 2;
    int iWindowHeight = m_iHeight + GetSystemMetrics( SM_CYFIXEDFRAME ) * 2 + GetSystemMetrics( SM_CYCAPTION );
 
@@ -125,7 +125,7 @@ BOOL GameEngine::Initialize( int iCmdShow )
    int iXWindowPos = ( GetSystemMetrics( SM_CXSCREEN ) - iWindowWidth ) / 2;
    int iYWindowPos = ( GetSystemMetrics( SM_CYSCREEN ) - iWindowHeight ) / 2;
 
-   // Create the window`
+   // create the window`
    m_hWindow = CreateWindow( m_szWindowClass, m_szTitle, WS_POPUPWINDOW |
                              WS_CAPTION | WS_MINIMIZEBOX, iXWindowPos, iYWindowPos, iWindowWidth,
                              iWindowHeight, NULL, NULL, m_hInstance, NULL );
@@ -134,7 +134,7 @@ BOOL GameEngine::Initialize( int iCmdShow )
       return FALSE;
    }
 
-   // Show and update the window
+   // show and update the window
    ShowWindow( m_hWindow, iCmdShow );
    UpdateWindow( m_hWindow );
 
@@ -143,23 +143,23 @@ BOOL GameEngine::Initialize( int iCmdShow )
 
 LRESULT GameEngine::HandleEvent( HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam )
 {
-   // Route Windows messages to game engine member functions
+   // route Windows messages to game engine member functions
    switch ( msg )
    {
    case WM_CREATE:
-      // Set the game window and start the game
+      // set the game window and start the game
       SetWindow( hWindow );
       GameStart( hWindow );
       return 0;
 
    case WM_SETFOCUS:
-      // Activate the game and update the Sleep status
+      // activate the game and update the sleep status
       GameActivate( hWindow );
       SetSleep( FALSE );
       return 0;
 
    case WM_KILLFOCUS:
-      // Deactivate the game and update the Sleep status
+      // deactivate the game and update the sleep status
       GameDeactivate( hWindow );
       SetSleep( TRUE );
       return 0;
@@ -169,17 +169,18 @@ LRESULT GameEngine::HandleEvent( HWND hWindow, UINT msg, WPARAM wParam, LPARAM l
       PAINTSTRUCT ps;
       hDC = BeginPaint( hWindow, &ps );
 
-      // Paint the game
+      // paint the game in the client area
       GamePaint( hDC );
 
       EndPaint( hWindow, &ps );
       return 0;
 
    case WM_DESTROY:
-      // End the game and exit the application
+      // end the game and exit the application
       GameEnd( );
       PostQuitMessage( 0 );
       return 0;
    }
+
    return DefWindowProc( hWindow, msg, wParam, lParam );
 }

@@ -2,31 +2,31 @@
 
 BOOL GameInitialize( HINSTANCE hInstance )
 {
-   // Create the game engine
-   g_pGame = new GameEngine( hInstance, TEXT( "Blizzard" ), TEXT( "Blizzard a" ),
-                             IDI_BLIZZARD, IDI_BLIZZARD_SM );
+   // create the game engine
+   g_game = new GameEngine( hInstance, TEXT( "Blizzard" ), TEXT( "Blizzard a" ),
+                            IDI_BLIZZARD, IDI_BLIZZARD_SM );
 
-   if ( g_pGame == NULL )
+   if ( g_game == NULL )
    {
       return FALSE;
    }
 
-   // Set the frame rate
-   g_pGame->SetFrameRate( 15 );
+   // set the frame rate
+   g_game->SetFrameRate( 15 );
 
    return TRUE;
 }
 
 void GameStart( HWND hWindow )
 {
-   // Seed the random number generator
+   // seed the random number generator
    srand( GetTickCount( ) );
 }
 
 void GameEnd( )
 {
-   // Cleanup the game engine
-   delete g_pGame;
+   // cleanup the game engine
+   delete g_game;
 }
 
 void GameActivate( HWND hWindow )
@@ -34,7 +34,7 @@ void GameActivate( HWND hWindow )
    HDC  hDC;
    RECT rect;
 
-   // Draw activation text on the game screen
+   // draw activation text on the game screen
    GetClientRect( hWindow, &rect );
 
    hDC = GetDC( hWindow );
@@ -50,7 +50,7 @@ void GameDeactivate( HWND hWindow )
    HDC  hDC;
    RECT rect;
 
-   // Draw deactivation text on the game screen
+   // draw deactivation text on the game screen
    GetClientRect( hWindow, &rect );
 
    hDC = GetDC( hWindow );
@@ -67,12 +67,12 @@ void GamePaint( HDC hDC )
 void GameCycle( )
 {
    HDC  hDC;
-   HWND hWindow = g_pGame->GetWindow( );
+   HWND hWindow = g_game->GetWindow( );
 
-   // Draw the snowflake icon at random positions on the game screen
+   // draw the snowflake icon at random positions on the game screen
    hDC = GetDC( hWindow );
 
-   DrawIcon( hDC, rand( ) % g_pGame->GetWidth( ), rand( ) % g_pGame->GetHeight( ),
+   DrawIcon( hDC, rand( ) % g_game->GetWidth( ), rand( ) % g_game->GetHeight( ),
              ( HICON ) GetClassLongPtr( hWindow, GCLP_HICON ) );
 
    ReleaseDC( hWindow, hDC );

@@ -4,5 +4,5 @@
 #include "resource.h"
 #include "GameEngine.h"
 
-// Global Variables
-GameEngine* g_pGame;
+// global variables
+GameEngine* g_game;

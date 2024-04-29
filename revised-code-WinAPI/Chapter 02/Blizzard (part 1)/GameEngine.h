@@ -2,7 +2,7 @@
 
 #include <windows.h>
 
-int WINAPI        WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
+int     WINAPI    WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
                            PSTR szCmdLine, int iCmdShow );
 LRESULT CALLBACK  WndProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
 
@@ -37,8 +37,9 @@ public:
    virtual ~GameEngine( );
 
    static GameEngine* GetEngine( ) { return m_pGameEngine; };
-   BOOL               Initialize( int iCmdShow );
-   LRESULT            HandleEvent( HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam );
+
+   BOOL    Initialize( int iCmdShow );
+   LRESULT HandleEvent( HWND hWindow, UINT msg, WPARAM wParam, LPARAM lParam );
 
    HINSTANCE GetInstance( )                 { return m_hInstance; };
    HWND      GetWindow( )                   { return m_hWindow; };
