@@ -1,3 +1,5 @@
+// C++23
+
 import std;
 
 import random_toolkit;

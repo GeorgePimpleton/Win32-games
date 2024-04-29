@@ -14,11 +14,6 @@ export module random_toolkit;
 // use this define where <windows.h> is included
 // #define NOMINMAX
 
-// import <chrono>;
-// import <random>;
-// import <stdexcept>;
-// import <limits>;
-
 import std;
 
 namespace rtk

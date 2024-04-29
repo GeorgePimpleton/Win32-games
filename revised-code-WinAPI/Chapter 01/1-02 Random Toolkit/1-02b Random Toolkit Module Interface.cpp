@@ -1,4 +1,6 @@
-﻿import <array>;
+﻿// C++20
+
+import <array>;
 import <iostream>;
 import <numeric>;
 import <algorithm>;
