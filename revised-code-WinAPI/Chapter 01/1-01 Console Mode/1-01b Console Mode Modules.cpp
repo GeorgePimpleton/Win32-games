@@ -1,3 +1,5 @@
+// import necessary modules
+// similar to #incude
 import <iostream>;
 
 int main( )

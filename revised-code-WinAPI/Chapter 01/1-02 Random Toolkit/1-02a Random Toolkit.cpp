@@ -1,4 +1,6 @@
-﻿// pre-C++20 example
+﻿// creating a random toolkit makes it easier generate pseudo-random numbers
+//
+// pre-C++20 example
 
 #include <array>
 #include <iostream>
