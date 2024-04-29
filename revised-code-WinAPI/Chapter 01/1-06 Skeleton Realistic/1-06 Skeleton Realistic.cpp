@@ -1,6 +1,9 @@
-#include "1-6 Skeleton Realistic.hpp"
+#include "1-06 Skeleton Realistic.hpp"
 
-int WINAPI wWinMain( _In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int cmdShow )
+int WINAPI wWinMain( _In_     HINSTANCE inst,
+                     _In_opt_ HINSTANCE prevInst,
+                     _In_     PWSTR     cmdLine,
+                     _In_     int       cmdShow )
 {
    PCWSTR appName { L"Realistic Windows Skeleton" };
 
