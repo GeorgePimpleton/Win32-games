@@ -130,16 +130,15 @@ HRESULT GameEngine::Initialize( int cmdShow )
       return E_FAIL;
    }
 
-   UINT windowWidth  = m_width + GetSystemMetrics( SM_CXFIXEDFRAME ) * 2 + 10;
-   UINT windowHeight = m_height + GetSystemMetrics( SM_CYFIXEDFRAME ) * 2
-      + GetSystemMetrics( SM_CYCAPTION ) + 10;
+   UINT windowWidth  = m_width  + GetSystemMetrics( SM_CXFIXEDFRAME ) * 2 + 10;
+   UINT windowHeight = m_height + GetSystemMetrics( SM_CYFIXEDFRAME ) * 2 + GetSystemMetrics( SM_CYCAPTION ) + 10;
 
    if ( wc.lpszMenuName != NULL )
    {
       windowHeight += GetSystemMetrics( SM_CYMENU );
    }
 
-   UINT windowPosX = ( GetSystemMetrics( SM_CXSCREEN ) - windowWidth ) / 2;
+   UINT windowPosX = ( GetSystemMetrics( SM_CXSCREEN ) - windowWidth  ) / 2;
    UINT windowPosY = ( GetSystemMetrics( SM_CYSCREEN ) - windowHeight ) / 2;
 
    m_wnd = CreateWindowW( m_wndClass, m_title,

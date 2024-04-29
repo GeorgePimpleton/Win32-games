@@ -18,8 +18,8 @@ Sprite::Sprite( Bitmap* bitmap )
 
 Sprite::Sprite( Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction )
 {
-   int xPos = rtk::rand( 0, ( bounds.right - bounds.left ) );
-   int yPos = rtk::rand( 0, ( bounds.bottom - bounds.top ) );
+   int xPos = rtk::rand( 0, ( bounds.right  - bounds.left ) );
+   int yPos = rtk::rand( 0, ( bounds.bottom - bounds.top  ) );
 
    m_bitmap.reset( bitmap );
 
@@ -71,12 +71,12 @@ SPRITEACTION Sprite::Update( )
    POINT spriteSize  = { };
    POINT boundsSize  = { };
 
-   newPosition.x = m_position.left + m_velocity.x;
-   newPosition.y = m_position.top + m_velocity.y;
-   spriteSize.x  = m_position.right - m_position.left;
+   newPosition.x = m_position.left   + m_velocity.x;
+   newPosition.y = m_position.top    + m_velocity.y;
+   spriteSize.x  = m_position.right  - m_position.left;
    spriteSize.y  = m_position.bottom - m_position.top;
-   boundsSize.x  = m_bounds.right - m_bounds.left;
-   boundsSize.y  = m_bounds.bottom - m_bounds.top;
+   boundsSize.x  = m_bounds.right    - m_bounds.left;
+   boundsSize.y  = m_bounds.bottom   - m_bounds.top;
 
    if ( BA_WRAP == m_boundsAction )
    {

@@ -18,8 +18,8 @@ Sprite::Sprite( Bitmap* bitmap )
 
 Sprite::Sprite( Bitmap* bitmap, RECT& bounds, BOUNDSACTION boundsAction )
 {
-   int xPos = rtk::rand( 0, ( bounds.right - bounds.left ) );
-   int yPos = rtk::rand( 0, ( bounds.bottom - bounds.top ) );
+   int xPos = rtk::rand( 0, ( bounds.right  - bounds.left ) );
+   int yPos = rtk::rand( 0, ( bounds.bottom - bounds.top  ) );
 
    m_bitmap.reset( bitmap );
 
@@ -57,8 +57,8 @@ Sprite::~Sprite( )
 
 void Sprite::CalcCollisionRect( )
 {
-   int xShrink = ( m_position.left - m_position.right ) / 12;
-   int yShrink = ( m_position.top - m_position.bottom ) / 12;
+   int xShrink = ( m_position.left - m_position.right  ) / 12;
+   int yShrink = ( m_position.top  - m_position.bottom ) / 12;
 
    CopyRect( &m_collision, &m_position );
    InflateRect( &m_collision, xShrink, yShrink );
@@ -71,12 +71,12 @@ SPRITEACTION Sprite::Update( )
    POINT spriteSize  = { };
    POINT boundsSize  = { };
 
-   newPosition.x = m_position.left + m_velocity.x;
-   newPosition.y = m_position.top + m_velocity.y;
-   spriteSize.x  = m_position.right - m_position.left;
+   newPosition.x = m_position.left   + m_velocity.x;
+   newPosition.y = m_position.top    + m_velocity.y;
+   spriteSize.x  = m_position.right  - m_position.left;
    spriteSize.y  = m_position.bottom - m_position.top;
-   boundsSize.x  = m_bounds.right - m_bounds.left;
-   boundsSize.y  = m_bounds.bottom - m_bounds.top;
+   boundsSize.x  = m_bounds.right    - m_bounds.left;
+   boundsSize.y  = m_bounds.bottom   - m_bounds.top;
 
    if ( BA_WRAP == m_boundsAction )
    {
@@ -137,7 +137,7 @@ SPRITEACTION Sprite::Update( )
    else if ( m_boundsAction == BA_DIE )
    {
       if ( ( newPosition.x + spriteSize.x ) < m_bounds.left || newPosition.x > m_bounds.right ||
-           ( newPosition.y + spriteSize.y ) < m_bounds.top || newPosition.y > m_bounds.bottom )
+           ( newPosition.y + spriteSize.y ) < m_bounds.top  || newPosition.y > m_bounds.bottom )
       {
          return SA_KILL;
       }

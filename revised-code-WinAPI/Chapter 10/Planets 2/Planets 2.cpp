@@ -5,10 +5,7 @@ HRESULT GameInitialize( HINSTANCE inst )
    g_game = std::make_unique<GameEngine>( inst, L"Planets 2", L"Planets 2: Managing a World Sprites",
                                           IDI_ICON, IDI_ICON_SM, 600, 400 );
 
-   if ( NULL == g_game )
-   {
-      return E_FAIL;
-   }
+   if ( NULL == g_game ) { return E_FAIL; }
 
    g_game->SetFrameRate( 30 );
 
@@ -136,7 +133,7 @@ void MouseMove( LONG x, LONG y )
 {
    if ( g_dragSprite != NULL )
    {
-      g_dragSprite->SetPosition( x - ( g_dragSprite->GetWidth( ) / 2 ),
+      g_dragSprite->SetPosition( x - ( g_dragSprite->GetWidth( )  / 2 ),
                                  y - ( g_dragSprite->GetHeight( ) / 2 ) );
 
       InvalidateRect( g_game->GetWindow( ), NULL, FALSE );

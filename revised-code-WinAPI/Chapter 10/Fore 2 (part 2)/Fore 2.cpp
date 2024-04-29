@@ -5,10 +5,7 @@ HRESULT GameInitialize( HINSTANCE inst )
    g_game = std::make_unique<GameEngine>( inst, L"Fore 2", L"Fore 2 b: Managing a World Sprites",
                                           IDI_ICON, IDI_ICON_SM, 600, 400 );
 
-   if ( NULL == g_game )
-   {
-      return E_FAIL;
-   }
+   if ( NULL == g_game ) { return E_FAIL; }
 
    g_game->SetFrameRate( 30 );
 
@@ -84,7 +81,6 @@ void GameCycle( )
 
    BitBlt( dc, 0, 0, g_game->GetWidth( ), g_game->GetHeight( ), g_offscreenDC, 0, 0, SRCCOPY );
 
-   // cleanup
    ReleaseDC( wnd, dc );
 }
 
@@ -134,7 +130,7 @@ void MouseMove( LONG x, LONG y )
 {
    if ( g_dragSprite != NULL )
    {
-      g_dragSprite->SetPosition( x - ( g_dragSprite->GetWidth( ) / 2 ),
+      g_dragSprite->SetPosition( x - ( g_dragSprite->GetWidth( )  / 2 ),
                                  y - ( g_dragSprite->GetHeight( ) / 2 ) );
 
       InvalidateRect( g_game->GetWindow( ), NULL, FALSE );
