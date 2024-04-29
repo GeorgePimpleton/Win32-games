@@ -1,6 +1,6 @@
 // a minimal MFC program
 
-#include "1-8 Minimal MFC App.hpp"
+#include "1-08 Minimal MFC App.hpp"
 
 // instantiate the application
 CTheApp theApp;
