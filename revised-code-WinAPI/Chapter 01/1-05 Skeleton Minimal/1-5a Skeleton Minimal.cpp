@@ -3,7 +3,10 @@
 
 LRESULT CALLBACK WndProc( HWND, UINT, WPARAM, LPARAM );
 
-int WINAPI wWinMain( _In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int winMode )
+int WINAPI wWinMain( _In_     HINSTANCE inst,
+                     _In_opt_ HINSTANCE prevInst,
+                     _In_     PWSTR     cmdLine,
+                     _In_     int       winMode )
 {
    PCWSTR      appName { L"Skeleton" };
    WNDCLASSEXW wc      { };
