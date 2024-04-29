@@ -5,30 +5,32 @@ LRESULT CALLBACK WndProc( HWND, UINT, WPARAM, LPARAM );
 int WINAPI wWinMain( _In_ HINSTANCE inst,    _In_opt_ HINSTANCE prevInst,
                      _In_ PWSTR     cmdLine, _In_     int       winMode )
 {
-   static const WCHAR appName[ ] { L"MinWinApp" };
+   static PCWSTR appName { L"MinWinApp" };
 
-   WNDCLASSW wc { };
+   // use the extended window class version
+   // for the small icon
+   WNDCLASSEXW wc { };
 
+   wc.cbSize        = sizeof( wc );
    wc.style         = CS_HREDRAW | CS_VREDRAW;
    wc.lpfnWndProc   = WndProc;
    wc.cbClsExtra    = 0;
    wc.cbWndExtra    = 0;
    wc.hInstance     = inst;
    wc.hIcon         = ( HICON ) LoadImageW( NULL, IDI_APPLICATION, IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR );
+   wc.hIconSm       = ( HICON ) LoadImageW( NULL, IDI_APPLICATION, IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR );
    wc.hCursor       = ( HCURSOR ) LoadImageW( NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED );
    wc.hbrBackground = ( HBRUSH ) ( COLOR_WINDOW + 1 );
    wc.lpszMenuName  = NULL;
    wc.lpszClassName = appName;
 
-   // using the FAILED() macro for generic return testing success/failure
-   if ( FAILED( RegisterClassW( &wc ) ) )
+   if ( FAILED( RegisterClassExW( &wc ) ) )
    {
       MessageBoxW( NULL, L"Can't Register the Window Class!", appName, MB_OK | MB_ICONERROR );
       return E_FAIL;
    }
 
-   // Win32 is now known as the Windows API (WinAPI) since x64 Windows
-   static const WCHAR appTitle[ ] { L"Windows API Skeletal Application, Rev. A" };
+   static PCWSTR appTitle { L"Windows API Skeletal Application, Rev. B" };
 
    HWND wnd { CreateWindowW( appName, appTitle,
                              WS_OVERLAPPEDWINDOW,
@@ -53,7 +55,6 @@ int WINAPI wWinMain( _In_ HINSTANCE inst,    _In_opt_ HINSTANCE prevInst,
       DispatchMessageW( &msg );
    }
 
-   // the cast is done for x64 Windows, otherwise Visual Studio whinges about possible loss of data
    return ( int ) msg.wParam;
 }
 

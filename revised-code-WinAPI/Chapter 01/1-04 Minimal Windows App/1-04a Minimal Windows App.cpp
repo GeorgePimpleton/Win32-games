@@ -1,85 +1,98 @@
+// a very minimal Windows API application skeleton
+
+// INCLUDES ====================================================================
 #include <windows.h>
 
+// FUNCTION PROTOTYPES =========================================================
 LRESULT CALLBACK WndProc( HWND, UINT, WPARAM, LPARAM );
 
-int WINAPI wWinMain( _In_ HINSTANCE inst,    _In_opt_ HINSTANCE prevInst,
-                     _In_ PWSTR     cmdLine, _In_     int       winMode )
+// entry point for a Windows application =======================================
+int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int nWinMode )
 {
-   static const WCHAR appName[ ] { L"MinWinApp" };
+   // define the window class name
+   static const TCHAR szAppName[ ] = TEXT( "MinimalWindowsApp" );
 
-   WNDCLASSW wc { };
+   // create an instance of the window class structure
+   WNDCLASS wc;
 
    wc.style         = CS_HREDRAW | CS_VREDRAW;
    wc.lpfnWndProc   = WndProc;
    wc.cbClsExtra    = 0;
    wc.cbWndExtra    = 0;
-   wc.hInstance     = inst;
-   wc.hIcon         = ( HICON ) LoadImageW( NULL, IDI_APPLICATION, IMAGE_ICON, 0, 0, LR_DEFAULTCOLOR );
-   wc.hCursor       = ( HCURSOR ) LoadImageW( NULL, IDC_ARROW, IMAGE_CURSOR, 0, 0, LR_SHARED );
+   wc.hInstance     = hInstance;
+   wc.hIcon         = ( HICON ) LoadIcon( NULL, IDI_APPLICATION );
+   wc.hCursor       = ( HCURSOR ) LoadCursor( NULL, IDC_ARROW );
    wc.hbrBackground = ( HBRUSH ) ( COLOR_WINDOW + 1 );
    wc.lpszMenuName  = NULL;
-   wc.lpszClassName = appName;
+   wc.lpszClassName = szAppName;
 
-   // using the FAILED() macro for generic return testing success/failure
-   if ( FAILED( RegisterClassW( &wc ) ) )
+   if ( 0 == RegisterClass( &wc ) )
    {
-      MessageBoxW( NULL, L"Can't Register the Window Class!", appName, MB_OK | MB_ICONERROR );
-      return E_FAIL;
+      MessageBox( NULL, TEXT( "Can't Register the Window Class!" ), szAppName, MB_OK | MB_ICONERROR );
+      return 0;
    }
 
-   // Win32 is now known as the Windows API (WinAPI) since x64 Windows
-   static const WCHAR appTitle[ ] { L"Windows API Skeletal Application, Rev. A" };
+   // define the application title
+   static const TCHAR szAppTitle[ ] = TEXT( "Win32 API Skeletal Application" );
 
-   HWND wnd { CreateWindowW( appName, appTitle,
+   // create the window
+   HWND hwnd = CreateWindow( szAppName, szAppTitle,
                              WS_OVERLAPPEDWINDOW,
                              CW_USEDEFAULT, CW_USEDEFAULT,
                              CW_USEDEFAULT, CW_USEDEFAULT,
-                             NULL, NULL, inst, NULL ) };
+                             NULL, NULL, hInstance, NULL );
 
-   if ( NULL == wnd )
+   // check if the window was created, exit if fail
+   if ( NULL == hwnd )
    {
-      MessageBoxW( NULL, L"Unable to Create the Main Window!", appName, MB_OK | MB_ICONERROR );
-      return E_FAIL;
+      MessageBox( NULL, TEXT( "Unable to Create the Main Window!" ), szAppName, MB_OK | MB_ICONERROR );
+      return 0;
    }
 
-   ShowWindow( wnd, winMode );
-   UpdateWindow( wnd );
+   // show and update the window
+   ShowWindow( hwnd, nWinMode );
+   UpdateWindow( hwnd );
 
+   // enter the main message loop
    MSG msg;
 
    while ( GetMessageW( &msg, NULL, 0, 0 ) )
    {
+      // process the message
       TranslateMessage( &msg );
       DispatchMessageW( &msg );
    }
 
-   // the cast is done for x64 Windows, otherwise Visual Studio whinges about possible loss of data
-   return ( int ) msg.wParam;
+   // the app is done, exit normally, return control to Windows©
+   return msg.wParam;
 }
 
-LRESULT CALLBACK WndProc( HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam )
+// processes the messages that Windows sends to the application ================
+LRESULT CALLBACK WndProc( HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam )
 {
-   switch ( msg )
+   HDC         hdc;
+   PAINTSTRUCT ps;
+   RECT        rect;
+
+   // choose which Windows© messages you want to use
+   switch ( message )
    {
    case WM_PAINT:
-   {
-      PAINTSTRUCT ps;
-      HDC         dc = BeginPaint( wnd, &ps );
+      hdc = BeginPaint( hwnd, &ps );
 
-      RECT rect;
-      GetClientRect( wnd, &rect );
+      // draw some text centered in the client area
+      GetClientRect( hwnd, &rect );
+      DrawText( hdc, TEXT( "Hello, Windows!" ), -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER );
 
-      DrawTextW( dc, L"Hello, Windows!", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER );
-
-      EndPaint( wnd, &ps );
-
-      return S_OK;
-   }
+      EndPaint( hwnd, &ps );
+      return 0;
 
    case WM_DESTROY:
+      // exit the application
       PostQuitMessage( 0 );
-      return S_OK;
+      return 0;
    }
 
-   return DefWindowProcW( wnd, msg, wParam, lParam );
+   // let Windows process any unhandled messages
+   return DefWindowProc( hwnd, message, wParam, lParam );
 }
