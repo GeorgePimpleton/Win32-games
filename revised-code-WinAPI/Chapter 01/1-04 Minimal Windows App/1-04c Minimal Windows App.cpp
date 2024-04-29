@@ -1,5 +1,7 @@
 // using alternate WinAPI structs/data types
 
+#define WIN32_MEAN_AND_LEAN
+
 #include <windows.h>
 
 LRESULT CALLBACK WndProc( HWND, UINT, WPARAM, LPARAM );
