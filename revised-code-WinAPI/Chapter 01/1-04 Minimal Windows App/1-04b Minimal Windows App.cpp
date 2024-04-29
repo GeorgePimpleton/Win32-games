@@ -1,3 +1,5 @@
+// Unicode/wide functions/structs/variables
+
 #include <windows.h>
 
 LRESULT CALLBACK WndProc( HWND, UINT, WPARAM, LPARAM );
@@ -28,7 +30,7 @@ int WINAPI wWinMain( _In_ HINSTANCE inst,    _In_opt_ HINSTANCE prevInst,
    }
 
    // Win32 is now known as the Windows API (WinAPI) since x64 Windows
-   static const WCHAR appTitle[ ] { L"Windows API Skeletal Application, Rev. A" };
+   static const WCHAR appTitle[ ] { L"Windows API Skeletal Application, Rev. 1" };
 
    HWND wnd { CreateWindowW( appName, appTitle,
                              WS_OVERLAPPEDWINDOW,

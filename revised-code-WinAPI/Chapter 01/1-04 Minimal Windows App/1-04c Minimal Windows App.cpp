@@ -1,15 +1,20 @@
+// using alternate WinAPI structs/data types
+
 #include <windows.h>
 
 LRESULT CALLBACK WndProc( HWND, UINT, WPARAM, LPARAM );
 
-int WINAPI wWinMain( _In_ HINSTANCE inst,    _In_opt_ HINSTANCE prevInst,
-                     _In_ PWSTR     cmdLine, _In_     int       winMode )
+int WINAPI wWinMain( _In_     HINSTANCE inst,
+                     _In_opt_ HINSTANCE prevInst,
+                     _In_     PWSTR     cmdLine,
+                     _In_     int       winMode )
 {
-   static PCWSTR appName { L"MinWinApp" };
+   // alternate WinAPI string instead of a C string char array
+   static PCWSTR appName = L"MinWinApp";
 
    // use the extended window class version
    // for the small icon
-   WNDCLASSEXW wc { };
+   WNDCLASSEXW wc = { };
 
    wc.cbSize        = sizeof( wc );
    wc.style         = CS_HREDRAW | CS_VREDRAW;
@@ -30,7 +35,7 @@ int WINAPI wWinMain( _In_ HINSTANCE inst,    _In_opt_ HINSTANCE prevInst,
       return E_FAIL;
    }
 
-   static PCWSTR appTitle { L"Windows API Skeletal Application, Rev. B" };
+   static PCWSTR appTitle { L"Windows API Skeletal Application, Rev. 2" };
 
    HWND wnd { CreateWindowW( appName, appTitle,
                              WS_OVERLAPPEDWINDOW,

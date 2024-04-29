@@ -1,5 +1,7 @@
 // a very minimal Windows API application skeleton
 
+// this is a commonly seen bit of code
+
 // INCLUDES ====================================================================
 #include <windows.h>
 
@@ -35,7 +37,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
    // define the application title
    static const TCHAR szAppTitle[ ] = TEXT( "Win32 API Skeletal Application" );
 
-   // create the window
+   // create the window using default size and location
    HWND hwnd = CreateWindow( szAppName, szAppTitle,
                              WS_OVERLAPPEDWINDOW,
                              CW_USEDEFAULT, CW_USEDEFAULT,
