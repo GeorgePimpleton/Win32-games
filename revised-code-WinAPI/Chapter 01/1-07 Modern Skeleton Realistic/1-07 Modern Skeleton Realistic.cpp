@@ -1,6 +1,9 @@
-#include "1-7 Modern Skeleton Realistic.hpp"
+#include "1-07 Modern Skeleton Realistic.hpp"
 
-int WINAPI wWinMain( _In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int cmdShow )
+int WINAPI wWinMain( _In_     HINSTANCE inst,
+                     _In_opt_ HINSTANCE prevInst,
+                     _In_     PWSTR     cmdLine,
+                     _In_     int       cmdShow )
 {
    static std::wstring appName { L"C++ Modernized Realistic Windows Skeleton" };
 
