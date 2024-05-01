@@ -4,8 +4,7 @@
 
 Bitmap::Bitmap( )
    : m_bitmap( NULL ), m_width( 0 ), m_height( 0 )
-{
-}
+{ }
 
 Bitmap::Bitmap( PCWSTR fileName )
    : m_bitmap( NULL ), m_width( 0 ), m_height( 0 )
