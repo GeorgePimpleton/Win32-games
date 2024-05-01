@@ -17,5 +17,7 @@ Slideshow demonstrates how to load bitmap files from a file or as a Win32 resour
 3. A minimal rewrite to use the image files from the 2003 CD.
 4. Modern Windows compliant
 
+I personally like the bitmap images on the 2003 CD.
+
 ### Notes
 There may be links to websites or internet sources in these pages and source code. Links can go stale. A search engine is your friend.

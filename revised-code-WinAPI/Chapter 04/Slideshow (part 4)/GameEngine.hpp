@@ -37,9 +37,9 @@ public:
 
    static GameEngine* GetEngine( ) { return m_gameEngine; };
 
-   BOOL               Initialize( int );
-   LRESULT            HandleEvent( HWND, UINT, WPARAM, LPARAM );
-   void               ErrorQuit( PCWSTR );
+   BOOL    Initialize( int );
+   LRESULT HandleEvent( HWND, UINT, WPARAM, LPARAM );
+   void    ErrorQuit( PCWSTR );
 
    HINSTANCE GetInstance( ) const          { return m_inst; };
    HWND      GetWindow( ) const            { return m_wnd; };
