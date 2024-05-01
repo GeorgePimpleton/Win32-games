@@ -2,7 +2,7 @@
 
 BOOL GameInitialize( HINSTANCE inst )
 {
-   g_game = std::make_unique<GameEngine>( inst, L"Trippy", L"Trippy b: Learning to Draw Basic Graphics",
+   g_game = std::make_unique<GameEngine>( inst, L"Trippy", L"Trippy c: Learning to Draw Basic Graphics",
                                           IDI_ICON, IDI_ICON_SM );
 
    if ( g_game == NULL )

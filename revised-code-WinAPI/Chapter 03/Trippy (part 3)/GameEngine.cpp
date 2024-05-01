@@ -137,7 +137,8 @@ BOOL GameEngine::Initialize( int iCmdShow )
 
    m_wnd = CreateWindowW( m_wndClass, m_title,
                           WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
-                          xWindowPos, yWindowPos, windowWidth, windowHeight,
+                          xWindowPos, yWindowPos,
+                          windowWidth, windowHeight,
                           NULL, NULL, m_inst, NULL );
 
    if ( !m_wnd )

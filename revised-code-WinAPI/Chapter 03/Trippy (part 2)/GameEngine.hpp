@@ -38,8 +38,8 @@ public:
 
    static GameEngine* GetEngine( ) { return m_gameEngine; };
 
-   BOOL               Initialize( int );
-   LRESULT            HandleEvent( HWND, UINT, WPARAM, LPARAM );
+   BOOL    Initialize( int );
+   LRESULT HandleEvent( HWND, UINT, WPARAM, LPARAM );
 
    HINSTANCE GetInstance( )                { return m_inst; };
    HWND      GetWindow( )                  { return m_wnd; };
