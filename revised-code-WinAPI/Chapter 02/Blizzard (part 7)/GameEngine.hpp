@@ -5,9 +5,9 @@
 
 int     WINAPI   wWinMain( _In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ PWSTR, _In_ int );
 LRESULT CALLBACK WndProc( HWND, UINT, WPARAM, LPARAM );
-BOOL  CALLBACK   DlgProc( HWND, UINT, WPARAM, LPARAM );
+BOOL    CALLBACK DlgProc( HWND, UINT, WPARAM, LPARAM );
 
-BOOL GameInitialize( HINSTANCE );
+HRESULT GameInitialize( HINSTANCE );
 void GameStart( HWND );
 void GameNew( );
 void GameEnd( );
@@ -37,9 +37,10 @@ public:
                         WORD, WORD, int width = 640, int height = 480 );
    virtual ~GameEngine( );
 
-   static GameEngine* GetEngine( )           { return m_gameEngine; };
-   BOOL               Initialize( int );
-   LRESULT            HandleEvent( HWND, UINT, WPARAM, LPARAM );
+   static GameEngine* GetEngine( ) { return m_gameEngine; };
+
+   HRESULT Initialize( int );
+   LRESULT HandleEvent( HWND, UINT, WPARAM, LPARAM );
 
    HINSTANCE GetInstance( ) const          { return m_inst; };
    HWND      GetWindow( ) const            { return m_wnd; };

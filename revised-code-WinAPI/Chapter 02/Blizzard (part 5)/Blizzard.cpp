@@ -1,18 +1,18 @@
 #include "Blizzard.hpp"
 
-BOOL GameInitialize( HINSTANCE inst )
+HRESULT GameInitialize( HINSTANCE inst )
 {
    g_game = std::make_unique<GameEngine>( inst, L"Blizzard", L"Blizzard e",
                                           IDI_ICON, IDI_ICON_SM );
 
-   if ( g_game == NULL )
+   if ( NULL == g_game )
    {
-      return FALSE;
+      return E_FAIL;
    }
 
    g_game->SetFrameRate( 15 );
 
-   return TRUE;
+   return S_OK;
 }
 
 void GameStart( HWND wnd )

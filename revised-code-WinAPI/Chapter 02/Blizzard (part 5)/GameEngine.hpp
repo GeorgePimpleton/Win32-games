@@ -6,13 +6,13 @@
 int     WINAPI   wWinMain( _In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ PWSTR, _In_ int );
 LRESULT CALLBACK WndProc( HWND, UINT, WPARAM, LPARAM );
 
-BOOL GameInitialize( HINSTANCE );
-void GameStart( HWND );
-void GameEnd( );
-void GameActivate( HWND );
-void GameDeactivate( HWND );
-void GamePaint( HDC );
-void GameCycle( );
+HRESULT GameInitialize( HINSTANCE );
+void    GameStart( HWND );
+void    GameEnd( );
+void    GameActivate( HWND );
+void    GameDeactivate( HWND );
+void    GamePaint( HDC );
+void    GameCycle( );
 
 class GameEngine
 {
@@ -36,7 +36,7 @@ public:
 
    static GameEngine* GetEngine( ) { return m_gameEngine; };
 
-   BOOL    Initialize( int );
+   HRESULT Initialize( int );
    LRESULT HandleEvent( HWND, UINT, WPARAM, LPARAM );
 
    HINSTANCE GetInstance( ) const          { return m_inst; };

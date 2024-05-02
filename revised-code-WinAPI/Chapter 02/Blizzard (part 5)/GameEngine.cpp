@@ -7,11 +7,11 @@ int WINAPI wWinMain( _In_     HINSTANCE inst,
                      _In_     PWSTR     cmdLine,
                      _In_     int       cmdShow )
 {
-   if ( GameInitialize( inst ) )
+   if ( SUCCEEDED( GameInitialize( inst ) ) )
    {
-      if ( !GameEngine::GetEngine( )->Initialize( cmdShow ) )
+      if ( FAILED( GameEngine::GetEngine( )->Initialize( cmdShow ) ) )
       {
-         return FALSE;
+         return E_FAIL;
       }
 
       MSG msg;
@@ -48,7 +48,7 @@ int WINAPI wWinMain( _In_     HINSTANCE inst,
 
    GameEnd( );
 
-   return TRUE;
+   return S_OK;
 }
 
 LRESULT CALLBACK WndProc( HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam )
@@ -75,7 +75,7 @@ GameEngine::GameEngine( HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
 GameEngine::~GameEngine( )
 { }
 
-BOOL GameEngine::Initialize( int cmdShow )
+HRESULT GameEngine::Initialize( int cmdShow )
 {
    WNDCLASSEXW wc;
 
@@ -94,7 +94,7 @@ BOOL GameEngine::Initialize( int cmdShow )
 
    if ( !RegisterClassExW( &wc ) )
    {
-      return FALSE;
+      return E_FAIL;
    }
 
    int windowWidth  = m_width  + GetSystemMetrics( SM_CXFIXEDFRAME ) * 2 + 10;
@@ -115,13 +115,13 @@ BOOL GameEngine::Initialize( int cmdShow )
 
    if ( !m_wnd )
    {
-      return FALSE;
+      return E_FAIL;
    }
 
    ShowWindow( m_wnd, cmdShow );
    UpdateWindow( m_wnd );
 
-   return TRUE;
+   return S_OK;
 }
 
 LRESULT GameEngine::HandleEvent( HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam )
