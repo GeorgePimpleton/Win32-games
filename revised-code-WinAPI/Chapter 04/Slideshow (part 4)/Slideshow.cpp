@@ -1,20 +1,20 @@
 #include "Slideshow.hpp"
 
-BOOL GameInitialize( HINSTANCE inst )
+HRESULT GameInitialize( HINSTANCE inst )
 {
    g_game = std::make_unique<GameEngine>( inst, L"Slideshow", L"Slideshow d: Drawing Graphical Images",
                                           IDI_ICON, IDI_ICON_SM );
 
-   if ( g_game == NULL )
+   if ( NULL == g_game )
    {
-      return FALSE;
+      return E_FAIL;
    }
 
    g_game->SetFrameRate( 1 );
 
    g_inst = inst;
 
-   return TRUE;
+   return S_OK;
 }
 
 void GameStart( HWND wnd )
