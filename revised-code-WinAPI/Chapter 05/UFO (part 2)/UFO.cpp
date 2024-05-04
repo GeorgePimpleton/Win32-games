@@ -1,18 +1,18 @@
 #include "UFO.hpp"
 
-BOOL GameInitialize( HINSTANCE inst )
+HRESULT GameInitialize( HINSTANCE inst )
 {
    g_game = std::make_unique<GameEngine>( inst, L"UFO", L"UFO b: Controlling Games with the Keyboard and Mouse",
                                           IDI_ICON, IDI_ICON_SM, 500, 400 );
 
-   if ( g_game == NULL )
+   if ( NULL == g_game )
    {
-      return FALSE;
+      return E_FAIL;
    }
 
    g_game->SetFrameRate( 30 );
 
-   return TRUE;
+   return S_OK;
 }
 
 void GameStart( HWND wnd )
