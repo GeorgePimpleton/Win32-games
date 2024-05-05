@@ -113,7 +113,7 @@ BOOL Bitmap::Create( HWND wnd, LONG width, LONG height, COLORREF color )
    return TRUE;
 }
 
-void Bitmap::Draw( HDC dc, int x, int y, BOOL trans, COLORREF transColor )
+void Bitmap::Draw( HDC dc, int x, int y, BOOL trans, COLORREF transColor ) const
 {
    if ( m_bitmap != nullptr )
    {

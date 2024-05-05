@@ -22,15 +22,15 @@ public:
    BOOL Create( HWND, LONG, LONG, COLORREF );
 
 public:
-   void Draw( HDC, int, int, BOOL = FALSE, COLORREF = RGB( 255, 0, 255 ) );
+   void Draw( HDC, int, int, BOOL = FALSE, COLORREF = RGB( 255, 0, 255 ) ) const;
 
 public:
-   constexpr LONG GetWidth( ) const;
-   constexpr LONG GetHeight( )const;
+   constexpr LONG GetWidth( )  const;
+   constexpr LONG GetHeight( ) const;
 
 protected:
    void Free( );
 };
 
-inline constexpr LONG Bitmap::GetWidth( ) const  { return m_width; };
+inline constexpr LONG Bitmap::GetWidth( )  const { return m_width; };
 inline constexpr LONG Bitmap::GetHeight( ) const { return m_height; };

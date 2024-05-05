@@ -17,11 +17,11 @@ public:
    BOOL Create( HWND, LONG, LONG, COLORREF );
 
 public:
-   void Draw( HDC, int, int, BOOL = FALSE, COLORREF = RGB( 255, 0, 255 ) );
+   void Draw( HDC, int, int, BOOL = FALSE, COLORREF = RGB( 255, 0, 255 ) ) const;
 
 public:
-   LONG GetWidth( );
-   LONG GetHeight( );
+   LONG GetWidth( )  const;
+   LONG GetHeight( ) const;
 
 protected:
    void Free( );
@@ -32,5 +32,5 @@ protected:
    LONG    m_height;
 };
 
-inline LONG Bitmap::GetWidth( )  { return m_width; };
-inline LONG Bitmap::GetHeight( ) { return m_height; };
+inline LONG Bitmap::GetWidth( )  const { return m_width; };
+inline LONG Bitmap::GetHeight( ) const { return m_height; };

@@ -4,16 +4,16 @@ GameEngine* GameEngine::m_gameEngine = nullptr;
 
 int WINAPI wWinMain( _In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst, _In_ PWSTR cmdLine, _In_ int cmdShow )
 {
-   if ( GameInitialize( inst ) == S_OK )
+   if ( SUCCEEDED( GameInitialize( inst ) ) )
    {
-      if ( GameEngine::GetEngine( )->Initialize( cmdShow ) != S_OK )
+      if ( FAILED( GameEngine::GetEngine( )->Initialize( cmdShow ) ) )
       {
          return E_FAIL;
       }
 
       HACCEL accel = LoadAcceleratorsW( inst, MAKEINTRESOURCEW( IDR_ACCELERATORS ) );
 
-      if ( nullptr == accel )
+      if ( NULL == accel )
       {
          MessageBoxW( nullptr, L"Unable to Load the Accelerators!", GameEngine::GetEngine( )->GetTitle( ), MB_OK | MB_ICONERROR );
          return E_FAIL;

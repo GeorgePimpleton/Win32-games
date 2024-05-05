@@ -88,8 +88,8 @@ void GameDeactivate( HWND wnd )
 
 void GamePaint( HDC dc )
 {
-   UINT tileWidth  { ( UINT ) g_tiles[0]->GetWidth( ) };
-   UINT tileHeight { ( UINT ) g_tiles[0]->GetHeight( ) };
+   UINT tileWidth  = ( UINT ) g_tiles[0]->GetWidth( );
+   UINT tileHeight = ( UINT ) g_tiles[0]->GetHeight( );
 
    for ( UINT i = 0; i < 4; i++ )
    {
@@ -124,7 +124,8 @@ void GameMenu( WPARAM wParam )
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW( g_game->GetInstance( ), MAKEINTRESOURCEW( IDD_ABOUT ), g_game->GetWindow( ), ( DLGPROC ) DlgProc );
+      DialogBoxParamW( g_game->GetInstance( ), MAKEINTRESOURCEW( IDD_ABOUT ),
+                       g_game->GetWindow( ), ( DLGPROC ) DlgProc, 0L );
       return;
    }
 }
@@ -171,7 +172,7 @@ void MouseButtonDown( LONG x, LONG y, BOOL left )
 
       InvalidateRect( g_game->GetWindow( ), NULL, FALSE );
 
-      if ( g_matches == 8 )
+      if ( 8 == g_matches )
       {
          std::wstring s = std::format( L"You won in {} tries.", g_tries );
 

@@ -1,5 +1,3 @@
-#define NOMINMAX
-
 #include "Brainiac.hpp"
 
 HRESULT GameInitialize( HINSTANCE inst )
@@ -7,7 +5,7 @@ HRESULT GameInitialize( HINSTANCE inst )
    g_game = std::make_unique<GameEngine>( inst, L"Brainiac", L"Example Game: Brainiac b",
                                           IDI_ICON, IDI_ICON_SM, 528, 508 );
 
-   if ( nullptr == g_game )
+   if ( NULL == g_game )
    {
       return E_FAIL;
    }
@@ -107,7 +105,8 @@ void GameMenu( WPARAM wParam )
       return;
 
    case IDM_HELP_ABOUT:
-      DialogBoxW( g_game->GetInstance( ), MAKEINTRESOURCEW( IDD_ABOUT ), g_game->GetWindow( ), ( DLGPROC ) DlgProc );
+      DialogBoxParamW( g_game->GetInstance( ), MAKEINTRESOURCEW( IDD_ABOUT ),
+                       g_game->GetWindow( ), ( DLGPROC ) DlgProc, 0L );
       return;
    }
 }

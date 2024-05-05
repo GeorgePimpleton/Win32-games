@@ -3,10 +3,9 @@
 #include <windows.h>
 #include "resource.h"
 
-int WINAPI       wWinMain( _In_ HINSTANCE, _In_opt_ HINSTANCE,
-                           _In_ PWSTR,     _In_     int );
+int     WINAPI   wWinMain( _In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ PWSTR, _In_ int );
 LRESULT CALLBACK WndProc( HWND, UINT, WPARAM, LPARAM );
-BOOL CALLBACK    DlgProc( HWND, UINT, WPARAM, LPARAM );
+BOOL    CALLBACK DlgProc( HWND, UINT, WPARAM, LPARAM );
 
 HRESULT GameInitialize( HINSTANCE );
 void    GameStart( HWND );
@@ -32,8 +31,8 @@ public:
 public:
    static GameEngine* GetEngine( ) { return m_gameEngine; }
 
-   HRESULT            Initialize( int );
-   LRESULT            HandleEvent( HWND, UINT, WPARAM, LPARAM );
+   HRESULT Initialize( int );
+   LRESULT HandleEvent( HWND, UINT, WPARAM, LPARAM );
 
 public:
    HINSTANCE GetInstance( ) const          { return m_inst; }
