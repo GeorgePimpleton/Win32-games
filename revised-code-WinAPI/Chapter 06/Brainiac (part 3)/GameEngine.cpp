@@ -130,13 +130,13 @@ HRESULT GameEngine::Initialize( int cmdShow )
    UINT windowWidth  = m_width  + GetSystemMetrics( SM_CXFIXEDFRAME ) * 2 + 10;
    UINT windowHeight = m_height + GetSystemMetrics( SM_CYFIXEDFRAME ) * 2 + GetSystemMetrics( SM_CYCAPTION ) + 10;
 
-   if ( wc.lpszMenuName != NULL)
+   if ( NULL != wc.lpszMenuName )
    {
       windowHeight += GetSystemMetrics( SM_CYMENU );
    }
 
-   UINT windowPosX { ( GetSystemMetrics( SM_CXSCREEN ) - windowWidth )  / 2 };
-   UINT windowPosY { ( GetSystemMetrics( SM_CYSCREEN ) - windowHeight ) / 2 };
+   UINT windowPosX = ( GetSystemMetrics( SM_CXSCREEN ) - windowWidth )  / 2;
+   UINT windowPosY = ( GetSystemMetrics( SM_CYSCREEN ) - windowHeight ) / 2;
 
    m_wnd = CreateWindowW( m_wndClass, m_title,
                           WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
