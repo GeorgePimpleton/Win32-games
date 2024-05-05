@@ -22,8 +22,8 @@ public:
    BOOL Create( UINT );
    BOOL Create( HDC, int, int, COLORREF );
 
-   void Draw( HDC, int, int );
+   void Draw( HDC, int, int ) const;
 
-   int GetWidth( )  { return m_width; };
-   int GetHeight( ) { return m_height; };
+   int GetWidth( )  const { return m_width; };
+   int GetHeight( ) const { return m_height; };
 };

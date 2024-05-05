@@ -29,7 +29,7 @@ int WINAPI wWinMain( _In_     HINSTANCE inst,
       {
          if ( PeekMessageW( &msg, NULL, 0, 0, PM_REMOVE ) )
          {
-            if ( msg.message == WM_QUIT )
+            if ( WM_QUIT == msg.message )
             {
                break;
             }
