@@ -28,7 +28,7 @@ int WINAPI wWinMain( _In_     HINSTANCE inst,
       {
          if ( PeekMessageW( &msg, NULL, 0, 0, PM_REMOVE ) )
          {
-            if ( msg.message == WM_QUIT )
+            if ( WM_QUIT == msg.message )
             {
                break;
             }
@@ -95,7 +95,7 @@ GameEngine::GameEngine( HINSTANCE inst, PCWSTR wndClass, PCWSTR title,
    m_smallIcon  = smallIcon;
    m_width      = width;
    m_height     = height;
-   m_frameDelay = 50;   // 20 FPS default
+   m_frameDelay = 50;
    m_asleep     = TRUE;
 }
 
@@ -127,7 +127,7 @@ HRESULT GameEngine::Initialize( int cmdShow )
    int windowWidth  = m_width  + GetSystemMetrics( SM_CXFIXEDFRAME ) * 2 + 10;
    int windowHeight = m_height + GetSystemMetrics( SM_CYFIXEDFRAME ) * 2 + GetSystemMetrics( SM_CYCAPTION ) + 10;
 
-   if ( wc.lpszMenuName != NULL )
+   if ( NULL != wc.lpszMenuName )
    {
       windowHeight += GetSystemMetrics( SM_CYMENU );
    }
