@@ -10,9 +10,9 @@ int WINAPI wWinMain( _In_     HINSTANCE inst,
                      _In_     int       cmdShow )
 {
 
-   if ( GameInitialize( inst ) == S_OK )
+   if ( SUCCEEDED( GameInitialize( inst ) ) )
    {
-      if ( GameEngine::GetEngine( )->Initialize( cmdShow ) != S_OK )
+      if ( FAILED( GameEngine::GetEngine( )->Initialize( cmdShow ) ) )
       {
          return E_FAIL;
       }
@@ -134,7 +134,7 @@ HRESULT GameEngine::Initialize( int cmdShow )
    UINT windowWidth  = m_width  + GetSystemMetrics( SM_CXFIXEDFRAME ) * 2 + 10;
    UINT windowHeight = m_height + GetSystemMetrics( SM_CYFIXEDFRAME ) * 2 + GetSystemMetrics( SM_CYCAPTION ) + 10;
 
-   if ( wc.lpszMenuName != NULL )
+   if ( NULL != wc.lpszMenuName )
    {
       windowHeight += GetSystemMetrics( SM_CYMENU );
    }
@@ -236,7 +236,7 @@ HRESULT GameEngine::InitJoystick( )
 
    JOYINFO joyInfo = { };
 
-   if ( joyGetPos( JOYSTICKID1, &joyInfo ) != JOYERR_UNPLUGGED )
+   if ( JOYERR_UNPLUGGED != joyGetPos( JOYSTICKID1, &joyInfo ) )
    {
       m_joyID = JOYSTICKID1;
    }
@@ -262,7 +262,7 @@ HRESULT GameEngine::InitJoystick( )
 
 void GameEngine::CaptureJoystick( )
 {
-   if ( m_joyID == JOYSTICKID1 )
+   if ( JOYSTICKID1 == m_joyID )
    {
       joySetCapture( m_wnd, m_joyID, NULL, TRUE );
    }
@@ -270,7 +270,7 @@ void GameEngine::CaptureJoystick( )
 
 void GameEngine::ReleaseJoystick( )
 {
-   if ( m_joyID == JOYSTICKID1 )
+   if ( JOYSTICKID1 == m_joyID )
    {
       joyReleaseCapture( m_joyID );
    }
@@ -278,12 +278,12 @@ void GameEngine::ReleaseJoystick( )
 
 void GameEngine::CheckJoystick( )
 {
-   if ( m_joyID == JOYSTICKID1 )
+   if ( JOYSTICKID1 == m_joyID )
    {
       JOYINFO  joyInfo  = { };
       JOYSTATE joyState = JOY_NONE;
 
-      if ( joyGetPos( m_joyID, &joyInfo ) == JOYERR_NOERROR )
+      if ( JOYERR_NOERROR == joyGetPos( m_joyID, &joyInfo ) )
       {
          if ( joyInfo.wXpos < ( WORD ) m_joyTrip.left )
          {
