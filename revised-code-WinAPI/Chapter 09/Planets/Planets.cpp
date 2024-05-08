@@ -125,7 +125,7 @@ void MouseMove( LONG x, LONG y )
 {
    if ( g_dragging )
    {
-      g_panetSprite[g_dragPlanet]->SetPosition( x - ( g_planetBitmap[g_dragPlanet]->GetWidth( ) / 2 ),
+      g_panetSprite[g_dragPlanet]->SetPosition( x - ( g_planetBitmap[g_dragPlanet]->GetWidth( )  / 2 ),
                                                 y - ( g_planetBitmap[g_dragPlanet]->GetHeight( ) / 2 ) );
 
       InvalidateRect( g_game->GetWindow( ), NULL, FALSE );
