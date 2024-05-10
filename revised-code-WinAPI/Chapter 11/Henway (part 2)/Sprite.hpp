@@ -4,13 +4,13 @@
 #include "Bitmap.hpp"
 #include "random_toolkit_v131.hpp"
 
-using BOUNDSACTION           = WORD;
+using BOUNDSACTION = WORD;
 const BOUNDSACTION BA_STOP   = 0,
                    BA_WRAP   = 1,
                    BA_BOUNCE = 2,
                    BA_DIE    = 3;
 
-using SPRITEACTION         = WORD;
+using SPRITEACTION = WORD;
 const SPRITEACTION SA_NONE = 0x0000L;
 const SPRITEACTION SA_KILL = 0x0001L;
 
@@ -35,7 +35,7 @@ public:
 
 public:
    virtual SPRITEACTION Update( );
-   void                 Draw( HDC );
+   void                 Draw( HDC ) const;
    BOOL                 IsPointInside( LONG, LONG );
    BOOL                 TestCollision( Sprite* );
 

@@ -80,7 +80,8 @@ void GameNew( )
    g_score = 0;
    g_gameOver = FALSE;
 
-   EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
+   EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                   ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
 
    InvalidateRect( g_game->GetWindow( ), NULL, FALSE );
 }
@@ -223,7 +224,7 @@ void HandleJoystick( JOYSTATE joyState )
 
 BOOL SpriteCollision( Sprite* spriteHitter, Sprite* spriteHittee )
 {
-   if ( spriteHittee == g_chickenSprite.get( ) )
+   if ( g_chickenSprite.get( ) == spriteHittee )
    {
       g_chickenSprite->SetPosition( 4, 175 );
 
@@ -237,7 +238,8 @@ BOOL SpriteCollision( Sprite* spriteHitter, Sprite* spriteHittee )
          wsprintfW( szText, L"Game Over! You scored %d points.", g_score );
          MessageBoxW( g_game->GetWindow( ), szText, L"Henway", MB_OK );
          g_gameOver = TRUE;
-         EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
+         EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                         ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
       }
 
       return FALSE;

@@ -7,12 +7,12 @@
 #include "GameEngine.hpp"
 #include "random_toolkit_v131.hpp"
 
-std::unique_ptr<GameEngine>             g_game;
-std::unique_ptr<Bitmap>                 g_highwayBitmap;
-std::unique_ptr<Bitmap>                 g_chickenBitmap;
-std::unique_ptr<Bitmap>                 g_chickenHeadBitmap;
-std::array<std::unique_ptr<Bitmap> , 4> g_carBitmaps;
-std::unique_ptr<Sprite>                 g_chickenSprite;
+std::unique_ptr<GameEngine>            g_game;
+std::unique_ptr<Bitmap>                g_highwayBitmap;
+std::unique_ptr<Bitmap>                g_chickenBitmap;
+std::unique_ptr<Bitmap>                g_chickenHeadBitmap;
+std::array<std::unique_ptr<Bitmap>, 4> g_carBitmaps;
+std::unique_ptr<Sprite>                g_chickenSprite;
 
 BOOL    g_gameOver;
 HDC     g_offscreenDC;
