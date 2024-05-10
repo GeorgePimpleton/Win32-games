@@ -131,7 +131,7 @@ void MouseButtonUp( LONG x, LONG y, BOOL left )
 
 void MouseMove( LONG x, LONG y )
 {
-   if ( g_dragSprite != NULL )
+   if ( NULL != g_dragSprite )
    {
       g_dragSprite->SetPosition( x - ( g_dragSprite->GetWidth( )  / 2 ),
                                  y - ( g_dragSprite->GetHeight( ) / 2 ) );

@@ -35,7 +35,7 @@ public:
 
 public:
    virtual SPRITEACTION Update( );
-   void                 Draw( HDC );
+   void                 Draw( HDC ) const;
    BOOL                 IsPointInside( LONG, LONG );
    BOOL                 TestCollision( Sprite* );
 

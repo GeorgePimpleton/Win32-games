@@ -134,7 +134,7 @@ SPRITEACTION Sprite::Update( )
          SetVelocity( newVelocity );
       }
    }
-   else if ( m_boundsAction == BA_DIE )
+   else if ( BA_DIE == m_boundsAction )
    {
       if ( ( newPosition.x + spriteSize.x ) < m_bounds.left || newPosition.x > m_bounds.right ||
            ( newPosition.y + spriteSize.y ) < m_bounds.top || newPosition.y > m_bounds.bottom )
@@ -162,9 +162,9 @@ SPRITEACTION Sprite::Update( )
    return SA_NONE;
 }
 
-void Sprite::Draw( HDC dc )
+void Sprite::Draw( HDC dc ) const
 {
-   if ( m_bitmap != NULL && !m_hidden )
+   if ( NULL != m_bitmap && !m_hidden )
    {
       m_bitmap->Draw( dc, m_position.left, m_position.top, TRUE );
    }
