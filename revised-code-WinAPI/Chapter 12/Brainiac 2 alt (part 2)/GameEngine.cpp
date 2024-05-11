@@ -4,12 +4,14 @@
 
 GameEngine* GameEngine::m_gameEngine = NULL;
 
-int WINAPI wWinMain( _In_ HINSTANCE inst,    _In_opt_ HINSTANCE prevInst,
-                     _In_ PWSTR     cmdLine, _In_     int       cmdShow )
+int WINAPI wWinMain( _In_     HINSTANCE inst,
+                     _In_opt_ HINSTANCE prevInst,
+                     _In_     PWSTR     cmdLine,
+                     _In_     int       cmdShow )
 {
-   if ( GameInitialize( inst ) == S_OK )
+   if ( SUCCEEDED( GameInitialize( inst ) ) )
    {
-      if ( GameEngine::GetEngine( )->Initialize( cmdShow ) != S_OK )
+      if ( FAILED( GameEngine::GetEngine( )->Initialize( cmdShow ) ) )
       {
          return E_FAIL;
       }
@@ -131,16 +133,15 @@ HRESULT GameEngine::Initialize( int cmdShow )
       return E_FAIL;
    }
 
-   UINT windowWidth  = m_width + GetSystemMetrics( SM_CXFIXEDFRAME ) * 2 + 10;
-   UINT windowHeight = m_height + GetSystemMetrics( SM_CYFIXEDFRAME ) * 2
-      + GetSystemMetrics( SM_CYCAPTION ) + 10;
+   UINT windowWidth  = m_width  + GetSystemMetrics( SM_CXFIXEDFRAME ) * 2 + 10;
+   UINT windowHeight = m_height + GetSystemMetrics( SM_CYFIXEDFRAME ) * 2 + GetSystemMetrics( SM_CYCAPTION ) + 10;
 
-   if ( wc.lpszMenuName != NULL )
+   if ( NULL != wc.lpszMenuName != NULL )
    {
       windowHeight += GetSystemMetrics( SM_CYMENU );
    }
 
-   UINT windowPosX = ( GetSystemMetrics( SM_CXSCREEN ) - windowWidth ) / 2;
+   UINT windowPosX = ( GetSystemMetrics( SM_CXSCREEN ) - windowWidth  ) / 2;
    UINT windowPosY = ( GetSystemMetrics( SM_CYSCREEN ) - windowHeight ) / 2;
 
    m_wnd = CreateWindowW( m_wndClass, m_title,
@@ -171,7 +172,7 @@ LRESULT GameEngine::HandleEvent( HWND wnd, UINT msg, WPARAM wParam, LPARAM lPara
       return S_OK;
 
    case WM_ACTIVATE:
-      if ( wParam != WA_INACTIVE )
+      if ( WA_INACTIVE != wParam )
       {
          GameActivate( wnd );
          SetSleep( FALSE );
@@ -238,7 +239,7 @@ HRESULT GameEngine::InitJoystick( )
 
    JOYINFO joyInfo = { };
 
-   if ( joyGetPos( JOYSTICKID1, &joyInfo ) != JOYERR_UNPLUGGED )
+   if ( JOYERR_UNPLUGGED != joyGetPos( JOYSTICKID1, &joyInfo ) )
    {
       m_joyID = JOYSTICKID1;
    }
@@ -264,7 +265,7 @@ HRESULT GameEngine::InitJoystick( )
 
 void GameEngine::CaptureJoystick( )
 {
-   if ( m_joyID == JOYSTICKID1 )
+   if ( JOYSTICKID1 == m_joyID )
    {
       joySetCapture( m_wnd, m_joyID, NULL, TRUE );
    }
@@ -272,7 +273,7 @@ void GameEngine::CaptureJoystick( )
 
 void GameEngine::ReleaseJoystick( )
 {
-   if ( m_joyID == JOYSTICKID1 )
+   if ( JOYSTICKID1 == m_joyID )
    {
       joyReleaseCapture( m_joyID );
    }
@@ -280,7 +281,7 @@ void GameEngine::ReleaseJoystick( )
 
 void GameEngine::CheckJoystick( )
 {
-   if ( m_joyID == JOYSTICKID1 )
+   if ( JOYSTICKID1 == m_joyID )
    {
       JOYINFO  joyInfo  = { };
       JOYSTATE joyState = 0;
@@ -322,7 +323,7 @@ void GameEngine::CheckJoystick( )
 
 void GameEngine::AddSprite( Sprite* pSprite )
 {
-   if ( pSprite != NULL )
+   if ( NULL != pSprite )
    {
       if ( m_sprites.size( ) > 0 )
       {
@@ -340,7 +341,7 @@ void GameEngine::AddSprite( Sprite* pSprite )
    }
 }
 
-void GameEngine::DrawSprites( HDC dc )
+void GameEngine::DrawSprites( HDC dc ) const
 {
    for ( auto iterSprite = m_sprites.begin( ); iterSprite != m_sprites.end( ); iterSprite++ )
    {

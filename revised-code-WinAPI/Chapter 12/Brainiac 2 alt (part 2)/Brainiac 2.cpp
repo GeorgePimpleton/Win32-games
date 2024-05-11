@@ -63,7 +63,8 @@ void GameNew( )
    g_tile2.x = g_tile2.y = -1;
    g_matches = g_tries   = 0;
 
-   EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
+   EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                   ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
 
    InvalidateRect( g_game->GetWindow( ), NULL, FALSE );
 }
@@ -182,7 +183,8 @@ void MouseButtonDown( LONG x, LONG y, BOOL left )
 
          MessageBoxW( g_game->GetWindow( ), szText, L"Brainiac", MB_OK );
 
-         EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
+         EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                         ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
       }
    }
 }

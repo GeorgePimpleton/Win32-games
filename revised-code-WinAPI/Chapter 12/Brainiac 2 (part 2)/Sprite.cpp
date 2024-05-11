@@ -162,9 +162,9 @@ SPRITEACTION Sprite::Update( )
    return SA_NONE;
 }
 
-void Sprite::Draw( HDC dc )
+void Sprite::Draw( HDC dc ) const
 {
-   if ( m_bitmap != NULL && !m_hidden )
+   if ( NULL != m_bitmap && !m_hidden )
    {
       m_bitmap->Draw( dc, m_position.left, m_position.top, TRUE );
    }

@@ -4,13 +4,13 @@
 #include "Bitmap.hpp"
 #include "random_toolkit_v131.hpp"
 
-using BOUNDSACTION           = WORD;
+using BOUNDSACTION = WORD;
 const BOUNDSACTION BA_STOP   = 0,
                    BA_WRAP   = 1,
                    BA_BOUNCE = 2,
                    BA_DIE    = 3;
 
-using SPRITEACTION         = WORD;
+using SPRITEACTION = WORD;
 const SPRITEACTION SA_NONE = 0x0000L,
                    SA_KILL = 0x0001L;
 
@@ -29,13 +29,12 @@ protected:
 public:
             Sprite( Bitmap* );
             Sprite( Bitmap*, RECT&, BOUNDSACTION = BA_STOP );
-            Sprite( Bitmap*, POINT, POINT, LONG, RECT&,
-                    BOUNDSACTION = BA_STOP );
+            Sprite( Bitmap*, POINT, POINT, LONG, RECT&, BOUNDSACTION = BA_STOP );
    virtual ~Sprite( );
 
 public:
    virtual SPRITEACTION Update( );
-   void                 Draw( HDC );
+   void                 Draw( HDC ) const;
    BOOL                 IsPointInside( LONG, LONG );
    BOOL                 TestCollision( Sprite* );
 
@@ -76,8 +75,8 @@ inline BOOL Sprite::TestCollision( Sprite* testSprite )
 {
    RECT& rcTest = testSprite->GetCollision( );
 
-   return m_collision.left <= rcTest.right && rcTest.left <= m_collision.right &&
-      m_collision.top <= rcTest.bottom && rcTest.top <= m_collision.bottom;
+   return m_collision.left <= rcTest.right  && rcTest.left <= m_collision.right &&
+          m_collision.top  <= rcTest.bottom && rcTest.top  <= m_collision.bottom;
 }
 
 inline RECT& Sprite::GetPosition( ) { return m_position; }
