@@ -54,7 +54,6 @@ void GameMenu( WPARAM wParam )
    switch ( LOWORD( wParam ) )
    {
    case IDM_GAME_NEW:
-      // spaceholder for later examples
       return;
 
    case IDM_GAME_EXIT:

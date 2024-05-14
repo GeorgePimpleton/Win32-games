@@ -31,7 +31,7 @@ Bitmap::~Bitmap( )
 
 void Bitmap::Free( )
 {
-   if ( m_bitmap != NULL )
+   if ( NULL != m_bitmap )
    {
       DeleteObject( m_bitmap );
       m_bitmap = NULL;
@@ -44,7 +44,7 @@ BOOL Bitmap::Create( PCWSTR fileName )
 
    m_bitmap = ( HBITMAP ) LoadImageW( NULL, fileName, IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION | LR_LOADFROMFILE );
 
-   if ( m_bitmap == NULL )
+   if ( NULL == m_bitmap )
    {
       Free( );
       return FALSE;
@@ -66,7 +66,7 @@ BOOL Bitmap::Create( UINT resID )
 
    m_bitmap = ( HBITMAP ) LoadImageW( GetModuleHandleW( NULL ), MAKEINTRESOURCEW( resID ), IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION );
 
-   if ( m_bitmap == NULL )
+   if ( NULL == m_bitmap )
    {
       Free( );
       return FALSE;
@@ -86,7 +86,7 @@ BOOL Bitmap::Create( HDC dc, int width, int height, COLORREF color )
 {
    m_bitmap = CreateCompatibleBitmap( dc, width, height );
 
-   if ( m_bitmap == NULL )
+   if ( NULL == m_bitmap )
    {
       return FALSE;
    }
@@ -110,7 +110,7 @@ BOOL Bitmap::Create( HDC dc, int width, int height, COLORREF color )
 
 void Bitmap::Draw( HDC dc, int x, int y, BOOL trans, COLORREF transColor ) const
 {
-   if ( m_bitmap != NULL )
+   if ( NULL != m_bitmap )
    {
       HDC     memDC     = CreateCompatibleDC( dc );
       HBITMAP oldBitmap = ( HBITMAP ) SelectObject( memDC, m_bitmap );
