@@ -39,7 +39,6 @@ public:
 
    HRESULT Initialize( int );
    LRESULT HandleEvent( HWND, UINT, WPARAM, LPARAM );
-   void    ErrorQuit( PCWSTR );
 
    HINSTANCE GetInstance( ) const          { return m_inst; };
    HWND      GetWindow( ) const            { return m_wnd; };
