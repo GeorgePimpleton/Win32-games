@@ -103,7 +103,7 @@ GameEngine::~GameEngine( )
 
 HRESULT GameEngine::Initialize( int cmdShow )
 {
-   WNDCLASSEXW wc { };
+   WNDCLASSEXW wc = { };
 
    wc.cbSize        = sizeof( WNDCLASSEXW );
    wc.style         = CS_HREDRAW | CS_VREDRAW;
@@ -132,8 +132,8 @@ HRESULT GameEngine::Initialize( int cmdShow )
       windowHeight += GetSystemMetrics( SM_CYMENU );
    }
 
-   UINT windowPosX { ( GetSystemMetrics( SM_CXSCREEN ) - windowWidth )  / 2 };
-   UINT windowPosY { ( GetSystemMetrics( SM_CYSCREEN ) - windowHeight ) / 2 };
+   UINT windowPosX = ( GetSystemMetrics( SM_CXSCREEN ) - windowWidth )  / 2;
+   UINT windowPosY = ( GetSystemMetrics( SM_CYSCREEN ) - windowHeight ) / 2;
 
    m_wnd = CreateWindowW( m_wndClass, m_title,
                           WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX,
@@ -163,7 +163,7 @@ LRESULT GameEngine::HandleEvent( HWND wnd, UINT msg, WPARAM wParam, LPARAM lPara
       return S_OK;
 
    case WM_ACTIVATE:
-      if ( wParam != WA_INACTIVE )
+      if ( WA_INACTIVE != wParam )
       {
          GameActivate( wnd );
          SetSleep( FALSE );

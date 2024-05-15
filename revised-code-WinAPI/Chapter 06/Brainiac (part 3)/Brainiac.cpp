@@ -80,8 +80,8 @@ void GameDeactivate( HWND wnd )
 
 void GamePaint( HDC dc )
 {
-   UINT tileWidth  { ( UINT ) g_tiles[0]->GetWidth( ) };
-   UINT tileHeight { ( UINT ) g_tiles[0]->GetHeight( ) };
+   UINT tileWidth  = ( UINT ) g_tiles[0]->GetWidth( );
+   UINT tileHeight = ( UINT ) g_tiles[0]->GetHeight( );
 
    for ( UINT i = 0; i < 4; i++ )
    {

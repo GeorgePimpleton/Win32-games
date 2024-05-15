@@ -106,7 +106,7 @@ GameEngine::~GameEngine( )
 
 HRESULT GameEngine::Initialize( int cmdShow )
 {
-   WNDCLASSEXW wc { };
+   WNDCLASSEXW wc = { };
 
    wc.cbSize        = sizeof( WNDCLASSEXW );
    wc.style         = CS_HREDRAW | CS_VREDRAW;
@@ -166,7 +166,7 @@ LRESULT GameEngine::HandleEvent( HWND wnd, UINT msg, WPARAM wParam, LPARAM lPara
       return S_OK;
 
    case WM_ACTIVATE:
-      if ( wParam != WA_INACTIVE )
+      if ( WA_INACTIVE != wParam )
       {
          GameActivate( wnd );
          SetSleep( FALSE );

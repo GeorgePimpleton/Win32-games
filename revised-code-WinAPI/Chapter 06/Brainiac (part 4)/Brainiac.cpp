@@ -88,15 +88,15 @@ void GameDeactivate( HWND wnd )
 
 void GamePaint( HDC dc )
 {
-   UINT tileWidth  { ( UINT ) g_tiles[0]->GetWidth( ) };
-   UINT tileHeight { ( UINT ) g_tiles[0]->GetHeight( ) };
+   UINT tileWidth  = ( UINT ) g_tiles[0]->GetWidth( );
+   UINT tileHeight = ( UINT ) g_tiles[0]->GetHeight( );
 
    for ( UINT i = 0; i < 4; i++ )
    {
       for ( UINT j = 0; j < 4; j++ )
       {
          if ( g_tileState[i][j] || ( ( i == g_tile1.x ) && ( j == g_tile1.y ) ) ||
-              ( ( i == g_tile2.x ) && ( j == g_tile2.y ) ) )
+                                   ( ( i == g_tile2.x ) && ( j == g_tile2.y ) ) )
          {
             g_tiles[g_tile[i][j]]->Draw( dc, i * tileWidth, j * tileHeight, TRUE );
          }
@@ -181,7 +181,7 @@ void MouseButtonDown( LONG x, LONG y, BOOL left )
          g_gameOver = TRUE;
 
          EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
-                         ( UINT ) ( LONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
+                         ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
 
       }
    }
