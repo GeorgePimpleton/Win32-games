@@ -170,7 +170,7 @@ LRESULT GameEngine::HandleEvent( HWND wnd, UINT msg, WPARAM wParam, LPARAM lPara
       return S_OK;
 
    case WM_ACTIVATE:
-      if ( wParam != WA_INACTIVE )
+      if ( WA_INACTIVE != wParam )
       {
          GameActivate( wnd );
          SetSleep( FALSE );
@@ -229,7 +229,7 @@ HRESULT GameEngine::InitJoystick( )
 {
    UINT numJoysticks = 0;
 
-   if ( ( numJoysticks = joyGetNumDevs( ) ) == 0 )
+   if ( 0 == ( numJoysticks = joyGetNumDevs( ) ) )
    {
       return E_FAIL;
    }
