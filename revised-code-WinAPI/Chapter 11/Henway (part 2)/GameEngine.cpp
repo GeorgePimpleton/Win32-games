@@ -220,6 +220,7 @@ LRESULT GameEngine::HandleEvent( HWND hWindow, UINT msg, WPARAM wParam, LPARAM l
       PostQuitMessage( 0 );
       return S_OK;
    }
+
    return DefWindowProcW( hWindow, msg, wParam, lParam );
 }
 
