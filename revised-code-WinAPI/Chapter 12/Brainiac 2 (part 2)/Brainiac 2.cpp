@@ -39,7 +39,7 @@ void GameNew( )
       for ( int j = 0; j < 4; j++ )
       {
          g_tileStates[i][j] = FALSE;
-         g_tiles[i][j] = 0;
+         g_tiles[i][j]      = 0;
       }
    }
 

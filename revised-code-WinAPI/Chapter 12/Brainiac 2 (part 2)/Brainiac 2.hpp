@@ -3,7 +3,6 @@
 #include <windows.h>
 #include <memory>
 #include <array>
-#include "random_toolkit_v131.hpp"
 #include "resource.h"
 #include "Bitmap.hpp"
 #include "Sprite.hpp"
