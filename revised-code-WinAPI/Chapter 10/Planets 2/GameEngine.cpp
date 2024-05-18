@@ -221,6 +221,7 @@ LRESULT GameEngine::HandleEvent( HWND wnd, UINT msg, WPARAM wParam, LPARAM lPara
       PostQuitMessage( 0 );
       return S_OK;
    }
+
    return DefWindowProcW( wnd, msg, wParam, lParam );
 }
 
@@ -337,7 +338,7 @@ void GameEngine::AddSprite( Sprite* sprite )
    }
 }
 
-void GameEngine::DrawSprites( HDC dc )
+void GameEngine::DrawSprites( HDC dc ) const
 {
    for ( auto iterSprite = m_sprites.begin( ); iterSprite != m_sprites.end( ); iterSprite++ )
    {

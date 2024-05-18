@@ -69,7 +69,7 @@ public:
    void    ReleaseJoystick( );
    void    CheckJoystick( );
    void    AddSprite( Sprite* );
-   void    DrawSprites( HDC );
+   void    DrawSprites( HDC ) const;
    void    UpdateSprites( );
    void    CleanupSprites( );
    Sprite* IsPointInSprite( LONG, LONG );
