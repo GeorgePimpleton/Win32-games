@@ -167,7 +167,7 @@ LRESULT GameEngine::HandleEvent( HWND wnd, UINT msg, WPARAM wParam, LPARAM lPara
       return S_OK;
 
    case WM_ACTIVATE:
-      if ( wParam != WA_INACTIVE )
+      if ( WA_INACTIVE != wParam )
       {
          GameActivate( wnd );
          SetSleep( FALSE );
@@ -219,6 +219,7 @@ LRESULT GameEngine::HandleEvent( HWND wnd, UINT msg, WPARAM wParam, LPARAM lPara
       PostQuitMessage( 0 );
       return S_OK;
    }
+
    return DefWindowProcW( wnd, msg, wParam, lParam );
 }
 

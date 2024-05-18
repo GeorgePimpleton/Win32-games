@@ -85,7 +85,6 @@ void Sprite::Update( )
          newPosition.y = m_bounds.top - spriteSize.y;
       }
    }
-
    else if ( BA_BOUNCE == m_boundsAction )
    {
       BOOL  bounce      = FALSE;
@@ -122,7 +121,6 @@ void Sprite::Update( )
          SetVelocity( newVelocity );
       }
    }
-
    else
    {
       if ( newPosition.x  < m_bounds.left || newPosition.x >( m_bounds.right - spriteSize.x ) )
@@ -143,7 +141,7 @@ void Sprite::Update( )
    SetPosition( newPosition );
 }
 
-void Sprite::Draw( HDC dc )
+void Sprite::Draw( HDC dc ) const
 {
    if ( m_bitmap != NULL && !m_hidden )
    {

@@ -30,7 +30,7 @@ public:
 
 public:
    virtual void Update( );
-   void         Draw( HDC );
+   void         Draw( HDC ) const;
    BOOL         IsPointInside( LONG, LONG );
 
 public:
