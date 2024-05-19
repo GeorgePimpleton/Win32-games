@@ -4,12 +4,14 @@
 
 GameEngine* GameEngine::m_gameEngine = NULL;
 
-int WINAPI wWinMain( _In_ HINSTANCE inst, _In_opt_ HINSTANCE prevInst,
-                     _In_ PWSTR cmdLine,  _In_     int       cmdShow )
+int WINAPI wWinMain( _In_     HINSTANCE inst,
+                     _In_opt_ HINSTANCE prevInst,
+                     _In_     PWSTR     cmdLine,
+                     _In_     int       cmdShow )
 {
-   if ( GameInitialize( inst ) == S_OK )
+   if ( SUCCEEDED( GameInitialize( inst ) ) )
    {
-      if ( GameEngine::GetEngine( )->Initialize( cmdShow ) != S_OK )
+      if ( FAILED( GameEngine::GetEngine( )->Initialize( cmdShow ) ) )
       {
          return E_FAIL;
       }
@@ -132,16 +134,15 @@ HRESULT GameEngine::Initialize( int cmdShow )
       return E_FAIL;
    }
 
-   UINT windowWidth  = m_width + GetSystemMetrics( SM_CXFIXEDFRAME ) * 2 + 10;
-   UINT windowHeight = m_height + GetSystemMetrics( SM_CYFIXEDFRAME ) * 2
-      + GetSystemMetrics( SM_CYCAPTION ) + 10;
+   UINT windowWidth  = m_width  + GetSystemMetrics( SM_CXFIXEDFRAME ) * 2 + 10;
+   UINT windowHeight = m_height + GetSystemMetrics( SM_CYFIXEDFRAME ) * 2 + GetSystemMetrics( SM_CYCAPTION ) + 10;
 
-   if ( wc.lpszMenuName != NULL )
+   if ( NULL != wc.lpszMenuName )
    {
       windowHeight += GetSystemMetrics( SM_CYMENU );
    }
 
-   UINT windowPosX = ( GetSystemMetrics( SM_CXSCREEN ) - windowWidth ) / 2;
+   UINT windowPosX = ( GetSystemMetrics( SM_CXSCREEN ) - windowWidth  ) / 2;
    UINT windowPosY = ( GetSystemMetrics( SM_CYSCREEN ) - windowHeight ) / 2;
 
    m_wnd = CreateWindowW( m_wndClass, m_title,
@@ -172,7 +173,7 @@ LRESULT GameEngine::HandleEvent( HWND wnd, UINT msg, WPARAM wParam, LPARAM lPara
       return S_OK;
 
    case WM_ACTIVATE:
-      if ( wParam != WA_INACTIVE )
+      if ( WA_INACTIVE != wParam )
       {
          GameActivate( wnd );
          SetSleep( FALSE );
@@ -222,6 +223,7 @@ LRESULT GameEngine::HandleEvent( HWND wnd, UINT msg, WPARAM wParam, LPARAM lPara
       PostQuitMessage( 0 );
       return S_OK;
    }
+
    return DefWindowProcW( wnd, msg, wParam, lParam );
 }
 
@@ -236,7 +238,7 @@ BOOL GameEngine::InitJoystick( )
 
    JOYINFO joyInfo = { };
 
-   if ( joyGetPos( JOYSTICKID1, &joyInfo ) != JOYERR_UNPLUGGED )
+   if ( JOYERR_UNPLUGGED!=  joyGetPos( JOYSTICKID1, &joyInfo ) )
    {
       m_joyID = JOYSTICKID1;
    }
@@ -262,7 +264,7 @@ BOOL GameEngine::InitJoystick( )
 
 void GameEngine::CaptureJoystick( )
 {
-   if ( m_joyID == JOYSTICKID1 )
+   if ( JOYSTICKID1 == m_joyID )
    {
       joySetCapture( m_wnd, m_joyID, NULL, TRUE );
    }
@@ -270,7 +272,7 @@ void GameEngine::CaptureJoystick( )
 
 void GameEngine::ReleaseJoystick( )
 {
-   if ( m_joyID == JOYSTICKID1 )
+   if ( JOYSTICKID1 == m_joyID )
    {
       joyReleaseCapture( m_joyID );
    }
@@ -278,12 +280,12 @@ void GameEngine::ReleaseJoystick( )
 
 void GameEngine::CheckJoystick( )
 {
-   if ( m_joyID == JOYSTICKID1 )
+   if ( JOYSTICKID1 == m_joyID )
    {
       JOYINFO  joyInfo  = { };
       JOYSTATE joyState = 0;
 
-      if ( joyGetPos( m_joyID, &joyInfo ) == JOYERR_NOERROR )
+      if ( JOYERR_NOERROR == joyGetPos( m_joyID, &joyInfo ) )
       {
          if ( joyInfo.wXpos < ( WORD ) m_joyTrip.left )
          {
@@ -319,7 +321,7 @@ void GameEngine::CheckJoystick( )
 
 void GameEngine::AddSprite( Sprite* sprite )
 {
-   if ( sprite != NULL )
+   if ( NULL != sprite )
    {
       if ( m_sprites.size( ) > 0 )
       {
@@ -337,7 +339,7 @@ void GameEngine::AddSprite( Sprite* sprite )
    }
 }
 
-void GameEngine::DrawSprites( HDC dc )
+void GameEngine::DrawSprites( HDC dc ) const
 {
    for ( auto iterSprite = m_sprites.begin( ); iterSprite != m_sprites.end( ); iterSprite++ )
    {
@@ -414,14 +416,14 @@ BOOL GameEngine::CheckSpriteCollision( Sprite* testSprite )
 
 void GameEngine::PlayMIDISong( PCWSTR MIDIFileName, BOOL restart )
 {
-   if ( m_MIDIPlayerID == 0 )
+   if ( 0 == m_MIDIPlayerID )
    {
       MCI_OPEN_PARMSW mciOpenParms = { };
 
       mciOpenParms.lpstrDeviceType = L"sequencer";
       mciOpenParms.lpstrElementName = MIDIFileName;
 
-      if ( mciSendCommandW( NULL, MCI_OPEN, MCI_OPEN_TYPE | MCI_OPEN_ELEMENT, ( DWORD_PTR ) &mciOpenParms ) == 0 )
+      if ( 0 == mciSendCommandW( NULL, MCI_OPEN, MCI_OPEN_TYPE | MCI_OPEN_ELEMENT, ( DWORD_PTR ) &mciOpenParms ) )
       {
          m_MIDIPlayerID = mciOpenParms.wDeviceID;
       }
@@ -435,7 +437,7 @@ void GameEngine::PlayMIDISong( PCWSTR MIDIFileName, BOOL restart )
    {
       MCI_SEEK_PARMS mciSeekParms = { };
 
-      if ( mciSendCommandW( m_MIDIPlayerID, MCI_SEEK, MCI_SEEK_TO_START, ( DWORD_PTR ) &mciSeekParms ) != 0 )
+      if ( 0 != mciSendCommandW( m_MIDIPlayerID, MCI_SEEK, MCI_SEEK_TO_START, ( DWORD_PTR ) &mciSeekParms ) )
       {
          CloseMIDIPlayer( );
       }
@@ -443,7 +445,7 @@ void GameEngine::PlayMIDISong( PCWSTR MIDIFileName, BOOL restart )
 
    MCI_PLAY_PARMS mciPlayParms = { };
 
-   if ( mciSendCommandW( m_MIDIPlayerID, MCI_PLAY, 0, ( DWORD_PTR ) &mciPlayParms ) != 0 )
+   if ( 0 != mciSendCommandW( m_MIDIPlayerID, MCI_PLAY, 0, ( DWORD_PTR ) &mciPlayParms ) )
    {
       CloseMIDIPlayer( );
    }
@@ -451,7 +453,7 @@ void GameEngine::PlayMIDISong( PCWSTR MIDIFileName, BOOL restart )
 
 void GameEngine::PauseMIDISong( )
 {
-   if ( m_MIDIPlayerID != 0 )
+   if ( 0 != m_MIDIPlayerID )
    {
       mciSendCommandW( m_MIDIPlayerID, MCI_PAUSE, 0, NULL );
    }
@@ -459,7 +461,7 @@ void GameEngine::PauseMIDISong( )
 
 void GameEngine::CloseMIDIPlayer( )
 {
-   if ( m_MIDIPlayerID != 0 )
+   if ( 0 != m_MIDIPlayerID )
    {
       mciSendCommandW( m_MIDIPlayerID, MCI_CLOSE, 0, NULL );
       m_MIDIPlayerID = 0;

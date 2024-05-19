@@ -79,7 +79,8 @@ void GameNew( )
    g_score      = 0;
    g_gameOver   = FALSE;
 
-   EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
+   EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                   ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
 
    g_game->PlayMIDISong( );
 }
@@ -261,14 +262,14 @@ BOOL SpriteCollision( Sprite* spriteHitter, Sprite* spriteHittee )
          PlaySoundW( ( PCWSTR ) IDW_GAMEOVER, inst, SND_ASYNC | SND_RESOURCE );
 
          WCHAR szText[64];
-
          wsprintfW( szText, L"Game Over! You scored %d points.", g_score );
 
          MessageBoxW( g_game->GetWindow( ), szText, L"Henway 2", MB_OK );
 
          g_gameOver = TRUE;
 
-         EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
+         EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                         ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
       }
 
       return FALSE;
