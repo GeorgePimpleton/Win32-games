@@ -5,7 +5,7 @@ HRESULT GameInitialize( HINSTANCE inst )
    g_game = std::make_unique<GameEngine>( inst, L"Battle Office 2", L"Battle Office 2 b: Animating the Appearance of Sprites",
                                           IDI_ICON, IDI_ICON_SM, 500, 400 );
 
-   if ( g_game == NULL )
+   if ( NULL == g_game )
    {
       return E_FAIL;
    }
@@ -40,7 +40,7 @@ void GameStart( HWND wnd )
    g_smallGuyBitmap = std::make_unique<Bitmap>( IDB_SMALLGUY );
    g_gameOverBitmap = std::make_unique<Bitmap>( IDB_GAMEOVER );
 
-   RECT    bounds = { 0, 0, 500, 400 };
+   RECT bounds = { 0, 0, 500, 400 };
 
    g_powSprite = std::make_unique<Sprite>( g_powBitmap.get( ), bounds, BA_STOP );
    g_powSprite->SetZOrder( 3 );
@@ -97,7 +97,8 @@ void GameNew( )
    g_misses         = 0;
    g_gameOver       = FALSE;
 
-   EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
+   EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                   ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
 
    g_game->PlayMIDISong( );
 }
@@ -191,7 +192,8 @@ void GameCycle( )
                   g_powSprite->SetHidden( TRUE );
                   g_gameOver = TRUE;
 
-                  EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
+                  EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                                  ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
 
                   g_game->PauseMIDISong( );
                }
@@ -256,9 +258,9 @@ void MouseButtonDown( LONG x, LONG y, BOOL left )
 
          sprite->SetHidden( TRUE );
 
-         if ( ( ++g_hits % 5 ) == 0 )
+         if ( 0 == ( ++g_hits % 5 ) )
          {
-            if ( --g_guyMasterDelay == 0 )
+            if ( 0 == --g_guyMasterDelay )
             {
                g_guyMasterDelay = 1;
             }
