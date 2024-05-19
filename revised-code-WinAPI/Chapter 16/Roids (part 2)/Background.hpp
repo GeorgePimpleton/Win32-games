@@ -5,11 +5,10 @@
 #include "Bitmap.hpp"
 #include <array>
 
-enum class STARSIZE : WORD { SS_SMALL  = 0,
-                             SS_MEDIUM = 1,
-                             SS_LARGE  = 2 };
-
-using enum STARSIZE;
+using STARSIZE = WORD;
+const STARSIZE SS_SMALL  = 0;
+const STARSIZE SS_MEDIUM = 1;
+const STARSIZE SS_LARGE  = 2;
 
 class Background
 {
@@ -25,11 +24,11 @@ public:
    virtual ~Background( );
 
 public:
-   virtual void Draw( HDC );
+   virtual void Draw( HDC ) const;
    virtual void Update( );
 
 public:
-   constexpr LONG GetWidth( ) const  { return m_width; }
+   constexpr LONG GetWidth( )  const { return m_width; }
    constexpr LONG GetHeight( ) const { return m_height; }
 };
 
@@ -49,6 +48,6 @@ public:
    virtual ~StarryBackground( );
 
 public:
-   virtual void Draw( HDC );
+   virtual void Draw( HDC ) const;
    virtual void Update( );
 };

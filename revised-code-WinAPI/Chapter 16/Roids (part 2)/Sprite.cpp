@@ -70,15 +70,13 @@ SPRITEACTION Sprite::Update( )
    POINT boundsSize  = { };
 
    newPosition.x = m_position.left + m_velocity.x;
-   newPosition.y = m_position.top + m_velocity.y;
+   newPosition.y = m_position.top  + m_velocity.y;
 
-   spriteSize.x = m_position.right - m_position.left;
+   spriteSize.x = m_position.right  - m_position.left;
    spriteSize.y = m_position.bottom - m_position.top;
-   boundsSize.x = m_bounds.right - m_bounds.left;
-   boundsSize.y = m_bounds.bottom - m_bounds.top;
+   boundsSize.x = m_bounds.right    - m_bounds.left;
+   boundsSize.y = m_bounds.bottom   - m_bounds.top;
 
-   // check the bounds
-   // wrap?
    if ( BA_WRAP == m_boundsAction )
    {
       if ( ( newPosition.x + spriteSize.x ) < m_bounds.left )
@@ -99,8 +97,7 @@ SPRITEACTION Sprite::Update( )
          newPosition.y = m_bounds.top - spriteSize.y;
       }
    }
-   // bounce?
-   else if ( m_boundsAction == BA_BOUNCE )
+   else if ( BA_BOUNCE == m_boundsAction )
    {
       BOOL  bounce      = FALSE;
       POINT newVelocity = m_velocity;
@@ -136,16 +133,14 @@ SPRITEACTION Sprite::Update( )
          SetVelocity( newVelocity );
       }
    }
-   // die?
-   else if ( m_boundsAction == BA_DIE )
+   else if ( BA_DIE == m_boundsAction )
    {
       if ( ( newPosition.x + spriteSize.x ) < m_bounds.left || newPosition.x > m_bounds.right ||
-           ( newPosition.y + spriteSize.y ) < m_bounds.top || newPosition.y > m_bounds.bottom )
+           ( newPosition.y + spriteSize.y ) < m_bounds.top  || newPosition.y > m_bounds.bottom )
       {
          return SA_KILL;
       }
    }
-   // stop (default)
    else
    {
       if ( newPosition.x  < m_bounds.left || newPosition.x >( m_bounds.right - spriteSize.x ) )
@@ -168,9 +163,9 @@ SPRITEACTION Sprite::Update( )
    return SA_NONE;
 }
 
-void Sprite::Draw( HDC dc )
+void Sprite::Draw( HDC dc ) const
 {
-   if ( m_bitmap != NULL && !m_hidden )
+   if ( NULL != m_bitmap && !m_hidden )
    {
       if ( m_numFrames == 1 )
       {

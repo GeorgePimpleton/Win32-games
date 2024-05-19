@@ -19,7 +19,7 @@ Background::Background( Bitmap* bitmap )
 Background::~Background( )
 { }
 
-void Background::Draw( HDC dc )
+void Background::Draw( HDC dc ) const
 {
    if ( NULL != m_bitmap )
    {
@@ -71,7 +71,7 @@ StarryBackground::StarryBackground( LONG width, LONG height, LONG numStars, LONG
 StarryBackground::~StarryBackground( )
 { }
 
-void StarryBackground::Draw( HDC dc )
+void StarryBackground::Draw( HDC dc ) const
 {
    RECT   rect  = { 0, 0, m_width, m_height };
    HBRUSH brush = CreateSolidBrush( RGB( 0, 0, 0 ) );
