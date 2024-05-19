@@ -2,7 +2,7 @@
 
 BOOL GameInitialize(HINSTANCE hInstance)
 {
-   _pGame = new GameEngine(hInstance, TEXT("Battle Office"), TEXT("Battle Office"),
+   _pGame = new GameEngine(hInstance, TEXT("Battle Office"), TEXT("Battle Office a"),
                            IDI_BATTLEOFFICE, IDI_BATTLEOFFICE_SM, 500, 400);
    if ( _pGame == NULL )
       return FALSE;

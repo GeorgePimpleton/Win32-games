@@ -2,7 +2,7 @@
 
 HRESULT GameInitialize( HINSTANCE inst )
 {
-   g_game = std::make_unique<GameEngine>( inst, L"Battle Office", L"Example Game: Battle Office",
+   g_game = std::make_unique<GameEngine>( inst, L"Battle Office", L"Example Game: Battle Office b",
                                           IDI_ICON, IDI_ICON_SM, 500, 400 );
 
    if ( NULL == g_game )
@@ -91,7 +91,8 @@ void GameNew( )
    g_misses         = 0;
    g_gameOver       = FALSE;
 
-   EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
+   EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                   ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
 
    g_game->PlayMIDISong( );
 }
@@ -184,7 +185,8 @@ void GameCycle( )
                   }
                   g_gameOver = TRUE;
 
-                  EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
+                  EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                                  ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
 
                   g_game->PauseMIDISong( );
                }
