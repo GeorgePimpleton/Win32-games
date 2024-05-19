@@ -20,10 +20,10 @@ IDD_ABOUT   DIALOG   32, 32, 180, 102
 CAPTION "About..."
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 {
-   ICON           IDI_ICON, IDC_STATIC, 7, 7, 20, 20, SS_SUNKEN
-   CTEXT          "Meteor Defense b", IDC_STATIC, 40, 12, 100, 8
+   ICON           IDI_ICON,           IDC_STATIC,  7,  7,  20, 20, SS_SUNKEN
+   CTEXT          "Meteor Defense b", IDC_STATIC, 40, 12, 100,  8
 
-   CTEXT          "Example Game", IDC_STATIC, 7, 35, 166, 8
+   CTEXT          "Example Game",           IDC_STATIC, 7, 35, 166, 8
    CTEXT          "© This Year, Your Name", IDC_STATIC, 7, 47, 166, 8
 
    DEFPUSHBUTTON  "OK", IDOK, 66, 81, 50, 14
@@ -33,19 +33,19 @@ IDR_MENU    MENU
 {
    POPUP "&Game"
    {
-      MENUITEM "&New\tCTRL+N",   IDM_GAME_NEW, GRAYED
+      MENUITEM "&New\tCtrl+N",  IDM_GAME_NEW, GRAYED
       MENUITEM SEPARATOR
-      MENUITEM "E&xit",          IDM_GAME_EXIT
+      MENUITEM "E&xit\tALT+F4", IDM_GAME_EXIT
    }
 
    POPUP "&Help"
    {
-      MENUITEM "&About...\tF1",  IDM_HELP_ABOUT
+      MENUITEM "&About...\tF1", IDM_HELP_ABOUT
    }
 }
 
 IDR_ACCELERATORS ACCELERATORS
 {
    "^N",    IDM_GAME_NEW
-   VK_F1,   IDM_HELP_ABOUT,   VIRTKEY
+   VK_F1,   IDM_HELP_ABOUT, VIRTKEY
 }

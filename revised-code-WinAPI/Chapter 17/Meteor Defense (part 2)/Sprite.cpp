@@ -81,11 +81,12 @@ SPRITEACTION Sprite::Update( )
    POINT boundsSize  = { };
 
    newPosition.x = m_position.left + m_velocity.x;
-   newPosition.y = m_position.top + m_velocity.y;
-   spriteSize.x  = m_position.right - m_position.left;
+   newPosition.y = m_position.top  + m_velocity.y;
+
+   spriteSize.x  = m_position.right  - m_position.left;
    spriteSize.y  = m_position.bottom - m_position.top;
-   boundsSize.x  = m_bounds.right - m_bounds.left;
-   boundsSize.y  = m_bounds.bottom - m_bounds.top;
+   boundsSize.x  = m_bounds.right    - m_bounds.left;
+   boundsSize.y  = m_bounds.bottom   - m_bounds.top;
 
    if ( BA_WRAP == m_boundsAction )
    {
@@ -143,29 +144,23 @@ SPRITEACTION Sprite::Update( )
    }
    else if ( BA_DIE == m_boundsAction )
    {
-      if ( ( newPosition.x + spriteSize.x ) < m_bounds.left ||
-           newPosition.x > m_bounds.right ||
-           ( newPosition.y + spriteSize.y ) < m_bounds.top ||
-           newPosition.y > m_bounds.bottom )
+      if ( ( newPosition.x + spriteSize.x ) < m_bounds.left || newPosition.x > m_bounds.right ||
+           ( newPosition.y + spriteSize.y ) < m_bounds.top  || newPosition.y > m_bounds.bottom )
       {
          return SA_KILL;
       }
    }
    else
    {
-      if ( newPosition.x  < m_bounds.left ||
-           newPosition.x >( m_bounds.right - spriteSize.x ) )
+      if ( newPosition.x  < m_bounds.left || newPosition.x >( m_bounds.right - spriteSize.x ) )
       {
-         newPosition.x = max( m_bounds.left, min( newPosition.x,
-                              m_bounds.right - spriteSize.x ) );
+         newPosition.x = max( m_bounds.left, min( newPosition.x, m_bounds.right - spriteSize.x ) );
          SetVelocity( 0, 0 );
       }
 
-      if ( newPosition.y  < m_bounds.top ||
-           newPosition.y >( m_bounds.bottom - spriteSize.y ) )
+      if ( newPosition.y  < m_bounds.top || newPosition.y >( m_bounds.bottom - spriteSize.y ) )
       {
-         newPosition.y = max( m_bounds.top, min( newPosition.y,
-                              m_bounds.bottom - spriteSize.y ) );
+         newPosition.y = max( m_bounds.top, min( newPosition.y, m_bounds.bottom - spriteSize.y ) );
          SetVelocity( 0, 0 );
       }
    }
@@ -174,7 +169,7 @@ SPRITEACTION Sprite::Update( )
    return SA_NONE;
 }
 
-void Sprite::Draw( HDC dc )
+void Sprite::Draw( HDC dc ) const
 {
    if ( NULL != m_bitmap && !m_hidden )
    {

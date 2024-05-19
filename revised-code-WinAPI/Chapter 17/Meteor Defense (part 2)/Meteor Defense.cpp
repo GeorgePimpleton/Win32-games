@@ -69,7 +69,8 @@ void GameNew( )
    g_difficulty = 50;
    g_gameOver   = FALSE;
 
-   EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
+   EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                   ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
 
    g_game->PlayMIDISong( );
 }
@@ -227,7 +228,8 @@ BOOL SpriteCollision( Sprite* spriteHitter, Sprite* spriteHittee )
 
       if ( 0 == ( --g_numCities ) )
       {
-         EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
+         EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                         ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
 
          g_gameOver = TRUE;
       }
