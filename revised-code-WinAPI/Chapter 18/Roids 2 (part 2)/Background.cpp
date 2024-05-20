@@ -22,7 +22,7 @@ Background::~Background( )
 void Background::Update( )
 { }
 
-void Background::Draw( HDC dc )
+void Background::Draw( HDC dc ) const
 {
    if ( NULL != m_bitmap )
    {
@@ -91,7 +91,7 @@ void StarryBackground::Update( )
    }
 }
 
-void StarryBackground::Draw( HDC dc )
+void StarryBackground::Draw( HDC dc ) const
 {
    HBRUSH brush = CreateSolidBrush( RGB( 0, 0, 0 ) );
    RECT   rect  = { 0, 0, m_width, m_height };
@@ -103,7 +103,7 @@ void StarryBackground::Draw( HDC dc )
    {
       SetPixel( dc, m_stars[i].x, m_stars[i].y, m_starColors[i] );
 
-      if ( m_sizeStars[i] == SS_MEDIUM )
+      if ( SS_MEDIUM == m_sizeStars[i] )
       {
          for ( int x = -1; x < 2; x++ )
          {
@@ -113,7 +113,7 @@ void StarryBackground::Draw( HDC dc )
             }
          }
       }
-      else if ( m_sizeStars[i] == SS_LARGE )
+      else if ( SS_LARGE == m_sizeStars[i] )
       {
          for ( int x = -2; x < 3; x++ )
          {
