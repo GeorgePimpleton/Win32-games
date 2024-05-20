@@ -81,11 +81,12 @@ SPRITEACTION Sprite::Update( )
    POINT boundsSize  = { };
 
    newPosition.x = m_position.left + m_velocity.x;
-   newPosition.y = m_position.top + m_velocity.y;
-   spriteSize.x  = m_position.right - m_position.left;
-   spriteSize.y  = m_position.bottom - m_position.top;
-   boundsSize.x  = m_bounds.right - m_bounds.left;
-   boundsSize.y  = m_bounds.bottom - m_bounds.top;
+   newPosition.y = m_position.top  + m_velocity.y;
+
+   spriteSize.x = m_position.right  - m_position.left;
+   spriteSize.y = m_position.bottom - m_position.top;
+   boundsSize.x = m_bounds.right    - m_bounds.left;
+   boundsSize.y = m_bounds.bottom   - m_bounds.top;
 
    if ( BA_WRAP == m_boundsAction )
    {
@@ -145,10 +146,8 @@ SPRITEACTION Sprite::Update( )
    }
    else if ( BA_DIE == m_boundsAction )
    {
-      if ( ( newPosition.x + spriteSize.x ) < m_bounds.left ||
-           newPosition.x > m_bounds.right ||
-           ( newPosition.y + spriteSize.y ) < m_bounds.top ||
-           newPosition.y > m_bounds.bottom )
+      if ( ( newPosition.x + spriteSize.x ) < m_bounds.left || newPosition.x > m_bounds.right ||
+           ( newPosition.y + spriteSize.y ) < m_bounds.top  || newPosition.y > m_bounds.bottom )
       {
          return SA_KILL;
       }
@@ -177,11 +176,11 @@ Sprite* Sprite::AddSprite( )
    return NULL;
 }
 
-void Sprite::Draw( HDC dc )
+void Sprite::Draw( HDC dc ) const
 {
-   if ( m_bitmap != NULL && !m_hidden )
+   if ( NULL != m_bitmap && !m_hidden )
    {
-      if ( m_numFrames == 1 )
+      if ( 1 == m_numFrames )
       {
          m_bitmap->Draw( dc, m_position.left, m_position.top, TRUE );
       }

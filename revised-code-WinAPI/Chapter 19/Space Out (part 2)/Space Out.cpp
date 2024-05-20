@@ -99,7 +99,7 @@ void GameCycle( )
 {
    if ( !g_gameOver )
    {
-      if ( rtk::rand( 0, g_difficulty / 2 ) == 0 )
+      if ( 0 == rtk::rand( 0, g_difficulty / 2 ) )
       {
          AddAlien( );
       }
@@ -194,10 +194,8 @@ BOOL SpriteCollision( Sprite* spriteHitter, Sprite* spriteHittee )
    Bitmap* pHitter = spriteHitter->GetBitmap( );
    Bitmap* pHittee = spriteHittee->GetBitmap( );
 
-   if ( ( pHitter == g_missileBitmap.get( ) && ( pHittee == g_BlobboBitmap.get( ) ||
-        pHittee == g_JellyBitmap.get( ) || pHittee == g_TimmyBitmap.get( ) ) ) ||
-        ( pHittee == g_missileBitmap.get( ) && ( pHitter == g_BlobboBitmap.get( ) ||
-        pHitter == g_JellyBitmap.get( ) || pHitter == g_TimmyBitmap.get( ) ) ) )
+   if ( ( pHitter == g_missileBitmap.get( ) && ( pHittee == g_BlobboBitmap.get( ) || pHittee == g_JellyBitmap.get( ) || pHittee == g_TimmyBitmap.get( ) ) ) ||
+        ( pHittee == g_missileBitmap.get( ) && ( pHitter == g_BlobboBitmap.get( ) || pHitter == g_JellyBitmap.get( ) || pHitter == g_TimmyBitmap.get( ) ) ) )
    {
       PlaySoundW( ( PCWSTR ) IDW_LGEXPLODE, g_inst, SND_ASYNC | SND_RESOURCE );
 
@@ -226,10 +224,8 @@ BOOL SpriteCollision( Sprite* spriteHitter, Sprite* spriteHittee )
       g_difficulty  = max( 80 - ( g_score / 20 ), 20 );
    }
 
-   if ( ( pHitter == g_carBitmap.get( ) && ( pHittee == g_BMissileBitmap.get( ) ||
-        pHittee == g_JMissileBitmap.get( ) || pHittee == g_TMissileBitmap.get( ) ) ) ||
-        ( pHittee == g_carBitmap.get( ) && ( pHitter == g_BMissileBitmap.get( ) ||
-        pHitter == g_JMissileBitmap.get( ) || pHitter == g_TMissileBitmap.get( ) ) ) )
+   if ( ( pHitter == g_carBitmap.get( ) && ( pHittee == g_BMissileBitmap.get( ) || pHittee == g_JMissileBitmap.get( ) || pHittee == g_TMissileBitmap.get( ) ) ) ||
+        ( pHittee == g_carBitmap.get( ) && ( pHitter == g_BMissileBitmap.get( ) || pHitter == g_JMissileBitmap.get( ) || pHitter == g_TMissileBitmap.get( ) ) ) )
    {
       PlaySoundW( ( PCWSTR ) IDW_LGEXPLODE, g_inst, SND_ASYNC | SND_RESOURCE );
 
@@ -268,7 +264,8 @@ BOOL SpriteCollision( Sprite* spriteHitter, Sprite* spriteHittee )
 
          g_gameOver = TRUE;
 
-         EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
+         EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                         ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
       }
    }
 
@@ -277,8 +274,7 @@ BOOL SpriteCollision( Sprite* spriteHitter, Sprite* spriteHittee )
 
 void SpriteDying( Sprite* spriteDying )
 {
-   if ( spriteDying->GetBitmap( ) == g_BMissileBitmap.get( ) ||
-        spriteDying->GetBitmap( ) == g_JMissileBitmap.get( ) ||
+   if ( spriteDying->GetBitmap( ) == g_BMissileBitmap.get( ) || spriteDying->GetBitmap( ) == g_JMissileBitmap.get( ) ||
         spriteDying->GetBitmap( ) == g_TMissileBitmap.get( ) )
    {
       PlaySoundW( ( PCWSTR ) IDW_SMEXPLODE, g_inst, SND_ASYNC | SND_RESOURCE | SND_NOSTOP );
@@ -310,7 +306,8 @@ void GameNew( )
    g_difficulty     = 80;
    g_gameOver       = FALSE;
 
-   EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
+   EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                   ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
 
    g_game->PlayMIDISong( );
 }
