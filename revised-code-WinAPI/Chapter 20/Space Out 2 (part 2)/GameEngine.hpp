@@ -6,17 +6,16 @@
 #include "Sprite.hpp"
 #include "resource.h"
 
-typedef WORD    JOYSTATE;
-const JOYSTATE  JOY_NONE  = 0x0000L,
-                JOY_LEFT  = 0x0001L,
-                JOY_RIGHT = 0x0002L,
-                JOY_UP    = 0x0004L,
-                JOY_DOWN  = 0x0008L,
-                JOY_FIRE1 = 0x0010L,
-                JOY_FIRE2 = 0x0020L;
+using JOYSTATE = WORD;
+const JOYSTATE JOY_NONE  = 0x0000L;
+const JOYSTATE JOY_LEFT  = 0x0001L;
+const JOYSTATE JOY_RIGHT = 0x0002L;
+const JOYSTATE JOY_UP    = 0x0004L;
+const JOYSTATE JOY_DOWN  = 0x0008L;
+const JOYSTATE JOY_FIRE1 = 0x0010L;
+const JOYSTATE JOY_FIRE2 = 0x0020L;
 
-int      WINAPI  wWinMain( _In_ HINSTANCE, _In_opt_ HINSTANCE,
-                           _In_ PWSTR,     _In_     int );
+int      WINAPI  wWinMain( _In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ PWSTR, _In_ int );
 LRESULT CALLBACK WndProc( HWND, UINT, WPARAM, LPARAM );
 BOOL    CALLBACK DlgProc( HWND, UINT, WPARAM, LPARAM );
 
@@ -71,7 +70,7 @@ public:
    void               ReleaseJoystick( );
    void               CheckJoystick( );
    void               AddSprite( Sprite* );
-   void               DrawSprites( HDC );
+   void               DrawSprites( HDC ) const;
    void               UpdateSprites( );
    void               CleanupSprites( );
    Sprite*            IsPointInSprite( int, int );

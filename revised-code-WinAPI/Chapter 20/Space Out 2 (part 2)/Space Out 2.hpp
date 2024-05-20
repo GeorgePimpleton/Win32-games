@@ -3,7 +3,6 @@
 #include <windows.h>
 #include "resource.h"
 #include <memory>
-#include "random_toolkit_v131.hpp"
 #include "GameEngine.hpp"
 #include "Bitmap.hpp"
 #include "Sprite.hpp"

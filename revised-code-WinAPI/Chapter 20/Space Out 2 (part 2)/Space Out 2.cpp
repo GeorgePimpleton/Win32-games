@@ -294,7 +294,8 @@ BOOL SpriteCollision( Sprite* spriteHitter, Sprite* spriteHittee )
 
          g_gameOver = TRUE;
 
-         EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
+         EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                         ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
       }
    }
 
@@ -334,7 +335,8 @@ void GameNew( )
    g_carSprite->SetPosition( 300, 405 );
    g_game->AddSprite( g_carSprite.get( ) );
 
-   EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
+   EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                   ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
 
    g_game->PlayMIDISong( L"Music.mid" );
 }
