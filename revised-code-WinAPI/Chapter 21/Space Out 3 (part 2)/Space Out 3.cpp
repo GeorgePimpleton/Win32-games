@@ -5,7 +5,7 @@ HRESULT GameInitialize( HINSTANCE inst )
    g_game = std::make_unique<GameEngine>( inst, L"Space Out 3", L"Space Out 3 b: Showing Off Your Game with Demo Mode",
                                           IDI_ICON, IDI_ICON_SM, 600, 450 );
 
-   if ( g_game == NULL )
+   if ( NULL == g_game )
    {
       return E_FAIL;
    }
@@ -46,7 +46,8 @@ void GameStart( HWND wnd )
 
    g_demo = TRUE;
 
-   EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
+   EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                   ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
 
    GameNew( );
 }
@@ -87,7 +88,8 @@ void GamePaint( HDC dc )
    {
       g_splashBitmap->Draw( dc, 142, 100, TRUE );
 
-      EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
+      EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                      ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
    }
    else
    {
@@ -143,7 +145,8 @@ void GameCycle( )
    {
       g_game->PauseMIDISong( );
       g_demo = TRUE;
-      EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
+      EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                      ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
       GameNew( );
    }
 }
@@ -305,7 +308,8 @@ BOOL SpriteCollision( Sprite* spriteHitter, Sprite* spriteHittee )
          g_gameOver      = TRUE;
          g_gameOverDelay = 150;
 
-         EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
+         EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                         ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
       }
    }
 
@@ -357,7 +361,8 @@ void GameNew( )
       g_carSprite->SetPosition( 300, 405 );
       g_game->AddSprite( g_carSprite.get( ) );
 
-      EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
+      EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                      ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
 
       g_game->PlayMIDISong( L"Music.mid" );
    }

@@ -8,8 +8,7 @@
 class AlienSprite : public Sprite
 {
 public:
-            AlienSprite( Bitmap*, RECT&,
-                         BOUNDSACTION = BA_STOP );
+            AlienSprite( Bitmap*, RECT&, BOUNDSACTION = BA_STOP );
    virtual ~AlienSprite( );
 
    virtual SPRITEACTION Update( );
