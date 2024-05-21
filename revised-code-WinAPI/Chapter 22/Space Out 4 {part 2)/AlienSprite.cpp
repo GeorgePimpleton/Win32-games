@@ -11,7 +11,7 @@ SPRITEACTION AlienSprite::Update( )
 {
    SPRITEACTION spriteAction = Sprite::Update( );
 
-   if ( ( rtk::rand( 0, g_difficulty / 2 ) ) == 0 )
+   if ( 0 == ( rtk::rand( 0, g_difficulty / 2 ) ) )
    {
       spriteAction |= SA_ADDSPRITE;
    }

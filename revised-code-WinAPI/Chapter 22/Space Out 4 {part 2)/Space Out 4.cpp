@@ -5,7 +5,7 @@ HRESULT GameInitialize( HINSTANCE inst )
    g_game = std::make_unique<GameEngine>( inst, L"Space Out 4", L"Space Out 4 b: Keeping Track of High Scores",
                                           IDI_ICON, IDI_ICON_SM, 600, 450 );
 
-   if ( g_game == NULL )
+   if ( NULL == g_game )
    {
       return E_FAIL;
    }
@@ -48,7 +48,8 @@ void GameStart( HWND wnd )
 
    g_demo = TRUE;
 
-   EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
+   EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                   ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
 
    GameNew( );
 }
@@ -91,7 +92,8 @@ void GamePaint( HDC dc )
    {
       g_splashBitmap->Draw( dc, 142, 20, TRUE );
 
-      EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
+      EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                      ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
 
       WCHAR text[64];
       RECT  rect = { 275, 250, 325, 270 };
@@ -140,7 +142,7 @@ void GameCycle( )
    {
       if ( !g_demo )
       {
-         if ( ( rtk::rand( 0, g_difficulty ) ) == 0 )
+         if ( 0 == ( rtk::rand( 0, g_difficulty ) ) )
          {
             AddAlien( );
          }
@@ -159,11 +161,12 @@ void GameCycle( )
 
       ReleaseDC( wnd, dc );
    }
-   else if ( --g_gameOverDelay == 0 )
+   else if ( 0 == --g_gameOverDelay )
    {
       g_game->PauseMIDISong( );
       g_demo = TRUE;
-      EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
+      EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                      ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
       GameNew( );
    }
 }
@@ -251,11 +254,11 @@ BOOL SpriteCollision( Sprite* spriteHitter, Sprite* spriteHittee )
    Bitmap* pHittee = spriteHittee->GetBitmap( );
 
    if ( ( pHitter == g_missileBitmap.get( ) && ( pHittee == g_BlobboBitmap.get( ) ||
-        pHittee == g_JellyBitmap.get( ) ||
-        pHittee == g_TimmyBitmap.get( ) ) ) ||
+          pHittee == g_JellyBitmap.get( ) ||
+          pHittee == g_TimmyBitmap.get( ) ) ) ||
         ( pHittee == g_missileBitmap.get( ) && ( pHitter == g_BlobboBitmap.get( ) ||
-        pHitter == g_JellyBitmap.get( ) ||
-        pHitter == g_TimmyBitmap.get( ) ) ) )
+          pHitter == g_JellyBitmap.get( ) ||
+          pHitter == g_TimmyBitmap.get( ) ) ) )
    {
       PlaySoundW( ( PCWSTR ) IDW_LGEXPLODE, g_inst, SND_ASYNC | SND_RESOURCE );
 
@@ -284,11 +287,11 @@ BOOL SpriteCollision( Sprite* spriteHitter, Sprite* spriteHittee )
    }
 
    if ( ( pHitter == g_carBitmap.get( ) && ( pHittee == g_BMissileBitmap.get( ) ||
-        pHittee == g_JMissileBitmap.get( ) ||
-        pHittee == g_TMissileBitmap.get( ) ) ) ||
+          pHittee == g_JMissileBitmap.get( ) ||
+          pHittee == g_TMissileBitmap.get( ) ) ) ||
         ( pHittee == g_carBitmap.get( ) && ( pHitter == g_BMissileBitmap.get( ) ||
-        pHitter == g_JMissileBitmap.get( ) ||
-        pHitter == g_TMissileBitmap.get( ) ) ) )
+          pHitter == g_JMissileBitmap.get( ) ||
+          pHitter == g_TMissileBitmap.get( ) ) ) )
    {
       PlaySoundW( ( PCWSTR ) IDW_LGEXPLODE, g_inst, SND_ASYNC | SND_RESOURCE );
 
@@ -327,7 +330,8 @@ BOOL SpriteCollision( Sprite* spriteHitter, Sprite* spriteHittee )
          g_gameOver      = TRUE;
          g_gameOverDelay = 150;
 
-         EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
+         EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                         ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_ENABLED );
 
          UpdateHiScores( );
       }
@@ -368,7 +372,8 @@ void GameNew( )
 
    if ( g_demo )
    {
-      EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
+      EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                      ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
 
       for ( int i = 0; i < 6; i++ )
       {
@@ -383,7 +388,8 @@ void GameNew( )
       g_carSprite->SetPosition( 300, 405 );
       g_game->AddSprite( g_carSprite.get( ) );
 
-      EnableMenuItem( GetMenu( g_game->GetWindow( ) ), ( UINT ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
+      EnableMenuItem( GetMenu( g_game->GetWindow( ) ),
+                      ( UINT ) ( ULONGLONG ) MAKEINTRESOURCEW( IDM_GAME_NEW ), MF_GRAYED );
 
       g_game->PlayMIDISong( L"Music.mid" );
    }
