@@ -3,12 +3,11 @@
 #include <windows.h>
 #include "Background.hpp"
 
-enum class SCROLLDIR : WORD { SD_UP     = 0,
-                              SD_RIGHT  = 1,
-                              SD_DOWN   = 2,
-                              SD_LEFT   = 3 };
-
-using enum SCROLLDIR;
+using SCROLLDIR = WORD;
+const SCROLLDIR SD_UP     = 0;
+const SCROLLDIR SD_RIGHT  = 1;
+const SCROLLDIR SD_DOWN   = 2;
+const SCROLLDIR SD_LEFT   = 3;
 
 class BackgroundLayer : Bitmap
 {
@@ -18,14 +17,12 @@ protected:
    SCROLLDIR m_scrollDirection;
 
 public:
-   BackgroundLayer( PCWSTR, int,
-                    SCROLLDIR );
-   BackgroundLayer( UINT, int = 0,
-                    SCROLLDIR = SD_LEFT );
+   BackgroundLayer( PCWSTR, int, SCROLLDIR );
+   BackgroundLayer( UINT, int = 0, SCROLLDIR = SD_LEFT );
 
    virtual void Update( );
    virtual void Draw( HDC, int, int, BOOL = FALSE,
-                      COLORREF = RGB( 255, 0, 255 ) );
+                      COLORREF = RGB( 255, 0, 255 ) ) const;
 
    void SetSpeed( int speed )                     { m_speed = speed; };
    void SetDirection( SCROLLDIR scrollDirection ) { m_scrollDirection = scrollDirection; };
@@ -44,7 +41,7 @@ public:
 
    virtual void Update( );
    virtual void Draw( HDC, BOOL = FALSE,
-                      COLORREF = RGB( 255, 0, 255 ) );
+                      COLORREF = RGB( 255, 0, 255 ) ) const;
 
    void AddLayer( BackgroundLayer* );
 };

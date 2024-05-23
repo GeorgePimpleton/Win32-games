@@ -19,7 +19,7 @@ BackgroundLayer::BackgroundLayer( UINT resID,
 }
 
 void BackgroundLayer::Draw( HDC dc, int x, int y, BOOL trans,
-                            COLORREF transColor )
+                            COLORREF transColor ) const
 {
    if ( m_viewport.top < 0 && m_viewport.left < 0 )
    {
@@ -214,7 +214,7 @@ void ScrollingBackground::Update( )
 }
 
 void ScrollingBackground::Draw( HDC dc, BOOL trans,
-                                COLORREF transColor )
+                                COLORREF transColor ) const
 {
    for ( int i = 0; i < m_numLayers; i++ )
    {

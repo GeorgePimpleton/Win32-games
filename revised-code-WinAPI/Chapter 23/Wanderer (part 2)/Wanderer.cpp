@@ -5,7 +5,7 @@ HRESULT GameInitialize( HINSTANCE inst )
    g_game = std::make_unique<GameEngine>( inst, L"Wanderer", L"Wanderer",
                                           IDI_ICON, IDI_ICON_SM, 256, 256 );
 
-   if ( g_game == NULL )
+   if ( NULL == g_game )
    {
       return E_FAIL;
    }

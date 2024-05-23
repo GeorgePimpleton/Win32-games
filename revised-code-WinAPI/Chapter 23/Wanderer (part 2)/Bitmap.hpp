@@ -22,12 +22,10 @@ public:
    BOOL Create( UINT );
    BOOL Create( HDC, LONG, LONG, COLORREF );
 
-   virtual void Draw( HDC, int, int, BOOL = FALSE,
-                      COLORREF = RGB( 255, 0, 255 ) );
+   virtual void Draw( HDC, int, int, BOOL = FALSE, COLORREF = RGB( 255, 0, 255 ) ) const;
    void DrawPart( HDC, int, int, int, int,
-                  int, int, BOOL = FALSE,
-                  COLORREF = RGB( 255, 0, 255 ) );
+                  int, int, BOOL = FALSE, COLORREF = RGB( 255, 0, 255 ) ) const;
 
-   constexpr LONG GetWidth( )  { return m_width; };
-   constexpr LONG GetHeight( ) { return m_height; };
+   constexpr LONG GetWidth( )  const { return m_width; };
+   constexpr LONG GetHeight( ) const { return m_height; };
 };
