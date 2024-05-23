@@ -5,9 +5,9 @@ HRESULT GameInitialize( HINSTANCE inst )
    g_game = std::make_unique<GameEngine>( inst, L"Stunt Jumper", L"Example Game: Stunt Jumper b",
                                           IDI_ICON, IDI_ICON_SM, 750, 250 );
 
-   if ( g_game == NULL )
+   if ( NULL == g_game )
    {
-      return FALSE;
+      return E_FAIL;
    }
 
    g_game->SetFrameRate( 30 );
@@ -16,7 +16,7 @@ HRESULT GameInitialize( HINSTANCE inst )
 
    g_inst = inst;
 
-   return TRUE;
+   return S_OK;
 }
 
 void GameStart( HWND wnd )
@@ -29,12 +29,12 @@ void GameStart( HWND wnd )
 
    SelectObject( g_offscreenDC, g_offscreenBitmap );
 
-   g_splashBitmap    = std::make_unique <Bitmap>( IDB_SPLASH );
-   g_pJumperBitmap   = std::make_unique<Bitmap>( IDB_JUMPER );
-   g_busBitmap       = std::make_unique<Bitmap>( IDB_BUS );
-   g_rampBitmap[0] = std::make_unique<Bitmap>( IDB_RAMPLEFT );
-   g_rampBitmap[1] = std::make_unique<Bitmap>( IDB_RAMPRIGHT );
-   g_gameOverBitmap  = std::make_unique<Bitmap>( IDB_GAMEOVER );
+   g_splashBitmap   = std::make_unique <Bitmap>( IDB_SPLASH );
+   g_pJumperBitmap  = std::make_unique<Bitmap>( IDB_JUMPER );
+   g_busBitmap      = std::make_unique<Bitmap>( IDB_BUS );
+   g_rampBitmap[0]  = std::make_unique<Bitmap>( IDB_RAMPLEFT );
+   g_rampBitmap[1]  = std::make_unique<Bitmap>( IDB_RAMPRIGHT );
+   g_gameOverBitmap = std::make_unique<Bitmap>( IDB_GAMEOVER );
 
    g_background = std::make_unique<ScrollingBackground>( 750, 250 );
    g_BGSkyLayer = std::make_unique<BackgroundLayer>( IDB_BG_SKY, 1, SD_LEFT );
@@ -156,8 +156,7 @@ void HandleKeys( )
       {
          if ( GetAsyncKeyState( VK_LEFT ) < 0 )
          {
-            PlaySoundW( ( PCWSTR ) IDW_BRAKES, g_inst, SND_ASYNC |
-                        SND_RESOURCE );
+            PlaySoundW( ( PCWSTR ) IDW_BRAKES, g_inst, SND_ASYNC | SND_RESOURCE );
 
             g_jumperSprite->DecreaseSpeed( );
 
@@ -165,8 +164,7 @@ void HandleKeys( )
          }
          else if ( GetAsyncKeyState( VK_RIGHT ) < 0 )
          {
-            PlaySoundW( ( PCWSTR ) IDW_ENGINE, g_inst, SND_ASYNC |
-                        SND_RESOURCE );
+            PlaySoundW( ( PCWSTR ) IDW_ENGINE, g_inst, SND_ASYNC | SND_RESOURCE );
 
             g_jumperSprite->IncreaseSpeed( );
 

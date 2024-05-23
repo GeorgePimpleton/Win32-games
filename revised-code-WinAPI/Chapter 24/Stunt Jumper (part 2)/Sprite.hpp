@@ -4,16 +4,16 @@
 #include "Bitmap.hpp"
 #include "random_toolkit_v131.hpp"
 
-typedef WORD       SPRITEACTION;
-const SPRITEACTION SA_NONE      = 0x0000L,
-                   SA_KILL      = 0x0001L,
-                   SA_ADDSPRITE = 0x0002L;
+using SPRITEACTION = WORD;
+const SPRITEACTION SA_NONE      = 0x0000L;
+const SPRITEACTION SA_KILL      = 0x0001L;
+const SPRITEACTION SA_ADDSPRITE = 0x0002L;
 
-typedef WORD       BOUNDSACTION;
-const BOUNDSACTION BA_STOP   = 0,
-                   BA_WRAP   = 1,
-                   BA_BOUNCE = 2,
-                   BA_DIE    = 3;
+using BOUNDSACTION = WORD;
+const BOUNDSACTION BA_STOP   = 0;
+const BOUNDSACTION BA_WRAP   = 1;
+const BOUNDSACTION BA_BOUNCE = 2;
+const BOUNDSACTION BA_DIE    = 3;
 
 class Sprite
 {
@@ -38,15 +38,14 @@ protected:
 
 public:
             Sprite( Bitmap* );
-            Sprite( Bitmap*, RECT&,
-                    BOUNDSACTION = BA_STOP );
+            Sprite( Bitmap*, RECT&, BOUNDSACTION = BA_STOP );
             Sprite( Bitmap*, POINT, POINT, LONG,
                     RECT&, BOUNDSACTION = BA_STOP );
    virtual ~Sprite( );
 
    virtual SPRITEACTION Update( );
    virtual Sprite*      AddSprite( );
-   void                 Draw( HDC );
+   void                 Draw( HDC ) const;
    BOOL                 IsPointInside( int, int );
    BOOL                 TestCollision( Sprite* );
    void                 Kill( ) { m_dying = TRUE; };
@@ -139,8 +138,7 @@ inline void Sprite::SetPosition( int x, int y )
 
 inline void Sprite::SetPosition( POINT position )
 {
-   OffsetRect( &m_position, position.x - m_position.left,
-               position.y - m_position.top );
+   OffsetRect( &m_position, position.x - m_position.left, position.y - m_position.top );
    CalcCollisionRect( );
 }
 
