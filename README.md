@@ -11,7 +11,7 @@ No representation is made that the source code belongs to me, it's simply reprod
 ### Why this github repository exists
 I own a couple of \*\****OLD***\*\* (© 2003 & 2004) books about creating 2D games using the Windows API.
 
-No representation is made that the source code belongs to me, it remains the copyright of Michael Morrison.
+No representation is made that the source code belongs to me, it remains the copyright of Michael Morrison and Samspublishing.
 
 
 ![Sams Teach Yourself Game Programming in 24 Hours (2003)](tygp24h.jpg) ![Sams Beginning Game Programming (2004)](bgp.jpg)
@@ -20,18 +20,19 @@ I've spent a lot of time -- years -- updating and revising this pre-C++11 code t
 
 Why did it take so long you might ask?  I was learning C++/WinAPI fundamentals as they changed over the years as well.  Yeah, I'm a slow and methodical learner.
 
-The original (and modified) source code and media files are copyrighted © 2003 & 2004 by Samspublishing, the source files and resulting games are not my work.
 
 There are no executables included, you need to create them by compiling the sources.  Learn to program by compiling, compiling, compiling.
 
 There are 4 directories of original and revised game code sources.  The original game code from the two CDs, the WinAPI revisions dir, and two additional dirs for revised code using GDI+ and Direct2D.  Currently the GDI+ & D2D dirs are mostly empty placeholders.
 
 ### Compiler used
-I've used Visual Studio 2015, 2017, 2019 and 2022 (Community) to update and test the game code.  Currently I am using VS 2022, setting the C++ language standard to C++20.
+I've used Visual Studio 2015, 2017, 2019, 2022 and 2026 (Community) to update and test the game code. 
 
-You should think about using VS 2022 as well.  It's free for the Community edition.
+The sources were adapted and compiled using Visual Studio 2022 & 2026, the Community editions. Currently I am using VS 2026, setting the C++ language standard to c++latest.
 
-[Visual Studio 2022 Community download](https://visualstudio.microsoft.com/vs/community/)
+You should think about using VS 2026 as well.  The Community edition is free for non-commercial use.
+
+[Download Visual Studio 2026 Community](https://visualstudio.microsoft.com/downloads/)
 
 ### About the revised sources
 I've been working with the games source code from both books for years, plinking around and trying out newer C++ features as I've run across them.  Most of the example code is the same between the books, so I've combined the examples into one representative example for each chapter.
