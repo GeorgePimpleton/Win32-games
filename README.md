@@ -6,6 +6,8 @@ Win9X/Me is officially dead!  Windows API ANSI encoding is dead!  Windows XP and
 
 Windows and C/C++ have changed since 2003/2004.  Programmers need to adapt.
 
+No representation is made that the source code belongs to me, it's simply reproduced here for convenience (so you don't need to dig up the physical media of the books) and remains the copyright of Michael Morrison.
+
 ### Why this github repository exists
 I own a couple of \*\****OLD***\*\* (© 2003 & 2004) books about creating 2D games using the Windows API.
 
